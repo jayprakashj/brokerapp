@@ -28,15 +28,15 @@ class UserSeeder extends Seeder
 
         $data = [
             [
-                'name' => $faker->text(),
+                'name' => $faker->text(10),
                 'email' => 'companyuser@mailinator.com',
                 'mobile' => '1234567891',
                 'password' => 'Strong@123',
                 'type' => User::TYPE_COMPANY,
-                'company_name' => $faker->text(),
+                'company_name' => $faker->text(10),
             ],
             [
-                'name' => $faker->text(),
+                'name' => $faker->text(10),
                 'email' => 'individual@mailinator.com',
                 'mobile' => '12345678000',
                 'password' => 'Strong@123',
@@ -46,7 +46,8 @@ class UserSeeder extends Seeder
 
         foreach( $data as $item ){
             $request = new Request( $item );
-            $this->userClass->register( $request );
+            $user = $this->userClass->register( $request );
+            $this->userClass->setEmailVerify( $user );
         }
     }
 }

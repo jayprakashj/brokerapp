@@ -65,10 +65,10 @@
                     </span>
                     @endif
                 </div>
-                @if( $item->isOwnedByMe() )
+                @if( !$item->isDefault() )
                 <div class="mt-6 grid w-full grid-cols-2 gap-2">
 
-                    @if( !$item->isDefault() )
+                    @if( $item->isOwnedByMe() )
                     <a href="{{ route('company.change_status', $item) }}"
                         class="btn space-x-2 bg-primary px-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
                         @if( $item->isActive() )
@@ -81,7 +81,8 @@
                         </span>
                     </a>
 
-                    @if( $item->isActive() )
+                    @endif
+                    @if( $item->isActive()  )
                     <a href="{{ route('company.set_default', $item) }}"
                         class="btn space-x-2 bg-slate-150 px-0 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24"
@@ -92,7 +93,6 @@
                         </svg>
                         <span> Set Default </span>
                     </a>
-                    @endif
                     @endif
                 </div>
                 @endif

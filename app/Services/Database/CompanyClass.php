@@ -3,18 +3,31 @@
 namespace App\Services\Database;
 
 use App\Models\Company;
+use App\Models\CompanyMember;
 use App\Models\CompanyUserPivot;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class CompanyClass {
+
+    private $memberClass;
+
+    public function __construct()
+    {
+        $this->memberClass = new MemberClass();
+    }
+
 
     public function create ( User $user, $request, $default = false ) {
 
         $company = new Company();
-        $company = $this->createOrUpdate( $company, $user, $request );
+        $company = $this->createOrUpdate( $company, $user, $request, $default );
 
-        $this->associateCompanyWithUser( $user, $company, $default );
+        $member = $this->memberClass->createWithUserRegistration( $company, $user, CompanyMember::FLAG_IS_DEFAULT_NO, CompanyMember::INVITE_STATUS_ACCEPT );
+
+        setPermissionsTeamId( $company->id );
+        $user->assignRole( $member->role_id );
 
         return $company;
     }
@@ -23,22 +36,15 @@ class CompanyClass {
         return $this->createOrUpdate( $company, $user, $request );
     }
 
-    public function associateCompanyWithUser ( User $user, Company $company, $default = false ){
-        $companyUser = new CompanyUserPivot();
-        $companyUser->company_id = $company->id;
-        $companyUser->user_id = $user->id;
-        $companyUser->is_default = $default;
-        $companyUser->save();
-    }
 
     public function detachCompanyWithUser ( User $user, Company $company ){
-        CompanyUserPivot::where('company_id',$company->id)
+        CompanyMember::where('company_id',$company->id)
                         ->where('user_id', $user->id)
                         ->delete();
     }
 
     public function detachCompanyWithManyUser ( array $user, Company $company ){
-        CompanyUserPivot::where('company_id',$company->id)
+        CompanyMember::where('company_id',$company->id)
                         ->whereIn('user_id', $user)
                         ->delete();
     }
@@ -48,7 +54,7 @@ class CompanyClass {
         if( is_null( $user ) ){
             $user = auth()->user();
         }
-        CompanyUserPivot::where('user_id', $user->id )
+        CompanyMember::where('user_id', $user->id )
                         ->update([
                             'is_default' => DB::raw( '( company_id = '. $company->id .' )')
                         ]);

@@ -18,6 +18,14 @@ class Company extends Model
         return $this->hasManyThrough( User::class, CompanyUserPivot::class, 'company_id','id','id', 'user_id')->latest();
     }
 
+    public function members () {
+        return $this->hasMany( CompanyMember::class, 'company_id', 'id' );
+    }
+
+    public function authMember () {
+        return $this->hasOne( CompanyMember::class, 'company_id', 'id' )->byAuthUser();
+    }
+
     public function getOwnerName () {
         if( $this->owned_by == auth()->id() ){
             return 'You';
@@ -26,13 +34,18 @@ class Company extends Model
         }
     }
 
+
+    public function scopeOwnedByAuthUser ( $q ){
+        return $q->whereOwnedBy( auth()->id() );
+    }
+
     public function isOwnedByMe () {
         return ( $this->owned_by == auth()->id() );
     }
 
     public function isDefault() {
-        if( $this->pivot ){
-            return ($this->pivot->is_default ?? 0 ) == 1;
+        if( $this->authMember ){
+            return $this->authMember->isDefault();
         }
         return false;
     }

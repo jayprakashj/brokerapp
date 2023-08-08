@@ -17,22 +17,41 @@
                 x-tooltip.placement.right="'Dashboards'">
                 <i class="fa fa-dashboard fa-2x h-7 w-7" ></i>
             </a>
-            @can('Company List')
+
+            @if( Helper::hasGlobalPermission( 'Company List' ) )
             <!-- User Management -->
             <a href="{{ route('company.index') }}"
-                class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 {{ request()->is('dashboard') ? 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 bg-primary/10 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90' : 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25' }}"
+                class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 {{ request()->is('compant*') ? 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 bg-primary/10 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90' : 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25' }}"
                 x-tooltip.placement.right="'Comapny Management'">
 
                 <i class="fa fa-suitcase fa-2x h-7 w-7" ></i>
             </a>
             @endif
+            @if( Helper::hasGlobalPermission( 'Role List' ) )
             <!-- User Management -->
-            <a href="{{ route('dashboard') }}"
-                class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 {{ request()->is('dashboard') ? 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 bg-primary/10 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90' : 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25' }}"
-                x-tooltip.placement.right="'User Management'">
+            <a href="{{ route('role.index') }}"
+                class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 {{ request()->is('roles*') ? 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 bg-primary/10 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90' : 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25' }}"
+                x-tooltip.placement.right="'Role Management'">
+
+                <i class="fa fa-user-gear fa-2x h-7 w-7" ></i>
+            </a>
+            @endif
+            <!-- User Management -->
+            <a href="{{ route('member.index') }}"
+                class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 {{ request()->is('members*') ? 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 bg-primary/10 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90' : 'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25' }}"
+                x-tooltip.placement.right="'Members'">
 
                 <i class="fa fa-users fa-2x h-7 w-7" ></i>
             </a>
+
+            <div>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                        <i class="fa fa-sign-out fa-2x text-red-500"></i>
+                    </button>
+                </form>
+            </div>
         </div>
 
     </div>

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use App\Mail\UserRegisterMail;
 use App\Models\Company;
+use App\Models\CompanyMember;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -14,10 +15,12 @@ use Illuminate\Support\Facades\Password;
 class UserClass {
 
     private $companyClass;
+    private $memberClass;
 
-    public function __construct( CompanyClass $companyClass )
+    public function __construct( )
     {
-        $this->companyClass = $companyClass;
+        $this->companyClass = new CompanyClass();
+        $this->memberClass = new MemberClass();
     }
 
     public function register ( $request ) {
@@ -42,11 +45,16 @@ class UserClass {
         }
         $request->merge( $companyReqData );
 
-        $company = $this->companyClass->create( $user, $request, true );
+        $company = $this->companyClass->update( $user, (new Company), $request, true );
+
+        $companyMember = $this->memberClass->createWithUserRegistration( $company, $user, CompanyMember::FLAG_IS_DEFAULT_YES, CompanyMember::INVITE_STATUS_ACCEPT  );
 
         $user->setRelation('ownedCompany', $company );
 
-        Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
+        setPermissionsTeamId( $companyMember->company_id );
+        $user->assignRole( $companyMember->role_id );
+
+        // Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
 
         return $user;
     }

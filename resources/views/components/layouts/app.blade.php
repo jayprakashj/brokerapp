@@ -73,6 +73,7 @@
         <!-- Right Sidebar -->
         <x-app-partials.right-sidebar></x-app-partials.right-sidebar>
         <main class="main-content w-full px-[var(--margin-x)] pb-8">
+            <x-alert-default-company></x-alert-default-company>
             {{ $slot }}
 
         </main>

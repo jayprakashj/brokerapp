@@ -28,9 +28,9 @@
                             class="popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700">
                             <ul>
                                 <li>
-                                    <a href="{{ route('company.edit', $item) }}"
+                                    <a href="{{ route('role.edit', $item) }}"
                                         class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100">
-                                        <i class="fa fa-pencil"></i> Edit
+                                        <i class="fa fa-pencil mr-2"></i> Edit
                                     </a>
                                 </li>
                             </ul>
@@ -45,57 +45,16 @@
                 <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
                     {{ $item->name }}
                 </h3>
-                <p class="text-xs+">Creator: <b>{{ $item->getOwnerName() }}</b></p>
-                <div class="inline-space mt-3 flex grow flex-wrap items-start">
-                    @if( $item->isDefault() )
-                    <span
-                        class="tag rounded-full bg-success/10 text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
-                        Default
-                    </span>
-                    @endif
-                    @if( $item->isActive() )
-                    <span
-                        class="tag rounded-full bg-success/10 text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
-                        Active
-                    </span>
-                    @else
-                    <span
-                        class="tag rounded-full badge rounded-full bg-error text-white">
-                        In-Active
-                    </span>
-                    @endif
-                </div>
-                @if( $item->isOwnedByMe() )
                 <div class="mt-6 grid w-full grid-cols-2 gap-2">
 
-                    @if( !$item->isDefault() )
-                    <a href="{{ route('company.change_status', $item) }}"
+                    <a href="{{ route('role.delete', $item) }}"
                         class="btn space-x-2 bg-primary px-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                        @if( $item->isActive() )
-                        <i class="fa fa-ban"></i>
-                        @else
-                        <i class="fa fa-check"></i>
-                        @endif
-                        <span>
-                            {{ $item->isActive() ? 'Deactive': 'Active' }}
+                        <i class="fa fa-trash text-red-500"></i>
+                        <span class="ml-2">
+                            Delete
                         </span>
                     </a>
-
-                    @if( $item->isActive() )
-                    <a href="{{ route('company.set_default', $item) }}"
-                        class="btn space-x-2 bg-slate-150 px-0 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
-                            </path>
-                        </svg>
-                        <span> Set Default </span>
-                    </a>
-                    @endif
-                    @endif
                 </div>
-                @endif
             </div>
         </div>
         @endforeach

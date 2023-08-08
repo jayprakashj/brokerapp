@@ -42,7 +42,6 @@ class AuthController extends Controller
                     if( $user->isEmailVerified() ){
                         auth()->login( $user );
                         \Helper::setDefaultCompanySessionTeam();
-
                         return redirect()->route('dashboard');
                     }else{
                         return redirect()->back()
@@ -136,5 +135,12 @@ class AuthController extends Controller
 
             return redirect()->back()->withInput()->with('error-message', 'Token is expired or may email is incorrect.');
         }
+    }
+
+    public function logout ( Request $request ) {
+        $request->session()->flush();
+        session()->flush();
+        auth()->logout();
+        return redirect()->route('login');
     }
 }

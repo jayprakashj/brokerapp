@@ -24,12 +24,12 @@ class CompanyController extends Controller
                 'link' => route('company.create')
             ]
         ];
-        $companies = auth()->user()
-                            ->associatedCompanies()
-                            ->with([
-                                'owner:id,name'
-                            ])
-                            ->paginate( 10 );
+        $companies = Company::with(['authMember'])
+                                ->whereHas('members', function ( $q ) {
+                                    $q->whereUserId( auth()->id() )
+                                        ->acceptedInvite();
+                                })
+                                ->paginate(10);
         $data = compact( 'menus', 'companies' );
         return view('company.index', $data);
     }

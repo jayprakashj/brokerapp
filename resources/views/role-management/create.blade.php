@@ -9,7 +9,7 @@
                     <p class="text-base font-medium text-slate-700 dark:text-navy-100">
                         {{ $title }}
                     </p>
-                    <div class="mt-4 space-y-4">
+                    <div class="mt-4 space-y-4" x-data="{permissions: @json(old('permissions', $role->permissions->pluck('id')->toArray()))}">
                         <form action="{{ route('role.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $role->id }}">
@@ -18,7 +18,7 @@
                                 <span class="relative mt-1.5 flex">
                                     <input
                                         class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        placeholder="Name..." type="text" name="role_name" value="{{ old('role_name', $role->name) }}">
+                                        placeholder="Name..." type="text" name="role_name" value="{{ old('role_name', $role-> name) }}">
                                     <span
                                         class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
                                         <i class="fa-regular fa-building text-base"></i>
@@ -48,8 +48,10 @@
                                                     <input
                                                         name="permissions[]"
                                                         x-bind:checked="selectAll"
+                                                        value="{{ $subPermission->id }}"
+                                                        x-model="permissions"
                                                         class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
-                                                        type="checkbox" {{ in_array( $subPermission->id, old('permissions', []))? 'checked' :'' }}>
+                                                        type="checkbox" {{ in_array( $subPermission->id, old('permissions', $role->permissions->pluck('id')->toArray()))? 'checked' :'' }}>
                                                     <span>{{ $subPermission->name }}</span>
                                                 </label>
                                             @endforeach

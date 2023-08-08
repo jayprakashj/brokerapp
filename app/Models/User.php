@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -17,7 +18,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasActive, HasRoles;
 
-    protected $with = ['defaultCompany', 'globalRole.permissions'];
+    protected $with = ['defaultCompany.company', 'globalRole.permissions'];
 
     /**
      * The attributes that are mass assignable.
@@ -91,13 +92,31 @@ class User extends Authenticatable
         return $this->hasMany( Company::class, 'owned_by', 'id')->latest();
     }
 
+
     public function associatedCompanies () {
         // return $this->hasManyThrough( Company::class, CompanyUserPivot::class, 'user_id','id','id', 'company_id')->latest();
-        return $this->belongsToMany( Company::class, CompanyUserPivot::class, 'user_id','company_id','id', 'id')->withPivot('is_default')->latest();
+        // return $this->belongsToMany( Company::class, CompanyUserPivot::class, 'user_id','company_id','id', 'id')->withPivot('is_default')->latest();
+        return $this->hasMany( CompanyMember::class, 'user_id', 'id');
+    }
+
+    public function acceptedCompanies (){
+        return $this->associatedCompanies()->acceptedInvite();
     }
 
     public function defaultCompany () {
-        return $this->associatedCompanies()->wherePivot('is_default', 1 );
+        return $this->hasOne( CompanyMember::class, 'user_id', 'id')->onlyDefault();
+    }
+
+    public function currentDefaultCompany () {
+        return $this->hasOne( CompanyMember::class, 'user_id', 'id')->currentDefaultCompany();
+    }
+
+    public function companyRole () {
+        return $this->hasOne( Role::class, 'user_id', 'id');
+    }
+
+    public function userRoles () {
+        return $this->hasMany( Role::class, 'user_id', 'id');
     }
 
     public function isTypeCompany () {
@@ -117,13 +136,20 @@ class User extends Authenticatable
     }
 
     public function retrieveDefaultCompany(){
-        return $this->defaultCompany->first();
+        $company = $this->defaultCompany;
+        if( !is_null( $company ) ){
+            $company = $this->defaultCompany->company;
+            if( !is_null( $company ) && $company->isActive() ){
+                return $company;
+            }
+        }
+        return null;
     }
 
     public function hasGlobalPermission ( $permission, $guard = null ){
         $permission = $this->globalRole->first();
         if( $permission ){
-            return $permission->hasPermission( $permission, $guard );
+            return $permission->hasPermissionTo( $permission, $guard );
         }
         return false;
     }

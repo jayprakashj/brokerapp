@@ -44,7 +44,23 @@ class HelperService {
         }
         $defaultCompany = $user->retrieveDefaultCompany();
         if( !is_null( $defaultCompany )){
-            setPermissionsTeamId( $defaultCompany );
+            setPermissionsTeamId( $defaultCompany->id );
         }
+    }
+
+    public function hasGlobalPermission ( $permission, $guard = null ) {
+        return auth()->user()->hasGlobalPermission( $permission, $guard );
+    }
+
+    public function retrieveDefaultCompany(){
+        $user = auth()->user();
+        if( $user ){
+            $defaultCompany = $user->retrieveDefaultCompany();
+            if( !is_null( $defaultCompany ) ){
+                return $defaultCompany;
+            }
+        }
+
+        return null;
     }
 }

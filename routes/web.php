@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\RoleManagementController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,10 +35,13 @@ Route::middleware('guest')->group( function () {
 
     Route::get('/reset-password/{token}', [AuthController::class, 'viewResetPassword'])->name('password.reset');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('reset_password');
+
 });
 
 
-Route::middleware('auth')->group( function (){
+Route::middleware(['auth', 'set_default_company'])->group( function (){
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get('dashboard', [DashboardController::class, 'viewDashboard'])->name('dashboard');
 
     Route::prefix('company')
@@ -57,9 +61,23 @@ Route::middleware('auth')->group( function (){
             ->group( function () {
                 Route::get('/', [RoleManagementController::class, 'index'])->name('index');
                 Route::get('create', [RoleManagementController::class, 'create'])->name('create');
-                Route::get('{company}/edit', [RoleManagementController::class, 'create'])->name('edit');
+                Route::get('{role}/edit', [RoleManagementController::class, 'create'])->name('edit');
                 Route::post('store', [RoleManagementController::class, 'store'])->name('store');
                 Route::post('delete', [RoleManagementController::class, 'delete'])->name('delete');
+
+            });
+
+    Route::prefix('members')
+            ->middleware('check_default_company')
+            ->name('member.')
+            ->group( function () {
+                Route::get('/', [MemberController::class, 'index'])->name('index');
+                Route::get('create', [MemberController::class, 'create'])->name('create');
+                Route::get('{member}/edit', [MemberController::class, 'create'])->name('edit');
+                Route::post('store', [MemberController::class, 'store'])->name('store');
+                Route::post('delete', [MemberController::class, 'delete'])->name('delete');
+                Route::get('{token:token}/invitation', [MemberController::class, 'viewInvitation'])->name('view_invitation');
+                Route::post('{member:token}/accept-invitation', [MemberController::class, 'acceptInvitation'])->name('accept_invitation');
 
             });
 });
