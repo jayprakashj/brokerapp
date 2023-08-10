@@ -58,8 +58,14 @@ class CompanyController extends Controller
             $this->companyClass->create( auth()->user(), $request );
 
         }else{
-            $message = 'Success! Company updated successfully.';
-            $this->companyClass->update( auth()->user(), $company, $request );
+            if( $company->isOwnedByMe() ){
+
+                $message = 'Success! Company updated successfully.';
+                $this->companyClass->update( auth()->user(), $company, $request );
+            }else{
+
+                return redirect()->route('company.index')->with('error-message', 'Error! You can not edit the company which is not created by you.');
+            }
 
         }
         return redirect()->route('company.index')->with('success-message', $message);
