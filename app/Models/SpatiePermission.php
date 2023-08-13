@@ -17,4 +17,9 @@ class SpatiePermission extends Permission
     public function subPermissions () {
         return $this->hasMany( self::class, 'group_name', 'group_name');
     }
+
+    public function scopeGlobalPermissions ( $q ) {
+
+        return $q->whereRelation( 'roles', auth()->user()->globeRole );
+    }
 }

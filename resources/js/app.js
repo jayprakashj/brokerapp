@@ -87,6 +87,7 @@ import inputMask from "./directives/inputMask";
 // Alpine Magic Functions
 import notification from "./magics/notification";
 import clipboard from "./magics/clipboard";
+import { createApp } from "vue";
 
 // Register HTML, XML language for highlight.js
 // Just for demo purpose only for highlighting code
@@ -116,7 +117,7 @@ Alpine.plugin(persist);
 Alpine.plugin(collapse);
 Alpine.plugin(intersect);
 
-Alpine.directive("tooltip", tooltip);
+// Alpine.directive("tooltip", tooltip);
 Alpine.directive("input-mask", inputMask);
 
 Alpine.magic("notification", () => notification);
@@ -127,3 +128,50 @@ Alpine.store("global", store);
 
 Alpine.data("usePopper", usePopper);
 Alpine.data("accordionItem", accordionItem);
+
+// Vue Component
+import App from './App.vue';
+import router from "./router/index";
+import vueStore from "@/store/index";
+import HelperPlugin from "@/services/helper";
+
+import PageHeader from "@/components/PageHeader.vue";
+import Pagination from "@/components/Pagination.vue";
+import ListContainer from "@/components/ListContainer.vue";
+import PopperDropdown from "@/components/PopperDropdown.vue";
+import ToastPlugin from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-bootstrap.css';
+
+import VueTippy from 'vue-tippy'
+
+import ClickOutside from "@/directives/clickOutside";
+
+const app = createApp( App )
+
+app.use( ToastPlugin );
+app.use(vueStore);
+app.use(router);
+app.use( HelperPlugin );
+app.use(
+    VueTippy,
+    // optional
+    {
+      directive: 'tippy', // => v-tippy
+      component: 'tippy', // => <tippy/>
+      componentSingleton: 'tippy-singleton', // => <tippy-singleton/>,
+      defaultProps: {
+        arrow: false,
+        placement: 'auto-end',
+        allowHTML: true,
+      }, // => Global default options * see all props
+    }
+  );
+
+app.component('page-header', PageHeader );
+app.component('list-container', ListContainer );
+app.component('pagination', Pagination );
+app.component('popper-dropdown', PopperDropdown );
+
+app.directive('clickOutside', ClickOutside );
+
+app.mount("#broker-app")

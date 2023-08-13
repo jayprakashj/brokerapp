@@ -28,7 +28,7 @@ class CompanyCreateRequest extends FormRequest
             'company_name' => [
                 'required',
                 Rule::unique('companies', 'name')
-                        ->whereNot('owned_by', auth()->id())
+                        ->where('owned_by', auth()->id())
                         ->when( $this->id, function( $clause ){
                             $clause->whereNot('id', $this->id);
                         })
@@ -38,9 +38,6 @@ class CompanyCreateRequest extends FormRequest
 
     public function attributes(){
         return [
-            'email' => 'Email',
-            'password' => 'Password',
-            'password_confirmation' => 'Password Confirmation',
         ];
     }
 }

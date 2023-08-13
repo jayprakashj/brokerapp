@@ -42,30 +42,30 @@ Route::middleware('guest')->group( function () {
 Route::middleware(['auth', 'set_default_company'])->group( function (){
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('dashboard', [DashboardController::class, 'viewDashboard'])->name('dashboard');
+    // Route::get('dashboard', [DashboardController::class, 'viewDashboard'])->name('dashboard');
 
-    Route::prefix('company')
-            ->name('company.')
-            ->group( function () {
-                Route::get('/', [CompanyController::class, 'index'])->name('index');
-                Route::get('create', [CompanyController::class, 'create'])->name('create');
-                Route::get('{company}/set-default', [CompanyController::class, 'makeDefault'])->name('set_default');
-                Route::get('{company}/change-status', [CompanyController::class, 'changeStatus'])->name('change_status');
-                Route::get('{company}/edit', [CompanyController::class, 'create'])->name('edit');
-                Route::post('store', [CompanyController::class, 'store'])->name('store');
+    // Route::prefix('company')
+    //         ->name('company.')
+    //         ->group( function () {
+    //             Route::get('/', [CompanyController::class, 'index'])->name('index');
+    //             Route::get('create', [CompanyController::class, 'create'])->name('create');
+    //             Route::get('{company}/set-default', [CompanyController::class, 'makeDefault'])->name('set_default');
+    //             Route::get('{company}/change-status', [CompanyController::class, 'changeStatus'])->name('change_status');
+    //             Route::get('{company}/edit', [CompanyController::class, 'create'])->name('edit');
+    //             Route::post('store', [CompanyController::class, 'store'])->name('store');
 
-            });
+    //         });
 
-    Route::prefix('roles')
-            ->name('role.')
-            ->group( function () {
-                Route::get('/', [RoleManagementController::class, 'index'])->name('index');
-                Route::get('create', [RoleManagementController::class, 'create'])->name('create');
-                Route::get('{role}/edit', [RoleManagementController::class, 'create'])->name('edit');
-                Route::post('store', [RoleManagementController::class, 'store'])->name('store');
-                Route::post('delete', [RoleManagementController::class, 'delete'])->name('delete');
+    // Route::prefix('roles')
+    //         ->name('role.')
+    //         ->group( function () {
+    //             Route::get('/', [RoleManagementController::class, 'index'])->name('index');
+    //             Route::get('create', [RoleManagementController::class, 'create'])->name('create');
+    //             Route::get('{role}/edit', [RoleManagementController::class, 'create'])->name('edit');
+    //             Route::post('store', [RoleManagementController::class, 'store'])->name('store');
+    //             Route::post('delete', [RoleManagementController::class, 'delete'])->name('delete');
 
-            });
+    //         });
 
     Route::prefix('members')
             ->middleware('check_default_company')
@@ -80,4 +80,5 @@ Route::middleware(['auth', 'set_default_company'])->group( function (){
                 Route::post('{member:token}/accept-invitation', [MemberController::class, 'acceptInvitation'])->name('accept_invitation');
 
             });
+    Route::get('{any?}/{slug?}/{id?}', [ DashboardController::class, 'loadVueApp'])->name('vue_app');
 });

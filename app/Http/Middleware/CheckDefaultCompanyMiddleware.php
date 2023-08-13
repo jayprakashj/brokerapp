@@ -20,6 +20,9 @@ class CheckDefaultCompanyMiddleware
             return $next($request);
         }
 
+        if( $request->wantsJson() ){
+            return response()->json([ 'default_company' => false], 500 );
+        }
         session()->flash('error-message', 'Err! You must have one active default company from your companies.');
         return redirect()->route('company.index');
     }

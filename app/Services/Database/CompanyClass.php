@@ -22,6 +22,9 @@ class CompanyClass {
     public function create ( User $user, $request, $default = false ) {
 
         $company = new Company();
+
+        $company->owned_by = $user->id;
+
         $company = $this->createOrUpdate( $company, $user, $request, $default );
 
         $member = $this->memberClass->createWithUserRegistration( $company, $user, CompanyMember::FLAG_IS_DEFAULT_NO, CompanyMember::INVITE_STATUS_ACCEPT );
@@ -78,9 +81,10 @@ class CompanyClass {
     }
 
     private function createOrUpdate( Company $company, User $user, $request ){
-        $company->owned_by = $user->id;
         $company->name = $request->input('company_name');
-        $company->status = $request->input('status');
+        if( $company->id && !$company->isDefault() ){
+            $company->status = $request->input('status');
+        }
         $company->save();
         return $company;
     }
