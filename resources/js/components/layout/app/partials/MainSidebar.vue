@@ -29,11 +29,9 @@
             </template>
 
             <div>
-                <form action="{{ route('logout') }}" method="post">
-                    <button type="submit" class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
-                        <i class="fa fa-sign-out fa-2x text-red-500"></i>
-                    </button>
-                </form>
+            <button type="button" @click="logout" class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                <i class="fa fa-sign-out fa-2x text-red-500"></i>
+            </button>
             </div>
         </div>
 
@@ -82,6 +80,16 @@ export default {
                     checkGlobalPermission: true,
                 }
             ]
+        }
+    },
+    methods:{
+        logout(){
+            this.$request.logout()
+                .then(
+                    () => {
+                        window.location.href = '/login';
+                    }
+                )
         }
     }
 }

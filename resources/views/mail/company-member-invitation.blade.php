@@ -5,7 +5,7 @@ You have requested to join the company <b>{{ $companyMember->company->name ?? ''
 
 If you want to accept or join the requested company then click the below link.
 
-<x-mail::button :url="route('member.view_invitation', ['token' => $companyMember->token ])">
+<x-mail::button :url="url('member/'. $companyMember->token  .'/invitation')">
 Accept Invitation
 </x-mail::button>
 

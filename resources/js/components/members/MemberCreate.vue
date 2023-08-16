@@ -9,35 +9,35 @@
                 </p>
                 <div class="mt-4 space-y-4">
                     <form @submit.prevent="submitForm">
-                        <label class="block">
-                            <span>Company name</span>
+                        <label class="block" v-if="!formData?.is_accepted">
+                            <span>Email</span>
                             <span class="relative mt-1.5 flex">
                                 <input
                                     class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                    placeholder="Your Company" type="text" name="company_name" v-model="formData.company_name">
+                                    placeholder="Email..." type="email" name="email" v-model="formData.email">
                                 <span
                                     class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                    <i class="fa-regular fa-building text-base"></i>
+                                    <i class="fa-regular fa-envelope text-base"></i>
                                 </span>
                             </span>
 
-                            <span class="text-tiny+ text-error" v-if="errors?.company_name?.length">{{ errors.company_name.at(0) }}</span>
+                            <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
+                        </label>
+                        <label class="block mt-2">
+                            <span>Role</span>
+                            <select
+                                name="role_id"
+                                v-model="formData.role"
+                                class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent"
+                            >
+                                <option :value="item.id" v-for="(item, idx) in rolesList" :key="'role_option_'+idx">{{ item.name }}</option>
+
+                            </select>
+
+                            <span class="text-tiny+ text-error" v-if="errors?.role?.length">{{ errors.role.at(0) }}</span>
                         </label>
 
-                        <div class="flex-wrap items-start space-y-2 pt-2 sm:flex sm:space-x-5 sm:space-y-0">
-                            <label class="inline-flex items-center space-x-2">
-                                <input
-                                    name="status"
-                                    class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
-                                    type="checkbox"
-                                    :value="1"
-                                    v-model="formData.status"
-                                    >
-                                <span>Active?</span>
-                            </label>
-                        </div>
-
-                        <div class="flex justify-end space-x-2">
+                        <div class="flex justify-end space-x-2 mt-4">
                             <button
                             type="submit"
                                 class="btn space-x-2 bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
@@ -66,8 +66,9 @@ export default {
             errors: {},
             formData:{
                 company_name: '',
-                status: 0
+                role: null
             },
+            rolesList: [],
             loading:{
                 formSubmit: false
             }
@@ -92,10 +93,13 @@ export default {
         },
         validationSchema(){
             let fields = {
-                company_name: Yup.string()
+                email: Yup.string()
                             .nullable(true)
                             .required('Required')
-                            .min('2', 'Must have at least 2 characters'),
+                            .email( 'Must be a valid email address'),
+                role: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
 
             }
             const yup = Yup.object().shape( fields );
@@ -105,6 +109,7 @@ export default {
     },
     methods:{
         init () {
+            this.loadRolesList();
             if( this.$route?.params?.id ){
                 this.loadEditFormDetail( this.$route.params.id );
 
@@ -130,6 +135,24 @@ export default {
                             }
                         )
         },
+        loadRolesList(){
+            this.$store.commit('setGlobalLoaderOn');
+            this.$request.getRoleForMemberForm()
+                        .then(
+                            ( res ) => {
+                                if( res.data ){
+                                    this.rolesList = res.data.data;
+                                }
+                            },
+                            (err) => {
+                                this.$toast.error('Err! There is something wrong. Please retry.');
+                            }
+                        ).finally(
+                            () => {
+                                this.$store.commit('setGlobalLoaderOff');
+                            }
+                        )
+        },
         submitForm () {
             if( this.loading.formSubmit ){
                 return;
@@ -138,17 +161,17 @@ export default {
                                     .then( ( resValidate ) => {
                                         this.loading.formSubmit = true;
                                         this.$store.commit('setGlobalLoaderOn');
-                                        this.$request.createCompany( this.formData )
+                                        this.$request.acceptInvitation( this.formData )
                                                     .then(
                                                         ( res ) => {
-                                                            let message = 'Success! Company created successfully.';
+                                                            let message = 'Success! Invitation has been sent successfully.';
                                                             if( this.formData?.id ){
-                                                                message = 'Success! Company data update successfully.';
+                                                                message = 'Success! Member data updated successfully.';
                                                             }
                                                             if( res.data?.message ){
                                                                 message = res.data.message;
                                                             }
-                                                            this.$router.push({ name: 'company_lists' });
+                                                            this.$router.push({ name: 'member_lists' });
                                                             this.$toast.info( message );
                                                         },
                                                         ( err ) => {

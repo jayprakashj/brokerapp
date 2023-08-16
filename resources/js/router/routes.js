@@ -5,6 +5,7 @@ import RoleList from  '@/components/roles/RoleList.vue'
 import RoleCreate from  '@/components/roles/RoleCreate.vue'
 import MemberList from  '@/components/members/MemberList.vue'
 import MemberCreate from  '@/components/members/MemberCreate.vue'
+import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
 
@@ -95,6 +96,14 @@ const routes = [
         component: MemberCreate,
         meta: {
             title: 'Member Edit'
+        }
+    },
+    {
+        path: '/member/:token/invitation',
+        name: 'member_invitation',
+        component: ViewInvitation,
+        meta: {
+            title: 'Invitation'
         }
     },
     {

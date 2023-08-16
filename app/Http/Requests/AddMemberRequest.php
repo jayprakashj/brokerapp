@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\CompanyMember;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -23,7 +24,8 @@ class AddMemberRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+
+        $rules =  [
             //
             'email' => [
                 'required',
@@ -34,8 +36,15 @@ class AddMemberRequest extends FormRequest
                             $clause->whereNot('id', $this->id);
                         })
             ],
-            'role_id' => 'required',
+            'role' => 'required',
         ];
+        if( $this->id ){
+            $member = CompanyMember::find( $this->id );
+            if( $member->isAccepted() ){
+                unset( $rules['email']);
+            }
+        }
+        return $rules;
     }
 
     public function attributes(){

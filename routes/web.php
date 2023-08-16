@@ -40,7 +40,7 @@ Route::middleware('guest')->group( function () {
 
 
 Route::middleware(['auth', 'set_default_company'])->group( function (){
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // Route::get('dashboard', [DashboardController::class, 'viewDashboard'])->name('dashboard');
 
@@ -67,18 +67,19 @@ Route::middleware(['auth', 'set_default_company'])->group( function (){
 
     //         });
 
-    Route::prefix('members')
-            ->middleware('check_default_company')
-            ->name('member.')
-            ->group( function () {
-                Route::get('/', [MemberController::class, 'index'])->name('index');
-                Route::get('create', [MemberController::class, 'create'])->name('create');
-                Route::get('{member}/edit', [MemberController::class, 'create'])->name('edit');
-                Route::post('store', [MemberController::class, 'store'])->name('store');
-                Route::post('delete', [MemberController::class, 'delete'])->name('delete');
-                Route::get('{token:token}/invitation', [MemberController::class, 'viewInvitation'])->name('view_invitation');
-                Route::post('{member:token}/accept-invitation', [MemberController::class, 'acceptInvitation'])->name('accept_invitation');
+    // Route::prefix('members')
+    //         ->middleware('check_default_company')
+    //         ->name('member.')
+    //         ->group( function () {
+    //             Route::get('/', [MemberController::class, 'index'])->name('index');
+    //             Route::get('create', [MemberController::class, 'create'])->name('create');
+    //             Route::get('{member}/edit', [MemberController::class, 'create'])->name('edit');
+    //             Route::post('store', [MemberController::class, 'store'])->name('store');
+    //             Route::post('delete', [MemberController::class, 'delete'])->name('delete');
+    //             Route::get('{token:token}/invitation', [MemberController::class, 'viewInvitation'])->name('view_invitation');
+    //             Route::post('{member:token}/accept-invitation', [MemberController::class, 'acceptInvitation'])->name('accept_invitation');
 
-            });
+    //         });
+    // Route::get('member/{token:token}/invitation', [MemberController::class, 'viewInvitation'])->name('view_invitation');
     Route::get('{any?}/{slug?}/{id?}', [ DashboardController::class, 'loadVueApp'])->name('vue_app');
 });

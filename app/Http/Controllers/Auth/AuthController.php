@@ -42,7 +42,7 @@ class AuthController extends Controller
                     if( $user->isEmailVerified() ){
                         auth()->login( $user );
                         \Helper::setDefaultCompanySessionTeam();
-                        return redirect()->route('dashboard');
+                        return redirect()->to('/dashboard');
                     }else{
                         return redirect()->back()
                                         ->withInput()

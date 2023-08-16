@@ -81,9 +81,29 @@ class MemberClass {
         $member->email = $request->input('email');
         $member->user_id = $emailUser->id ?? null;
         $member->company_id = \Helper::retrieveDefaultCompany()->id ?? null;
-        $member->role_id = $request->input('role_id');
+        $member->role_id = $request->input('role');
         $member->created_by = $user->id;
         $member->is_owner = CompanyMember::FLAG_IS_OWNER_NO;
+        $member->save();
+
+
+        return $member;
+    }
+
+    public function changeWhenInvitationAccepted( CompanyMember $member, $request ){
+        $member->role_id = $request->input('role');
+        $member->save();
+
+
+        return $member;
+    }
+
+    public function changeWhenInvitationPending( CompanyMember $member, $request ){
+        $email = $request->input('email');
+        $emailUser = User::whereEmail( $email )->first();
+        $member->email = $request->input('email');
+        $member->user_id = $emailUser->id ?? null;
+        $member->role_id = $request->input('role');
         $member->save();
 
 

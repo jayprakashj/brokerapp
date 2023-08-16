@@ -22,6 +22,7 @@ return new class extends Migration
             $table->bigInteger('created_by');
             $table->tinyInteger('is_default')->comment('0: No, 1: Yes')->default(0);
             $table->tinyInteger('is_owner')->comment('0: No, 1: Yes')->default(0);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index('user_id');

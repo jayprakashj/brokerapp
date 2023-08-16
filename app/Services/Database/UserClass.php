@@ -45,7 +45,7 @@ class UserClass {
         }
         $request->merge( $companyReqData );
 
-        $company = $this->companyClass->update( $user, (new Company), $request, true );
+        $company = $this->companyClass->createWithUserRegistration( (new Company), $user,  $request );
 
         $companyMember = $this->memberClass->createWithUserRegistration( $company, $user, CompanyMember::FLAG_IS_DEFAULT_YES, CompanyMember::INVITE_STATUS_ACCEPT  );
 
@@ -54,7 +54,7 @@ class UserClass {
         setPermissionsTeamId( $companyMember->company_id );
         $user->assignRole( $companyMember->role_id );
 
-        Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
+        // Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
 
         return $user;
     }

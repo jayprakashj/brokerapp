@@ -35,6 +35,7 @@
                 </div>
             </div>
         </template>
+        <no-data-found v-else />
     </list-container>
     <pagination :total-records="lists?.total_records" :per-page="lists?.per_page" :current-page="page" @pageChange="updatePage"></pagination>
 </template>

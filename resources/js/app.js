@@ -139,10 +139,13 @@ import PageHeader from "@/components/PageHeader.vue";
 import Pagination from "@/components/Pagination.vue";
 import ListContainer from "@/components/ListContainer.vue";
 import PopperDropdown from "@/components/PopperDropdown.vue";
+import NoDataFound from "@/components/NoDataFound.vue";
 import ToastPlugin from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 
 import VueTippy from 'vue-tippy'
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 import ClickOutside from "@/directives/clickOutside";
 
@@ -166,11 +169,12 @@ app.use(
       }, // => Global default options * see all props
     }
   );
-
+app.use(VueSweetalert2);
 app.component('page-header', PageHeader );
 app.component('list-container', ListContainer );
 app.component('pagination', Pagination );
 app.component('popper-dropdown', PopperDropdown );
+app.component('no-data-found', NoDataFound );
 
 app.directive('clickOutside', ClickOutside );
 

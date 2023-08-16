@@ -87,8 +87,16 @@ class CompanyMember extends Model
         return $q;
     }
 
-    public function isOwnerMe () {
+    public function isOwner () {
         return $this->is_owner == self::FLAG_IS_OWNER_YES;
+    }
+
+    public function isOwnerMe () {
+        return $this->isOwner() && $this->isMe();
+    }
+
+    public function isMe () {
+        return $this->user_id == auth()->id();
     }
 
     public function isAccepted () {

@@ -88,4 +88,14 @@ class CompanyClass {
         $company->save();
         return $company;
     }
+
+    public function createWithUserRegistration( Company $company, User $user, $request ){
+        $company->owned_by = $user->id;
+        $company->name = $request->input('company_name');
+        if( $company->id && !$company->isDefault() ){
+            $company->status = $request->input('status');
+        }
+        $company->save();
+        return $company;
+    }
 }

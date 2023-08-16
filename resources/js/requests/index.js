@@ -1,6 +1,9 @@
 import axios from 'axios';
 import store from '@/store';
 import router from '@/router/index';
+import {useToast} from 'vue-toast-notification';
+
+const $toast = useToast();
 
 const http = axios.create({
     baseURL: import.meta.env.VITE_BASE_API_URL,
@@ -36,6 +39,7 @@ http.interceptors.response.use(
         }
 
         if (error.response && error.response.status === 500 && 'default_company' in error.response.data && error.response.data.default_company === false ) {
+            $toast.error("Err! Please select default company.");
             router.push({name: 'company_lists'});
         }
         return Promise.reject(error);
@@ -43,6 +47,11 @@ http.interceptors.response.use(
 );
 
 const apis = {
+    logout: ( ) => {
+
+        return http.post('logout');
+
+    },
     getCompanyList: ( params) => {
         let config = {};
         if( params ) {
@@ -104,15 +113,21 @@ const apis = {
         return http.get(`members/${id}/edit` );
 
     },
-    createMember: ( data ) => {
-
-        return http.post('members/store', data);
+    getRoleForMemberForm: () => {
+        return http.get(`members/roles` );
 
     },
-    logout: () => {
-
-        return http.post('auth/logout');
-
+    createMember: ( data ) => {
+        return http.post('members/store', data);
+    },
+    deleteMember: ( id ) => {
+        return http.post( `members/${id}/delete` );
+    },
+    fetchInvitation: ( token ) => {
+        return http.get( 'members/' + token + '/invitation');
+    },
+    acceptInvitation: ( token ) => {
+        return http.post( 'members/' + token + '/accept-invitation');
     },
 }
 export default apis;
