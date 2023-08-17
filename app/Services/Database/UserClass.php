@@ -36,6 +36,8 @@ class UserClass {
 
         $user->setDefaultRole();
 
+        $user->refresh();
+
         $companyReqData = [
             'status' => Company::$STATUS_ACTIVE
         ];

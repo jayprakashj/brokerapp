@@ -41,11 +41,47 @@ class UserSeeder extends Seeder
                 'mobile' => '12345678000',
                 'password' => 'Strong@123',
                 'type' => User::TYPE_INDIVIDUAL,
+            ],
+            [
+                'name' => $faker->text(10),
+                'email' => 'member1@mailinator.com',
+                'mobile' => '12345678001',
+                'password' => 'Strong@123',
+                'type' => User::TYPE_INDIVIDUAL,
+            ],
+            [
+                'name' => $faker->text(10),
+                'email' => 'member2@mailinator.com',
+                'mobile' => '12345678002',
+                'password' => 'Strong@123',
+                'type' => User::TYPE_INDIVIDUAL,
+            ],
+            [
+                'name' => $faker->text(10),
+                'email' => 'member3@mailinator.com',
+                'mobile' => '12345678003',
+                'password' => 'Strong@123',
+                'type' => User::TYPE_INDIVIDUAL,
+            ],
+            [
+                'name' => $faker->text(10),
+                'email' => 'member4@mailinator.com',
+                'mobile' => '12345678004',
+                'password' => 'Strong@123',
+                'type' => User::TYPE_INDIVIDUAL,
+            ],
+            [
+                'name' => $faker->text(10),
+                'email' => 'member5@mailinator.com',
+                'mobile' => '12345678005',
+                'password' => 'Strong@123',
+                'type' => User::TYPE_INDIVIDUAL,
             ]
         ];
 
         foreach( $data as $item ){
             $request = new Request( $item );
+            setPermissionsTeamId( null );
             $user = $this->userClass->register( $request );
             $this->userClass->setEmailVerify( $user );
         }
