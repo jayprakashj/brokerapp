@@ -80,10 +80,20 @@ class MemberController extends Controller
     }
 
     public function delete ( CompanyMember $member ) {
-        $member->delete();
-        $response = [
-            'message' => 'Member removed successfully.'
-        ];
-        return response()->json( $response , 200);
+        $code = 500;
+        if( !$member->isMe() && !$member->isOwner() ){
+
+            $member->delete();
+            $response = [
+                'message' => 'Member removed successfully.'
+            ];
+            $code = 200;
+        }else{
+            $response = [
+                'message' => 'Oops! Invalid action.'
+            ];
+
+        }
+        return response()->json( $response , $code);
     }
 }
