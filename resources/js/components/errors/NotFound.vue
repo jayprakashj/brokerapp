@@ -4,13 +4,13 @@
             <img
                 class="w-full"
                 v-show="!$store.state.default.global.isDarkModeEnabled"
-                src="images/illustrations/ufo.svg"
+                src="/public/images/illustrations/ufo.svg"
                 alt="image"
             />
             <img
                 class="w-full"
                 v-show="$store.state.default.global.isDarkModeEnabled"
-                src="images/illustrations/ufo-dark.svg"
+                src="/public/images/illustrations/ufo-dark.svg"
                 alt="image"
             />
         </div>

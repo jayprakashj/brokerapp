@@ -72,7 +72,7 @@
                             <div
                                 class="swiper-slide relative flex h-28 w-48 flex-col overflow-hidden rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 p-3">
                                 <div class="grow">
-                                    <img class="h-3" src="{{ asset('images/payments/cc-visa-white.svg') }}"
+                                    <img class="h-3" src="/public/images/payments/cc-visa-white.svg"
                                          alt="image" />
                                 </div>
                                 <div class="text-white">
@@ -90,7 +90,7 @@
                             <div
                                 class="swiper-slide relative flex h-28 w-48 flex-col overflow-hidden rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 p-3">
                                 <div class="grow">
-                                    <img class="h-3" src="{{ asset('images/payments/cc-visa-white.svg') }}"
+                                    <img class="h-3" src="/public/images/payments/cc-visa-white.svg"
                                          alt="image" />
                                 </div>
                                 <div class="text-white">
@@ -107,7 +107,7 @@
                             <div
                                 class="swiper-slide relative flex h-28 w-48 flex-col overflow-hidden rounded-xl bg-gradient-to-br from-info to-info-focus p-3">
                                 <div class="grow">
-                                    <img class="h-3" src="{{ asset('images/payments/cc-visa-white.svg') }}"
+                                    <img class="h-3" src="/public/images/payments/cc-visa-white.svg"
                                          alt="image" />
                                 </div>
                                 <div class="text-white">
@@ -129,7 +129,7 @@
                         Pinned Apps
                     </h2>
                     <div class="mt-3 flex space-x-3">
-                        <a href="{{ url('apps/kanban') }}" class="w-12 text-center">
+                        <a href="#" class="w-12 text-center">
                             <div class="avatar h-10 w-10">
                                 <div class="is-initial mask is-squircle bg-success text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
@@ -144,7 +144,7 @@
                                 Kanban
                             </p>
                         </a>
-                        <a href="{{ url('dashboards/crm-analytics') }}" class="w-12 text-center">
+                        <a href="#" class="w-12 text-center">
                             <div class="avatar h-10 w-10">
                                 <div class="is-initial mask is-squircle bg-warning text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
@@ -159,7 +159,7 @@
                                 Analytics
                             </p>
                         </a>
-                        <a href="{{ url('apps/chat') }}" class="w-12 text-center">
+                        <a href="#" class="w-12 text-center">
                             <div class="avatar h-10 w-10">
                                 <div class="is-initial mask is-squircle bg-info text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
@@ -174,7 +174,7 @@
                                 Chat
                             </p>
                         </a>
-                        <a href="{{ url('apps/filemanager') }}" class="w-12 text-center">
+                        <a href="#" class="w-12 text-center">
                             <div class="avatar h-10 w-10">
                                 <div class="is-initial mask is-squircle bg-error text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
@@ -189,7 +189,7 @@
                                 Files
                             </p>
                         </a>
-                        <a href="{{ url('dashboards/banking-1') }}" class="w-12 text-center">
+                        <a href="#" class="w-12 text-center">
                             <div class="avatar h-10 w-10">
                                 <div class="is-initial mask is-squircle bg-secondary text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
@@ -292,7 +292,7 @@
                     <div class="mt-3 grid grid-cols-2 gap-3 px-3">
                         <div class="rounded-lg bg-slate-100 p-2.5 dark:bg-navy-600">
                             <div class="flex items-center space-x-2">
-                                <img class="h-10 w-10" src="{{ asset('images/100x100.png') }}" alt="image" />
+                                <img class="h-10 w-10" src="/public/images/100x100.png" alt="image" />
                                 <div>
                                     <h2 class="font-medium tracking-wide text-slate-700 dark:text-navy-100">
                                         BTC
@@ -320,7 +320,7 @@
 
                         <div class="rounded-lg bg-slate-100 p-2.5 dark:bg-navy-600">
                             <div class="flex items-center space-x-2">
-                                <img class="h-10 w-10" src="{{asset('images/200x200.png') }}" alt="image" />
+                                <img class="h-10 w-10" src="/public/images/200x200.png" alt="image" />
                                 <div>
                                     <h2 class="font-medium tracking-wide text-slate-700 dark:text-navy-100">
                                         SOL
@@ -363,7 +363,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center space-x-2">
                                         <div class="avatar h-7 w-7">
-                                            <img class="rounded-full" src="{{ asset('images/200x200.png') }}"
+                                            <img class="rounded-full" src="/public/images/200x200.png"
                                                  alt="avatar" />
                                         </div>
                                         <div>
@@ -395,7 +395,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="{{ asset('images/800x600.png') }}"
+                            <img src="/public/images/800x600.png"
                                  class="h-20 w-20 rounded-lg object-cover object-center" alt="image" />
                         </div>
 
@@ -409,7 +409,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center space-x-2">
                                         <div class="avatar h-7 w-7">
-                                            <img class="rounded-full" src="{{ asset('images/200x200.png') }}"
+                                            <img class="rounded-full" src="/public/images/200x200.png"
                                                  alt="avatar" />
                                         </div>
                                         <div>
@@ -441,7 +441,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="{{ asset('images/800x600.png') }}"
+                            <img src="/public/images/800x600.png"
                                  class="h-20 w-20 rounded-lg object-cover object-center" alt="image" />
                         </div>
 
@@ -455,7 +455,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center space-x-2">
                                         <div class="avatar h-7 w-7">
-                                            <img class="rounded-full" src="{{ asset('images/200x200.png') }}"
+                                            <img class="rounded-full" src="/public/images/200x200.png"
                                                  alt="avatar" />
                                         </div>
                                         <div>
@@ -487,7 +487,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <img src="{{ asset('images/800x600.png') }}"
+                            <img src="/public/images/800x600.png"
                                  class="h-20 w-20 rounded-lg object-cover object-center" alt="image" />
                         </div>
                     </div>
@@ -589,7 +589,7 @@
                 <div class="mt-4 rounded-lg border border-slate-150 p-3 dark:border-navy-600">
                     <div class="flex items-center space-x-3">
                         <img class="h-10 w-10 rounded-lg object-cover object-center"
-                             src="{{ asset('images/illustrations/lms-ui.svg') }}" alt="image" />
+                             src="/public/images/illustrations/lms-ui.svg" alt="image" />
                         <div>
                             <p class="font-medium leading-snug text-slate-700 dark:text-navy-100">
                                 LMS App Design
@@ -613,7 +613,7 @@
                         <div class="flex -space-x-3">
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                     src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                     src="/public/images/200x200.png" alt="avatar" />
                             </div>
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <div
@@ -623,7 +623,7 @@
                             </div>
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                     src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                     src="/public/images/200x200.png" alt="avatar" />
                             </div>
                         </div>
                         <button
@@ -640,7 +640,7 @@
                 <div class="mt-4 rounded-lg border border-slate-150 p-3 dark:border-navy-600">
                     <div class="flex items-center space-x-3">
                         <img class="h-10 w-10 rounded-lg object-cover object-center"
-                             src="{{ asset('images/illustrations/store-ui.svg') }}" alt="image" />
+                             src="/public/images/illustrations/store-ui.svg" alt="image" />
                         <div>
                             <p class="font-medium leading-snug text-slate-700 dark:text-navy-100">
                                 Store Dashboard
@@ -664,7 +664,7 @@
                         <div class="flex -space-x-3">
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                     src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                     src="/public/images/200x200.png" alt="avatar" />
                             </div>
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <div
@@ -674,7 +674,7 @@
                             </div>
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                     src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                     src="/public/images/200x200.png" alt="avatar" />
                             </div>
                         </div>
                         <button
@@ -691,7 +691,7 @@
                 <div class="mt-4 rounded-lg border border-slate-150 p-3 dark:border-navy-600">
                     <div class="flex items-center space-x-3">
                         <img class="h-10 w-10 rounded-lg object-cover object-center"
-                             src="{{ asset('images/illustrations/chat-ui.svg') }}" alt="image" />
+                             src="/public/images/illustrations/chat-ui.svg" alt="image" />
                         <div>
                             <p class="font-medium leading-snug text-slate-700 dark:text-navy-100">
                                 Chat Mobile App
@@ -715,7 +715,7 @@
                         <div class="flex -space-x-3">
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                     src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                     src="/public/images/200x200.png" alt="avatar" />
                             </div>
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <div
@@ -725,7 +725,7 @@
                             </div>
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                     src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                     src="/public/images/200x200.png" alt="avatar" />
                             </div>
                         </div>
                         <button
@@ -742,7 +742,7 @@
                 <div class="mt-4 rounded-lg border border-slate-150 p-3 dark:border-navy-600">
                     <div class="flex items-center space-x-3">
                         <img class="h-10 w-10 rounded-lg object-cover object-center"
-                             src="{{ asset('images/illustrations/nft.svg') }}" alt="image" />
+                             src="/public/images/illustrations/nft.svg" alt="image" />
                         <div>
                             <p class="font-medium leading-snug text-slate-700 dark:text-navy-100">
                                 NFT Marketplace App
@@ -766,7 +766,7 @@
                         <div class="flex -space-x-3">
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                     src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                     src="/public/images/200x200.png" alt="avatar" />
                             </div>
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <div
@@ -776,7 +776,7 @@
                             </div>
                             <div class="avatar h-7 w-7 hover:z-10">
                                 <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                     src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                     src="/public/images/200x200.png" alt="avatar" />
                             </div>
                         </div>
                         <button
@@ -842,7 +842,7 @@
                             </div>
                             <p class="py-1">John Doe changed his avatar photo</p>
                             <div class="avatar mt-2 h-20 w-20">
-                                <img class="mask is-squircle" src="{{ asset('images/200x200.png') }}"
+                                <img class="mask is-squircle" src="/public/images/200x200.png"
                                      alt="avatar" />
                             </div>
                         </div>
@@ -861,12 +861,12 @@
                             </div>
                             <p class="py-1">Mores Clarke added new image gallery</p>
                             <div class="mt-4 grid grid-cols-3 gap-3">
-                                <img class="rounded-lg" src="{{ asset('images/800x600.png') }}" alt="image" />
-                                <img class="rounded-lg" src="{{ asset('images/800x600.png') }}" alt="image" />
-                                <img class="rounded-lg" src="{{ asset('images/800x600.png') }}" alt="image" />
-                                <img class="rounded-lg" src="{{ asset('images/800x600.png') }}" alt="image" />
-                                <img class="rounded-lg" src="{{ asset('images/800x600.png') }}" alt="image" />
-                                <img class="rounded-lg" src="{{ asset('images/800x600.png') }}" alt="image" />
+                                <img class="rounded-lg" src="/public/images/800x600.png" alt="image" />
+                                <img class="rounded-lg" src="/public/images/800x600.png" alt="image" />
+                                <img class="rounded-lg" src="/public/images/800x600.png" alt="image" />
+                                <img class="rounded-lg" src="/public/images/800x600.png" alt="image" />
+                                <img class="rounded-lg" src="/public/images/800x600.png" alt="image" />
+                                <img class="rounded-lg" src="/public/images/800x600.png" alt="image" />
                             </div>
                             <div class="mt-4">
                                 <span class="font-medium text-slate-600 dark:text-navy-100">
@@ -948,7 +948,7 @@
                                     <div class="flex flex-wrap -space-x-2">
                                         <div class="avatar h-7 w-7 hover:z-10">
                                             <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                                 src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                                 src="/public/images/200x200.png" alt="avatar" />
                                         </div>
 
                                         <div class="avatar h-7 w-7 hover:z-10">
@@ -960,17 +960,17 @@
 
                                         <div class="avatar h-7 w-7 hover:z-10">
                                             <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                                 src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                                 src="/public/images/200x200.png" alt="avatar" />
                                         </div>
 
                                         <div class="avatar h-7 w-7 hover:z-10">
                                             <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                                 src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                                 src="/public/images/200x200.png" alt="avatar" />
                                         </div>
 
                                         <div class="avatar h-7 w-7 hover:z-10">
                                             <img class="rounded-full ring ring-white dark:ring-navy-700"
-                                                 src="{{ asset('images/200x200.png') }}" alt="avatar" />
+                                                 src="/public/images/200x200.png" alt="avatar" />
                                         </div>
                                     </div>
                                     <button
