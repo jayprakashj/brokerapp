@@ -21,12 +21,12 @@ class MemberClass {
     // {
     //     $this->userClass = $userClass;
     // }
-    public function getDefaultCompanyMembers () {
+    public function getDefaultCompanyMembers ( $perPage = 24 ) {
         $members = CompanyMember::with([
                             'memberUser',
                             'role'
                         ])->currentDefaultCompany()
-                        ->paginate( 10 );
+                        ->paginate( $perPage );
         return $members;
     }
 
@@ -104,8 +104,10 @@ class MemberClass {
         $member->email = $request->input('email');
         $member->user_id = $emailUser->id ?? null;
         $member->role_id = $request->input('role');
+        $member->token = $this->generateUniqueToken();
         $member->save();
 
+        $this->sendInvitation( $member );
 
         return $member;
     }

@@ -1,18 +1,46 @@
 <template>
     <page-header :title="pageTitle" />
-    <div class="grid place-items-center" v-if="invitationData">
-        <div class="card mt-20 w-1/2">
-            <div class="flex grow flex-col items-center px-4 pb-5 sm:px-5">
-                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                    {{ invitationData.company_name }}
-                </h3>
-                <p class="text-xs+">Creator: <b>{{ invitationData.creator ?? '' }}</b></p>
-                <div class="mt-6 w-full " v-if="invitationData.is_pending">
-                    <button type="button" @click="acceptInvitation" class="btn space-x-2 w-1/2 m-auto bg-primary px-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                        <i class="fa fa-check"></i>
-                        <span>Accept</span>
-                    </button>
+    <div class="py-5 text-center lg:py-6">
+        <p class="text-sm uppercase">Invitation!</p>
+        <h3 class="mt-1 text-xl font-semibold text-slate-600 dark:text-navy-100">
+        You've received the request to join the company.
+        </h3>
+    </div>
+    <div class="grid  place-items-center" v-if="invitationData">
+        <div class="card grow items-center p-4 sm:p-5 " >
+            <div class="avatar h-20 w-20">
+                <img class="rounded-full" src="/public/images/avatar/avatar-20.jpg" alt="avatar">
+                <div
+                    class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent">
                 </div>
+            </div>
+            <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
+                {{ invitationData.company_name }}
+            </h3>
+            <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
+            <div class="grow space-y-4">
+                <div class="flex items-center space-x-4">
+                    <div
+                        class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                        <i class="fa fa-phone text-xs"></i>
+                    </div>
+                    <p>{{ invitationData.company_phone}}</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div
+                        class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                        <i class="fa fa-envelope text-xs"></i>
+                    </div>
+                    <p>{{ invitationData.company_email }}</p>
+                </div>
+            </div>
+            <div class="mt-5 space-x-2">
+
+                <button v-if="invitationData.is_pending"
+                        @click="acceptInvitation"
+                    class="btn mt-8 bg-primary font-medium text-white shadow-lg shadow-primary/50 hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:shadow-accent/50 dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                    <i class="fa fa-check"></i> <span class="ml-2"> Accept </span>
+                </button>
             </div>
         </div>
     </div>

@@ -13,6 +13,7 @@ use App\Models\Company;
 use App\Models\CompanyMember;
 use App\Models\User;
 use App\Services\Database\MemberClass;
+use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
@@ -23,9 +24,9 @@ class MemberController extends Controller
         $this->memberClass = $memberClass;
     }
 
-    public function index () {
+    public function index ( Request $request ) {
 
-        $members = $this->memberClass->getDefaultCompanyMembers();
+        $members = $this->memberClass->getDefaultCompanyMembers( $request->input('per_page', 24 ));
 
         return new MemberPaginationResource( $members );
     }
@@ -47,10 +48,19 @@ class MemberController extends Controller
             $this->memberClass->create( auth()->user(), $request );
 
         }else{
-            $this->memberClass->update( auth()->user(), $member, $request );
-            $response = [
-                'message' => 'Success! User invitation updated successfully.'
-            ];
+            if( $member->isAccepted() ){
+
+                $this->memberClass->changeWhenInvitationAccepted(  $member, $request );
+                $response = [
+                    'message' => 'Success! Member role has been changed successfully.'
+                ];
+            }else{
+                $this->memberClass->changeWhenInvitationPending(  $member, $request );
+
+                $response = [
+                    'message' => 'Success! New invitation send successfully for the user.'
+                ];
+            }
         }
         return response()->json( $response, $code );
     }

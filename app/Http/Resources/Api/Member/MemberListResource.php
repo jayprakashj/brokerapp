@@ -17,6 +17,7 @@ class MemberListResource extends JsonResource
         $data = [
             'id' => $this->id,
             'member_name' => $this->memberUser->name ?? 'N/A',
+            'member_phone' => $this->memberUser->mobile ?? 'N/A',
             'email' => $this->email,
             'creator' => $this->createdUser->name,
             'is_owned' => $this->isOwnerMe(),
