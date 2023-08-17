@@ -161,7 +161,7 @@ export default {
                                     .then( ( resValidate ) => {
                                         this.loading.formSubmit = true;
                                         this.$store.commit('setGlobalLoaderOn');
-                                        this.$request.acceptInvitation( this.formData )
+                                        this.$request.createMember( this.formData )
                                                     .then(
                                                         ( res ) => {
                                                             let message = 'Success! Invitation has been sent successfully.';
