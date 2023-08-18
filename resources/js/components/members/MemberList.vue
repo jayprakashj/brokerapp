@@ -4,10 +4,7 @@
         <template v-if="lists?.data?.length">
             <div class="card grow items-center p-4 sm:p-5 " :class="{'bg-amber-300 text-gray-700': !item.is_accepted}" v-for="(item, idx) in lists.data" :key="'member_'+idx">
                 <div class="avatar h-20 w-20">
-                    <img class="rounded-full" src="/public/images/avatar/avatar-20.jpg" alt="avatar">
-                    <div
-                        class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent">
-                    </div>
+                    <img class="rounded-full" :src="item.logo_url" alt="avatar">
                 </div>
                 <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
                     {{ item.member_name || item.email }}
