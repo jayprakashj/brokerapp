@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\RoleManagementController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['auth' , 'set_default_company' ])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::post('/upload-media', [DashboardController::class, 'uploadMedia'])->name('upload_media');
 
     Route::prefix('company')->group( function () {
         Route::get('/lists', [CompanyController::class, 'index'])->name('index');

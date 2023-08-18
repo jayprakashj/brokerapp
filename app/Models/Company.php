@@ -5,10 +5,30 @@ namespace App\Models;
 use App\Models\Scopes\HasActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Company extends Model
+class Company extends Model implements HasMedia
 {
-    use HasFactory, HasActive;
+    use HasFactory,
+        HasActive,
+        InteractsWithMedia;
+
+    protected $defaultImage = '/images/100x100.png';
+
+    public function registerMediaCollections(Media $media = null): void
+    {
+        $this->addMediaCollection('logo')
+                ->singleFile()
+                ->registerMediaConversions(function (Media $media) {
+                    $this
+                        ->addMediaConversion('logo')
+                        ->fit(Manipulations::FIT_FILL, 150, 150)
+                        ->nonQueued();
+                });
+    }
 
     public function owner () {
         return $this->belongsTo( User::class, 'owned_by', 'id');
@@ -48,5 +68,23 @@ class Company extends Model
             return $this->authMember->isDefault();
         }
         return false;
+    }
+
+    public function getLogoUrl () {
+        $media = $this->media;
+        if( $media->count() ){
+            return  $this->getFirstMediaUrl('logo');
+        }
+
+        return url( $this->defaultImage );
+    }
+
+    public function getLogoMediaId () {
+        $media = $this->getFirstMedia('logo');
+        if( !is_null( $media ) ){
+            return  $media->id;
+        }
+
+        return null;
     }
 }

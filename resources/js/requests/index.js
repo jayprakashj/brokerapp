@@ -52,6 +52,15 @@ const apis = {
         return http.post('logout');
 
     },
+    uploadMedia: ( data ) => {
+        const headers = {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }
+        const fd = new FormData;
+        fd.append('media[]', data);
+        return http.post('upload-media', fd, headers);
+
+    },
     getCompanyList: ( params) => {
         let config = {};
         if( params ) {
