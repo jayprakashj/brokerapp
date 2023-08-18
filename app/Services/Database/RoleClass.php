@@ -12,7 +12,9 @@ use Spatie\Permission\Models\Role;
 class RoleClass {
 
     public function getAllAuthUserRoles ( $perPage = 24 ) {
-        return Role::where('user_id', auth()->id() )
+        return Role::with(['permissions'])
+                        ->withCount('users')
+                        ->where('user_id', auth()->id() )
                         ->paginate( $perPage );
     }
 

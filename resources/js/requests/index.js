@@ -101,6 +101,9 @@ const apis = {
         return http.post('roles/store', data);
 
     },
+    deleteRole: ( id ) => {
+        return http.post( `roles/${id}/delete` );
+    },
     getMemberList: ( params) => {
         let config = {};
         if( params ) {

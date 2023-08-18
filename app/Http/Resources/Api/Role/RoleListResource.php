@@ -16,7 +16,9 @@ class RoleListResource extends JsonResource
     {
         $data = [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'users_count' => $this->users_count,
+            'permissions' => $this->permissions->pluck('name')
         ];
 
         return $data;

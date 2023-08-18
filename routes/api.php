@@ -42,7 +42,7 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                 Route::get('/lists', [RoleManagementController::class, 'index'])->name('index');
                 Route::get('{role}/edit', [RoleManagementController::class, 'edit'])->name('edit');
                 Route::post('store', [RoleManagementController::class, 'store'])->name('store');
-                Route::post('delete', [RoleManagementController::class, 'delete'])->name('delete');
+                Route::post('{role}/delete', [RoleManagementController::class, 'delete'])->name('delete');
 
             });
 
