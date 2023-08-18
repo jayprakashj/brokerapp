@@ -59,8 +59,11 @@ class CompanyController extends Controller
 
         if( is_null( $company ) ){
 
-            $this->companyClass->create( auth()->user(), $request );
-
+            // $this->companyClass->create( auth()->user(), $request );
+            $response = [
+                'message' => 'Oops! You are not able to add the extra company.'
+            ];
+            $code = 500;
         }else{
             if( $company->isOwnedByMe() ){
 
