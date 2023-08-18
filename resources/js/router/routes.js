@@ -34,14 +34,14 @@ const routes = [
             title: 'Company Management'
         },
     },
-    {
-        path: '/company/create',
-        name: 'company_create',
-        component: CompanyCreate,
-        meta: {
-            title: 'Company Create'
-        }
-    },
+    // {
+    //     path: '/company/create',
+    //     name: 'company_create',
+    //     component: CompanyCreate,
+    //     meta: {
+    //         title: 'Company Create'
+    //     }
+    // },
     {
         path: '/company/edit/:id',
         name: 'company_edit',

@@ -1,5 +1,5 @@
 <template>
-    <page-header :title="pageTitle" :menus="menus" />
+    <page-header :title="pageTitle"  />
     <list-container>
         <template v-if="companies?.data?.length">
             <div class="card" v-for="(item, idx) in companies.data" :key="'company_'+idx">
