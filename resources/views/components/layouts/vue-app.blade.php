@@ -32,6 +32,7 @@
          */
         localStorage.getItem("_x_darkMode_on") === "true" &&
         document.documentElement.classList.add("dark");
+        var authUser = @json( auth()->user() );
         var userPermissions = @json( auth()->user()->getAllPermissions() );
         var globalPermissions = @json( $globalPermissions ?? [] );
     </script>
