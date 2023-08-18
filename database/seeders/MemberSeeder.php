@@ -41,6 +41,9 @@ class MemberSeeder extends Seeder
                 $member->invite_status = CompanyMember::INVITE_STATUS_ACCEPT;
                 $member->is_owner = CompanyMember::FLAG_IS_OWNER_NO;
                 $member->save();
+
+                setPermissionsTeamId( $item->defaultCompany->id );
+                $memberItem->assignRole( $member->role_id );
             }
         }
     }
