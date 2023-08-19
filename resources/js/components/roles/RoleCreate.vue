@@ -176,6 +176,7 @@ export default {
             if( this.loading.formSubmit ){
                 return;
             }
+            this.errors = {};
             this.validationSchema.validate( this.formData, { abortEarly: false })
                                     .then( ( resValidate ) => {
                                         this.loading.formSubmit = true;

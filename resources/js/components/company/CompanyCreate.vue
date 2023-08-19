@@ -235,6 +235,7 @@ export default {
             if( this.loading.formSubmit || this.loading.upload ){
                 return;
             }
+            this.errors = {};
             this.validationSchema.validate( this.companyDetail, { abortEarly: false })
                                     .then( ( resValidate ) => {
                                         this.loading.formSubmit = true;
