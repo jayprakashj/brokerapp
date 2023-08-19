@@ -138,7 +138,7 @@ class UserClass {
     }
 
     public function updatePassword ( User $user, $request ) {
-        $user->password = $request->input('password');
+        $user->password = $request->input('new_password');
         $user->save();
 
         return $user;

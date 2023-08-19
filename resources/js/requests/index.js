@@ -65,6 +65,10 @@ const apis = {
         return http.post('update-profile', data);
 
     },
+    updatePassword: ( data ) => {
+        return http.post('update-password', data);
+
+    },
     getCompanyList: ( params) => {
         let config = {};
         if( params ) {

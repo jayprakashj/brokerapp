@@ -1,5 +1,6 @@
 import Dashboard from  '@/components/dashboard/Dashboard.vue'
 import ProfileUpdate from  '@/components/profile/ProfileUpdate.vue'
+import ChangePassword from  '@/components/profile/ChangePassword.vue'
 import CompanyList from  '@/components/company/CompanyList.vue'
 import CompanyCreate from  '@/components/company/CompanyCreate.vue'
 import RoleList from  '@/components/roles/RoleList.vue'
@@ -33,6 +34,14 @@ const routes = [
         component: ProfileUpdate,
         meta:{
             title: 'Profile'
+        }
+    },
+    {
+        path: '/change-password',
+        name: 'change_password',
+        component: ChangePassword,
+        meta:{
+            title: 'Change Password'
         }
     },
     {

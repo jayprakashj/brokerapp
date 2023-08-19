@@ -7,6 +7,7 @@ use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
 use App\Services\Database\UserClass;
@@ -156,6 +157,37 @@ class AuthController extends Controller
                 'data' => $user->getDataForVueApp()
             ];
             $code = 200;
+        }catch( Exception $e ){
+            $response = [
+                'message' => $e->getMessage()
+            ];
+
+        }
+
+        return response()->json( $response, $code );
+    }
+
+    public function updatePassword ( UpdatePasswordRequest $request ){
+        $response = [];
+        $code = 500;
+        try{
+            $user = auth()->user();
+            if( Hash::check( $request->input('password' ), $user->getAuthPassword() ) ){
+
+                $user = $this->userClass->updatePassword( $user, $request );
+
+                $response = [
+                    'message' => 'Success! Password has been changed successfully.',
+                    'data' => $user->getDataForVueApp()
+                ];
+                $code = 200;
+
+            }else{
+                $response = [
+                    'message' => 'Error! Current password is invalid.'
+                ];
+
+            }
         }catch( Exception $e ){
             $response = [
                 'message' => $e->getMessage()

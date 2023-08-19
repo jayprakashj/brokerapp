@@ -29,6 +29,7 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
     Route::post('/upload-media', [DashboardController::class, 'uploadMedia'])->name('upload_media');
 
     Route::post('/update-profile', [AuthController::class, 'updateProfile'])->name('upadte_profile');
+    Route::post('/update-password', [AuthController::class, 'updatePassword'])->name('upadte_password');
 
     Route::prefix('company')->group( function () {
         Route::get('/lists', [CompanyController::class, 'index'])->name('index');
