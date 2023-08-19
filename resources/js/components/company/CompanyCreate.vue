@@ -196,6 +196,10 @@ export default {
             const yup = Yup.object().shape( fields );
 
             return yup;
+        },
+
+        currentUser(){
+            return this.$store.state.default.authUser;
         }
     },
     methods:{
@@ -241,6 +245,9 @@ export default {
                                                             let message = 'Success! Company created successfully.';
                                                             if( this.companyDetail?.id ){
                                                                 message = 'Success! Company data update successfully.';
+                                                                if( res.data?.data && this.currentUser?.current_company?.id && this.currentUser.current_company.id == this.companyDetail.id){
+                                                                    this.$store.commit('changeDefaultCompany', res.data.data);
+                                                                }
                                                             }
                                                             if( res.data?.message ){
                                                                 message = res.data.message;
@@ -267,7 +274,6 @@ export default {
                                     },
                                     ( e ) => {
 
-                                        console.log( e);
                                         const err = {};
                                         if( e.inner?.length ){
 
@@ -299,7 +305,6 @@ export default {
 
                                             this.$toast.error( 'Oops!' );
                                         }
-                                        console.log( res.data );
                                     },
                                     ( err ) => {
                                         let message = 'Error! Request failed while uploading.';

@@ -4,10 +4,10 @@
         class="flex h-full w-full flex-col items-center border-r border-slate-150 bg-white dark:border-navy-700 dark:bg-navy-800">
         <!-- Application Logo -->
         <div class="flex pt-4">
-            <a href="/">
-                <img class="h-11 w-11 transition-transform duration-500 ease-in-out hover:rotate-[360deg]"
-                    src="/public/images/app-logo.svg" alt="logo" />
-            </a>
+            <router-link to="/dashboard">
+                <img class="h-11 w-11 transition-transform duration-500 ease-in-out "
+                    :src="(currentUser?.current_company?.logo_url || '/public/images/app-logo.svg')" alt="logo" />
+            </router-link>
         </div>
 
         <!-- Main Sections Links -->
@@ -34,15 +34,15 @@
             </button>
             </div>
         </div>
-
         <div class="flex flex-col items-center space-y-3 py-3">
             <popper-dropdown
+                    ref="popperDropdown"
                     class-name="flex"
                     popper-root-class="fixed"
                     popper-root-style="position: fixed; inset: auto auto 0px 0px; margin: 0px; transform: translate(76px, -12px);"
                     >
                 <template v-slot:popper_btn>
-                    <img class="rounded-full" src="/public/images/avatar/avatar-12.jpg" alt="avatar">
+                    <img class="rounded-full" :src="currentUser.logo_url" alt="avatar">
                 </template>
                 <template v-slot:default>
 
@@ -50,12 +50,12 @@
                         class="popper-box w-64 rounded-lg border border-slate-150 bg-white shadow-soft dark:border-navy-600 dark:bg-navy-700">
                         <div class="flex items-center space-x-4 rounded-t-lg bg-slate-100 py-5 px-4 dark:bg-navy-800">
                             <div class="avatar h-14 w-14">
-                                <img class="rounded-full" src="images/avatar/avatar-12.jpg" alt="avatar">
+                                <img class="rounded-full" :src="currentUser.logo_url" alt="avatar">
                             </div>
                             <div>
                                 <a href="#"
                                     class="text-base font-medium text-slate-700 hover:text-primary focus:text-primary dark:text-navy-100 dark:hover:text-accent-light dark:focus:text-accent-light">
-                                    {{ $authUser.name }}
+                                    {{ currentUser.name }}
                                 </a>
                                 <p class="text-xs text-slate-400 dark:text-navy-300">
                                     Admin
@@ -63,14 +63,11 @@
                             </div>
                         </div>
                         <div class="flex flex-col pt-2 pb-5">
-                            <a href="#"
+                            <router-link to="/profile"
+                                @click="hidePopperDropDown"
                                 class="group flex items-center space-x-3 py-2 px-4 tracking-wide outline-none transition-all hover:bg-slate-100 focus:bg-slate-100 dark:hover:bg-navy-600 dark:focus:bg-navy-600">
                                 <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-warning text-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                    </svg>
+                                    <i class="fa fa-user"></i>
                                 </div>
 
                                 <div>
@@ -82,7 +79,7 @@
                                         Your profile setting
                                     </div>
                                 </div>
-                            </a>
+                            </router-link>
                             <div class="mt-3 px-4">
                                 <button
                                     @click="logout"
@@ -109,6 +106,7 @@
 <script>
 
 import permission from '@/constants/permissions' ;
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -148,6 +146,11 @@ export default {
             ]
         }
     },
+    computed:{
+        ...mapGetters([
+            'currentUser'
+        ])
+    },
     methods:{
         logout(){
             this.$request.logout()
@@ -156,6 +159,9 @@ export default {
                         window.location.href = '/login';
                     }
                 )
+        },
+        hidePopperDropDown(){
+            this.$refs.popperDropdown.closePopper();
         }
     }
 }

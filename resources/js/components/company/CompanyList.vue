@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     data(){
         return {
@@ -84,6 +86,11 @@ export default {
     },
     mounted(){
         this.init();
+    },
+    computed:{
+        ...mapGetters([
+            'currentUser'
+        ])
     },
     methods:{
         init () {
@@ -147,6 +154,9 @@ export default {
                                 }
                                 if( res.data?.new_permissions ){
                                     userPermissions = res.data.new_permissions;
+                                }
+                                if( res.data?.company_data && this.currentUser?.current_company?.id && this.currentUser.current_company.id != id){
+                                    this.$store.commit('changeDefaultCompany', res.data.company_data);
                                 }
                                 this.loadCompanies();
                                 this.$toast.info( message );

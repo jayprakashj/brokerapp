@@ -12,7 +12,8 @@ const defaultStore = ({
             },
             isSearchbarActive: false,
             breakpoints: {},
-            globalLoader: true
+            globalLoader: true,
+            authUser: window.authUser
         }
     },
     getters:{
@@ -22,6 +23,9 @@ const defaultStore = ({
             }
             return null;
         },
+        currentUser( state ){
+            return state.authUser;
+        }
     },
     mutations:{
         setSidebarExpanded ( state ){
@@ -32,7 +36,13 @@ const defaultStore = ({
         },
         setGlobalLoaderOn ( state ){
             state.globalLoader = true
-        }
+        },
+        setAuthUser(state, data ){
+            state.authUser = data;
+        },
+        changeDefaultCompany(state, data ){
+            state.authUser.current_company = data;
+        },
     },
     actions:{
         login(context, data ){

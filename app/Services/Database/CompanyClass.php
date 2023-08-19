@@ -97,6 +97,7 @@ class CompanyClass {
                 $company->addMediaFromDisk( $logoFile, 'public')->toMediaCollection('logo');
             }
         }
+        $company->refresh();
         return $company;
     }
 
