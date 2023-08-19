@@ -133,6 +133,7 @@
 
 <script>
 import * as Yup from 'yup';
+import { mapGetters } from 'vuex';
 
 export default {
     data(){
@@ -172,6 +173,9 @@ export default {
         this.init();
     },
     computed:{
+        ...mapGetters([
+            'currentUser'
+        ]),
         validationSchema(){
             let fields = {
                 company_name: Yup.string()
@@ -197,10 +201,6 @@ export default {
 
             return yup;
         },
-
-        currentUser(){
-            return this.$store.state.default.authUser;
-        }
     },
     methods:{
         init () {
