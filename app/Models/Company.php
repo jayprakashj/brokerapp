@@ -73,7 +73,7 @@ class Company extends Model implements HasMedia
     public function getLogoUrl () {
         $media = $this->media;
         if( $media->count() ){
-            return  $this->getFirstMediaUrl('logo');
+            return  $this->getFirstMediaUrl('logo', 'logo');
         }
 
         return url( $this->defaultImage );
