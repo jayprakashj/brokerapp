@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 
 class UserClass {
 
@@ -117,4 +118,29 @@ class UserClass {
         return $status === Password::PASSWORD_RESET;
     }
 
+    public function updateProfile ( User $user, $request ) {
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->mobile = $request->input('mobile');
+        $user->save();
+
+
+        if( $request->has('logo') ){
+            $logoFile = 'tmp_media/' . $request->input('logo');
+            if( Storage::disk('public')->has( $logoFile ) ){
+                $user->addMediaFromDisk( $logoFile, 'public')->toMediaCollection('logo');
+            }
+        }
+
+        $user->refresh();
+
+        return $user;
+    }
+
+    public function updatePassword ( User $user, $request ) {
+        $user->password = $request->input('password');
+        $user->save();
+
+        return $user;
+    }
 }

@@ -1,4 +1,5 @@
 import Dashboard from  '@/components/dashboard/Dashboard.vue'
+import ProfileUpdate from  '@/components/profile/ProfileUpdate.vue'
 import CompanyList from  '@/components/company/CompanyList.vue'
 import CompanyCreate from  '@/components/company/CompanyCreate.vue'
 import RoleList from  '@/components/roles/RoleList.vue'
@@ -24,6 +25,14 @@ const routes = [
         component: Dashboard,
         meta:{
             title: 'Dashboard'
+        }
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: ProfileUpdate,
+        meta:{
+            title: 'Profile'
         }
     },
     {

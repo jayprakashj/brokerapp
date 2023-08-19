@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
@@ -142,5 +143,26 @@ class AuthController extends Controller
         session()->flush();
         auth()->logout();
         return redirect()->route('login');
+    }
+
+    public function updateProfile ( ProfileUpdateRequest $request ){
+        $response = [];
+        $code = 500;
+        try{
+
+            $user = $this->userClass->updateProfile( auth()->user(), $request );
+            $response = [
+                'message' => 'Success! Profile updated successfully.',
+                'data' => $user->getDataForVueApp()
+            ];
+            $code = 200;
+        }catch( Exception $e ){
+            $response = [
+                'message' => $e->getMessage()
+            ];
+
+        }
+
+        return response()->json( $response, $code );
     }
 }

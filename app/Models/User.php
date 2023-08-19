@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Http\Resources\Api\Company\CompanyEditResource;
+use App\Http\Resources\Api\Company\DefaultCompanyResource;
 use App\Models\Scopes\HasActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -77,7 +79,7 @@ class User extends Authenticatable implements HasMedia
                 ->registerMediaConversions(function (Media $media) {
                     $this
                         ->addMediaConversion('logo')
-                        ->fit(Manipulations::FIT_FILL, 150, 150)
+                        ->fit(Manipulations::FIT_CONTAIN, 150, 150)
                         ->nonQueued();
                 });
     }
@@ -211,7 +213,7 @@ class User extends Authenticatable implements HasMedia
     public function getLogoUrl () {
         $media = $this->media;
         if( $media->count() ){
-            return  $this->getFirstMediaUrl('logo');
+            return  $this->getFirstMediaUrl('logo','logo');
         }
 
         return $this->getDefaultLogo();
@@ -224,5 +226,16 @@ class User extends Authenticatable implements HasMedia
         }
 
         return null;
+    }
+
+    public function getDataForVueApp () {
+        $this->logo = $this->getLogoMediaId();
+        $this->logo_url = $this->getLogoUrl();
+        if( !is_null( $this->defaultCompany ) && !empty( $this->defaultCompany->company ) ){
+            $this->current_company = new DefaultCompanyResource( $this->defaultCompany->company );
+
+        }
+
+        return $this;
     }
 }

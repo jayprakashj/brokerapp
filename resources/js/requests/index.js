@@ -61,6 +61,10 @@ const apis = {
         return http.post('upload-media', fd, headers);
 
     },
+    updateProfile: ( data ) => {
+        return http.post('update-profile', data);
+
+    },
     getCompanyList: ( params) => {
         let config = {};
         if( params ) {
