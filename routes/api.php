@@ -45,10 +45,21 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
     Route::prefix('roles')
             ->name('role.')
             ->group( function () {
-                Route::get('/lists', [RoleManagementController::class, 'index'])->name('index');
-                Route::get('{role}/edit', [RoleManagementController::class, 'edit'])->name('edit');
-                Route::post('store', [RoleManagementController::class, 'store'])->name('store');
-                Route::post('{role}/delete', [RoleManagementController::class, 'delete'])->name('delete');
+                Route::get('/lists', [RoleManagementController::class, 'index'])
+                        ->middleware('permission:Role List')
+                        ->name('index');
+
+                Route::get('{role}/edit', [RoleManagementController::class, 'edit'])
+                        ->middleware('permission:Update Role')
+                        ->name('edit');
+
+                Route::post('store', [RoleManagementController::class, 'store'])
+                        ->middleware('permission:Add Role|Update Role')
+                        ->name('store');
+
+                Route::post('{role}/delete', [RoleManagementController::class, 'delete'])
+                        ->middleware('permission:Remove Role')
+                        ->name('delete');
 
             });
 
@@ -61,11 +72,24 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                 Route::middleware('check_default_company')->group( function(){
 
-                    Route::get('/lists', [MemberController::class, 'index'])->name('index');
-                    Route::get('{member}/edit', [MemberController::class, 'edit'])->name('edit');
-                    Route::post('store', [MemberController::class, 'store'])->name('store');
-                    Route::post('{member}/delete', [MemberController::class, 'delete'])->name('delete');
-                    Route::get('roles', [MemberController::class, 'getRoles'])->name('members_roles_list');
+                    Route::get('/lists', [MemberController::class, 'index'])
+                                    ->middleware('permission:User List')
+                                    ->name('index');
+
+                    Route::get('{member}/edit', [MemberController::class, 'edit'])
+                                    ->middleware('permission:Update User')
+                                    ->name('edit');
+
+                    Route::post('store', [MemberController::class, 'store'])
+                                    ->middleware('permission:Add User|Update User')
+                                    ->name('store');
+
+                    Route::post('{member}/delete', [MemberController::class, 'delete'])
+                                    ->middleware('permission:Remove User')
+                                    ->name('delete');
+
+                    Route::get('roles', [MemberController::class, 'getRoles'])
+                                    ->name('members_roles_list');
                 });
 
             });
