@@ -43,11 +43,6 @@
 
     <livewire:styles />
 
-    @bukStyles
-
-    @laravelViewsStyles(laravel-views)
-
-    @routes
 </head>
 
 <body x-data x-bind="$store.global.documentBody"
@@ -65,9 +60,7 @@
 
     <livewire:scripts />
 
-    @bukScripts
 
-    @laravelViewsScripts(laravel-views)
 
 </body>
 
