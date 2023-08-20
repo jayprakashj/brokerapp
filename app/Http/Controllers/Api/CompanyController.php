@@ -99,7 +99,7 @@ class CompanyController extends Controller
 
             $response = [
                 'message' => 'Success! Default company changed to '.$company->name.'.',
-                'new_permissions' =>  auth()->user()->getAllPermissions(),
+                'new_permissions' =>  auth()->user()->getAllPermissions()->pluck('name'),
                 'company_data' => new DefaultCompanyResource( $company )
             ];
             $code = 200;
