@@ -154,6 +154,7 @@ export default {
                                 }
                                 if( res.data?.new_permissions ){
                                     userPermissions = res.data.new_permissions;
+                                    this.$store.commit('changeUserPermissions', res.data.new_permissions);
                                 }
                                 if( res.data?.company_data && this.currentUser?.current_company?.id && this.currentUser.current_company.id != id){
                                     this.$store.commit('changeDefaultCompany', res.data.company_data);

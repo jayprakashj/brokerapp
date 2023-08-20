@@ -44,12 +44,12 @@
                 <div class="mt-5 space-x-2">
 
                     <router-link :to="'member/edit/' + item.id"
-                        v-if="!item.is_company_owner"
+                        v-if="!item.is_company_owner && userPermissions.isPermissionsAllowed([ $permissions.UPDATE_USER ] )"
                         class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
                         <i class="fa fa-pencil"></i>
                         <span> Edit </span>
                     </router-link>
-                    <button v-if="!item.is_company_owner && !item.is_self"
+                    <button v-if="!item.is_company_owner && !item.is_self && userPermissions.isPermissionsAllowed([ $permissions.REMOVE_USER ] )"
                             @click="removeMember( item.id )"
                         class="btn rounded-full bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
                         <i class="fa fa-trash"></i>
@@ -62,18 +62,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex' ;
+
 export default {
     data(){
         return {
             pageTitle: 'Member Management',
             isShowPopper: false,
-            menus:[
-                {
-                    title: 'Add new',
-                    icon_class: 'fa-plus',
-                    link: '/member/create'
-                }
-            ],
             page: 1,
             lists:{}
         }
@@ -82,6 +77,26 @@ export default {
     },
     mounted(){
         this.init();
+    },
+    computed:{
+        ...mapGetters([
+            'globalPermissions',
+            'userPermissions'
+        ]),
+        menus(){
+            var menus = [];
+            if( userPermissions.isPermissionsAllowed( this.$permissions.ADD_ROLE ) ){
+                menus.push(
+                        {
+                            title: 'Add new',
+                            icon_class: 'fa-plus',
+                            link: '/member/create'
+                        }
+                    )
+            }
+
+            return menus;
+        }
     },
     methods:{
         init () {

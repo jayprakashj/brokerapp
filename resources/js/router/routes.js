@@ -1,3 +1,5 @@
+import permission from '@/constants/permissions' ;
+
 import Dashboard from  '@/components/dashboard/Dashboard.vue'
 import ProfileUpdate from  '@/components/profile/ProfileUpdate.vue'
 import ChangePassword from  '@/components/profile/ChangePassword.vue'
@@ -73,7 +75,8 @@ const routes = [
         name: 'role_lists',
         component: RoleList,
         meta:{
-            title: 'Role Management'
+            title: 'Role Management',
+            permissions: [ permission.ROLE_LIST ]
         },
     },
     {
@@ -81,7 +84,8 @@ const routes = [
         name: 'role_create',
         component: RoleCreate,
         meta: {
-            title: 'Role Create'
+            title: 'Role Create',
+            permissions: [ permission.ADD_ROLE ]
         }
     },
     {
@@ -89,7 +93,8 @@ const routes = [
         name: 'role_edit',
         component: RoleCreate,
         meta: {
-            title: 'Role Edit'
+            title: 'Role Edit',
+            permissions: [ permission.UPDATE_ROLE ]
         }
     },
     {
@@ -97,7 +102,8 @@ const routes = [
         name: 'member_lists',
         component: MemberList,
         meta:{
-            title: 'Member Management'
+            title: 'Member Management',
+            permissions: [ permission.USER_LIST ]
         },
     },
     {
@@ -105,7 +111,8 @@ const routes = [
         name: 'member_create',
         component: MemberCreate,
         meta: {
-            title: 'Member Create'
+            title: 'Member Create',
+            permissions: [ permission.ADD_USER ]
         }
     },
     {
@@ -113,7 +120,8 @@ const routes = [
         name: 'member_edit',
         component: MemberCreate,
         meta: {
-            title: 'Member Edit'
+            title: 'Member Edit',
+            permissions: [ permission.UPDATE_USER ]
         }
     },
     {

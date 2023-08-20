@@ -17,7 +17,7 @@
                 <router-link
                         :key="'route_' + idx"
                         :to="item.route"
-                        v-if="item.ignorePermission || $checkPermission( item.permission, item.checkGlobalPermission )"
+                        v-if="item.ignorePermission || (item.checkGlobalPermission ? globalPermissions.isPermissionsAllowed( item.permission) : userPermissions.isPermissionsAllowed( item.permission) )"
                         class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 "
                         :class="{
                             'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 bg-primary/10 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90' : item.active,
@@ -136,32 +136,34 @@ export default {
                     name: 'Company Mangement',
                     route: '/company',
                     iconClass: 'fa-suitcase',
-                    permission: [ permission.COMPANY_LIST ],
-                    ignorePermission: false,
+                    permission: [ this.$permissions.COMPANY_LIST ],
+                    ignorePermission: true,
                     checkGlobalPermission: true,
                 },
                 {
                     name: 'Roles',
                     route: '/role',
                     iconClass: 'fa-user-gear',
-                    permission: [ permission.ROLE_LIST ],
+                    permission: [ this.$permissions.ROLE_LIST ],
                     ignorePermission: false,
-                    checkGlobalPermission: true,
+                    checkGlobalPermission: false,
                 },
                 {
                     name: 'Members',
                     route: '/member',
                     iconClass: 'fa-users',
-                    permission: [ permission.USER_LIST ],
+                    permission: [ this.$permissions.USER_LIST ],
                     ignorePermission: false,
-                    checkGlobalPermission: true,
+                    checkGlobalPermission: false,
                 }
             ]
         }
     },
     computed:{
         ...mapGetters([
-            'currentUser'
+            'currentUser',
+            'globalPermissions',
+            'userPermissions'
         ])
     },
     methods:{

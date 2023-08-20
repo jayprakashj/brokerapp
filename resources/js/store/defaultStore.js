@@ -13,7 +13,9 @@ const defaultStore = ({
             isSearchbarActive: false,
             breakpoints: {},
             globalLoader: true,
-            authUser: window.authUser
+            authUser: window.authUser,
+            userPermissions: window.userPermissions,
+            globalPermissions: window.globalPermissions
         }
     },
     getters:{
@@ -25,7 +27,13 @@ const defaultStore = ({
         },
         currentUser( state ){
             return state.authUser;
-        }
+        },
+        globalPermissions( state ){
+            return state.globalPermissions;
+        },
+        userPermissions( state ){
+            return state.userPermissions;
+        },
     },
     mutations:{
         setSidebarExpanded ( state ){
@@ -42,6 +50,9 @@ const defaultStore = ({
         },
         changeDefaultCompany(state, data ){
             state.authUser.current_company = data;
+        },
+        changeUserPermissions(state, data ){
+            state.userPermissions = data;
         },
     },
     actions:{
