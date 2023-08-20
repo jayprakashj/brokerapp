@@ -152,7 +152,7 @@ export default {
                     name: 'Members',
                     route: '/member',
                     iconClass: 'fa-users',
-                    permission: [ this.$permissions.USER_LIST ],
+                    permission: [ this.$permissions.MEMBER_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
                 }

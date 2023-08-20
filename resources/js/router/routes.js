@@ -103,7 +103,7 @@ const routes = [
         component: MemberList,
         meta:{
             title: 'Member Management',
-            permissions: [ permission.USER_LIST ]
+            permissions: [ permission.MEMBER_LIST ]
         },
     },
     {
@@ -112,7 +112,7 @@ const routes = [
         component: MemberCreate,
         meta: {
             title: 'Member Create',
-            permissions: [ permission.ADD_USER ]
+            permissions: [ permission.ADD_MEMBER ]
         }
     },
     {
@@ -121,7 +121,7 @@ const routes = [
         component: MemberCreate,
         meta: {
             title: 'Member Edit',
-            permissions: [ permission.UPDATE_USER ]
+            permissions: [ permission.UPDATE_MEMBER ]
         }
     },
     {
