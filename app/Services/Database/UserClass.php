@@ -122,10 +122,11 @@ class UserClass {
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->mobile = $request->input('mobile');
+        $user->address = $request->input('address');
         $user->save();
 
 
-        if( $request->has('logo') ){
+        if( $request->filled('logo') ){
             $logoFile = 'tmp_media/' . $request->input('logo');
             if( Storage::disk('public')->has( $logoFile ) ){
                 $user->addMediaFromDisk( $logoFile, 'public')->toMediaCollection('logo');

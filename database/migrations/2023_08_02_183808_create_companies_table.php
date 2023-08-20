@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('gst_no')->nullable();
             $table->bigInteger('mobile')->nullable();
             $table->string('email')->nullable();
+            $table->text('address')->nullable();
             $table->tinyInteger('status')->default( 1 );
             $table->bigInteger('owned_by');
             $table->timestamps();

@@ -21,6 +21,7 @@ class DefaultCompanyResource extends JsonResource
             'gst_no' => $this->gst_no,
             'email' => $this->email,
             'mobile' => $this->mobile,
+            'address' => $this->address,
             'logo' => $this->getLogoMediaId(),
             'logo_url' => $this->getLogoUrl(),
             'is_default' => $this->isDefault(),

@@ -85,6 +85,19 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
                             </label>
 
+                            <label class="block">
+                                <span>Address</span>
+                                <label class="block">
+                                    <textarea
+                                    rows="4"
+                                    placeholder="Address"
+                                    v-model="formData.address"
+                                    class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                    ></textarea>
+                                </label>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.address?.length">{{ errors.address.at(0) }}</span>
+                            </label>
                         </div>
                      </div>
                 </div>
@@ -108,6 +121,7 @@ export default {
                 name: '',
                 email: '',
                 mobile: '',
+                address: '',
                 logo: '',
             },
             loading:{

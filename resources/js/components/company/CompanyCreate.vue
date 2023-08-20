@@ -7,7 +7,7 @@
                     <div
                         class="flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
                         <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
-                            {{ formData?.id ? 'Update Company Details' : 'New Company' }}
+                            Update Company Details
                         </h2>
                         <div class="flex justify-center space-x-2">
                             <router-link to="/company"
@@ -16,7 +16,7 @@
                             </router-link>
                             <button type="submit"
                                 class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                                {{ formData?.id ? 'Update' : 'Save' }}
+                                Update
                             </button>
                         </div>
                     </div>
@@ -121,6 +121,20 @@
                                     <span>Active?</span>
                                 </label>
                             </div>
+
+                            <label class="block">
+                                <span>Address</span>
+                                <label class="block">
+                                    <textarea
+                                    rows="4"
+                                    placeholder="Address"
+                                    v-model="companyDetail.address"
+                                    class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                    ></textarea>
+                                </label>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.address?.length">{{ errors.address.at(0) }}</span>
+                            </label>
                         </div>
                      </div>
                 </div>
@@ -139,7 +153,6 @@ export default {
     data(){
         return {
             pageTitle: 'Company Management',
-            subTitle: 'Create Company',
             isShowPopper: false,
             breadcrumbs:[
                 {
@@ -147,7 +160,7 @@ export default {
                     link: '/company'
                 },
                 {
-                    title: 'Create',
+                    title: 'Update',
                 }
             ],
             errors: {},
@@ -157,6 +170,7 @@ export default {
                 gst_no: '',
                 email: '',
                 mobile: '',
+                address: '',
                 logo: '',
                 status: 0
             },

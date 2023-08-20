@@ -87,11 +87,12 @@ class CompanyClass {
         $company->gst_no = $request->input('gst_no');
         $company->email = $request->input('email');
         $company->mobile = $request->input('mobile');
+        $company->address = $request->input('address');
         if( $company->id && !$company->isDefault() ){
             $company->status = $request->input('status');
         }
         $company->save();
-        if( $request->has('logo') ){
+        if( $request->filled('logo') ){
             $logoFile = 'tmp_media/' . $request->input('logo');
             if( Storage::disk('public')->has( $logoFile ) ){
                 $company->addMediaFromDisk( $logoFile, 'public')->toMediaCollection('logo');
