@@ -52,6 +52,10 @@ class PermissionSeeder extends Seeder
             'group_name' => 'User',
         ]);
         Permission::create([
+            'name' => 'Update User',
+            'group_name' => 'User',
+        ]);
+        Permission::create([
             'name' => 'Remove User',
             'group_name' => 'User',
         ]);
@@ -62,6 +66,10 @@ class PermissionSeeder extends Seeder
         ]);
         Permission::create([
             'name' => 'Add Role',
+            'group_name' => 'Role',
+        ]);
+        Permission::create([
+            'name' => 'Update Role',
             'group_name' => 'Role',
         ]);
         Permission::create([
