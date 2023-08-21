@@ -43,7 +43,7 @@
                 </div>
                 <div class="mt-5 space-x-2">
 
-                    <router-link :to="'member/edit/' + item.id"
+                    <router-link :to="'/member/edit/' + item.id"
                         v-if="!item.is_company_owner && userPermissions.isPermissionsAllowed([ $permissions.UPDATE_MEMBER ] )"
                         class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
                         <i class="fa fa-pencil"></i>
@@ -57,6 +57,7 @@
                 </div>
             </div>
         </template>
+        <no-data-found v-else />
     </list-container>
     <pagination :total-records="lists?.total_records" :per-page="lists?.per_page" :current-page="page" @pageChange="updatePage"></pagination>
 </template>
