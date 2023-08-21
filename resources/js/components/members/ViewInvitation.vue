@@ -9,7 +9,7 @@
     <div class="grid  place-items-center" v-if="invitationData">
         <div class="card grow items-center p-4 sm:p-5 " >
             <div class="avatar h-20 w-20">
-                <img class="rounded-full" src="/public/images/avatar/avatar-20.jpg" alt="avatar">
+                <img class="rounded-full" src="/public/images/100x100.png" alt="avatar">
                 <div
                     class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent">
                 </div>
