@@ -57,7 +57,7 @@ class UserClass {
         setPermissionsTeamId( $companyMember->company_id );
         $user->assignRole( $companyMember->role_id );
 
-        // Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
+        Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
 
         return $user;
     }
