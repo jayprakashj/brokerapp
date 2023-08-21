@@ -11,6 +11,10 @@ const permissions = {
     ADD_ROLE: 'Add Role',
     UPDATE_ROLE: 'Update Role',
     REMOVE_ROLE: 'Remove Role',
+    BRANCH_LIST:'Branch List',
+    ADD_BRANCH:'Add Branch',
+    UPDATE_BRANCH:'Update Branch',
+    REMOVE_BRANCH:'Remove Branch',
 }
 
 export default permissions;
