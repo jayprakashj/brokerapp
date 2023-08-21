@@ -20,7 +20,6 @@ router.beforeEach( ( to, from, next ) => {
     const userPermissions = vueStore.getters.userPermissions;
     vueStore.commit('setGlobalLoaderOn');
     if( to?.meta?.permissions ){
-        console.log( to.meta.permissions );
         if( userPermissions.isPermissionsAllowed( to.meta.permissions ) ){
             next();
         }else{
