@@ -9,6 +9,7 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Helper;
 
 class Company extends Model implements HasMedia
 {
@@ -57,6 +58,15 @@ class Company extends Model implements HasMedia
 
     public function scopeOwnedByAuthUser ( $q ){
         return $q->whereOwnedBy( auth()->id() );
+    }
+
+    public function scopeFilterCurrentDefaultCompany ( $q ){
+        $defaultCompany = Helper::retrieveDefaultCompany();
+        if( !is_null( $defaultCompany ) ){
+
+            return $q->whereId( $defaultCompany->id );
+        }
+        return $q->whereId( null );
     }
 
     public function isOwnedByMe () {
