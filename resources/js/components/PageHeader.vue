@@ -115,7 +115,6 @@ export default {
     },
     watch:{
         isShowPopper(nV){
-            console.log( nV );
             if( nV && this.popperI ){
                 // this.isShowPopper = true;
                 this.popperI.update();
