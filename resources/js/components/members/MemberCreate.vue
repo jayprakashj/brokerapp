@@ -60,48 +60,6 @@
                     </div>
                 </div>
             </form>
-
-            <div class="mt-4 space-y-4" v-if="false">
-                <form @submit.prevent="submitForm">
-                    <label class="block" v-if="!formData?.is_accepted">
-                        <span>Email</span>
-                        <span class="relative mt-1.5 flex">
-                            <input
-                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                placeholder="Email..." type="email" name="email" v-model="formData.email">
-                            <span
-                                class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                <i class="fa-regular fa-envelope text-base"></i>
-                            </span>
-                        </span>
-
-                        <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
-                    </label>
-                    <label class="block">
-                        <span>Role</span>
-                        <select
-                            name="role_id"
-                            v-model="formData.role"
-                            class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent"
-                        >
-                            <option :value="item.id" v-for="(item, idx) in rolesList" :key="'role_option_'+idx">{{ item.name }}</option>
-
-                        </select>
-
-                        <span class="text-tiny+ text-error" v-if="errors?.role?.length">{{ errors.role.at(0) }}</span>
-                    </label>
-
-                    <div class="flex justify-end space-x-2 mt-4">
-                        <button
-                        type="submit"
-                            class="btn space-x-2 bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                            <i class="fa fa-save"></i>
-                            <span v-if="formData?.id">Update</span>
-                            <span v-else>Create</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 
