@@ -34,6 +34,10 @@ http.interceptors.response.use(
 
             router.push({name: '401'});
         }
+        if (error.response && error.response.status === 403) {
+
+            router.push({name: '401'});
+        }
         if (error.response && error.response.status === 404) {
             router.push({name: '404'});
         }
@@ -148,6 +152,24 @@ const apis = {
     },
     acceptInvitation: ( token ) => {
         return http.post( 'members/' + token + '/accept-invitation');
+    },
+    getBranchList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('branches/lists', config);
+
+    },
+    getBranchDetail: ( id ) => {
+        return http.get(`branches/${id}/edit` );
+
+    },
+    createBranch: ( data ) => {
+        return http.post('branches/store', data);
+    },
+    deleteBranch: ( id ) => {
+        return http.post( `branches/${id}/delete` );
     },
 }
 export default apis;

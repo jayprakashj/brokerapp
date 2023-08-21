@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CompanyBranchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\MemberController;
@@ -73,23 +74,49 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                 Route::middleware('check_default_company')->group( function(){
 
                     Route::get('/lists', [MemberController::class, 'index'])
-                                    ->middleware('permission:User List')
+                                    ->middleware('permission:Member List')
                                     ->name('index');
 
                     Route::get('{member}/edit', [MemberController::class, 'edit'])
-                                    ->middleware('permission:Update User')
+                                    ->middleware('permission:Update Member')
                                     ->name('edit');
 
                     Route::post('store', [MemberController::class, 'store'])
-                                    ->middleware('permission:Add User|Update User')
+                                    ->middleware('permission:Add Member|Update Member')
                                     ->name('store');
 
                     Route::post('{member}/delete', [MemberController::class, 'delete'])
-                                    ->middleware('permission:Remove User')
+                                    ->middleware('permission:Remove Member')
                                     ->name('delete');
 
                     Route::get('roles', [MemberController::class, 'getRoles'])
                                     ->name('members_roles_list');
+                });
+
+            });
+
+    Route::prefix('branches')
+            ->name('company_branch.')
+            ->group( function () {
+
+                Route::middleware('check_default_company')->group( function(){
+
+                    Route::get('/lists', [CompanyBranchController::class, 'index'])
+                                    ->middleware('permission:Branch List')
+                                    ->name('index');
+
+                    Route::get('{branch}/edit', [CompanyBranchController::class, 'edit'])
+                                    ->middleware('permission:Update Branch')
+                                    ->name('edit');
+
+                    Route::post('store', [CompanyBranchController::class, 'store'])
+                                    ->middleware('permission:Add Branch|Update Branch')
+                                    ->name('store');
+
+                    // Route::post('{branch}/delete', [CompanyBranchController::class, 'delete'])
+                    //                 ->middleware('permission:Remove Branch')
+                    //                 ->name('delete');
+
                 });
 
             });

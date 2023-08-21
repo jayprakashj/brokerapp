@@ -18,13 +18,13 @@
                         :key="'route_' + idx"
                         :to="item.route"
                         v-if="item.ignorePermission || (item.checkGlobalPermission ? globalPermissions.isPermissionsAllowed( item.permission) : userPermissions.isPermissionsAllowed( item.permission) )"
-                        class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 "
+                        class="flex h-11 w-11 items-center justify-center rounded-lg outline-none transition-colors duration-200 text-center"
                         :class="{
-                            'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 bg-primary/10 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90' : item.active,
-                            'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25': !item.active
+                            'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-navy-600 bg-primary/10 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90' : ($route.path.startsWith( item.route )),
+                            'hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25': !($route.path.startsWith( item.route ))
                         }"
                         v-tippy="item.name">
-                    <i class="fa fa-2x h-7 w-7" :class="item.iconClass" ></i>
+                    <i class="fa fa-2x h-8 w-8" :class="item.iconClass" ></i>
                 </router-link>
             </template>
 
@@ -153,6 +153,14 @@ export default {
                     route: '/member',
                     iconClass: 'fa-users',
                     permission: [ this.$permissions.MEMBER_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
+                    name: 'Branch',
+                    route: '/branch',
+                    iconClass: 'fa-building',
+                    permission: [ this.$permissions.BRANCH_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
                 }
