@@ -28,7 +28,7 @@
                             </span>
                         </p>
                         <div class="mt-4 flex space-x-4">
-                            <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_ROLE ] )" :to="'role/edit/' + item.id"
+                            <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_ROLE ] )" :to="'/role/edit/' + item.id"
                                 class="btn h-7 w-7 rounded-full bg-slate-150 p-0 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
                                 <i class="fa fa-pencil"></i>
                             </router-link>
