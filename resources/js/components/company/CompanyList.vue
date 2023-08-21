@@ -2,7 +2,7 @@
     <page-header :title="pageTitle"  />
     <list-container>
         <template v-if="companies?.data?.length">
-            <div class="card grow items-center p-4 sm:p-5 " v-for="(item, idx) in companies.data" :key="'member_'+idx">
+            <div class="card grow items-center p-4 sm:p-5 " v-for="(item, idx) in companies.data" :key="'company_'+idx">
                 <div class="avatar h-20 w-20">
                     <img class="rounded-full" :src="item.logo_url" alt="avatar">
                     <div
