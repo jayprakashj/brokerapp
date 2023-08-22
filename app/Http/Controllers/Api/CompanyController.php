@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Company;
 use App\Http\Controllers\Controller;
+use App\Services\Database\CompanyClass;
 use App\Http\Requests\CompanyCreateRequest;
 use App\Http\Resources\Api\Company\CompanyEditResource;
+use App\Http\Resources\Api\Company\DefaultCompanyResource;
 use App\Http\Resources\Api\Company\CompanyPaginationResource;
-use App\Models\Company;
-use App\Services\Database\CompanyClass;
 
 class CompanyController extends Controller
 {
@@ -59,14 +60,19 @@ class CompanyController extends Controller
 
         if( is_null( $company ) ){
 
-            $this->companyClass->create( auth()->user(), $request );
-
+            // $this->companyClass->create( auth()->user(), $request );
+            $response = [
+                'message' => 'Oops! You are not able to add the extra company.'
+            ];
+            $code = 500;
         }else{
             if( $company->isOwnedByMe() ){
 
-                $this->companyClass->update( auth()->user(), $company, $request );
+                $company = $this->companyClass->update( auth()->user(), $company, $request );
+
                 $response = [
-                    'message' => 'Success! Company data updated successfully.'
+                    'message' => 'Success! Company data updated successfully.',
+                    'data' => new DefaultCompanyResource( $company )
                 ];
             }else{
                 $response = [
@@ -93,7 +99,8 @@ class CompanyController extends Controller
 
             $response = [
                 'message' => 'Success! Default company changed to '.$company->name.'.',
-                'new_permissions' =>  auth()->user()->getAllPermissions()
+                'new_permissions' =>  auth()->user()->getAllPermissions()->pluck('name'),
+                'company_data' => new DefaultCompanyResource( $company )
             ];
             $code = 200;
         }else{

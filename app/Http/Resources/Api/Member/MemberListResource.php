@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\Member;
 
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MemberListResource extends JsonResource
@@ -17,7 +18,9 @@ class MemberListResource extends JsonResource
         $data = [
             'id' => $this->id,
             'member_name' => $this->memberUser->name ?? 'N/A',
+            'member_phone' => $this->memberUser->mobile ?? 'N/A',
             'email' => $this->email,
+            'logo_url' => $this->memberUser ? $this->memberUser->getLogoUrl() : (User::getDefaultLogoUrl()),
             'creator' => $this->createdUser->name,
             'is_owned' => $this->isOwnerMe(),
             'is_company_owner' => $this->isOwner(),

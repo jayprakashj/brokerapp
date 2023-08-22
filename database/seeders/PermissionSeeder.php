@@ -44,16 +44,20 @@ class PermissionSeeder extends Seeder
         ]);
 
         Permission::create([
-            'name' => 'User List',
-            'group_name' => 'User',
+            'name' => 'Member List',
+            'group_name' => 'Member',
         ]);
         Permission::create([
-            'name' => 'Add User',
-            'group_name' => 'User',
+            'name' => 'Add Member',
+            'group_name' => 'Member',
         ]);
         Permission::create([
-            'name' => 'Remove User',
-            'group_name' => 'User',
+            'name' => 'Update Member',
+            'group_name' => 'Member',
+        ]);
+        Permission::create([
+            'name' => 'Remove Member',
+            'group_name' => 'Member',
         ]);
 
         Permission::create([
@@ -65,8 +69,29 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Role',
         ]);
         Permission::create([
+            'name' => 'Update Role',
+            'group_name' => 'Role',
+        ]);
+        Permission::create([
             'name' => 'Remove Role',
             'group_name' => 'Role',
+        ]);
+
+        Permission::create([
+            'name' => 'Branch List',
+            'group_name' => 'Branch',
+        ]);
+        Permission::create([
+            'name' => 'Add Branch',
+            'group_name' => 'Branch',
+        ]);
+        Permission::create([
+            'name' => 'Update Branch',
+            'group_name' => 'Branch',
+        ]);
+        Permission::create([
+            'name' => 'Remove Branch',
+            'group_name' => 'Branch',
         ]);
 
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);

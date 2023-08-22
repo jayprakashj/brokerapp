@@ -18,9 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
+
 Route::middleware('guest')->group( function () {
     Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login');

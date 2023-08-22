@@ -33,6 +33,34 @@ class CompanyCreateRequest extends FormRequest
                             $clause->whereNot('id', $this->id);
                         })
             ],
+            'pan_no' => [
+                'required',
+                Rule::unique('companies', 'pan_no')
+                        ->when( $this->id, function( $clause ){
+                            $clause->whereNot('id', $this->id);
+                        })
+            ],
+            'gst_no' => [
+                'required',
+                Rule::unique('companies', 'gst_no')
+                        ->when( $this->id, function( $clause ){
+                            $clause->whereNot('id', $this->id);
+                        })
+            ],
+            'email' => [
+                'required',
+                Rule::unique('companies', 'email')
+                        ->when( $this->id, function( $clause ){
+                            $clause->whereNot('id', $this->id);
+                        })
+            ],
+            'mobile' => [
+                'required',
+                Rule::unique('companies', 'mobile')
+                        ->when( $this->id, function( $clause ){
+                            $clause->whereNot('id', $this->id);
+                        })
+            ],
         ];
     }
 

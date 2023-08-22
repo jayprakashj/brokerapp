@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 
 class UserClass {
 
@@ -36,6 +37,8 @@ class UserClass {
 
         $user->setDefaultRole();
 
+        $user->refresh();
+
         $companyReqData = [
             'status' => Company::$STATUS_ACTIVE
         ];
@@ -54,7 +57,7 @@ class UserClass {
         setPermissionsTeamId( $companyMember->company_id );
         $user->assignRole( $companyMember->role_id );
 
-        // Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
+        Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
 
         return $user;
     }
@@ -115,4 +118,30 @@ class UserClass {
         return $status === Password::PASSWORD_RESET;
     }
 
+    public function updateProfile ( User $user, $request ) {
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->mobile = $request->input('mobile');
+        $user->address = $request->input('address');
+        $user->save();
+
+
+        if( $request->filled('logo') ){
+            $logoFile = 'tmp_media/' . $request->input('logo');
+            if( Storage::disk('public')->has( $logoFile ) ){
+                $user->addMediaFromDisk( $logoFile, 'public')->toMediaCollection('logo');
+            }
+        }
+
+        $user->refresh();
+
+        return $user;
+    }
+
+    public function updatePassword ( User $user, $request ) {
+        $user->password = $request->input('new_password');
+        $user->save();
+
+        return $user;
+    }
 }

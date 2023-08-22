@@ -34,6 +34,10 @@ http.interceptors.response.use(
 
             router.push({name: '401'});
         }
+        if (error.response && error.response.status === 403) {
+
+            router.push({name: '401'});
+        }
         if (error.response && error.response.status === 404) {
             router.push({name: '404'});
         }
@@ -50,6 +54,23 @@ const apis = {
     logout: ( ) => {
 
         return http.post('logout');
+
+    },
+    uploadMedia: ( data ) => {
+        const headers = {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }
+        const fd = new FormData;
+        fd.append('media[]', data);
+        return http.post('upload-media', fd, headers);
+
+    },
+    updateProfile: ( data ) => {
+        return http.post('update-profile', data);
+
+    },
+    updatePassword: ( data ) => {
+        return http.post('update-password', data);
 
     },
     getCompanyList: ( params) => {
@@ -101,6 +122,9 @@ const apis = {
         return http.post('roles/store', data);
 
     },
+    deleteRole: ( id ) => {
+        return http.post( `roles/${id}/delete` );
+    },
     getMemberList: ( params) => {
         let config = {};
         if( params ) {
@@ -128,6 +152,24 @@ const apis = {
     },
     acceptInvitation: ( token ) => {
         return http.post( 'members/' + token + '/accept-invitation');
+    },
+    getBranchList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('branches/lists', config);
+
+    },
+    getBranchDetail: ( id ) => {
+        return http.get(`branches/${id}/edit` );
+
+    },
+    createBranch: ( data ) => {
+        return http.post('branches/store', data);
+    },
+    deleteBranch: ( id ) => {
+        return http.post( `branches/${id}/delete` );
     },
 }
 export default apis;

@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'set_default_company' => \App\Http\Middleware\SetDefaultCompanyTeamMiddleware::class,
-        'check_default_company' => \App\Http\Middleware\CheckDefaultCompanyMiddleware::class
+        'check_default_company' => \App\Http\Middleware\CheckDefaultCompanyMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class
     ];
 }

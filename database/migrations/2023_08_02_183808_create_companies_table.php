@@ -14,12 +14,21 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('pan_no')->nullable();
+            $table->string('gst_no')->nullable();
+            $table->bigInteger('mobile')->nullable();
+            $table->string('email')->nullable();
+            $table->text('address')->nullable();
             $table->tinyInteger('status')->default( 1 );
             $table->bigInteger('owned_by');
             $table->timestamps();
 
             $table->index('owned_by');
             $table->index('status');
+            $table->index('pan_no');
+            $table->index('gst_no');
+            $table->index('mobile');
+            $table->index('email');
 
         });
     }

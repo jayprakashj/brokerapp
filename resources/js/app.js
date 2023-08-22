@@ -153,8 +153,8 @@ const app = createApp( App )
 
 app.use( ToastPlugin );
 app.use(vueStore);
-app.use(router);
 app.use( HelperPlugin );
+app.use(router);
 app.use(
     VueTippy,
     // optional

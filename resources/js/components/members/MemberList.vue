@@ -2,70 +2,74 @@
     <page-header :title="pageTitle" :menus="menus" />
     <list-container>
         <template v-if="lists?.data?.length">
-            <div class="card" v-for="(item, idx) in lists.data" :key="'member_'+idx">
-                <div class="p-2 text-right" >
-                    <popper-dropdown>
-                        <div
-                            class="absolute top-12 right-2 popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700">
-                            <ul>
-                                <li >
-                                    <router-link :to="'member/edit/' + item.id"
-                                        class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100">
-                                        <i class="fa fa-pencil mr-2"></i> Edit
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </div>
-                    </popper-dropdown>
+            <div class="card grow items-center p-4 sm:p-5 " :class="{'bg-amber-300 text-gray-700': !item.is_accepted}" v-for="(item, idx) in lists.data" :key="'member_'+idx">
+                <div class="avatar h-20 w-20">
+                    <img class="rounded-full" :src="item.logo_url" alt="avatar">
                 </div>
-                <div class="flex grow flex-col items-center px-4 pb-5 sm:px-5">
-                    <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                        {{ item.member_name || 'N/A' }}
-                    </h3>
-                    <p class="text-xs+"><b>{{ item.email }}</b></p>
-                    <p class="text-xs+">Creator: <b> {{ item.creator }}</b></p>
-                    <div class="inline-space mt-3 flex grow flex-wrap items-start">
+                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
+                    {{ item.member_name || item.email }}
+                </h3>
+                <p class="text-xs+">{{ item.is_company_owner ? 'Admin' : item.role_name }} </p>
+                <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
+                <div class="grow space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                            <i class="fa fa-phone text-xs"></i>
+                        </div>
+                        <p>{{ item.member_phone }}</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                            <i class="fa fa-envelope text-xs"></i>
+                        </div>
+                        <p>{{ item.email }}</p>
+                    </div>
+                    <div class="flex items-center space-x-4" v-if="item.is_accepted">
+                        <div
+                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                            <i class="fa fa-check text-xs"></i>
+                        </div>
+                        <p>Accepted</p>
+                    </div>
+                    <div class="flex items-center space-x-4" v-else>
+                        <div
+                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                            <i class="fa fa-clock text-xs"></i>
+                        </div>
+                        <p>Pending</p>
+                    </div>
+                </div>
+                <div class="mt-5 space-x-2">
 
-                        <span v-if="!item.is_owned"
-                            class="tag rounded-full bg-success/10 text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
-                            {{ item.role_name }}
-                        </span>
-                        <span v-if="item.is_accepted"
-                            class="tag rounded-full bg-success/10 text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
-                            Accepted
-                        </span>
-                        <span v-else
-                            class="tag rounded-full badge rounded-full bg-error text-white">
-                            Pending
-                        </span>
-                    </div>
-                    <div class="mt-6 grid w-full grid-cols-2 gap-2" >
-                        <button v-if="!item.is_company_owner && !item.is_self"
+                    <router-link :to="'/member/edit/' + item.id"
+                        v-if="!item.is_company_owner && userPermissions.isPermissionsAllowed([ $permissions.UPDATE_MEMBER ] )"
+                        class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                        <i class="fa fa-pencil"></i>
+                        <span> Edit </span>
+                    </router-link>
+                    <button v-if="!item.is_company_owner && !item.is_self && userPermissions.isPermissionsAllowed([ $permissions.REMOVE_MEMBER ] )"
                             @click="removeMember( item.id )"
-                            class="btn space-x-2 bg-primary px-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                            <i class="fa fa-trash" ></i>
-                            <span>Remove</span>
-                        </button>
-                    </div>
+                        class="btn rounded-full bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
+                        <i class="fa fa-trash"></i>
+                    </button>
                 </div>
             </div>
         </template>
+        <no-data-found v-else />
     </list-container>
     <pagination :total-records="lists?.total_records" :per-page="lists?.per_page" :current-page="page" @pageChange="updatePage"></pagination>
 </template>
 
 <script>
+import { mapGetters } from 'vuex' ;
+
 export default {
     data(){
         return {
             pageTitle: 'Member Management',
             isShowPopper: false,
-            menus:[
-                {
-                    title: 'Create',
-                    link: '/member/create'
-                }
-            ],
             page: 1,
             lists:{}
         }
@@ -74,6 +78,26 @@ export default {
     },
     mounted(){
         this.init();
+    },
+    computed:{
+        ...mapGetters([
+            'globalPermissions',
+            'userPermissions'
+        ]),
+        menus(){
+            var menus = [];
+            if( userPermissions.isPermissionsAllowed( this.$permissions.ADD_MEMBER ) ){
+                menus.push(
+                        {
+                            title: 'Add new',
+                            icon_class: 'fa-plus',
+                            link: '/member/create'
+                        }
+                    )
+            }
+
+            return menus;
+        }
     },
     methods:{
         init () {

@@ -83,4 +83,23 @@ class RoleManagementController extends Controller
 
         return GroupPermissionListResource::collection( $permissions );
     }
+
+    public function delete ( Role $role ) {
+        $code = 500;
+        $role->loadCount('users');
+        if( $role->users_count == 0 ){
+
+            $role->delete();
+            $response = [
+                'message' => 'Role removed successfully.'
+            ];
+            $code = 200;
+        }else{
+            $response = [
+                'message' => 'Oops! There are member assigned with this role.'
+            ];
+
+        }
+        return response()->json( $response , $code);
+    }
 }

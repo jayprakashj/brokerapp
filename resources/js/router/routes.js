@@ -1,10 +1,16 @@
+import permission from '@/constants/permissions' ;
+
 import Dashboard from  '@/components/dashboard/Dashboard.vue'
+import ProfileUpdate from  '@/components/profile/ProfileUpdate.vue'
+import ChangePassword from  '@/components/profile/ChangePassword.vue'
 import CompanyList from  '@/components/company/CompanyList.vue'
 import CompanyCreate from  '@/components/company/CompanyCreate.vue'
 import RoleList from  '@/components/roles/RoleList.vue'
 import RoleCreate from  '@/components/roles/RoleCreate.vue'
 import MemberList from  '@/components/members/MemberList.vue'
 import MemberCreate from  '@/components/members/MemberCreate.vue'
+import BranchList from  '@/components/company_branch/BranchList.vue'
+import BranchCreate from  '@/components/company_branch/BranchCreate.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -27,6 +33,22 @@ const routes = [
         }
     },
     {
+        path: '/profile',
+        name: 'profile',
+        component: ProfileUpdate,
+        meta:{
+            title: 'Profile'
+        }
+    },
+    {
+        path: '/change-password',
+        name: 'change_password',
+        component: ChangePassword,
+        meta:{
+            title: 'Change Password'
+        }
+    },
+    {
         path: '/company',
         name: 'company_lists',
         component: CompanyList,
@@ -34,14 +56,14 @@ const routes = [
             title: 'Company Management'
         },
     },
-    {
-        path: '/company/create',
-        name: 'company_create',
-        component: CompanyCreate,
-        meta: {
-            title: 'Company Create'
-        }
-    },
+    // {
+    //     path: '/company/create',
+    //     name: 'company_create',
+    //     component: CompanyCreate,
+    //     meta: {
+    //         title: 'Company Create'
+    //     }
+    // },
     {
         path: '/company/edit/:id',
         name: 'company_edit',
@@ -55,7 +77,8 @@ const routes = [
         name: 'role_lists',
         component: RoleList,
         meta:{
-            title: 'Role Management'
+            title: 'Role Management',
+            permissions: [ permission.ROLE_LIST ]
         },
     },
     {
@@ -63,7 +86,8 @@ const routes = [
         name: 'role_create',
         component: RoleCreate,
         meta: {
-            title: 'Role Create'
+            title: 'Role Create',
+            permissions: [ permission.ADD_ROLE ]
         }
     },
     {
@@ -71,7 +95,8 @@ const routes = [
         name: 'role_edit',
         component: RoleCreate,
         meta: {
-            title: 'Role Edit'
+            title: 'Role Edit',
+            permissions: [ permission.UPDATE_ROLE ]
         }
     },
     {
@@ -79,7 +104,8 @@ const routes = [
         name: 'member_lists',
         component: MemberList,
         meta:{
-            title: 'Member Management'
+            title: 'Member Management',
+            permissions: [ permission.MEMBER_LIST ]
         },
     },
     {
@@ -87,7 +113,8 @@ const routes = [
         name: 'member_create',
         component: MemberCreate,
         meta: {
-            title: 'Member Create'
+            title: 'Member Create',
+            permissions: [ permission.ADD_MEMBER ]
         }
     },
     {
@@ -95,7 +122,8 @@ const routes = [
         name: 'member_edit',
         component: MemberCreate,
         meta: {
-            title: 'Member Edit'
+            title: 'Member Edit',
+            permissions: [ permission.UPDATE_MEMBER ]
         }
     },
     {
@@ -104,6 +132,33 @@ const routes = [
         component: ViewInvitation,
         meta: {
             title: 'Invitation'
+        }
+    },
+    {
+        path: '/branch',
+        name: 'branch_lists',
+        component: BranchList,
+        meta:{
+            title: 'Branch Management',
+            permissions: [ permission.BRANCH_LIST ]
+        },
+    },
+    {
+        path: '/branch/create',
+        name: 'branch_create',
+        component: BranchCreate,
+        meta: {
+            title: 'Branch Create',
+            permissions: [ permission.ADD_BRANCH ]
+        }
+    },
+    {
+        path: '/branch/edit/:id',
+        name: 'branch_edit',
+        component: BranchCreate,
+        meta: {
+            title: 'Branch Edit',
+            permissions: [ permission.UPDATE_BRANCH ]
         }
     },
     {

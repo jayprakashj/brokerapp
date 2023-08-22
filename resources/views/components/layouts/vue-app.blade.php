@@ -32,7 +32,8 @@
          */
         localStorage.getItem("_x_darkMode_on") === "true" &&
         document.documentElement.classList.add("dark");
-        var userPermissions = @json( auth()->user()->getAllPermissions() );
+        var authUser = @json( auth()->user()->getDataForVueApp() );
+        var userPermissions = @json( auth()->user()->getAllPermissions()->pluck('name') );
         var globalPermissions = @json( $globalPermissions ?? [] );
     </script>
 
@@ -42,11 +43,6 @@
 
     <livewire:styles />
 
-    @bukStyles
-
-    @laravelViewsStyles(laravel-views)
-
-    @routes
 </head>
 
 <body x-data x-bind="$store.global.documentBody"
@@ -64,9 +60,7 @@
 
     <livewire:scripts />
 
-    @bukScripts
 
-    @laravelViewsScripts(laravel-views)
 
 </body>
 

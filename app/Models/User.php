@@ -4,21 +4,34 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Http\Resources\Api\Company\CompanyEditResource;
+use App\Http\Resources\Api\Company\DefaultCompanyResource;
 use App\Models\Scopes\HasActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasActive, HasRoles;
+    use HasApiTokens,
+        HasFactory,
+        Notifiable,
+        HasActive,
+        HasRoles,
+        InteractsWithMedia;
 
     protected $with = ['defaultCompany.company', 'globalRole.permissions'];
+
+    protected $defaultImage = '/images/100x100.png';
 
     /**
      * The attributes that are mass assignable.
@@ -58,6 +71,18 @@ class User extends Authenticatable
         self::TYPE_COMPANY => 'Company',
         self::TYPE_INDIVIDUAL => 'Individual',
     ];
+
+    public function registerMediaCollections(Media $media = null): void
+    {
+        $this->addMediaCollection('logo')
+                ->singleFile()
+                ->registerMediaConversions(function (Media $media) {
+                    $this
+                        ->addMediaConversion('logo')
+                        ->fit(Manipulations::FIT_CONTAIN, 150, 150)
+                        ->nonQueued();
+                });
+    }
 
 
     /**
@@ -172,5 +197,45 @@ class User extends Authenticatable
 
     public function setDefaultRole () {
         $this->assignRole('company-admin');
+    }
+
+
+    public function scopeGetDefaultLogoUrl () {
+
+        return $this->getDefaultLogo();
+    }
+
+    public function getDefaultLogo () {
+
+        return url( $this->defaultImage );
+    }
+
+    public function getLogoUrl () {
+        $media = $this->media;
+        if( $media->count() ){
+            return  $this->getFirstMediaUrl('logo','logo');
+        }
+
+        return $this->getDefaultLogo();
+    }
+
+    public function getLogoMediaId () {
+        $media = $this->getFirstMedia('logo');
+        if( !is_null( $media ) ){
+            return  $media->id;
+        }
+
+        return null;
+    }
+
+    public function getDataForVueApp () {
+        $this->logo = $this->getLogoMediaId();
+        $this->logo_url = $this->getLogoUrl();
+        if( !is_null( $this->defaultCompany ) && !empty( $this->defaultCompany->company ) ){
+            $this->current_company = new DefaultCompanyResource( $this->defaultCompany->company );
+
+        }
+
+        return $this;
     }
 }
