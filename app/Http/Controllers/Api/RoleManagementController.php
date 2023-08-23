@@ -79,7 +79,10 @@ class RoleManagementController extends Controller
     }
 
     public function getPermissions () {
-        $permissions = SpatiePermission::with('subPermissions')->groupBy('group_name')->get();
+        $permissions = SpatiePermission::with('subPermissions')
+                                        ->exceptDefaultPermission()
+                                        ->groupBy('group_name')
+                                        ->get();
 
         return GroupPermissionListResource::collection( $permissions );
     }
