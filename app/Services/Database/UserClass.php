@@ -50,7 +50,9 @@ class UserClass {
 
         $company = $this->companyClass->createWithUserRegistration( (new Company), $user,  $request );
 
-        $companyMember = $this->memberClass->createWithUserRegistration( $company, $user, CompanyMember::FLAG_IS_DEFAULT_YES, CompanyMember::INVITE_STATUS_ACCEPT  );
+        $isDefault = $user->isTypeIndividual() ? CompanyMember::FLAG_IS_DEFAULT_NO : CompanyMember::FLAG_IS_DEFAULT_YES;
+
+        $companyMember = $this->memberClass->createWithUserRegistration( $company, $user, $isDefault, CompanyMember::INVITE_STATUS_ACCEPT  );
 
         $user->setRelation('ownedCompany', $company );
 
