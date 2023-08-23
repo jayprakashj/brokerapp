@@ -27,7 +27,9 @@ class MemberSeeder extends Seeder
         //
         $users = User::with('defaultCompany')->get();
 
-        foreach( $users as $item ){
+        $companies = $users->where('type', User::TYPE_COMPANY );
+
+        foreach( $companies as $item ){
             $roles = Role::where('user_id', $item->id )->get()->pluck('id');
             $memberUsers = $users->where('id', '!=', $item->id );
             foreach( $memberUsers as $memberItem ){

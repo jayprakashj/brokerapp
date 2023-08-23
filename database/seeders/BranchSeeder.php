@@ -22,7 +22,7 @@ class BranchSeeder extends Seeder
         //
         $faker = app( Faker::class );
 
-        $users = User::with('defaultCompany')->get();
+        $users = User::with('defaultCompany')->typeCompany()->get();
         foreach( $users as $item ){
             for($i = 0; $i < 2; $i++){
                 $branch = new CompanyBranch();

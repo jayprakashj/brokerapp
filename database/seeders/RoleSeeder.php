@@ -27,19 +27,21 @@ class RoleSeeder extends Seeder
         $faker = app( Faker::class );
 
         $permissions = Permission::all()->pluck('id');
-        $users = User::with('defaultCompany')->get();
+        $users = User::with('defaultCompany')->typeCompany()->get();
         foreach( $users as $item ){
             for( $i = 0 ; $i < 5; $i++ ){
+                if( !is_null( $item->defaultCompany )){
+                    $role = new Role();
+                    $role->name = $faker->text( 12 );
+                    $role->user_id = $item->id;
+                    $role->company_id = $item->defaultCompany->id;
+                    $role->guard_name = 'web';
+                    $role->save();
 
-                $role = new Role();
-                $role->name = $faker->text( 12 );
-                $role->user_id = $item->id;
-                $role->company_id = $item->defaultCompany->id;
-                $role->guard_name = 'web';
-                $role->save();
+                    $role->syncPermissions( $permissions->random( 5 ) );
+                }
 
 
-                $role->syncPermissions( $permissions->random( 5 ) );
 
             }
         }

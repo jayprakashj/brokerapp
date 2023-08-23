@@ -97,7 +97,7 @@ class PermissionSeeder extends Seeder
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => 'user-admin']);
         $role->givePermissionTo(Permission::whereGroupName('Company')->get());
 
         $role = Role::create(['name' => 'user Management']);
