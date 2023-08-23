@@ -144,6 +144,14 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany( Role::class, 'user_id', 'id');
     }
 
+    public function scopeTypeCompany ( $q ) {
+        return $q->whereType( self::TYPE_COMPANY );
+    }
+
+    public function scopeTypeIndividual ( $q ) {
+        return $q->whereType( self::TYPE_INDIVIDUAL );
+    }
+
     public function isTypeCompany () {
         return $this->type == self::TYPE_COMPANY;
     }
@@ -196,7 +204,11 @@ class User extends Authenticatable implements HasMedia
     }
 
     public function setDefaultRole () {
-        $this->assignRole('company-admin');
+        if( $this->isTypeIndividual() ){
+            $this->assignRole( 'user-admin' );
+        }else{
+            $this->assignRole('company-admin');
+        }
     }
 
 

@@ -78,6 +78,10 @@ class CompanyMember extends Model
         return $q->whereIsDefault( self::FLAG_IS_DEFAULT_YES );
     }
 
+    public function scopeNotOwner ( $q ){
+        return $q->whereIsOwner( self::FLAG_IS_OWNER_NO );
+    }
+
     public function scopeCurrentDefaultCompany ( $q ){
         $defaultCompany = \Helper::retrieveDefaultCompany();
         if( !is_null( $defaultCompany ) ){
