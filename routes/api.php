@@ -43,35 +43,36 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
     Route::get('/fetch/permissions', [RoleManagementController::class, 'getPermissions'])->name('fetch.permissions');
 
-    Route::prefix('roles')
-            ->name('role.')
-            ->group( function () {
-                Route::get('/lists', [RoleManagementController::class, 'index'])
-                        ->middleware('permission:Role List')
-                        ->name('index');
 
-                Route::get('{role}/edit', [RoleManagementController::class, 'edit'])
-                        ->middleware('permission:Update Role')
-                        ->name('edit');
+    Route::middleware('check_default_company')->group( function(){
 
-                Route::post('store', [RoleManagementController::class, 'store'])
-                        ->middleware('permission:Add Role|Update Role')
-                        ->name('store');
+        Route::prefix('roles')
+                ->name('role.')
+                ->group( function () {
+                    Route::get('/lists', [RoleManagementController::class, 'index'])
+                            ->middleware('permission:Role List')
+                            ->name('index');
 
-                Route::post('{role}/delete', [RoleManagementController::class, 'delete'])
-                        ->middleware('permission:Remove Role')
-                        ->name('delete');
+                    Route::get('{role}/edit', [RoleManagementController::class, 'edit'])
+                            ->middleware('permission:Update Role')
+                            ->name('edit');
 
-            });
+                    Route::post('store', [RoleManagementController::class, 'store'])
+                            ->middleware('permission:Add Role|Update Role')
+                            ->name('store');
 
-    Route::prefix('members')
-            ->name('member.')
-            ->group( function () {
+                    Route::post('{role}/delete', [RoleManagementController::class, 'delete'])
+                            ->middleware('permission:Remove Role')
+                            ->name('delete');
 
-                Route::get('{token:token}/invitation', [MemberController::class, 'getInvitation'])->name('view_invitation');
-                Route::post('{member:token}/accept-invitation', [MemberController::class, 'acceptInvitation'])->name('accept_invitation');
+                });
 
-                Route::middleware('check_default_company')->group( function(){
+        Route::prefix('members')
+                ->name('member.')
+                ->group( function () {
+
+                    Route::get('{token:token}/invitation', [MemberController::class, 'getInvitation'])->withoutMiddleware('check_default_company')->name('view_invitation');
+                    Route::post('{member:token}/accept-invitation', [MemberController::class, 'acceptInvitation'])->withoutMiddleware('check_default_company')->name('accept_invitation');
 
                     Route::get('/lists', [MemberController::class, 'index'])
                                     ->middleware('permission:Member List')
@@ -91,15 +92,12 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                     Route::get('roles', [MemberController::class, 'getRoles'])
                                     ->name('members_roles_list');
+
                 });
 
-            });
-
-    Route::prefix('branches')
-            ->name('company_branch.')
-            ->group( function () {
-
-                Route::middleware('check_default_company')->group( function(){
+        Route::prefix('branches')
+                ->name('company_branch.')
+                ->group( function () {
 
                     Route::get('/lists', [CompanyBranchController::class, 'index'])
                                     ->middleware('permission:Branch List')
@@ -119,6 +117,6 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                 });
 
-            });
+    });
 
 });
