@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Models\Relations\CompanyRelation;
+use App\Models\Relations\CreatedUpdatedUserRelation;
+use App\Models\Relations\OwnerUserRelation;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
 
 class CompanyBranch extends Model
 {
-    use CompanyRelation;
+    use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation;
 
     /**
      * The "booted" method of the model.
@@ -21,14 +23,6 @@ class CompanyBranch extends Model
 
     public function ownerUser (){
         return $this->belongsTo( User::class, 'user_id', 'id');
-    }
-
-    public function createdUser (){
-        return $this->belongsTo( User::class, 'created_by', 'id');
-    }
-
-    public function updatedUser (){
-        return $this->belongsTo( User::class, 'updated_by', 'id');
     }
 
 
