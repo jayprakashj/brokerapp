@@ -140,6 +140,7 @@ import Pagination from "@/components/Pagination.vue";
 import ListContainer from "@/components/ListContainer.vue";
 import PopperDropdown from "@/components/PopperDropdown.vue";
 import NoDataFound from "@/components/NoDataFound.vue";
+import TomSelect from "@/components/input/TomSelect.vue";
 import ToastPlugin from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 
@@ -175,6 +176,7 @@ app.component('list-container', ListContainer );
 app.component('pagination', Pagination );
 app.component('popper-dropdown', PopperDropdown );
 app.component('no-data-found', NoDataFound );
+app.component('input-tom-select', TomSelect );
 
 app.directive('clickOutside', ClickOutside );
 
