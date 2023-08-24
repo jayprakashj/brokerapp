@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\RoleManagementController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -115,6 +116,33 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                     //                 ->middleware('permission:Remove Branch')
                     //                 ->name('delete');
 
+                });
+
+        Route::prefix('contacts')
+                ->name('contact.')
+                ->group( function () {
+
+                    Route::get('/lists', [ContactController::class, 'index'])
+                                    ->middleware('permission:Contact List')
+                                    ->name('index');
+
+                    Route::get('{contact}/edit', [ContactController::class, 'edit'])
+                                    ->middleware('permission:Update Contact')
+                                    ->name('edit');
+
+                    Route::post('store', [ContactController::class, 'store'])
+                                    ->middleware('permission:Add Contact|Update Contact')
+                                    ->name('store');
+
+                    // Route::post('{contact}/delete', [ContactController::class, 'delete'])
+                    //                 ->middleware('permission:Remove Contact')
+                    //                 ->name('delete');
+
+                    Route::get('contact-types/select-list', [ ContactController::class, 'contactTypeSelectList'])
+                                    ->name('select.contact_types');
+
+                    Route::get('customer-types/select-list', [ ContactController::class, 'customerTypeSelectList'])
+                                    ->name('select.customer_types');
                 });
 
     });

@@ -11,6 +11,8 @@ import MemberList from  '@/components/members/MemberList.vue'
 import MemberCreate from  '@/components/members/MemberCreate.vue'
 import BranchList from  '@/components/company_branch/BranchList.vue'
 import BranchCreate from  '@/components/company_branch/BranchCreate.vue'
+import ContactList from  '@/components/contacts/ContactList.vue'
+import ContactCreate from  '@/components/contacts/ContactCreate.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -159,6 +161,33 @@ const routes = [
         meta: {
             title: 'Branch Edit',
             permissions: [ permission.UPDATE_BRANCH ]
+        }
+    },
+    {
+        path: '/contact',
+        name: 'contact_lists',
+        component: ContactList,
+        meta:{
+            title: 'Contact Management',
+            permissions: [ permission.CONTACT_LIST ]
+        },
+    },
+    {
+        path: '/contact/create',
+        name: 'contact_create',
+        component: ContactCreate,
+        meta: {
+            title: 'Contact Create',
+            permissions: [ permission.ADD_CONTACT ]
+        }
+    },
+    {
+        path: '/contact/edit/:id',
+        name: 'contact_edit',
+        component: ContactCreate,
+        meta: {
+            title: 'Contact Edit',
+            permissions: [ permission.UPDATE_CONTACT ]
         }
     },
     {

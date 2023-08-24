@@ -15,6 +15,11 @@ const permissions = {
     ADD_BRANCH:'Add Branch',
     UPDATE_BRANCH:'Update Branch',
     REMOVE_BRANCH:'Remove Branch',
+    CONTACT_LIST:'Contact List',
+    VIEW_CONTACT:'View Contact',
+    ADD_CONTACT:'Add Contact',
+    UPDATE_CONTACT:'Update Contact',
+    REMOVE_CONTACT:'Remove Contact',
 }
 
 export default permissions;

@@ -42,7 +42,7 @@ http.interceptors.response.use(
             router.push({name: '404'});
         }
 
-        if (error.response && error.response.status === 500 && 'default_company' in error.response.data && error.response.data.default_company === false ) {
+        if (error.response && error.response.status === 500 && error.response?.data?.default_company && error.response.data.default_company === false ) {
             $toast.error("Err! Please select default company.");
             router.push({name: 'company_lists'});
         }
@@ -71,6 +71,22 @@ const apis = {
     },
     updatePassword: ( data ) => {
         return http.post('update-password', data);
+
+    },
+    contactTypeSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('contacts/contact-types/select-list', config);
+
+    },
+    customerTypeSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('contacts/customer-types/select-list', config);
 
     },
     getCompanyList: ( params) => {
@@ -170,6 +186,23 @@ const apis = {
     },
     deleteBranch: ( id ) => {
         return http.post( `branches/${id}/delete` );
+    },
+    getContactList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('contacts/lists', config);
+
+    },
+    getContactDetail: ( id ) => {
+        return http.get(`contacts/${id}/edit` );
+    },
+    createContact: ( data ) => {
+        return http.post('contacts/store', data);
+    },
+    deleteContact: ( id ) => {
+        return http.post( `contacts/${id}/delete` );
     },
 }
 export default apis;

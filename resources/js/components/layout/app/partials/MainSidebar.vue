@@ -163,6 +163,14 @@ export default {
                     permission: [ this.$permissions.BRANCH_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
+                },
+                {
+                    name: 'Contacts',
+                    route: '/contact',
+                    iconClass: 'fa-phone',
+                    permission: [ this.$permissions.CONTACT_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
                 }
             ]
         }

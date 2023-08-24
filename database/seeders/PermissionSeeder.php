@@ -94,6 +94,27 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Branch',
         ]);
 
+        Permission::create([
+            'name' => 'Contact List',
+            'group_name' => 'Contact',
+        ]);
+        Permission::create([
+            'name' => 'View Contact',
+            'group_name' => 'Contact',
+        ]);
+        Permission::create([
+            'name' => 'Add Contact',
+            'group_name' => 'Contact',
+        ]);
+        Permission::create([
+            'name' => 'Update Contact',
+            'group_name' => 'Contact',
+        ]);
+        Permission::create([
+            'name' => 'Remove Contact',
+            'group_name' => 'Contact',
+        ]);
+
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 
