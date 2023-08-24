@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
                 UserSeeder::class,
                 RoleSeeder::class,
                 MemberSeeder::class,
-                BranchSeeder::class
+                BranchSeeder::class,
+                ContactTypeSeeder::class,
+                CustomerTypeSeeder::class,
             ]
         );
     }
