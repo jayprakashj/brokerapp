@@ -24,6 +24,7 @@ return new class extends Migration
             $table->index('user_id');
             $table->index('company_id');
             $table->index('name');
+            $table->index('created_by');
             $table->index('updated_by');
         });
     }
