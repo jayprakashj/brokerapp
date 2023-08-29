@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Api\Contact;
 
-use App\Http\Resources\Api\Contact\ContactListResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ContactPaginationResource extends JsonResource
