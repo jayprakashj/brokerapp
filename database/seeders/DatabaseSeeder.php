@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
                 BranchSeeder::class,
                 ContactTypeSeeder::class,
                 CustomerTypeSeeder::class,
+                LeadSourceSeeder::class,
+                LeadStatusSeeder::class,
             ]
         );
     }
