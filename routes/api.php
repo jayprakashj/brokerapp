@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\RoleManagementController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -143,6 +144,46 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                     Route::get('customer-types/select-list', [ ContactController::class, 'customerTypeSelectList'])
                                     ->name('select.customer_types');
+                });
+
+        Route::prefix('leads')
+                ->name('lead.')
+                ->group( function () {
+
+                    Route::get('/lists', [LeadController::class, 'index'])
+                                    ->middleware('permission:Lead List|Only Assigned Lead List')
+                                    ->name('index');
+
+                    Route::get('{lead}/edit', [LeadController::class, 'edit'])
+                                    ->middleware('permission:Update Lead')
+                                    ->name('edit');
+
+                    Route::get('{lead}/view', [LeadController::class, 'view'])
+                                    ->middleware('permission:View Lead')
+                                    ->name('view');
+
+                    Route::post('store', [LeadController::class, 'store'])
+                                    ->middleware('permission:Add Lead|Update Lead')
+                                    ->name('store');
+
+                    Route::post('{lead}/add-comment', [LeadController::class, 'addLeadComment'])
+                                    ->middleware('permission:Update Lead')
+                                    ->name('add.lead_comment');
+
+                    // Route::post('{lead}/delete', [LeadController::class, 'delete'])
+                    //                 ->middleware('permission:Remove Lead')
+                    //                 ->name('delete');
+
+                    Route::get('lead-source/select-list', [ LeadController::class, 'leadSourceSelectList'])
+                                    ->name('select.lead_source');
+
+                    Route::get('lead-status/select-list', [ LeadController::class, 'leadStatusSelectList'])
+                                    ->name('select.lead_status');
+
+                    Route::get('company-branch/select-list', [ LeadController::class, 'companyBranchSelectList'])
+                                    ->name('select.company_banch');
+                    Route::get('company-members/select-list', [ LeadController::class, 'companyMembersSelectList'])
+                                    ->name('select.company_member');
                 });
 
     });

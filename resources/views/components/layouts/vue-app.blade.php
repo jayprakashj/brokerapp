@@ -50,6 +50,8 @@
 
     <div id="broker-app"></div>
 
+    <div id="teleport-target"></div>
+
     <script>
         window.addEventListener("DOMContentLoaded", () => Alpine.start());
     </script>

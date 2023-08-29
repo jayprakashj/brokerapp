@@ -20,6 +20,12 @@ const permissions = {
     ADD_CONTACT:'Add Contact',
     UPDATE_CONTACT:'Update Contact',
     REMOVE_CONTACT:'Remove Contact',
+    LEAD_LIST:'Lead List',
+    ONLY_ASSIGNED_LEAD_LIST:'Only Assigned Lead List',
+    VIEW_LEAD:'View Lead',
+    ADD_LEAD:'Add Lead',
+    UPDATE_LEAD:'Update Lead',
+    REMOVE_LEAD:'Remove Lead'
 }
 
 export default permissions;

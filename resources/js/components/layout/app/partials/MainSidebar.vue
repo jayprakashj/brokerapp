@@ -118,7 +118,6 @@
 
 <script>
 
-import permission from '@/constants/permissions' ;
 import { mapGetters } from 'vuex';
 
 export default {
@@ -169,6 +168,14 @@ export default {
                     route: '/contact',
                     iconClass: 'fa-phone',
                     permission: [ this.$permissions.CONTACT_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
+                    name: 'Lead Management',
+                    route: '/lead',
+                    iconClass: 'fa-bullseye',
+                    permission: [ this.$permissions.LEAD_LIST,this.$permissions.ONLY_ASSIGNED_LEAD_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
                 }

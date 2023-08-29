@@ -13,6 +13,9 @@ import BranchList from  '@/components/company_branch/BranchList.vue'
 import BranchCreate from  '@/components/company_branch/BranchCreate.vue'
 import ContactList from  '@/components/contacts/ContactList.vue'
 import ContactCreate from  '@/components/contacts/ContactCreate.vue'
+import LeadList from  '@/components/leads/LeadList.vue'
+import LeadCreate from  '@/components/leads/LeadCreate.vue'
+import LeadView from  '@/components/leads/LeadView.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -188,6 +191,42 @@ const routes = [
         meta: {
             title: 'Contact Edit',
             permissions: [ permission.UPDATE_CONTACT ]
+        }
+    },
+    {
+        path: '/lead',
+        name: 'lead_lists',
+        component: LeadList,
+        meta:{
+            title: 'Lead Management',
+            permissions: [ permission.LEAD_LIST, permission.ONLY_ASSIGNED_LEAD_LIST ]
+        },
+    },
+    {
+        path: '/lead/create',
+        name: 'lead_create',
+        component: LeadCreate,
+        meta: {
+            title: 'Lead Create',
+            permissions: [ permission.ADD_LEAD ]
+        }
+    },
+    {
+        path: '/lead/edit/:id',
+        name: 'lead_edit',
+        component: LeadCreate,
+        meta: {
+            title: 'Lead Edit',
+            permissions: [ permission.UPDATE_LEAD ]
+        }
+    },
+    {
+        path: '/lead/view/:id',
+        name: 'lead_view',
+        component: LeadView,
+        meta: {
+            title: 'Lead View',
+            permissions: [ permission.VIEW_LEAD ]
         }
     },
     {

@@ -89,6 +89,38 @@ const apis = {
         return http.get('contacts/customer-types/select-list', config);
 
     },
+    leadSourceSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/lead-source/select-list', config);
+
+    },
+    leadStatusSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/lead-status/select-list', config);
+
+    },
+    companyBranchSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/company-branch/select-list', config);
+
+    },
+    companyMembersSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/company-members/select-list', config);
+
+    },
     getCompanyList: ( params) => {
         let config = {};
         if( params ) {
@@ -203,6 +235,29 @@ const apis = {
     },
     deleteContact: ( id ) => {
         return http.post( `contacts/${id}/delete` );
+    },
+    getLeadList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('leads/lists', config);
+
+    },
+    getLeadDetail: ( id ) => {
+        return http.get(`leads/${id}/edit` );
+    },
+    getLeadViewDetail: ( id ) => {
+        return http.get(`leads/${id}/view` );
+    },
+    createLead: ( data ) => {
+        return http.post('leads/store', data);
+    },
+    deleteLead: ( id ) => {
+        return http.post( `leads/${id}/delete` );
+    },
+    addLeadComment: ( id, data ) => {
+        return http.post( `leads/${id}/add-comment`, data );
     },
 }
 export default apis;

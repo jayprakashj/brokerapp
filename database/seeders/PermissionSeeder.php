@@ -115,6 +115,33 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Contact',
         ]);
 
+
+        Permission::create([
+            'name' => 'Lead List',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Only Assigned Lead List',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'View Lead',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Add Lead',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Update Lead',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Remove Lead',
+            'group_name' => 'Lead',
+        ]);
+
+
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 
