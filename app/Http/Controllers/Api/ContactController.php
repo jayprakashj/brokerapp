@@ -27,7 +27,7 @@ class ContactController extends Controller
 
     public function index ( Request $request ) {
 
-        $branches = $this->contactClass->getDefaultCompanyBranches( $request->input('per_page', 24 ));
+        $branches = $this->contactClass->getDefaultList( $request->input('per_page', 24 ));
         return new ContactPaginationResource( $branches );
     }
 

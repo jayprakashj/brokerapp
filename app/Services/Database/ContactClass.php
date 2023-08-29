@@ -18,11 +18,18 @@ class ContactClass {
         $this->contactTypeClass = new ContactTypeClass;
     }
 
-    public function getDefaultCompanyBranches ( $perPage = 24 ) {
-        $lists = Contact::paginate( $perPage );
+    public function getDefaultList ( $perPage = 24 ) {
+        $lists = Contact::with('company')->paginate( $perPage );
         return $lists;
     }
 
+    public function findByMobile ( $mobile ){
+        return Contact::whereMobile( $mobile )->first();
+    }
+
+    public function findByEmail ( $email ){
+        return Contact::whereEmail( $email )->first();
+    }
 
     public function create ( User $user, $request ) {
 
