@@ -30,6 +30,11 @@ class MemberClass {
         return $members;
     }
 
+    public function getMembersListForSelectList () {
+        $members = CompanyMember::with('memberUser')->currentDefaultCompany()->get();
+        return $members;
+    }
+
 
     public function create ( User $user, $request ) {
 
