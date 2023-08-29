@@ -8,6 +8,7 @@ use App\Models\Lead;
 use App\Models\LeadComment;
 use App\Models\User;
 use Helper;
+use Illuminate\Support\Arr;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -31,17 +32,20 @@ class LeadCommentClass {
 
         $changesField = $lead->getChanges();
         if( !empty( $changesField ) ){
-            $comment = \Helper::combineKeyValue( $changesField );
-            $leadComment = new LeadComment();
-            $leadComment->user_id = \Helper::retrieveDefaultCompany()->owned_by ?? null;
-            $leadComment->company_id = \Helper::retrieveDefaultCompany()->id ?? null;
-            $leadComment->lead_id = $lead->id;
-            $leadComment->created_by = $user->id;
-            $leadComment->updated_by = $user->id;
-            $leadComment->comment = implode("\n", $comment );
-            $leadComment->lead_status = $lead->lead_status;
-            $leadComment->followup_date = $lead->followup_date;
-            $leadComment->save();
+            $changesField = Arr::except( $changesField, 'updated_at');
+            if( !empty( $changesField ) ){
+                $comment = \Helper::combineKeyValue( $changesField );
+                $leadComment = new LeadComment();
+                $leadComment->user_id = \Helper::retrieveDefaultCompany()->owned_by ?? null;
+                $leadComment->company_id = \Helper::retrieveDefaultCompany()->id ?? null;
+                $leadComment->lead_id = $lead->id;
+                $leadComment->created_by = $user->id;
+                $leadComment->updated_by = $user->id;
+                $leadComment->comment = implode("\n", $comment );
+                $leadComment->lead_status = $lead->lead_status;
+                $leadComment->followup_date = $lead->followup_date;
+                $leadComment->save();
+            }
         }
 
     }
