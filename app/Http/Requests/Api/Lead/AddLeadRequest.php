@@ -43,7 +43,7 @@ class AddLeadRequest extends FormRequest
             'keywords' => [
                 'required'
             ],
-            'insterest_in' => [
+            'interest_in' => [
                 'required'
             ],
             'purpose' => [
