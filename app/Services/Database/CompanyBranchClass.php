@@ -8,7 +8,12 @@ use App\Models\CompanyBranch;
 class CompanyBranchClass {
 
     public function getDefaultCompanyBranches ( $perPage = 24 ) {
-        $branches = CompanyBranch::paginate( $perPage );
+        $branches = CompanyBranch::with('company')->paginate( $perPage );
+        return $branches;
+    }
+
+    public function defaultCompanyBranchSelectList () {
+        $branches = CompanyBranch::with('company')->get();
         return $branches;
     }
 
