@@ -10,10 +10,12 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Helper;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model implements HasMedia
 {
     use HasFactory,
+        SoftDeletes,
         HasActive,
         InteractsWithMedia;
 

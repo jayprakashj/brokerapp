@@ -9,6 +9,7 @@ use App\Http\Resources\Api\Company\DefaultCompanyResource;
 use App\Models\Scopes\HasActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -24,6 +25,7 @@ class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens,
         HasFactory,
+        SoftDeletes,
         Notifiable,
         HasActive,
         HasRoles,
@@ -209,6 +211,10 @@ class User extends Authenticatable implements HasMedia
         }else{
             $this->assignRole('company-admin');
         }
+    }
+
+    public function isCompanyAdmin () {
+        return $this->hasRole('company-admin');
     }
 
 

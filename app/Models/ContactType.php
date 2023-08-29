@@ -7,10 +7,11 @@ use App\Models\Relations\CreatedUpdatedUserRelation;
 use App\Models\Relations\OwnerUserRelation;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ContactType extends Model
 {
-    use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation;
+    use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes;
 
     /**
      * The "booted" method of the model.

@@ -7,10 +7,11 @@ use App\Models\Relations\CreatedUpdatedUserRelation;
 use App\Models\Relations\OwnerUserRelation;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CompanyBranch extends Model
 {
-    use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation;
+    use SoftDeletes, CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation;
 
     /**
      * The "booted" method of the model.
@@ -26,4 +27,11 @@ class CompanyBranch extends Model
     }
 
 
+    public function getNameWithCompanyName () {
+        $name = $this->name;
+        if( !is_null( $this->company ) ){
+            $name .= '( ' . $this->company->name . ' )';
+        }
+        return $name;
+    }
 }
