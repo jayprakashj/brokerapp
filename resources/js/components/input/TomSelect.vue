@@ -141,6 +141,9 @@ export default {
                     $thisApp.$request[ $thisApp.requestName ]( qry )
                             .then( ( res ) => {
                                 cb( res.data );
+                                setTimeout(() => {
+                                    $thisApp.setSelectedValues();
+                                }, 500);
                                 if( $thisApp.ajaxLoadOnce ){
                                     self.settings.load = null;
                                 }
