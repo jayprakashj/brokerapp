@@ -3,6 +3,7 @@
 namespace App\Services\Database;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use App\Models\CustomerType;
 
 class CustomerTypeClass {
@@ -33,7 +34,7 @@ class CustomerTypeClass {
 
     public function create( User $user, $keyword ){
         $customerType = new CustomerType();
-        $customerType->name = $keyword;
+        $customerType->name = Str::title( $keyword );
         $customerType->user_id = $user->id;
         $customerType->company_id = \Helper::retrieveDefaultCompany()->id;
         $customerType->updated_by = $user->id;

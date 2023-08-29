@@ -4,6 +4,7 @@ namespace App\Services\Database;
 
 use App\Models\User;
 use App\Models\ContactType;
+use Illuminate\Support\Str;
 
 class ContactTypeClass {
 
@@ -33,7 +34,7 @@ class ContactTypeClass {
 
     public function create( User $user, $keyword ){
         $contactType = new ContactType();
-        $contactType->name = $keyword;
+        $contactType->name = Str::title( $keyword );
         $contactType->user_id = $user->id;
         $contactType->company_id = \Helper::retrieveDefaultCompany()->id;
         $contactType->updated_by = $user->id;
