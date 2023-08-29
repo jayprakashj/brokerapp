@@ -25,6 +25,7 @@ const permissions = {
     VIEW_LEAD:'View Lead',
     ADD_LEAD:'Add Lead',
     UPDATE_LEAD:'Update Lead',
+    CAN_COMMENT:'Can Comment',
     REMOVE_LEAD:'Remove Lead'
 }
 

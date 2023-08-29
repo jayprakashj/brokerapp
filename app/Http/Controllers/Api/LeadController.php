@@ -41,7 +41,7 @@ class LeadController extends Controller
     public function index ( Request $request ) {
         $user = auth()->user();
 
-        $onlyAssignedTo = $user->hasPermissionTo('Only Assigned Lead List');
+        $onlyAssignedTo = $user->can('Only Assigned Lead List');
         if( $user->isCompanyAdmin() ){
             $onlyAssignedTo = false;
         }
@@ -50,11 +50,17 @@ class LeadController extends Controller
     }
 
     public function edit (Lead $lead ) {
-
+        if( !$lead->checkAuthorization() ){
+            return response()->json( [], 404 );
+        }
         return new LeadEditResource( $lead );
     }
 
     public function view (Lead $lead ) {
+
+        if( !$lead->checkAuthorization() ){
+            return response()->json( [], 404 );
+        }
 
         return new LeadViewResource( $lead );
     }
@@ -71,6 +77,10 @@ class LeadController extends Controller
             $this->leadClass->create( auth()->user(), $request );
 
         }else{
+
+            if( !$lead->checkAuthorization() ){
+                return response()->json( [], 404 );
+            }
             $this->leadClass->update( auth()->user(), $lead, $request );
             $response = [
                 'message' => 'Success! Lead data updated successfully.'
@@ -92,6 +102,11 @@ class LeadController extends Controller
 
     public function addLeadComment ( Lead $lead, AddLeadCommentRequest $request ) {
         // $code = 500;
+
+        if( !$lead->checkAuthorization() ){
+            return response()->json( [], 404 );
+        }
+
         $this->leadClass->updateLeadFollowup( $lead, auth()->user(), $request );
         $response = [
             'message' => 'Lead comment added successfully.'

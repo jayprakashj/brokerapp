@@ -137,6 +137,10 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Lead',
         ]);
         Permission::create([
+            'name' => 'Can Comment',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
             'name' => 'Remove Lead',
             'group_name' => 'Lead',
         ]);

@@ -215,6 +215,7 @@
                     <div class="flex justify-center space-x-2">
                         <button
                             @click="showCommentForm"
+                            v-if="userPermissions.isPermissionsAllowed([ $permissions.CAN_COMMENT ] )"
                             class="btn bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
                             >
                             <i class="fa fa-comments mr-2"></i> Add Comment
@@ -259,7 +260,8 @@
             </div>
         </div>
         <Teleport to="#teleport-target">
-            <add-comment-form v-if="show.commentForm" title="Add Comment" :lead-id="formData.id" @close="hideCommentForm" @onAdded="onCommentAdd" />
+
+            <add-comment-form v-if="userPermissions.isPermissionsAllowed([ $permissions.CAN_COMMENT ] ) && show.commentForm" title="Add Comment" :lead-id="formData.id" @close="hideCommentForm" @onAdded="onCommentAdd" />
         </Teleport>
     </div>
 

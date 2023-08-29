@@ -167,7 +167,7 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                                     ->name('store');
 
                     Route::post('{lead}/add-comment', [LeadController::class, 'addLeadComment'])
-                                    ->middleware('permission:Update Lead')
+                                    ->middleware('permission:Can Comment')
                                     ->name('add.lead_comment');
 
                     // Route::post('{lead}/delete', [LeadController::class, 'delete'])

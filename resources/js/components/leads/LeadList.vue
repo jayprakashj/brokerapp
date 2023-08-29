@@ -30,13 +30,6 @@
                         </div>
                         <p>{{ item.city }}</p>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <div
-                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                            <i class="fa text-xs" :class="{'fa-male': item.is_male, 'fa-female': item.is_female, 'fa-genderless': item.is_other_gender}"></i>
-                        </div>
-                        <p>{{ item.gender }}</p>
-                    </div>
                 </div>
                 <div class="mt-5 space-x-2">
 

@@ -25,8 +25,6 @@ class LeadClass {
 
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignedToAuth();
-        }else if( $onlyAssignedTo ){
-            $lists->assignedToAuth();
         }else if( $onlyCreatedBy ){
             $lists->createdByAuth();
         }

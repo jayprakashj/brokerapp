@@ -66,18 +66,18 @@ class Lead extends Model
         return $this->comments()->latest();
     }
 
-    public function scopeAssignedToAuth ( $q, $boolean = false ){
-        return $q->where('assigned_to', auth()->id(), $boolean );
+    public function scopeAssignedToAuth ( $q, $boolean = 'and' ){
+        return $q->where('assigned_to', '=', auth()->id(), $boolean );
     }
 
-    public function scopeCreatedByAuth ( $q, $boolean = false ){
-        return $q->where('created_by', auth()->id(), $boolean );
+    public function scopeCreatedByAuth ( $q, $boolean = 'and' ){
+        return $q->where('created_by','=', auth()->id(), $boolean );
     }
 
     public function scopeCreatedByOrAssignedToAuth ( $q ){
         return $q->where(function( $whereQry ){
-            $whereQry->assignedToAuth( false )
-                        ->createdByAuth( false );
+            $whereQry->assignedToAuth( 'or' )
+                        ->createdByAuth( 'or' );
         });
     }
 
@@ -91,5 +91,14 @@ class Lead extends Model
 
     public function isProtected(){
         return $this->is_protected == self::IS_PROTECTED_YES;
+    }
+
+    public function isAssignedToMe(){
+        return $this->assigned_to == auth()->id();
+    }
+
+    public function checkAuthorization(){
+        $user = auth()->user();
+        return ($user->isCompanyAdmin() || ($user->can('Only Assigned Lead List') && $this->isAssignedToMe()));
     }
 }

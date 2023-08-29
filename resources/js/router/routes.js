@@ -23,11 +23,7 @@ import Unauthorize from  '@/components/errors/Unauthorize.vue'
 const routes = [
     {
         path: '/',
-        name: 'home',
-        component: Dashboard,
-        meta:{
-            title: 'Home'
-        }
+        redirect:'/dashboard'
     },
     {
         path: '/dashboard',
@@ -238,12 +234,16 @@ const routes = [
         }
     },
     {
-        path: '/:pathMatch(.*)*',
+        path: '/404',
         name: '404',
         component: NotFound,
         meta:{
-            title: '404'
+            title: '404 - Not Found'
         }
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/404'
     },
 ];
 
