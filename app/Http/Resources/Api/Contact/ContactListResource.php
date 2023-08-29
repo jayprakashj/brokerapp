@@ -17,6 +17,7 @@ class ContactListResource extends JsonResource
         $data = [
             'id' => $this->id,
             'name' => $this->name ?? 'N/A',
+            'company_name' => $this->company->name ?? 'N/A',
             'mobile' => $this->mobile ?? 'N/A',
             'email' => $this->email ?? 'N/A',
             'city' => $this->city ?? 'N/A',
