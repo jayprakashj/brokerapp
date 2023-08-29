@@ -99,6 +99,8 @@ class MemberClass {
         $member->role_id = $request->input('role');
         $member->save();
 
+        setPermissionsTeamId( $member->company_id );
+        $member->memberUser->syncRoles( $member->role_id );
 
         return $member;
     }
