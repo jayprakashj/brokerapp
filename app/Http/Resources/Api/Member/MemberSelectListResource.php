@@ -24,7 +24,7 @@ class MemberSelectListResource extends JsonResource
 
         }
         $data = [
-            'id' => $this->id,
+            'id' => $this->user_id,
             'name' => $name,
         ];
 
