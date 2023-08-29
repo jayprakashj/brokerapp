@@ -6,6 +6,7 @@
                 <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
                     {{ item.name }}
                 </h3>
+                <p class="text-xs+">{{ item.company_name }} </p>
                 <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
                 <div class="grow space-y-4">
                     <div class="flex items-center space-x-4">
