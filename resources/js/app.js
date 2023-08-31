@@ -150,34 +150,37 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 import ClickOutside from "@/directives/clickOutside";
 
-const app = createApp( App )
+if( document.getElementById("broker-app")){
 
-app.use( ToastPlugin );
-app.use(vueStore);
-app.use( HelperPlugin );
-app.use(router);
-app.use(
-    VueTippy,
-    // optional
-    {
-      directive: 'tippy', // => v-tippy
-      component: 'tippy', // => <tippy/>
-      componentSingleton: 'tippy-singleton', // => <tippy-singleton/>,
-      defaultProps: {
-        arrow: false,
-        placement: 'auto-end',
-        allowHTML: true,
-      }, // => Global default options * see all props
-    }
-  );
-app.use(VueSweetalert2);
-app.component('page-header', PageHeader );
-app.component('list-container', ListContainer );
-app.component('pagination', Pagination );
-app.component('popper-dropdown', PopperDropdown );
-app.component('no-data-found', NoDataFound );
-app.component('input-tom-select', TomSelect );
+    const app = createApp( App )
 
-app.directive('clickOutside', ClickOutside );
+    app.use( ToastPlugin );
+    app.use(vueStore);
+    app.use( HelperPlugin );
+    app.use(router);
+    app.use(
+        VueTippy,
+        // optional
+        {
+          directive: 'tippy', // => v-tippy
+          component: 'tippy', // => <tippy/>
+          componentSingleton: 'tippy-singleton', // => <tippy-singleton/>,
+          defaultProps: {
+            arrow: false,
+            placement: 'auto-end',
+            allowHTML: true,
+          }, // => Global default options * see all props
+        }
+      );
+    app.use(VueSweetalert2);
+    app.component('page-header', PageHeader );
+    app.component('list-container', ListContainer );
+    app.component('pagination', Pagination );
+    app.component('popper-dropdown', PopperDropdown );
+    app.component('no-data-found', NoDataFound );
+    app.component('input-tom-select', TomSelect );
 
-app.mount("#broker-app")
+    app.directive('clickOutside', ClickOutside );
+
+    app.mount("#broker-app")
+}
