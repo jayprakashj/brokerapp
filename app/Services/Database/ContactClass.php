@@ -34,7 +34,7 @@ class ContactClass {
     public function create ( User $user, $request ) {
 
         $contact = new Contact();
-        $contact->user_id = $user->id;
+        $contact->user_id = \Helper::retrieveDefaultCompany()->owned_by;
         $contact->company_id = \Helper::retrieveDefaultCompany()->id ?? null;
         $contact->created_by = $user->id;
         $contact = $this->createOrUpdate( $contact, $user, $request );

@@ -35,7 +35,7 @@ class ContactTypeClass {
     public function create( User $user, $keyword ){
         $contactType = new ContactType();
         $contactType->name = Str::title( $keyword );
-        $contactType->user_id = $user->id;
+        $contactType->user_id = \Helper::retrieveDefaultCompany()->owned_by;
         $contactType->company_id = \Helper::retrieveDefaultCompany()->id;
         $contactType->updated_by = $user->id;
         $contactType->created_by = $user->id;

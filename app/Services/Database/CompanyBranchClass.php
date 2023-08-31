@@ -21,7 +21,7 @@ class CompanyBranchClass {
     public function create ( User $user, $request ) {
 
         $companyBranch = new CompanyBranch();
-        $companyBranch->user_id = $user->id;
+        $companyBranch->user_id = \Helper::retrieveDefaultCompany()->owned_by;
         $companyBranch->company_id = \Helper::retrieveDefaultCompany()->id ?? null;
         $companyBranch->created_by = $user->id;
         $companyBranch = $this->createOrUpdate( $companyBranch, $user, $request );

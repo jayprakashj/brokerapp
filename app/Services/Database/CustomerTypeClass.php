@@ -35,7 +35,7 @@ class CustomerTypeClass {
     public function create( User $user, $keyword ){
         $customerType = new CustomerType();
         $customerType->name = Str::title( $keyword );
-        $customerType->user_id = $user->id;
+        $customerType->user_id = \Helper::retrieveDefaultCompany()->owned_by;
         $customerType->company_id = \Helper::retrieveDefaultCompany()->id;
         $customerType->updated_by = $user->id;
         $customerType->created_by = $user->id;

@@ -38,7 +38,7 @@ class LeadClass {
     public function create ( User $user, $request ) {
 
         $lead = new Lead();
-        $lead->user_id = $user->id;
+        $lead->user_id = \Helper::retrieveDefaultCompany()->owned_by;
         $lead->company_id = \Helper::retrieveDefaultCompany()->id ?? null;
         $lead->created_by = $user->id;
         $lead = $this->createOrUpdate( $lead, $user, $request );
