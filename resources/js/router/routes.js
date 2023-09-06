@@ -16,6 +16,9 @@ import ContactCreate from  '@/components/contacts/ContactCreate.vue'
 import LeadList from  '@/components/leads/LeadList.vue'
 import LeadCreate from  '@/components/leads/LeadCreate.vue'
 import LeadView from  '@/components/leads/LeadView.vue'
+import PropertyList from  '@/components/property/PropertyList.vue'
+import PropertyCreate from  '@/components/property/PropertyCreate.vue'
+import PropertyView from  '@/components/property/PropertyView.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -223,6 +226,42 @@ const routes = [
         meta: {
             title: 'Lead View',
             permissions: [ permission.VIEW_LEAD ]
+        }
+    },
+    {
+        path: '/property',
+        name: 'property_lists',
+        component: PropertyList,
+        meta:{
+            title: 'Property Management',
+            permissions: [ permission.PROPERTY_LIST ]
+        },
+    },
+    {
+        path: '/property/create',
+        name: 'property_create',
+        component: PropertyCreate,
+        meta: {
+            title: 'Property Create',
+            permissions: [ permission.ADD_PROPERTY ]
+        }
+    },
+    {
+        path: '/property/edit/:id',
+        name: 'property_edit',
+        component: PropertyCreate,
+        meta: {
+            title: 'Property Edit',
+            permissions: [ permission.UPDATE_PROPERTY ]
+        }
+    },
+    {
+        path: '/property/view/:id',
+        name: 'property_view',
+        component: PropertyView,
+        meta: {
+            title: 'Property View',
+            permissions: [ permission.VIEW_PROPERTY ]
         }
     },
     {

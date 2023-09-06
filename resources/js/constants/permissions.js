@@ -26,7 +26,12 @@ const permissions = {
     ADD_LEAD:'Add Lead',
     UPDATE_LEAD:'Update Lead',
     CAN_COMMENT:'Can Comment',
-    REMOVE_LEAD:'Remove Lead'
+    REMOVE_LEAD:'Remove Lead',
+    PROPERTY_LIST: 'Property List',
+    VIEW_PROPERTY: 'View Property',
+    ADD_PROPERTY: 'Add Property',
+    UPDATE_PROPERTY: 'Update Property',
+    REMOVE_PROPERTY: 'Remove Property'
 }
 
 export default permissions;

@@ -158,7 +158,7 @@ export default {
                 {
                     name: 'Branch',
                     route: '/branch',
-                    iconClass: 'fa-building',
+                    iconClass: 'fa-network-wired',
                     permission: [ this.$permissions.BRANCH_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
@@ -176,6 +176,14 @@ export default {
                     route: '/lead',
                     iconClass: 'fa-bullseye',
                     permission: [ this.$permissions.LEAD_LIST,this.$permissions.ONLY_ASSIGNED_LEAD_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
+                    name: 'Property Management',
+                    route: '/property',
+                    iconClass: 'fa-building',
+                    permission: [ this.$permissions.PROPERTY_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
                 }

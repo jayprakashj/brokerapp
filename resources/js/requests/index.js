@@ -61,7 +61,15 @@ const apis = {
             headers: { 'Content-Type': 'multipart/form-data' }
         }
         const fd = new FormData;
-        fd.append('media[]', data);
+        if( data?.length && data.length >= 1 ){
+            for( var i =0; i< data.length; i++ ){
+
+                fd.append('media[]', data[i] );
+            }
+        }else{
+            fd.append('media[]', data);
+
+        }
         return http.post('upload-media', fd, headers);
 
     },
@@ -119,6 +127,14 @@ const apis = {
             config['search'] = params;
         }
         return http.get('leads/company-members/select-list', config);
+
+    },
+    propertyFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('properties/lists/form-select-lists', config);
 
     },
     getCompanyList: ( params) => {
@@ -258,6 +274,26 @@ const apis = {
     },
     addLeadComment: ( id, data ) => {
         return http.post( `leads/${id}/add-comment`, data );
+    },
+    getPropertyList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('properties/lists', config);
+
+    },
+    getPropertyDetail: ( id ) => {
+        return http.get(`properties/${id}/edit` );
+    },
+    getPropertyViewDetail: ( id ) => {
+        return http.get(`properties/${id}/view` );
+    },
+    createProperty: ( data ) => {
+        return http.post('properties/store', data);
+    },
+    deleteProperty: ( id ) => {
+        return http.post( `properties/${id}/delete` );
     },
 }
 export default apis;

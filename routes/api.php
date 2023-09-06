@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -186,6 +187,34 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                                     ->name('select.company_member');
                 });
 
+
+        Route::prefix('properties')
+        ->name('property.')
+        ->group( function () {
+
+            Route::get('/lists', [PropertyController::class, 'index'])
+                            ->middleware('permission:Property List')
+                            ->name('index');
+
+            Route::get('{property}/edit', [PropertyController::class, 'edit'])
+                            ->middleware('permission:Update Property')
+                            ->name('edit');
+
+            Route::get('{property}/view', [PropertyController::class, 'view'])
+                            ->middleware('permission:View Property')
+                            ->name('view');
+
+            Route::post('store', [PropertyController::class, 'store'])
+                            ->middleware('permission:Add Property|Update Property')
+                            ->name('store');
+
+            Route::get('lists/form-select-lists', [PropertyController::class, 'createFormSelectList'])
+                            ->name('create_form_lists');
+
+            // Route::post('{Property}/delete', [PropertyController::class, 'delete'])
+            //                 ->middleware('permission:Remove Property')
+            //                 ->name('delete');
+        });
     });
 
 });

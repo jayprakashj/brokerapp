@@ -146,6 +146,28 @@ class PermissionSeeder extends Seeder
         ]);
 
 
+        Permission::create([
+            'name' => 'Property List',
+            'group_name' => 'Property',
+        ]);
+        Permission::create([
+            'name' => 'View Property',
+            'group_name' => 'Property',
+        ]);
+        Permission::create([
+            'name' => 'Add Property',
+            'group_name' => 'Property',
+        ]);
+        Permission::create([
+            'name' => 'Update Property',
+            'group_name' => 'Property',
+        ]);
+        Permission::create([
+            'name' => 'Remove Property',
+            'group_name' => 'Property',
+        ]);
+
+
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 
