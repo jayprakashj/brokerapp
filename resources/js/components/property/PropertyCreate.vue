@@ -24,28 +24,6 @@
                         </div>
                         <div class="card mt-2 p-4 sm:p-5 col-span-8">
 
-                            <div class="flex flex-col" v-if="false">
-                                <span class="text-base font-medium text-slate-600 dark:text-navy-100">Logo</span>
-                                <div class="avatar mt-1.5 h-20 w-20">
-                                    <span class="w-full flex place-content-center fa-2x items-center" v-if="loading.upload">
-                                        <i class="fa fa-spin fa-spinner" ></i>
-
-                                    </span>
-                                    <template v-else>
-                                        <img class="mask is-squircle" :src="(media.logo || '/images/100x100.png')" alt="avatar">
-                                        <input type="file" name="logo" id="logo" class="hidden" ref="mediaLogo" @change="uploadMedia">
-                                        <div class="absolute bottom-0 right-0 flex items-center justify-center rounded-full bg-white dark:bg-navy-700">
-                                            <button
-                                                type="button"
-                                                @click="openLogoUpload"
-                                                class="btn h-6 w-6 rounded-full border border-slate-200 p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:border-navy-500 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
-                                                <i class="fa fa-pencil"></i>
-                                            </button>
-                                        </div>
-                                    </template>
-                                </div>
-                            </div>
-                            <!-- <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div> -->
                             <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
                                 <label class="block" >
                                     <span>Name</span>

@@ -73,6 +73,9 @@
                         <i class="fa fa-pencil"></i>
                         <span> Edit </span>
                     </router-link>
+                    <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_PROPERTY ] )" :to="'/property/view/' + item.id" class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                        <i class="far fa-eye"></i>
+                    </router-link>
                     <button v-if="false && userPermissions.isPermissionsAllowed([ $permissions.REMOVE_PROPERTY ] )"
                             @click="removeItem( item.id )"
                         class="btn rounded-full bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
