@@ -477,7 +477,14 @@
                         <div
                             class="col-span-12 flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
                             <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
-                                Images <button type="button" class="btn" @click="openModal">View All</button>
+                                Images
+                                <button
+                                    type="button"
+                                    class="btn h-9 w-9 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
+                                    @click="openModal"
+                                >
+                                   <i class="fa fa-external-link"></i>
+                                </button>
                             </h2>
                         </div>
                         <div class="grid grid-cols-8 gap-4 mt-2">
