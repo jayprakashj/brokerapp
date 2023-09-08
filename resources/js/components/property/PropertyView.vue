@@ -489,7 +489,7 @@
                         </div>
                         <div class="grid grid-cols-8 gap-4 mt-2">
                             <div class="card" v-for="(imgData, index) in formData.images" :key="'image_list_container_' + index">
-                                <img class="w-full rounded-lg object-cover" :src="(imgData.url || 'https://picsum.photos/100/100')" alt="image">
+                                <img class="w-full rounded-lg object-cover" :src="(imgData.url)" alt="image">
                             </div>
                         </div>
                     </div>
