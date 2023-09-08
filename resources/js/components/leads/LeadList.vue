@@ -30,6 +30,13 @@
                         </div>
                         <p>{{ item.city }}</p>
                     </div>
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                            <i class="fa fa-building text-xs"></i>
+                        </div>
+                        <p>{{ item.property_name }}</p>
+                    </div>
                 </div>
                 <div class="mt-5 space-x-2">
 

@@ -118,6 +118,19 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+
+                            <input-tom-select
+                                        v-model="formData.property"
+                                        form-label="Property"
+                                        placeholder="Select Property"
+                                        :is-ajax="true"
+                                        request-name="propertySelectList"
+                                        :ajax-preload="true"
+                                        :selected-item="selected.property_data?.id"
+                                        :selected-options="selected.property_data"
+                                        :error-msg="errors?.property"
+                                    />
+
                             <label class="block" >
                                 <span>Interest In</span>
                                 <span class="relative mt-1.5 flex">
@@ -309,6 +322,7 @@ export default {
                 lead_status: null,
                 remark: null,
                 keywords: null,
+                property: null,
             },
             rolesList: [],
             loading:{
@@ -320,6 +334,7 @@ export default {
                 lead_status: {},
                 assigned_to: {},
                 company_branch_data: {},
+                property_data: {},
             },
             selectedOptions:{
                 lead_source: [],
@@ -409,6 +424,7 @@ export default {
                                     this.formData = Object.assign( this.formData, res.data.data);
                                     this.selected.assigned_to = this.formData.assigned_to_data;
                                     this.selected.company_branch_data = this.formData.company_branch_data;
+                                    this.selected.property_data = this.formData.property_data;
                                 }
                             },
                             (err) => {

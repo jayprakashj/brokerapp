@@ -150,6 +150,11 @@ class PermissionSeeder extends Seeder
             'name' => 'Property List',
             'group_name' => 'Property',
         ]);
+
+        Permission::create([
+            'name' => 'Only Assigned Property List',
+            'group_name' => 'Property',
+        ]);
         Permission::create([
             'name' => 'View Property',
             'group_name' => 'Property',

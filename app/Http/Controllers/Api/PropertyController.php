@@ -34,16 +34,26 @@ class PropertyController extends Controller
     }
 
     public function index ( Request $request ) {
-        $list = $this->propertyClass->getDefaultCompanyProperties( $request->input('per_page', 24 ) );
+        $user = auth()->user();
+        $onlyAssignedTo = $user->can('Only Assigned Property List');
+        if( $user->isCompanyAdmin() ){
+            $onlyAssignedTo = false;
+        }
+        $list = $this->propertyClass->getDefaultCompanyProperties( $request->input('per_page', 24 ), $onlyAssignedTo );
         return new PropertyPaginationResource( $list );
     }
 
     public function edit (Property $property ) {
+        if( !$property->checkAuthorization() ){
+            return response()->json( [], 404 );
+        }
         return new PropertyEditResource( $property );
     }
 
     public function view (Property $property ) {
-
+        if( !$property->checkAuthorization() ){
+            return response()->json( [], 404 );
+        }
         return new PropertyViewResource( $property );
     }
 
@@ -59,7 +69,9 @@ class PropertyController extends Controller
             $this->propertyClass->create( auth()->user(), $request );
 
         }else{
-
+            if( !$property->checkAuthorization() ){
+                return response()->json( [], 404 );
+            }
             $this->propertyClass->update( auth()->user(), $property, $request );
             $response = [
                 'message' => 'Success! Property data updated successfully.'
@@ -70,6 +82,9 @@ class PropertyController extends Controller
 
 
     public function delete ( Property $property ) {
+        if( !$property->checkAuthorization() ){
+            return response()->json( [], 404 );
+        }
         $code = 500;
         $property->delete();
         $response = [
@@ -99,4 +114,8 @@ class PropertyController extends Controller
         return response()->json( $data, 200 );
     }
 
+    public function getPropertyForSelectList(){
+        $list = Property::select('id', 'name')->get();
+        return response()->json( $list, 200 );
+    }
 }

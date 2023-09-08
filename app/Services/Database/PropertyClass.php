@@ -23,10 +23,12 @@ class PropertyClass {
     {
     }
 
-    public function getDefaultCompanyProperties ( $perPage = 24, ) {
+    public function getDefaultCompanyProperties ( $perPage = 24, $onlyAssignedTo = false) {
 
         $lists = Property::query()->with(['company','companyBranch']);
-
+        if( $onlyAssignedTo ){
+            $lists->createdByOrAssignToAuth();
+        }
         $lists = $lists->paginate( $perPage );
 
         return $lists;

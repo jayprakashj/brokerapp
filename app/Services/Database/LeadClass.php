@@ -75,6 +75,7 @@ class LeadClass {
         $lead->title = $request->input('title');
         $lead->contact_id = $this->findOrCreateContact( $user, $request )->id;
         $lead->company_branch_id = $request->input('company_branch');
+        $lead->property_id = $request->input('property');
         $lead->customer_name = $request->input('name');
         $lead->customer_mobile = $request->input('mobile');
         $lead->customer_email = $request->input('email');

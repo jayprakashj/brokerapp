@@ -113,6 +113,14 @@ const apis = {
         return http.get('leads/lead-status/select-list', config);
 
     },
+    propertySelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('properties/select-lists/get', config);
+
+    },
     companyBranchSelectList: ( params) => {
         let config = {};
         if( params ) {

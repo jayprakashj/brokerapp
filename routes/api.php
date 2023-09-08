@@ -211,6 +211,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             Route::get('lists/form-select-lists', [PropertyController::class, 'createFormSelectList'])
                             ->name('create_form_lists');
 
+            Route::get('select-lists/get', [PropertyController::class, 'getPropertyForSelectList'])
+                            ->name('get_select_lists');
+
             // Route::post('{Property}/delete', [PropertyController::class, 'delete'])
             //                 ->middleware('permission:Remove Property')
             //                 ->name('delete');

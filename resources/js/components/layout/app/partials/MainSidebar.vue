@@ -183,7 +183,7 @@ export default {
                     name: 'Property Management',
                     route: '/property',
                     iconClass: 'fa-building',
-                    permission: [ this.$permissions.PROPERTY_LIST ],
+                    permission: [ this.$permissions.PROPERTY_LIST, this.$permissions.ONLY_ASSIGNED_PROPERTY_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
                 }

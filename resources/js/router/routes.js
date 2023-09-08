@@ -234,7 +234,7 @@ const routes = [
         component: PropertyList,
         meta:{
             title: 'Property Management',
-            permissions: [ permission.PROPERTY_LIST ]
+            permissions: [ permission.PROPERTY_LIST, permission.ONLY_ASSIGNED_PROPERTY_LIST ]
         },
     },
     {

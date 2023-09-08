@@ -25,6 +25,7 @@ class LeadViewResource extends JsonResource
             'remark' => $this->remark  ?? 'N/A',
             'keywords' => $this->keywords,
             'purpose' => $this->purpose ?? 'N/A',
+            'property_name' => $this->property->name ?? 'N/A',
             'interest_in' => $this->interest_in ?? 'N/A',
             'lead_source' => $this->lead_source,
             'lead_status' => $this->lead_status,

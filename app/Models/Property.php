@@ -62,6 +62,24 @@ class Property extends Model implements HasMedia
         return $this->belongsTo( CompanyBranch::class, 'company_branch_id', 'id');
     }
 
+    public function leads (){
+        return $this->hasMany( Lead::class, 'property_id', 'id');
+    }
+
+    public function scopeAssignToAuth ( $q, $boolean = 'and' ){
+        return $q->where('assign_to', '=', auth()->id(), $boolean );
+    }
+
+    public function scopeCreatedByAuth ( $q, $boolean = 'and' ){
+        return $q->where('created_by','=', auth()->id(), $boolean );
+    }
+
+    public function scopeCreatedByOrAssignToAuth ( $q ){
+        return $q->where(function( $whereQry ){
+            $whereQry->assignToAuth( 'or' )
+                        ->createdByAuth( 'or' );
+        });
+    }
 
     public function isVerified () {
         return $this->is_verified == self::IS_VERIFIED_YES;
@@ -71,4 +89,12 @@ class Property extends Model implements HasMedia
         return $this->is_document_verified == self::IS_DOCUMENT_VERIFIED_YES;
     }
 
+    public function isAssignedToMe(){
+        return $this->assign_to == auth()->id();
+    }
+
+    public function checkAuthorization(){
+        $user = auth()->user();
+        return ($user->isCompanyAdmin() || ($user->can('Only Assigned Property List') && $this->isAssignedToMe()));
+    }
 }

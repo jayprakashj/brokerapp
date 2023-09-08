@@ -28,6 +28,7 @@ const permissions = {
     CAN_COMMENT:'Can Comment',
     REMOVE_LEAD:'Remove Lead',
     PROPERTY_LIST: 'Property List',
+    ONLY_ASSIGNED_PROPERTY_LIST: 'Only Assigned Property List',
     VIEW_PROPERTY: 'View Property',
     ADD_PROPERTY: 'Add Property',
     UPDATE_PROPERTY: 'Update Property',

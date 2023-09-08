@@ -58,6 +58,10 @@ class Lead extends Model
         return $this->belongsTo( CompanyBranch::class, 'company_branch_id', 'id');
     }
 
+    public function property (){
+        return $this->belongsTo( Property::class, 'property_id', 'id');
+    }
+
     public function comments (){
         return $this->hasMany( LeadComment::class, 'lead_id', 'id');
     }
