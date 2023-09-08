@@ -113,7 +113,7 @@ export default {
         ]),
         menus(){
             var menus = [];
-            if( userPermissions.isPermissionsAllowed( this.$permissions.ADD_CONTACT ) ){
+            if( userPermissions.isPermissionsAllowed( this.$permissions.ADD_PROPERTY ) ){
                 menus.push(
                         {
                             title: 'Add new',

@@ -18,19 +18,19 @@ class Property extends Model implements HasMedia
     use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes, InteractsWithMedia;
 
     const IS_VERIFIED_YES = 1;
-    const IS_VERIFIED_NO = 1;
+    const IS_VERIFIED_NO = 0;
 
     const IS_VERIFIED_LIST = [
-        self::IS_VERIFIED_YES => 1,
-        self::IS_VERIFIED_NO => 0,
+        self::IS_VERIFIED_YES => 'Yes',
+        self::IS_VERIFIED_NO => 'No',
     ];
 
     const IS_DOCUMENT_VERIFIED_YES = 1;
-    const IS_DOCUMENT_VERIFIED_NO = 1;
+    const IS_DOCUMENT_VERIFIED_NO = 0;
 
     const IS_DOCUMENT_VERIFIED_LIST = [
-        self::IS_DOCUMENT_VERIFIED_YES => 1,
-        self::IS_DOCUMENT_VERIFIED_NO => 0,
+        self::IS_DOCUMENT_VERIFIED_YES => 'Yes',
+        self::IS_DOCUMENT_VERIFIED_NO => 'No',
     ];
 
     /**

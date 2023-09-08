@@ -60,14 +60,14 @@ class PropertyClass {
 
         $property->property_type = PropertyTypeList::whereName( $request->input('property_type') )->first()->name;
         $property->property_transaction = PropertyTransactionList::whereName( $request->input('property_transaction') )->first()->name;
-        $property->property_furnishing = PropertyFurnishList::whereName( $request->input('property_furnishing') )->first()->name;
-        $property->property_facing = PropertyFacingList::whereName( $request->input('property_facing') )->first()->name;
-        $property->property_obligation = PropertyObligationList::whereName( $request->input('property_obligation') )->first()->name;
+        $property->property_furnishing = PropertyFurnishList::whereName( $request->input('property_furnishing') )->first()->name ?? null;
+        $property->property_facing = PropertyFacingList::whereName( $request->input('property_facing') )->first()->name ?? null;
+        $property->property_obligation = PropertyObligationList::whereName( $request->input('property_obligation') )->first()->name ?? null;
 
         $property->building_name = $request->input('building_name');
         $property->unit_no = $request->input('unit_no');
-        $property->is_verified = $request->filled('is_verified');
-        $property->is_document_verified = $request->filled('is_document_verified');
+        $property->is_verified = ($request->filled('is_verified') && $request->is_verified == Property::IS_VERIFIED_YES) ? Property::IS_VERIFIED_YES: Property::IS_VERIFIED_NO;
+        $property->is_document_verified = ($request->filled('is_document_verified') && $request->is_document_verified == Property::IS_DOCUMENT_VERIFIED_YES )? Property::IS_DOCUMENT_VERIFIED_YES: Property::IS_DOCUMENT_VERIFIED_NO;
         $property->address = $request->input('address');
         $property->city = $request->input('city');
         $property->locality = $request->input('locality');

@@ -193,7 +193,7 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
         ->group( function () {
 
             Route::get('/lists', [PropertyController::class, 'index'])
-                            ->middleware('permission:Property List')
+                            ->middleware('permission:Property List|Only Assigned Property List')
                             ->name('index');
 
             Route::get('{property}/edit', [PropertyController::class, 'edit'])
