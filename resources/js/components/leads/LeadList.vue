@@ -1,5 +1,43 @@
 <template>
-    <page-header :title="pageTitle" :menus="menus" />
+    <page-header :title="pageTitle" :menus="menus" :filter-enabled="false">
+        <template v-slot:filterPopoverContent="popperSlotOptions">
+            <div class="popper-box max-w-[22rem]">
+                <div class="rounded-md border border-slate-150 bg-white p-4 dark:border-navy-600 dark:bg-navy-700">
+                    <h3 class="text-base font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
+                        Select Columns
+                    </h3>
+                    <p class="mt-1 text-xs+">Lorem ipsum dolor sit amet, consectetur.</p>
+                    <div class="mt-4 flex flex-col space-y-4 text-slate-600 dark:text-navy-100">
+                        <label class="block">
+                            <span>Choose Username:</span>
+                            <input
+                                class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                placeholder="Username"
+                                type="text"
+                            />
+                        </label>
+
+                    </div>
+                    <div class="my-4 h-px bg-slate-200 dark:bg-navy-500"></div>
+                    <div class="flex flex-col space-y-4 text-slate-600 dark:text-navy-100">
+                        <label class="inline-flex items-center space-x-2">
+                            <input checked
+                                class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
+                                type="checkbox" />
+                            <p>Created at</p>
+                        </label>
+                    </div>
+                    <button @click="applyFilter(popperSlotOptions)"
+                        class="btn mt-4 h-8 w-full rounded-md bg-primary px-4 text-xs+ font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                        Apply
+                    </button>
+                </div>
+                <div class="h-4 w-4" data-popper-arrow>
+                    <i class="fa fa-magnifier"></i>
+                </div>
+            </div>
+        </template>
+    </page-header>
     <list-container>
         <template v-if="lists?.data?.length">
             <div class="card grow items-center p-4 sm:p-5 " v-for="(item, idx) in lists.data" :key="'member_'+idx">
@@ -169,6 +207,9 @@ export default {
                         }
                     }
                 );
+        },
+        applyFilter( popperSlotOptions ){
+            popperSlotOptions.popperClose();
         }
     }
 }
