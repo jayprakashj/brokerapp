@@ -13,17 +13,17 @@
             </slot>
         </button>
         <div ref="popperRoot"
-                class="popper-root "
+                class="popper-root"
                 :class="{'show': isShowPopper, popperRootClass}"
                 :style="popperRootStyle"
                 data-popper-placement="bottom-end">
-            <slot />
+            <slot :closePopper="closePopper" />
         </div>
     </div>
 </template>
 
 <script >
-import { createPopper } from '@popperjs/core/lib/createPopper';
+import { createPopper } from '@popperjs/core';
 export default {
     props:{
         className:{
@@ -37,6 +37,10 @@ export default {
         popperRootStyle:{
             type: String,
             default: ''
+        },
+        popperOptions:{
+            type: Object,
+            default: {}
         }
     },
     data() {
@@ -59,7 +63,7 @@ export default {
     },
     mounted(){
         this.$nextTick( () => {
-            this.popperInstance = createPopper( this.$refs.popperRef, this.$refs.popperRoot, this.popperConfig );
+            this.popperInstance = createPopper( this.$refs.popperRef, this.$refs.popperRoot, Object.assign(this.popperConfig, this.popperOptions) );
 
         })
     },
