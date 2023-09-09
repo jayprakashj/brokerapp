@@ -71,9 +71,7 @@
       <div class="flex" v-if="filterEnabled">
         <popper-dropdown :popper-options="popoverOptionsForFilter">
             <template v-slot:popper_btn>
-                <button class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 sm:h-12 sm:w-12">
-                    <i class="fa fa-2x fa-filter"></i>
-                </button>
+                <i class="fa fa-2x fa-filter"></i>
 
             </template>
             <template v-slot:default="popperSlotOptions">
