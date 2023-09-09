@@ -172,6 +172,32 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Property',
         ]);
 
+        Permission::create([
+            'name' => 'Document List',
+            'group_name' => 'Document',
+        ]);
+
+        Permission::create([
+            'name' => 'Document Attach to Property',
+            'group_name' => 'Document',
+        ]);
+        Permission::create([
+            'name' => 'View Document',
+            'group_name' => 'Document',
+        ]);
+        Permission::create([
+            'name' => 'Add Document',
+            'group_name' => 'Document',
+        ]);
+        Permission::create([
+            'name' => 'Update Document',
+            'group_name' => 'Document',
+        ]);
+        Permission::create([
+            'name' => 'Remove Document',
+            'group_name' => 'Document',
+        ]);
+
 
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());

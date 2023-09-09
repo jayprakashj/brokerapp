@@ -19,6 +19,8 @@ import LeadView from  '@/components/leads/LeadView.vue'
 import PropertyList from  '@/components/property/PropertyList.vue'
 import PropertyCreate from  '@/components/property/PropertyCreate.vue'
 import PropertyView from  '@/components/property/PropertyView.vue'
+import DocumentList from  '@/components/documents/DocumentList.vue'
+import DocumentCreate from  '@/components/documents/DocumentCreate.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -262,6 +264,33 @@ const routes = [
         meta: {
             title: 'Property View',
             permissions: [ permission.VIEW_PROPERTY ]
+        }
+    },
+    {
+        path: '/document',
+        name: 'document_lists',
+        component: DocumentList,
+        meta:{
+            title: 'Document Management',
+            permissions: [ permission.DOCUMENT_LIST]
+        },
+    },
+    {
+        path: '/document/create',
+        name: 'document_create',
+        component: DocumentCreate,
+        meta: {
+            title: 'Document Create',
+            permissions: [ permission.ADD_DOCUMENT ]
+        }
+    },
+    {
+        path: '/document/edit/:id',
+        name: 'document_edit',
+        component: DocumentCreate,
+        meta: {
+            title: 'Document Edit',
+            permissions: [ permission.UPDATE_DOCUMENT ]
         }
     },
     {

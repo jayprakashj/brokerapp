@@ -3,16 +3,12 @@
 namespace App\Services\Database;
 
 use App\Models\User;
-use App\Models\Lead;
-use App\Models\LeadSource;
-use App\Models\LeadStatus;
 use App\Models\Property;
 use App\Models\PropertyFacingList;
 use App\Models\PropertyFurnishList;
 use App\Models\PropertyObligationList;
 use App\Models\PropertyTransactionList;
 use App\Models\PropertyTypeList;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 

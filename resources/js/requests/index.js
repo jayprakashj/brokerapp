@@ -303,5 +303,22 @@ const apis = {
     deleteProperty: ( id ) => {
         return http.post( `properties/${id}/delete` );
     },
+    getDocumentList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('documents/lists', config);
+
+    },
+    getDocumentDetail: ( id ) => {
+        return http.get(`documents/${id}/edit` );
+    },
+    createDocument: ( data ) => {
+        return http.post('documents/store', data);
+    },
+    deleteDocument: ( id ) => {
+        return http.post( `documents/${id}/delete` );
+    },
 }
 export default apis;

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
@@ -217,6 +218,28 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             // Route::post('{Property}/delete', [PropertyController::class, 'delete'])
             //                 ->middleware('permission:Remove Property')
             //                 ->name('delete');
+        });
+
+        Route::prefix('documents')
+        ->name('document.')
+        ->group( function () {
+
+            Route::get('/lists', [DocumentController::class, 'index'])
+                            ->middleware('permission:Document List')
+                            ->name('index');
+
+            Route::get('{document}/edit', [DocumentController::class, 'edit'])
+                            ->middleware('permission:Update Document')
+                            ->name('edit');
+
+            Route::post('store', [DocumentController::class, 'store'])
+                            ->middleware('permission:Add Document|Update Document')
+                            ->name('store');
+
+            // Route::post('{document}/delete', [DocumentController::class, 'delete'])
+            //                 ->middleware('permission:Remove Document')
+            //                 ->name('delete');
+
         });
     });
 

@@ -186,6 +186,14 @@ export default {
                     permission: [ this.$permissions.PROPERTY_LIST, this.$permissions.ONLY_ASSIGNED_PROPERTY_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
+                },
+                {
+                    name: 'Document Management',
+                    route: '/document',
+                    iconClass: 'fa-file',
+                    permission: [ this.$permissions.DOCUMENT_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
                 }
             ]
         }

@@ -32,7 +32,13 @@ const permissions = {
     VIEW_PROPERTY: 'View Property',
     ADD_PROPERTY: 'Add Property',
     UPDATE_PROPERTY: 'Update Property',
-    REMOVE_PROPERTY: 'Remove Property'
+    REMOVE_PROPERTY: 'Remove Property',
+    DOCUMENT_LIST: 'Document List',
+    DOCUMENT_ATTACH_TO_PROPERTY: 'Document Attach to Property',
+    VIEW_DOCUMENT: 'View Document',
+    ADD_DOCUMENT: 'Add Document',
+    UPDATE_DOCUMENT: 'Update Document',
+    REMOVE_DOCUMENT: 'Remove Document'
 }
 
 export default permissions;
