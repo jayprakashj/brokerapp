@@ -19,6 +19,7 @@ import LeadView from  '@/components/leads/LeadView.vue'
 import PropertyList from  '@/components/property/PropertyList.vue'
 import PropertyCreate from  '@/components/property/PropertyCreate.vue'
 import PropertyView from  '@/components/property/PropertyView.vue'
+import PropertyDocumentList from  '@/components/property/PropertyDocumentList.vue'
 import DocumentList from  '@/components/documents/DocumentList.vue'
 import DocumentCreate from  '@/components/documents/DocumentCreate.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
@@ -264,6 +265,15 @@ const routes = [
         meta: {
             title: 'Property View',
             permissions: [ permission.VIEW_PROPERTY ]
+        }
+    },
+    {
+        path: '/property/:id/documents',
+        name: 'property_document',
+        component: PropertyDocumentList,
+        meta: {
+            title: 'Property Document',
+            permissions: [ permission.DOCUMENT_ATTACH_TO_PROPERTY ]
         }
     },
     {

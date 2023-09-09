@@ -209,6 +209,15 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                             ->middleware('permission:Add Property|Update Property')
                             ->name('store');
 
+            Route::get('{property}/documents', [PropertyController::class, 'getDocumentList'])
+                            ->middleware('permission:Document Attach to Property')
+                            ->name('document_lists');
+
+            Route::get('{property}/documents/select-lists', [PropertyController::class, 'getDocumentListForSelectList'])
+                            ->middleware('permission:Document Attach to Property')
+                            ->name('document.select_lists');
+
+
             Route::get('lists/form-select-lists', [PropertyController::class, 'createFormSelectList'])
                             ->name('create_form_lists');
 
@@ -236,6 +245,12 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                             ->middleware('permission:Add Document|Update Document')
                             ->name('store');
 
+            Route::post('attach-property', [DocumentController::class, 'attachDocument'])
+                                ->middleware('permission:Document Attach to Property')
+                                ->name('attach_property');
+            Route::post('{document}/detach-property', [DocumentController::class, 'deletePropertyDocument'])
+                                ->middleware('permission:Document Attach to Property')
+                                ->name('detach_property');
             // Route::post('{document}/delete', [DocumentController::class, 'delete'])
             //                 ->middleware('permission:Remove Document')
             //                 ->name('delete');

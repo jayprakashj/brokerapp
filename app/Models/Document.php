@@ -23,6 +23,12 @@ class Document extends Model implements HasMedia
         static::addGlobalScope(new CompanyIdScope);
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('default')
+            ->singleFile();
+    }
 
     public function property () {
         return $this->belongsTo( Property::class, 'property_id', 'id');

@@ -297,6 +297,12 @@ const apis = {
     getPropertyViewDetail: ( id ) => {
         return http.get(`properties/${id}/view` );
     },
+    getPropertyDocumentList: ( id ) => {
+        return http.get(`properties/${id}/documents` );
+    },
+    getPropertyDocumentDropdownList: ( id ) => {
+        return http.get(`properties/${id}/documents/select-lists` );
+    },
     createProperty: ( data ) => {
         return http.post('properties/store', data);
     },
@@ -319,6 +325,12 @@ const apis = {
     },
     deleteDocument: ( id ) => {
         return http.post( `documents/${id}/delete` );
+    },
+    detachPropertyWithDocument: ( id ) => {
+        return http.post( `documents/${id}/detach-property` );
+    },
+    attachPropertyToDocument: ( data ) => {
+        return http.post( `documents/attach-property`, data );
     },
 }
 export default apis;

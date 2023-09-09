@@ -66,6 +66,10 @@ class Property extends Model implements HasMedia
         return $this->hasMany( Lead::class, 'property_id', 'id');
     }
 
+    public function documents (){
+        return $this->hasMany( Document::class, 'property_id', 'id');
+    }
+
     public function scopeAssignToAuth ( $q, $boolean = 'and' ){
         return $q->where('assign_to', '=', auth()->id(), $boolean );
     }

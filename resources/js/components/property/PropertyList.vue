@@ -81,6 +81,18 @@
                         class="btn rounded-full bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
                         <i class="fa fa-trash"></i>
                     </button>
+                    <popper-dropdown :popper-options="popoverOptionsForFilter">
+                        <div class="popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700">
+                            <ul>
+                                <li>
+                                    <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.DOCUMENT_ATTACH_TO_PROPERTY ] )" :to="'/property/' + item.id + '/documents'" class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100">
+                                        Manage Documents
+                                    </router-link>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </popper-dropdown>
                 </div>
             </div>
         </template>

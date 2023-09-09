@@ -3,17 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Contact\AddContactRequest;
 use App\Http\Requests\Api\Document\AddDocumentRequest;
-use App\Http\Resources\Api\Contact\ContactEditResource;
-use App\Http\Resources\Api\Contact\ContactPaginationResource;
 use App\Http\Resources\Api\Document\DocumentEditResource;
 use App\Http\Resources\Api\Document\DocumentPaginationResource;
-use App\Models\Contact;
 use App\Models\Document;
-use App\Services\Database\ContactClass;
-use App\Services\Database\ContactTypeClass;
-use App\Services\Database\CustomerTypeClass;
+use App\Models\Property;
 use App\Services\Database\DocumentClass;
 use Illuminate\Http\Request;
 
@@ -65,6 +59,66 @@ class DocumentController extends Controller
             'message' => 'Document removed successfully.'
         ];
         $code = 200;
+        return response()->json( $response , $code);
+    }
+
+    public function attachDocument ( Request $request ) {
+        $property = Property::find( $request->input('property_id') );
+        $document = Document::with('media')->find( $request->input('document_id') );
+        $code = 500;
+        $response = [
+            'message' => 'Document removed successfully.'
+        ];
+        if( !is_null( $property ) ){
+            if( !is_null( $document ) ){
+                $isExists = Document::wherePropertyId( $property->id )
+                                    ->whereDocumentId( $document->id )
+                                    ->first();
+                if( is_null( $isExists ) ){
+
+                    $this->documentClass->attachDocumentWithProperty( $document, $property, auth()->user() );
+
+                    $response = [
+                        'message' => 'Success! Document attached successfully.'
+                    ];
+                    $code = 200;
+                }else{
+
+                    $response = [
+                        'message' => 'Error! Document already attached with selected property.'
+                    ];
+                }
+            }else{
+                $response = [
+                    'message' => 'Error! Document not exists.'
+                ];
+            }
+
+        }else{
+            $response = [
+                'message' => 'Error! Property not exists.'
+            ];
+
+        }
+        return response()->json( $response , $code);
+    }
+
+
+    public function deletePropertyDocument ( Document $document ) {
+        $code = 500;
+        if( !is_null( $document->property_id ) ){
+            $document->delete();
+
+            $response = [
+                'message' => 'Document removed successfully.'
+            ];
+            $code = 200;
+        }else{
+
+            $response = [
+                'message' => 'Error! Invalid request.'
+            ];
+        }
         return response()->json( $response , $code);
     }
 }

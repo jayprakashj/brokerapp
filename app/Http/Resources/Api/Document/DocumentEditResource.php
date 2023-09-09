@@ -16,6 +16,8 @@ class DocumentEditResource extends JsonResource
     {
         $data = [
             'id' => $this->id,
+            'property_id' => $this->property_id,
+            'property_name' => $this->property->name ?? null,
             'name' => $this->name,
             'description' => $this->description,
             'content' => $this->content,

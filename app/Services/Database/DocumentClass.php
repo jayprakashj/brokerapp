@@ -3,6 +3,7 @@
 namespace App\Services\Database;
 
 use App\Models\Document;
+use App\Models\Property;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -69,5 +70,22 @@ class DocumentClass {
         return $document;
     }
 
+    public function attachDocumentWithProperty( Document $document, Property $property, User $user ){
+        $newDocument = $document->replicate();
+
+        $newDocument->document_id = $document->id;
+        $newDocument->property_id = $property->id;
+        $newDocument->created_by = $user->id;
+        $newDocument->updated_by = $user->id;
+
+        $newDocument->save();
+
+        if( $document->media->count() ){
+            $attachment = $document->media->first();
+            $attachment->copy( $newDocument );
+        }
+
+        return $newDocument;
+    }
 
 }

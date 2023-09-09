@@ -155,6 +155,25 @@ export default {
                             title: (this.formData?.id ? 'Edit': 'Create'),
                         }
                     ];
+            if( this.formData?.property_id ){
+                breadcrumbs = [
+                        {
+                            title: 'Property Management',
+                            link: '/property'
+                        },
+                        {
+                            title: (this.formData.property_name || ''),
+                            link: '/property/view/' + this.formData.property_id
+                        },
+                        {
+                            title: 'Property Documents',
+                            link: '/property/' + this.formData.property_id + '/documents'
+                        },
+                        {
+                            title: (this.formData.property_name || 'Update')
+                        }
+                    ];
+            }
             return breadcrumbs;
         },
         validationSchema(){
@@ -255,7 +274,12 @@ export default {
                                                             if( res.data?.message ){
                                                                 message = res.data.message;
                                                             }
-                                                            this.$router.push({ name: 'document_lists' });
+                                                            if( this.formData?.property_id ){
+
+                                                                this.$router.push({ name: 'property_document', params: { id: this.formData.property_id} } );
+                                                            }else{
+                                                                this.$router.push({ name: 'document_lists' });
+                                                            }
                                                             this.$toast.info( message );
                                                         },
                                                         ( err ) => {

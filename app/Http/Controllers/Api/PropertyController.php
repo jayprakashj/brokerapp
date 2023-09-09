@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Property\AddPropertyRequest;
+use App\Http\Resources\Api\Property\PropertyDocumentListResource;
+use App\Http\Resources\Api\Property\PropertyDocumentResource;
 use App\Http\Resources\Api\Property\PropertyEditResource;
 use App\Http\Resources\Api\Property\PropertyFacingListForSelectList;
 use App\Http\Resources\Api\Property\PropertyFurnishListForSelectList;
@@ -13,7 +15,7 @@ use App\Http\Resources\Api\Property\PropertyPaginationResource;
 use App\Http\Resources\Api\Property\PropertyTransactionListForSelectList;
 use App\Http\Resources\Api\Property\PropertyTypeListForSelectList;
 use App\Http\Resources\Api\Property\PropertyViewResource;
-use App\Models\LeadSource;
+use App\Models\Document;
 use App\Models\Property;
 use App\Models\PropertyFacingList;
 use App\Models\PropertyFurnishList;
@@ -112,6 +114,18 @@ class PropertyController extends Controller
             'property_img_types' => PropertyImageTypeListForSelectList::collection( $propertyImgTypes ),
         ];
         return response()->json( $data, 200 );
+    }
+
+    public function getDocumentList( Property $property ){
+        $property->load('documents');
+        return new PropertyDocumentResource( $property );
+    }
+
+    public function getDocumentListForSelectList( Property $property ){
+        $property->load('documents');
+        $selectedDocuments = $property->documents->pluck('document_id')->toArray();
+        $documents = Document::whereNotIn('id', $selectedDocuments )->whereNull('property_id')->get();
+        return PropertyDocumentListResource::collection($documents );
     }
 
     public function getPropertyForSelectList(){
