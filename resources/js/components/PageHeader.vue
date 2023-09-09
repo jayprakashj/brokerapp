@@ -53,8 +53,8 @@
             </li>
         </ul>
     </template>
-    <div class="flex items-center space-x-2" v-if="searchEnabled">
-      <label class="relative hidden sm:flex">
+    <div class="flex items-center space-x-2" v-if="searchEnabled || filterEnabled">
+      <label class="relative hidden sm:flex" v-if="searchEnabled">
         <input
           class="form-input peer h-9 w-full rounded-full border border-slate-300 bg-transparent px-3 py-2 pl-9 text-xs+ placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
           :placeholder="searchPlaceholder" type="text" v-model="searchText">
@@ -68,6 +68,20 @@
           </svg>
         </span>
       </label>
+      <div class="flex" v-if="filterEnabled">
+        <popper-dropdown :popper-options="popoverOptionsForFilter">
+            <template v-slot:popper_btn>
+                <button class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 sm:h-12 sm:w-12">
+                    <i class="fa fa-2x fa-filter"></i>
+                </button>
+
+            </template>
+            <template v-slot:default="popperSlotOptions">
+                <slot name="filterPopoverContent" :popperClose="popperSlotOptions.closePopper" />
+
+            </template>
+        </popper-dropdown>
+        </div>
     </div>
 </div>
 
@@ -98,6 +112,14 @@ export default {
         searchPlaceholder:{
             type: String,
             default: 'Search...'
+        },
+        filterEnabled:{
+            type: Boolean,
+            default: false
+        },
+        filterPopoverOptions:{
+            type: Object,
+            default: {}
         }
     },
     data(){
@@ -112,6 +134,25 @@ export default {
             this.popperI = createPopper( this.$refs.popperRef, this.$refs.popperRoot, {placement:'bottom-start',offset:4} );
 
         })
+    },
+    computed:{
+        popoverOptionsForFilter () {
+            if( Object.keys( this.filterPopoverOptions ).length ){
+                return this.filterPopoverOptions;
+            }
+            return {
+                offset: 12,
+                placement: 'auto',
+                modifiers: [
+                    {
+                        name: 'preventOverflow',
+                        options: {
+                            padding: 10
+                        }
+                    }
+                ]
+            }
+        }
     },
     watch:{
         isShowPopper(nV){
