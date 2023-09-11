@@ -22,7 +22,7 @@ return new class extends Migration
             $table->bigInteger('customer_mobile');
             $table->string('customer_email')->nullable();
             $table->string('customer_city')->nullable();
-            $table->string('company_branch_id')->nullable();
+            $table->bigInteger('company_branch_id')->nullable();
             $table->bigInteger('assigned_to')->nullable();
             $table->date('assigned_date')->nullable();
             $table->string('budget')->nullable();

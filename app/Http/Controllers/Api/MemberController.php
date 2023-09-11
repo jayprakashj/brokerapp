@@ -38,7 +38,7 @@ class MemberController extends Controller
 
     public function store (AddMemberRequest $request ) {
         $response = [
-            'message' => 'Success! Invitation sent successfully.'
+            'message' => 'Success! Member created successfully.'
         ];
         $code = 200;
 
@@ -48,18 +48,18 @@ class MemberController extends Controller
             $this->memberClass->create( auth()->user(), $request );
 
         }else{
-            if( $member->isAccepted() ){
+            if( $member->user_id !== auth()->id() ){
 
-                $this->memberClass->changeWhenInvitationAccepted(  $member, $request );
+                $this->memberClass->update(  auth()->user(), $member, $request );
                 $response = [
-                    'message' => 'Success! Member role has been changed successfully.'
+                    'message' => 'Success! Member updated changed successfully.'
                 ];
             }else{
-                $this->memberClass->changeWhenInvitationPending(  $member, $request );
-
+                $code = 500;
                 $response = [
-                    'message' => 'Success! New invitation send successfully for the user.'
+                    'message' => 'Oops! Invalid request.'
                 ];
+
             }
         }
         return response()->json( $response, $code );

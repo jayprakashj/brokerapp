@@ -26,6 +26,9 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->index('type');
+            $table->index('email');
+            $table->index('mobile');
+            $table->index('email_verified_at');
             $table->index('status');
         });
     }

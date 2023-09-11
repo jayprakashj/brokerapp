@@ -54,6 +54,10 @@ class CompanyMember extends Model
         return $this->belongsTo( Company::class, 'company_id', 'id');
     }
 
+    public function companyBranch (){
+        return $this->belongsTo( CompanyBranch::class, 'company_branch_id', 'id');
+    }
+
     public function authDefaultCompany () {
         return $this->defaultCompany()->ownedByAuthUser();
     }

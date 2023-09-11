@@ -39,7 +39,7 @@ class MemberSeeder extends Seeder
                 $member->company_id = $item->defaultCompany->id;
                 $member->role_id = $roles->random( 1 )->First();
                 $member->created_by = $item->id;
-                $member->is_default = CompanyMember::FLAG_IS_DEFAULT_NO;
+                $member->is_default = CompanyMember::FLAG_IS_DEFAULT_YES;
                 $member->invite_status = CompanyMember::INVITE_STATUS_ACCEPT;
                 $member->is_owner = CompanyMember::FLAG_IS_OWNER_NO;
                 $member->save();

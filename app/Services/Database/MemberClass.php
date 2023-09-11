@@ -6,23 +6,22 @@ use App\Models\User;
 use App\Models\Company;
 use Illuminate\Support\Str;
 use App\Models\CompanyMember;
-use App\Models\CompanyUserPivot;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 use App\Mail\SendUserInvitationMail;
 use Illuminate\Support\Facades\Mail;
-use Spatie\Permission\Models\Permission;
 
 class MemberClass {
 
     // private $userClass;
 
-    // public function __construct( UserClass $userClass )
+    // public function __construct( )
     // {
-    //     $this->userClass = $userClass;
+    //     $this->userClass = new UserClass;
     // }
+
     public function getDefaultCompanyMembers ( $perPage = 24 ) {
         $members = CompanyMember::with([
+                            'company',
+                            'companyBranch',
                             'memberUser',
                             'role'
                         ])->currentDefaultCompany()
@@ -38,18 +37,26 @@ class MemberClass {
 
     public function create ( User $user, $request ) {
 
-        $companyMember = new CompanyMember();
-        $companyMember->invite_status = CompanyMember::INVITE_STATUS_PENDING;
-        $companyMember->token = $this->generateUniqueToken();
-        $member = $this->createOrUpdate( $companyMember, $user, $request );
 
-        $this->sendInvitation( $member );
+        $companyMember = new CompanyMember();
+        $companyMember->invite_status = CompanyMember::INVITE_STATUS_ACCEPT;
+        $companyMember->token = null;
+        $userClass = new UserClass;
+        $memberUser = $userClass->createMember( $request );
+        $member = $this->createOrUpdate( $companyMember, $memberUser, $user, $request );
+
+
+        // $this->sendInvitation( $member );
 
         return $member;
     }
 
     public function update ( User $user, CompanyMember $companyMember, $request ){
-        return $this->createOrUpdate( $companyMember, $user, $request );
+        $userClass = new UserClass;
+        $memberUser = $companyMember->memberUser;
+        $memberUser = $userClass->updateMember( $memberUser, $request );
+        $memberUser->refresh();
+        return $this->createOrUpdate( $companyMember, $memberUser, $user, $request );
     }
 
     public function acceptInvitation ( CompanyMember $companyMember ){
@@ -64,7 +71,7 @@ class MemberClass {
         return $companyMember;
     }
 
-    public function createWithUserRegistration ( Company $company, User $user, $isDefault = 0, $inviteStatus = 0 ) {
+    public function createWithUserRegistration ( Company $company, User $user, $isDefault = 0, $inviteStatus = 0, $isOwner = CompanyMember::FLAG_IS_OWNER_YES ) {
         $member = new CompanyMember();
         $member->email = $user->email;
         $member->user_id = $user->id ?? null;
@@ -73,24 +80,28 @@ class MemberClass {
         $member->created_by = $user->id;
         $member->is_default = $isDefault;
         $member->invite_status = $inviteStatus;
-        $member->is_owner = CompanyMember::FLAG_IS_OWNER_YES;
+        $member->is_owner = $isOwner;
         $member->save();
 
         return $member;
     }
 
 
-    public function createOrUpdate( CompanyMember $member, User $user, $request ){
-        $email = $request->input('email');
-        $emailUser = User::whereEmail( $email )->first();
+    public function createOrUpdate( CompanyMember $member, User $memberUser, User $user, $request ){
         $member->email = $request->input('email');
-        $member->user_id = $emailUser->id ?? null;
+        $member->user_id = $memberUser->id ?? null;
+        $member->company_branch_id = $request->input('company_branch');
         $member->company_id = \Helper::retrieveDefaultCompany()->id ?? null;
         $member->role_id = $request->input('role');
         $member->created_by = $user->id;
+        $member->is_default = CompanyMember::FLAG_IS_DEFAULT_YES;
         $member->is_owner = CompanyMember::FLAG_IS_OWNER_NO;
         $member->save();
 
+        if( $member->wasChanged('role_id') ){
+            $memberUser->assignRole( $member->role_id );
+            info( 'Role assigned' );
+        }
 
         return $member;
     }

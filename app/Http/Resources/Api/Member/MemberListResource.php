@@ -27,6 +27,7 @@ class MemberListResource extends JsonResource
             'is_self' => $this->isMe(),
             'role_name' => $this->role->name ?? '',
             'is_accepted' => $this->isAccepted(),
+            'company_branch' => $this->companyBranch->name ?? 'N/A',
 
         ];
 
