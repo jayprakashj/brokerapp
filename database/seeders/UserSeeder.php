@@ -37,22 +37,6 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => $faker->text(10),
-                'email' => 'companyuser1@mailinator.com',
-                'mobile' => '2234567891',
-                'password' => 'Strong@123',
-                'type' => User::TYPE_COMPANY,
-                'company_name' => $faker->text(10),
-            ],
-            [
-                'name' => $faker->text(10),
-                'email' => 'companyuser2@mailinator.com',
-                'mobile' => '3234567891',
-                'password' => 'Strong@123',
-                'type' => User::TYPE_COMPANY,
-                'company_name' => $faker->text(10),
-            ],
-            [
-                'name' => $faker->text(10),
                 'email' => 'individual@mailinator.com',
                 'mobile' => '12345678000',
                 'password' => 'Strong@123',
