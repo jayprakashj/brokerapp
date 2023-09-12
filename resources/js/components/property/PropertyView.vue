@@ -473,12 +473,13 @@
                             </label>
                         </div>
                     </div>
-                    <div class="card mt-2 p-4 sm:p-5 col-span-12" >
+                    <div class="card mt-2 p-4 sm:p-5 col-span-12">
                         <div
                             class="col-span-12 flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
                             <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
                                 Images
                                 <button
+                                    v-if="formData.images?.length"
                                     type="button"
                                     class="btn h-9 w-9 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
                                     @click="openModal"
@@ -487,10 +488,16 @@
                                 </button>
                             </h2>
                         </div>
-                        <div class="grid grid-cols-8 gap-4 mt-2">
+                        <div class="grid grid-cols-8 gap-4 mt-2" v-if="formData.images?.length">
                             <div class="card" v-for="(imgData, index) in formData.images" :key="'image_list_container_' + index">
                                 <img class="w-full rounded-lg object-cover" :src="(imgData.url)" alt="image">
                             </div>
+                        </div>
+                        <div
+                            v-else
+                            class="alert flex rounded-lg border border-error px-4 py-4 text-error sm:px-5"
+                        >
+                            No images found.
                         </div>
                     </div>
                 </div>
