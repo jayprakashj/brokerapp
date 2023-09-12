@@ -34,7 +34,7 @@
                             </router-link>
                             <button
                                 v-if="userPermissions.isPermissionsAllowed( $permissions.REMOVE_ROLE )"
-                                @click="removeRole( item.id )"
+                                @click="removeRole( item )"
                                 class="btn h-7 w-7 rounded-full bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90"
                                 :class="{'bg-red-400 cursor-not-allowed': item.users_count > 0 }"
                                 >
@@ -119,44 +119,47 @@ export default {
 			this.page = pageNum;
             this.loadListData();
 		},
-        removeRole ( id ){
-            this.$swal.fire({
-                    title: 'Are you sure you want to remove?',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, delete.',
-                }).then(
-                    ( res ) =>{
-                        if( res.isConfirmed ){
-                            this.$store.commit('setGlobalLoaderOn')
-                            this.$request
-                                .deleteRole( id )
-                                .then(
-                                    ( res ) => {
-                                        let message = 'Success! Role removed successfully.';
+        removeRole ( item ){
+            if( item.users_count <= 0 ){
 
-                                        if( res.data?.message ){
-                                            message = res.data.message;
-                                        }
-                                        this.loadListData();
-                                        this.$toast.info( message );
-                                    },
-                                    ( err ) => {
-                                        let message = 'Error! There is error occured while processing request.';
-                                        if( err?.response?.data?.message ){
-                                            message = err.response.data.message;
-                                        }
-                                        this.$toast.error( message );
-                                    }
-                                )
-                                .finally(
-                                    () => {
-                                        this.$store.commit('setGlobalLoaderOff');
-                                    }
-                                )
+                this.$swal.fire({
+                        title: 'Are you sure you want to remove?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, delete.',
+                    }).then(
+                        ( res ) =>{
+                            if( res.isConfirmed ){
+                                this.$store.commit('setGlobalLoaderOn')
+                                this.$request
+                                    .deleteRole( item.id )
+                                    .then(
+                                        ( res ) => {
+                                            let message = 'Success! Role removed successfully.';
 
+                                            if( res.data?.message ){
+                                                message = res.data.message;
+                                            }
+                                            this.loadListData();
+                                            this.$toast.info( message );
+                                        },
+                                        ( err ) => {
+                                            let message = 'Error! There is error occured while processing request.';
+                                            if( err?.response?.data?.message ){
+                                                message = err.response.data.message;
+                                            }
+                                            this.$toast.error( message );
+                                        }
+                                    )
+                                    .finally(
+                                        () => {
+                                            this.$store.commit('setGlobalLoaderOff');
+                                        }
+                                    )
+
+                            }
                         }
-                    }
-                );
+                    );
+                }
             }
     }
 }
