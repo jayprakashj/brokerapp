@@ -98,9 +98,8 @@ class MemberClass {
         $member->is_owner = CompanyMember::FLAG_IS_OWNER_NO;
         $member->save();
 
-        if( $member->wasChanged('role_id') ){
-            $memberUser->assignRole( $member->role_id );
-            info( 'Role assigned' );
+        if(  $member->wasRecentlyCreated || $member->wasChanged('role_id') ){
+            $memberUser->syncRoles( $member->role_id );
         }
 
         return $member;
