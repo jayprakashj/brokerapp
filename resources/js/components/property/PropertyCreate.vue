@@ -57,12 +57,9 @@
                                     <span>Unit No.</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Unit No" type="text" name="unit_no" v-model="formData.unit_no">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
+
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.unit_no?.length">{{ errors.unit_no.at(0) }}</span>
@@ -113,14 +110,11 @@
 
                                 <label class="block" >
                                     <span>Suitable For</span>
-                                    <span class="relative mt-1.5 flex">
+                                    <span class="relative flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Suitable For" type="text" name="suitable_for" v-model="formData.suitable_for">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
+
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.suitable_for?.length">{{ errors.suitable_for.at(0) }}</span>
@@ -297,12 +291,8 @@
                                     <span>Sellable Area</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Sellable Area" type="text" name="sellable_area" v-model="formData.sellable_area">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.sellable_area?.length">{{ errors.sellable_area.at(0) }}</span>
@@ -311,12 +301,8 @@
                                     <span>Builtup Area</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Builtup Area" type="text" name="builtup_area" v-model="formData.builtup_area">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.builtup_area?.length">{{ errors.builtup_area.at(0) }}</span>
@@ -325,12 +311,8 @@
                                     <span>Carpet Area</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Carpet Area" type="text" name="carpet_area" v-model="formData.carpet_area">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.carpet_area?.length">{{ errors.carpet_area.at(0) }}</span>
@@ -339,12 +321,8 @@
                                     <span>Plot Area</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Plot Area" type="text" name="plot_area" v-model="formData.plot_area">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.plot_area?.length">{{ errors.plot_area.at(0) }}</span>
@@ -405,12 +383,8 @@
                                     <span>Property Floor</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Property Floor" type="text" name="property_floor" v-model="formData.property_floor">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.property_floor?.length">{{ errors.property_floor.at(0) }}</span>
@@ -419,12 +393,8 @@
                                     <span>Total Floor</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Total Floor" type="text" name="total_floor" v-model="formData.total_floor">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.total_floor?.length">{{ errors.total_floor.at(0) }}</span>
@@ -433,12 +403,8 @@
                                     <span>No of Parking</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="No of Parking" type="text" name="no_of_parking" v-model="formData.no_of_parking">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.no_of_parking?.length">{{ errors.no_of_parking.at(0) }}</span>
@@ -447,12 +413,8 @@
                                     <span>No of Lift</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2  placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="No of Lift" type="text" name="no_of_lift" v-model="formData.no_of_lift">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.no_of_lift?.length">{{ errors.no_of_lift.at(0) }}</span>
@@ -466,12 +428,8 @@
                                     <span>Lease Period</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Lease Period" type="text" name="lease_period" v-model="formData.lease_period">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.lease_period?.length">{{ errors.lease_period.at(0) }}</span>
@@ -494,12 +452,8 @@
                                     <span>Availability</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Availability" type="text" name="availability" v-model="formData.availability">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.availability?.length">{{ errors.availability.at(0) }}</span>
@@ -508,12 +462,8 @@
                                     <span>Ownership</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Ownership" type="text" name="ownership" v-model="formData.ownership">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.ownership?.length">{{ errors.ownership.at(0) }}</span>
@@ -535,12 +485,8 @@
                                     <span>Age of Property</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Age of Property" type="text" name="age_of_property" v-model="formData.age_of_property">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.age_of_property?.length">{{ errors.age_of_property.at(0) }}</span>
@@ -549,12 +495,8 @@
                                     <span>Workstation</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Workstation" type="text" name="workstation" v-model="formData.workstation">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.workstation?.length">{{ errors.workstation.at(0) }}</span>
@@ -563,12 +505,8 @@
                                     <span>Conference Room</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Conference Room" type="text" name="conference_room" v-model="formData.conference_room">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.conference_room?.length">{{ errors.conference_room.at(0) }}</span>
@@ -577,12 +515,8 @@
                                     <span>Reception</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Reception" type="text" name="reception" v-model="formData.reception">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.reception?.length">{{ errors.reception.at(0) }}</span>
@@ -596,12 +530,8 @@
                                     <span>Walk Through Link</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                             placeholder="Walk Through Link" type="text" name="walk_through_link" v-model="formData.walk_through_link">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa text-base"></i>
-                                        </span>
                                     </span>
 
                                     <span class="text-tiny+ text-error" v-if="errors?.walk_through_link?.length">{{ errors.walk_through_link.at(0) }}</span>
