@@ -66,7 +66,7 @@ class PropertyViewResource extends JsonResource
             'workstation' => $this->workstation ?? '-',
             'conference_room' => $this->conference_room ?? '-',
             'reception' => $this->reception ?? '-',
-            'walk_through_link' => $this->walk_through_link ?? '-',
+            'walk_through_link' => $this->walk_through_link,
             'amenities' => $this->amenities ?? '-',
             'owner_name' => $this->owner_name ?? '-',
             'owner_email' => $this->owner_email ?? '-',

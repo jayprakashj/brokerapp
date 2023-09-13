@@ -81,7 +81,7 @@
                         class="btn rounded-full bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
                         <i class="fa fa-trash"></i>
                     </button>
-                    <popper-dropdown :popper-options="popoverOptionsForFilter">
+                    <popper-dropdown :popper-options="popoverOptionsForFilter" v-if="userPermissions.isPermissionsAllowed([ $permissions.DOCUMENT_ATTACH_TO_PROPERTY ] )">
                         <div class="popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700">
                             <ul>
                                 <li>
