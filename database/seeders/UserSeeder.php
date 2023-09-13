@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'name' => $faker->text(10),
-                'email' => 'user1@brokerapp.com',
+                'email' => 'user6@brokerapp.com',
                 'mobile' => '1234567800',
                 'password' => 'Strong@123',
                 'type' => User::TYPE_INDIVIDUAL,
