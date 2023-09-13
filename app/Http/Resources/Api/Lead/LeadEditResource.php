@@ -34,6 +34,7 @@ class LeadEditResource extends JsonResource
             'is_protected' => $this->isProtected(),
             'followup_date' => $this->followup_date,
             'assigned_date' => $this->assigned_date,
+            'comments' => LeadCommentsResource::collection( $this->latestComments ),
         ];
 
         if( !is_null( $this->company_branch_id ) ){

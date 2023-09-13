@@ -4,22 +4,23 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Http\Resources\Api\Company\CompanyEditResource;
-use App\Http\Resources\Api\Company\DefaultCompanyResource;
-use App\Models\Scopes\HasActive;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 use Spatie\Image\Manipulations;
+use App\Models\Scopes\HasActive;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\PermissionRegistrar;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\PermissionRegistrar;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Http\Resources\Api\Company\CompanyEditResource;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Http\Resources\Api\Company\DefaultCompanyResource;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -33,7 +34,7 @@ class User extends Authenticatable implements HasMedia
 
     protected $with = ['defaultCompany.company', 'globalRole.permissions'];
 
-    protected $defaultImage = '/images/100x100.png';
+    protected $defaultImage = '/images/user-placeholder.png';
 
     /**
      * The attributes that are mass assignable.
@@ -249,6 +250,7 @@ class User extends Authenticatable implements HasMedia
     public function getDataForVueApp () {
         $this->logo = $this->getLogoMediaId();
         $this->logo_url = $this->getLogoUrl();
+        $this->role_name = Str::replace('-', ' ', Str::title( $this->getRoleNames()->first() ));
         if( !is_null( $this->defaultCompany ) && !empty( $this->defaultCompany->company ) ){
             $this->current_company = new DefaultCompanyResource( $this->defaultCompany->company );
 

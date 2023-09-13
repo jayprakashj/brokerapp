@@ -19,7 +19,7 @@ class Company extends Model implements HasMedia
         HasActive,
         InteractsWithMedia;
 
-    protected $defaultImage = '/images/100x100.png';
+    protected $defaultImage = '/images/user-placeholder.png';
 
     public function registerMediaCollections(Media $media = null): void
     {

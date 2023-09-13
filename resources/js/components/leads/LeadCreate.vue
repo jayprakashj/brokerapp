@@ -1,6 +1,6 @@
 <template>
     <page-header :title="pageTitle" :breadcrumbs="breadcrumbs" />
-    <div class="flex place-content-center">
+    <div class="flex place-content-center" :class="{'gap-4': formData?.id}">
         <div class="card p-4 w-7/12 sm:p-5 ">
 
             <form @submit.prevent="submitForm">
@@ -293,14 +293,78 @@
                 </div>
             </form>
         </div>
+
+        <div class="card p-4 w-7/12 sm:p-5 " v-if="formData?.id">
+            <div class="card">
+                <div
+                    class="flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
+                    <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
+                       History
+                    </h2>
+                    <div class="flex justify-center space-x-2">
+                        <button
+                            @click="showCommentForm"
+                            v-if="userPermissions.isPermissionsAllowed([ $permissions.CAN_COMMENT ] )"
+                            class="btn bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
+                            >
+                            <i class="fa fa-comments mr-2"></i> Add Comment
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4 sm:p-5">
+                    <ol class="timeline [--size:1.5rem]" v-if="formData?.comments?.length">
+                        <li class="timeline-item" v-for="(item, index) in formData.comments" :key="'comments_'+index">
+                            <div class="timeline-item-point rounded-full bg-slate-300 dark:bg-navy-400">
+                            </div>
+
+                            <div class="timeline-item-content flex-1 pl-4 sm:pl-8">
+                                <div class="flex flex-col justify-between pb-2 sm:flex-row sm:pb-0">
+                                    <p class="pb-2 font-medium leading-none text-slate-600 dark:text-navy-100 sm:pb-0">
+                                        {{ item.created_user }}
+                                    </p>
+                                    <span class="text-xs text-slate-400 dark:text-navy-300">{{ item.created_time }}</span>
+                                </div>
+                                <p class="py-1"><pre>{{ item.comment }}</pre></p>
+                                <div class="mt-4" >
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">
+                                        Status:
+                                    </span>
+                                    <span class="text-xs text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent">
+                                        {{ item.status }}
+                                    </span>
+                                </div>
+                                <div class="mt-4" v-if="item.followup_date">
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">
+                                        Followup Date:
+                                    </span>
+                                    <span class="text-xs text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent">
+                                        {{ item.followup_date }}
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                    <no-data-found message="No history found." v-else />
+                </div>
+            </div>
+        </div>
+        <Teleport to="#teleport-target">
+
+            <add-comment-form v-if="userPermissions.isPermissionsAllowed([ $permissions.CAN_COMMENT ] ) && show.commentForm" title="Add Comment" :lead-id="formData.id" @close="hideCommentForm" @onAdded="onCommentAdd" />
+        </Teleport>
     </div>
 
 </template>
 
 <script>
 import * as Yup from 'yup';
+import { mapGetters } from 'vuex' ;
+import AddCommentForm from '@/components/leads/AddCommentForm.vue' ;
 
 export default {
+    components:{
+        AddCommentForm
+    },
     data(){
         return {
             pageTitle: 'Lead Management',
@@ -342,6 +406,9 @@ export default {
                 assigned_to: [],
                 company_branch_data: [],
 
+            },
+            show:{
+                commentForm: false
             }
         }
     },
@@ -349,6 +416,10 @@ export default {
         this.init();
     },
     computed:{
+        ...mapGetters([
+            'globalPermissions',
+            'userPermissions'
+        ]),
         breadcrumbs(){
 
             var breadcrumbs = [
@@ -487,6 +558,37 @@ export default {
                                             this.$toast.error("Error! Please correct all the error fields.");
                                         }
                                     });
+        },
+        showCommentForm(){
+            this.show.commentForm = true;
+        },
+        hideCommentForm(){
+            this.show.commentForm = false;
+        },
+        onCommentAdd(){
+
+            this.hideCommentForm();
+            this.loadViewDetail( this.$route.params.id );
+        },
+        loadViewDetail( id ){
+            this.$request.getLeadViewDetail( id )
+                        .then(
+                            ( res ) => {
+                                if( res.data ){
+                                    if( res?.data?.data?.comments?.length ){
+
+                                        this.formData.comments = res.data.data.comments;
+                                    }
+                                }
+                            },
+                            (err) => {
+                                this.$toast.error('Err! There is something wrong. Please retry.');
+                            }
+                        ).finally(
+                            () => {
+                                this.$store.commit('setGlobalLoaderOff');
+                            }
+                        )
         },
     }
 }

@@ -125,9 +125,9 @@ class CompanyClass {
         $company->email = $request->input('email');
         $company->mobile = $request->input('mobile');
         $company->address = $request->input('address');
-        if( $company->id && !$company->isDefault() ){
-            $company->status = $request->input('status');
-        }
+        // if( $company->id && !$company->isDefault() ){
+        //     $company->status = $request->input('status');
+        // }
         $company->save();
         if( $request->filled('logo') ){
             $logoFile = 'tmp_media/' . $request->input('logo');

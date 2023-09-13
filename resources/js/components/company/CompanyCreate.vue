@@ -63,7 +63,7 @@
                                 <span>PAN No.</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="XXXXX1111X" type="text" name="pan_no" v-model="companyDetail.pan_no">
                                 </span>
 
@@ -73,7 +73,7 @@
                                 <span>GST No.</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="GST No" type="text" name="gst_no" v-model="companyDetail.gst_no">
                                 </span>
 
@@ -108,19 +108,6 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
                             </label>
-
-                            <div class="flex-wrap items-start space-y-2 pt-2 sm:flex sm:space-x-5 sm:space-y-0" >
-                                <label class="inline-flex items-center space-x-2">
-                                    <input
-                                        name="status"
-                                        class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
-                                        type="checkbox"
-                                        :value="1"
-                                        v-model="companyDetail.status"
-                                        >
-                                    <span>Active?</span>
-                                </label>
-                            </div>
 
                             <label class="block">
                                 <span>Address</span>
@@ -171,8 +158,7 @@ export default {
                 email: '',
                 mobile: '',
                 address: '',
-                logo: '',
-                status: 0
+                logo: ''
             },
             loading:{
                 formSubmit: false,

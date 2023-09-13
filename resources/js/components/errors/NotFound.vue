@@ -36,6 +36,9 @@
 <script>
 export default {
 
+    created(){
+        this.$store.commit('setGlobalLoaderOff')
+    }
 }
 </script>
 

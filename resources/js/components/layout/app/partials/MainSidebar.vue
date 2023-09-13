@@ -48,12 +48,12 @@
                                 <img class="rounded-full" :src="currentUser.logo_url" alt="avatar">
                             </div>
                             <div>
-                                <a href="#"
+                                <router-link to="/profile"
                                     class="text-base font-medium text-slate-700 hover:text-primary focus:text-primary dark:text-navy-100 dark:hover:text-accent-light dark:focus:text-accent-light">
                                     {{ currentUser.name }}
-                                </a>
+                                </router-link>
                                 <p class="text-xs text-slate-400 dark:text-navy-300">
-                                    Admin
+                                    {{ currentUser.role_name || '' }}
                                 </p>
                             </div>
                         </div>
@@ -174,7 +174,7 @@ export default {
                 {
                     name: 'Document Management',
                     route: '/document',
-                    iconClass: 'fa-file',
+                    iconClass: 'fa-folder',
                     permission: [ this.$permissions.DOCUMENT_LIST ],
                     ignorePermission: false,
                     checkGlobalPermission: false,
