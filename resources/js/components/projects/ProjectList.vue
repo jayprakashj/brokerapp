@@ -68,7 +68,7 @@ import { mapGetters } from 'vuex' ;
 export default {
     data(){
         return {
-            pageTitle: 'Project Management',
+            pageTitle: 'Project Visits',
             isShowPopper: false,
             page: 1,
             lists:{}
