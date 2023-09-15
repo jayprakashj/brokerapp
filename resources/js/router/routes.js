@@ -305,11 +305,11 @@ const routes = [
         }
     },
     {
-        path: '/project',
+        path: '/project-visit',
         name: 'project_lists',
         component: ProjectList,
         meta:{
-            title: 'Project Management',
+            title: 'Project Visits',
             // permissions: [ ]
         },
     },
