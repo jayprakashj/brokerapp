@@ -85,6 +85,13 @@ class Lead extends Model
         });
     }
 
+    public function scopeMyCustomOrderBy ( $q, $key, $order ){
+        if( $key == 'assign_to_name' ){
+            $key = User::select('name')->whereColumn('id', 'leads.assigned_to')->limit(1);
+        }
+        return $q->orderBy( $key, $order );
+    }
+
     public function isConfidential(){
         return $this->is_confidential == self::CONFIDENTIAL_YES;
     }
