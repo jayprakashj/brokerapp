@@ -44,7 +44,7 @@ class LeadSeeder extends Seeder
             $obj->updated_by = $item->id;
             $obj->company_id = $item->defaultCompany->id;
             $obj->property_id = $properties->random()->id;
-            $obj->title = $item->defaultCompany->id;
+            $obj->title = $faker->text( 10 );
             $obj->contact_id = $contactObj->id;
             $obj->company_branch_id = $companyBranches->random()->id;
             $obj->customer_name = $contactObj->name;
