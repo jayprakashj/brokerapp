@@ -9,6 +9,7 @@ use App\Http\Requests\CompanyCreateRequest;
 use App\Http\Resources\Api\Company\CompanyEditResource;
 use App\Http\Resources\Api\Company\DefaultCompanyResource;
 use App\Http\Resources\Api\Company\CompanyPaginationResource;
+use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
@@ -19,14 +20,9 @@ class CompanyController extends Controller
         $this->companyClass = $companyClass;
     }
 
-    public function index () {
+    public function index ( Request $request ) {
 
-        $companies = Company::with(['authMember'])
-                                ->whereHas('members', function ( $q ) {
-                                    $q->whereUserId( auth()->id() )
-                                        ->acceptedInvite();
-                                })
-                                ->paginate(10);
+        $companies = $this->companyClass->fetchCompaniesList( auth()->user(), $request->input('per_page', 10 ) );
 
         return response()->json( new CompanyPaginationResource( $companies ), 200 );
     }
@@ -67,13 +63,18 @@ class CompanyController extends Controller
             $code = 500;
         }else{
             if( $company->isOwnedByMe() ){
+                if( !auth()->user()->isTypeIndividual() ){
 
-                $company = $this->companyClass->update( auth()->user(), $company, $request );
+                    $company = $this->companyClass->update( auth()->user(), $company, $request );
 
-                $response = [
-                    'message' => 'Success! Company data updated successfully.',
-                    'data' => new DefaultCompanyResource( $company )
-                ];
+                    $response = [
+                        'message' => 'Success! Company data updated successfully.',
+                        'data' => new DefaultCompanyResource( $company )
+                    ];
+                }else{
+                    $response = [];
+                    $code = 404;
+                }
             }else{
                 $response = [
                     'message' => 'Error! You can not edit the company which is not created by you.'
@@ -93,22 +94,28 @@ class CompanyController extends Controller
         ];
         $code = 500;
 
-        if( $company->isActive() )
-        {
-            $this->companyClass->makeDefault( $company );
+        if( !(auth()->user()->isTypeIndividual() && $company->isOwnedByMe() )){
 
-            $response = [
-                'message' => 'Success! Default company changed to '.$company->name.'.',
-                'new_permissions' =>  auth()->user()->getAllPermissions()->pluck('name'),
-                'company_data' => new DefaultCompanyResource( $company )
-            ];
-            $code = 200;
+            if( $company->isActive() )
+            {
+                $this->companyClass->makeDefault( $company );
+
+                $response = [
+                    'message' => 'Success! Default company changed to '.$company->name.'.',
+                    'new_permissions' =>  auth()->user()->getAllPermissions()->pluck('name'),
+                    'company_data' => new DefaultCompanyResource( $company )
+                ];
+                $code = 200;
+            }else{
+
+                $response = [
+                    'message' => 'Error! Company must be active to cmake the default.'
+                ];
+
+            }
         }else{
-
-            $response = [
-                'message' => 'Error! Company must be active to cmake the default.'
-            ];
-
+            $response = [];
+            $code = 404;
         }
         return response()->json( $response, $code );
     }

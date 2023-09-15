@@ -85,21 +85,16 @@
                     class="btn mt-10 h-10 w-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
                     Sign In
                 </button>
-                <div class="mt-4 text-center text-xs+">
+                {{-- <div class="mt-4 text-center text-xs+">
                     <p class="line-clamp-1">
                         <span>Dont have Account?</span>
 
                         <a class="text-primary transition-colors hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
                             href="{{ route('register') }}">Create account</a>
                     </p>
-                </div>
+                </div> --}}
 
             </form>
-        </div>
-        <div class="my-5 flex justify-center text-xs text-slate-400 dark:text-navy-300">
-            <a href="#">Privacy Notice</a>
-            <div class="mx-3 my-1 w-px bg-slate-200 dark:bg-navy-500"></div>
-            <a href="#">Term of service</a>
         </div>
     </main>
 </x-layouts.auth>

@@ -42,7 +42,7 @@ http.interceptors.response.use(
             router.push({name: '404'});
         }
 
-        if (error.response && error.response.status === 500 && 'default_company' in error.response.data && error.response.data.default_company === false ) {
+        if (error.response && error.response.status === 500 && error.response?.data?.default_company && error.response.data.default_company === false ) {
             $toast.error("Err! Please select default company.");
             router.push({name: 'company_lists'});
         }
@@ -61,7 +61,15 @@ const apis = {
             headers: { 'Content-Type': 'multipart/form-data' }
         }
         const fd = new FormData;
-        fd.append('media[]', data);
+        if( data?.length && data.length >= 1 ){
+            for( var i =0; i< data.length; i++ ){
+
+                fd.append('media[]', data[i] );
+            }
+        }else{
+            fd.append('media[]', data);
+
+        }
         return http.post('upload-media', fd, headers);
 
     },
@@ -71,6 +79,70 @@ const apis = {
     },
     updatePassword: ( data ) => {
         return http.post('update-password', data);
+
+    },
+    contactTypeSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('contacts/contact-types/select-list', config);
+
+    },
+    customerTypeSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('contacts/customer-types/select-list', config);
+
+    },
+    leadSourceSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/lead-source/select-list', config);
+
+    },
+    leadStatusSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/lead-status/select-list', config);
+
+    },
+    propertySelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('properties/select-lists/get', config);
+
+    },
+    companyBranchSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/company-branch/select-list', config);
+
+    },
+    companyMembersSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/company-members/select-list', config);
+
+    },
+    propertyFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('properties/lists/form-select-lists', config);
 
     },
     getCompanyList: ( params) => {
@@ -170,6 +242,95 @@ const apis = {
     },
     deleteBranch: ( id ) => {
         return http.post( `branches/${id}/delete` );
+    },
+    getContactList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('contacts/lists', config);
+
+    },
+    getContactDetail: ( id ) => {
+        return http.get(`contacts/${id}/edit` );
+    },
+    createContact: ( data ) => {
+        return http.post('contacts/store', data);
+    },
+    deleteContact: ( id ) => {
+        return http.post( `contacts/${id}/delete` );
+    },
+    getLeadList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('leads/lists', config);
+
+    },
+    getLeadDetail: ( id ) => {
+        return http.get(`leads/${id}/edit` );
+    },
+    getLeadViewDetail: ( id ) => {
+        return http.get(`leads/${id}/view` );
+    },
+    createLead: ( data ) => {
+        return http.post('leads/store', data);
+    },
+    deleteLead: ( id ) => {
+        return http.post( `leads/${id}/delete` );
+    },
+    addLeadComment: ( id, data ) => {
+        return http.post( `leads/${id}/add-comment`, data );
+    },
+    getPropertyList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('properties/lists', config);
+
+    },
+    getPropertyDetail: ( id ) => {
+        return http.get(`properties/${id}/edit` );
+    },
+    getPropertyViewDetail: ( id ) => {
+        return http.get(`properties/${id}/view` );
+    },
+    getPropertyDocumentList: ( id ) => {
+        return http.get(`properties/${id}/documents` );
+    },
+    getPropertyDocumentDropdownList: ( id ) => {
+        return http.get(`properties/${id}/documents/select-lists` );
+    },
+    createProperty: ( data ) => {
+        return http.post('properties/store', data);
+    },
+    deleteProperty: ( id ) => {
+        return http.post( `properties/${id}/delete` );
+    },
+    getDocumentList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('documents/lists', config);
+
+    },
+    getDocumentDetail: ( id ) => {
+        return http.get(`documents/${id}/edit` );
+    },
+    createDocument: ( data ) => {
+        return http.post('documents/store', data);
+    },
+    deleteDocument: ( id ) => {
+        return http.post( `documents/${id}/delete` );
+    },
+    detachPropertyWithDocument: ( id ) => {
+        return http.post( `documents/${id}/detach-property` );
+    },
+    attachPropertyToDocument: ( data ) => {
+        return http.post( `documents/attach-property`, data );
     },
 }
 export default apis;

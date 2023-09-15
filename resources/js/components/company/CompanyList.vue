@@ -29,19 +29,13 @@
                         </div>
                         <p>{{ item.email }}</p>
                     </div>
-                    <div class="flex items-center space-x-4" v-if="item.is_active">
-                        <div
-                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                            <i class="fa fa-check text-xs"></i>
-                        </div>
-                        <p>Active</p>
+                    <div class="flex items-center space-x-4" v-if="item.gst_no">
+
+                        <p>{{ item.gst_no }}</p>
                     </div>
-                    <div class="flex items-center space-x-4" v-else>
-                        <div
-                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                            <i class="fa fa-close m-auto"></i>
-                        </div>
-                        <p>InActive</p>
+                    <div class="flex items-center space-x-4" v-if="item.address">
+
+                        <p>{{ item.address }}</p>
                     </div>
                 </div>
                 <div class="mt-5 space-x-2">

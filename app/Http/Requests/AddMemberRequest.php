@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Company;
 use App\Models\CompanyMember;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -25,24 +26,64 @@ class AddMemberRequest extends FormRequest
     public function rules(): array
     {
 
+        $userId = null;
+        if( $this->id ){
+            $member = CompanyMember::with('memberUser')->find( $this->id );
+            $userId = $member->user_id;
+        }
         $rules =  [
             //
+            'name' => 'required',
+            'role' => 'required',
+            'company_branch' => 'required',
+            'mobile' => [
+                'required',
+                'digits:10',
+                Rule::unique('users', 'mobile')
+                        // ->where('company_id', \Helper::retrieveDefaultCompany()->id )
+                        ->when( $userId, function( $clause ) use ($userId) {
+                            $clause->whereNot('id', $userId);
+                        })
+            ],
             'email' => [
                 'required',
                 'email',
-                Rule::unique('company_members', 'email')
-                        ->where('company_id', \Helper::retrieveDefaultCompany()->id )
-                        ->when( $this->id, function( $clause ){
-                            $clause->whereNot('id', $this->id);
+                Rule::unique('users', 'email')
+                        // ->where('company_id', \Helper::retrieveDefaultCompany()->id )
+                        ->when( $userId, function( $clause ) use ($userId) {
+                            $clause->whereNot('id', $userId);
                         })
             ],
-            'role' => 'required',
+            'company_branch' => [
+                'required',
+                Rule::exists('company_branches', 'id')
+                        ->where('company_id', \Helper::retrieveDefaultCompany()->id )
+            ],
+            'role' => [
+                'required',
+                Rule::exists('roles', 'id')
+                        ->where('company_id', \Helper::retrieveDefaultCompany()->id )
+            ],
+            'password' => [
+                'required',
+                Password::min(8)
+                        ->letters()
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols()
+            ],
+            'confirm_password' => 'required|same:password'
         ];
         if( $this->id ){
-            $member = CompanyMember::find( $this->id );
-            if( $member->isAccepted() ){
-                unset( $rules['email']);
-            }
+            $rules['password'] = [
+                    'nullable',
+                    Password::min(8)
+                        ->letters()
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols()
+            ];
+            $rules['confirm_password'] = 'nullable|same:password';
         }
         return $rules;
     }

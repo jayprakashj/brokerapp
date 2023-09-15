@@ -46,8 +46,9 @@
                                         <input
                                             :name="'permission_group[' + item.name+ ']'"
                                             class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
-                                            type="checkbox" @click="checkAllPermission( $event, item.permissions)">
-                                        {{ item.name }}
+                                            type="checkbox" @click="checkAllPermission( $event, item.permissions)"
+                                            :id="'permission_group_'+index">
+                                        <label :for="'permission_group_'+index">{{ item.name }}</label>
                                     </h2>
                                 </div>
                                 <div class="max-w-100">

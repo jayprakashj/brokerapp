@@ -2,6 +2,8 @@
 
 namespace App\Models\Relations;
 
+use App\Models\Company;
+
 trait CompanyRelation {
 
     public function company (){

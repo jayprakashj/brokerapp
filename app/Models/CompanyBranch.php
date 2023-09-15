@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Models\Relations\CompanyRelation;
+use App\Models\Relations\CreatedUpdatedUserRelation;
+use App\Models\Relations\OwnerUserRelation;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CompanyBranch extends Model
 {
-    use CompanyRelation;
+    use SoftDeletes, CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation;
 
     /**
      * The "booted" method of the model.
@@ -23,13 +26,12 @@ class CompanyBranch extends Model
         return $this->belongsTo( User::class, 'user_id', 'id');
     }
 
-    public function createdUser (){
-        return $this->belongsTo( User::class, 'created_by', 'id');
+
+    public function getNameWithCompanyName () {
+        $name = $this->name;
+        if( !is_null( $this->company ) ){
+            $name .= '( ' . $this->company->name . ' )';
+        }
+        return $name;
     }
-
-    public function updatedUser (){
-        return $this->belongsTo( User::class, 'updated_by', 'id');
-    }
-
-
 }

@@ -63,4 +63,15 @@ class HelperService {
 
         return null;
     }
+
+    public function combineKeyValue( $data ){
+        $result = [];
+        if( !empty( $data ) ){
+            foreach( $data as $key => $value ){
+                $result[] = $key . ' : ' . $value;
+            }
+        }
+
+        return $result;
+    }
 }

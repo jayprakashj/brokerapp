@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->nullable();
             $table->bigInteger('company_id');
+            $table->bigInteger('company_branch_id')->nullable();
             $table->bigInteger('role_id')->nullable();
             $table->string('email')->nullable();
             $table->string('token')->nullable();
@@ -27,6 +28,7 @@ return new class extends Migration
 
             $table->index('user_id');
             $table->index('company_id');
+            $table->index('company_branch_id');
             $table->index('role_id');
             $table->index('email');
             $table->index('created_by');

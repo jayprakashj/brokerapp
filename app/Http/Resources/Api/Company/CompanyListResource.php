@@ -19,6 +19,8 @@ class CompanyListResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'mobile' => $this->mobile,
+            'gst_no' => $this->gst_no,
+            'address' => $this->address,
             'logo_url' => $this->getLogoUrl(),
             'is_owned' => $this->isOwnedByMe(),
             'creator' => $this->getOwnerName(),

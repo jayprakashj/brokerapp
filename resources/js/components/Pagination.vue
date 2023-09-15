@@ -4,7 +4,7 @@
             <ul class="pagination space-x-1.5">
                 <li class="prev" :class="{'active': isPrevEnable}">
                     <a href="#" @click.prevent="goPrevPage" class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-150 text-slate-500 transition-colors hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-300/80 dark:bg-navy-500 dark:text-navy-200 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                        <i class="fa fa-less-than"></i>
+                        <i class="fa fa-angle-left"></i>
                     </a>
                 </li>
                 <li
@@ -29,7 +29,7 @@
                         @click.prevent="goNextPage"
                         class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-150 text-slate-500 transition-colors hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-300/80 dark:bg-navy-500 dark:text-navy-200 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
                         >
-                        <i class="fa fa-greater-than"></i>
+                        <i class="fa fa-angle-right"></i>
                     </a>
                 </li>
             </ul>

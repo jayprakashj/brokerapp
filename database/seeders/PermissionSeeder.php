@@ -94,10 +94,115 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Branch',
         ]);
 
+        Permission::create([
+            'name' => 'Contact List',
+            'group_name' => 'Contact',
+        ]);
+        Permission::create([
+            'name' => 'View Contact',
+            'group_name' => 'Contact',
+        ]);
+        Permission::create([
+            'name' => 'Add Contact',
+            'group_name' => 'Contact',
+        ]);
+        Permission::create([
+            'name' => 'Update Contact',
+            'group_name' => 'Contact',
+        ]);
+        Permission::create([
+            'name' => 'Remove Contact',
+            'group_name' => 'Contact',
+        ]);
+
+
+        Permission::create([
+            'name' => 'Lead List',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Only Assigned Lead List',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'View Lead',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Add Lead',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Update Lead',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Can Comment',
+            'group_name' => 'Lead',
+        ]);
+        Permission::create([
+            'name' => 'Remove Lead',
+            'group_name' => 'Lead',
+        ]);
+
+
+        Permission::create([
+            'name' => 'Property List',
+            'group_name' => 'Property',
+        ]);
+
+        Permission::create([
+            'name' => 'Only Assigned Property List',
+            'group_name' => 'Property',
+        ]);
+        Permission::create([
+            'name' => 'View Property',
+            'group_name' => 'Property',
+        ]);
+        Permission::create([
+            'name' => 'Add Property',
+            'group_name' => 'Property',
+        ]);
+        Permission::create([
+            'name' => 'Update Property',
+            'group_name' => 'Property',
+        ]);
+        Permission::create([
+            'name' => 'Remove Property',
+            'group_name' => 'Property',
+        ]);
+
+        Permission::create([
+            'name' => 'Document List',
+            'group_name' => 'Document',
+        ]);
+
+        Permission::create([
+            'name' => 'Document Attach to Property',
+            'group_name' => 'Document',
+        ]);
+        Permission::create([
+            'name' => 'View Document',
+            'group_name' => 'Document',
+        ]);
+        Permission::create([
+            'name' => 'Add Document',
+            'group_name' => 'Document',
+        ]);
+        Permission::create([
+            'name' => 'Update Document',
+            'group_name' => 'Document',
+        ]);
+        Permission::create([
+            'name' => 'Remove Document',
+            'group_name' => 'Document',
+        ]);
+
+
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => 'user-admin']);
         $role->givePermissionTo(Permission::whereGroupName('Company')->get());
 
         $role = Role::create(['name' => 'user Management']);

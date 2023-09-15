@@ -22,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default( 1 );
             $table->bigInteger('owned_by');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('owned_by');
             $table->index('status');

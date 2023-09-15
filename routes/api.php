@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\DocumentController;
+use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -43,35 +47,36 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
     Route::get('/fetch/permissions', [RoleManagementController::class, 'getPermissions'])->name('fetch.permissions');
 
-    Route::prefix('roles')
-            ->name('role.')
-            ->group( function () {
-                Route::get('/lists', [RoleManagementController::class, 'index'])
-                        ->middleware('permission:Role List')
-                        ->name('index');
 
-                Route::get('{role}/edit', [RoleManagementController::class, 'edit'])
-                        ->middleware('permission:Update Role')
-                        ->name('edit');
+    Route::middleware('check_default_company')->group( function(){
 
-                Route::post('store', [RoleManagementController::class, 'store'])
-                        ->middleware('permission:Add Role|Update Role')
-                        ->name('store');
+        Route::prefix('roles')
+                ->name('role.')
+                ->group( function () {
+                    Route::get('/lists', [RoleManagementController::class, 'index'])
+                            ->middleware('permission:Role List')
+                            ->name('index');
 
-                Route::post('{role}/delete', [RoleManagementController::class, 'delete'])
-                        ->middleware('permission:Remove Role')
-                        ->name('delete');
+                    Route::get('{role}/edit', [RoleManagementController::class, 'edit'])
+                            ->middleware('permission:Update Role')
+                            ->name('edit');
 
-            });
+                    Route::post('store', [RoleManagementController::class, 'store'])
+                            ->middleware('permission:Add Role|Update Role')
+                            ->name('store');
 
-    Route::prefix('members')
-            ->name('member.')
-            ->group( function () {
+                    Route::post('{role}/delete', [RoleManagementController::class, 'delete'])
+                            ->middleware('permission:Remove Role')
+                            ->name('delete');
 
-                Route::get('{token:token}/invitation', [MemberController::class, 'getInvitation'])->name('view_invitation');
-                Route::post('{member:token}/accept-invitation', [MemberController::class, 'acceptInvitation'])->name('accept_invitation');
+                });
 
-                Route::middleware('check_default_company')->group( function(){
+        Route::prefix('members')
+                ->name('member.')
+                ->group( function () {
+
+                    Route::get('{token:token}/invitation', [MemberController::class, 'getInvitation'])->withoutMiddleware('check_default_company')->name('view_invitation');
+                    Route::post('{member:token}/accept-invitation', [MemberController::class, 'acceptInvitation'])->withoutMiddleware('check_default_company')->name('accept_invitation');
 
                     Route::get('/lists', [MemberController::class, 'index'])
                                     ->middleware('permission:Member List')
@@ -91,15 +96,12 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                     Route::get('roles', [MemberController::class, 'getRoles'])
                                     ->name('members_roles_list');
+
                 });
 
-            });
-
-    Route::prefix('branches')
-            ->name('company_branch.')
-            ->group( function () {
-
-                Route::middleware('check_default_company')->group( function(){
+        Route::prefix('branches')
+                ->name('company_branch.')
+                ->group( function () {
 
                     Route::get('/lists', [CompanyBranchController::class, 'index'])
                                     ->middleware('permission:Branch List')
@@ -119,6 +121,141 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                 });
 
-            });
+        Route::prefix('contacts')
+                ->name('contact.')
+                ->group( function () {
+
+                    Route::get('/lists', [ContactController::class, 'index'])
+                                    ->middleware('permission:Contact List')
+                                    ->name('index');
+
+                    Route::get('{contact}/edit', [ContactController::class, 'edit'])
+                                    ->middleware('permission:Update Contact')
+                                    ->name('edit');
+
+                    Route::post('store', [ContactController::class, 'store'])
+                                    ->middleware('permission:Add Contact|Update Contact')
+                                    ->name('store');
+
+                    // Route::post('{contact}/delete', [ContactController::class, 'delete'])
+                    //                 ->middleware('permission:Remove Contact')
+                    //                 ->name('delete');
+
+                    Route::get('contact-types/select-list', [ ContactController::class, 'contactTypeSelectList'])
+                                    ->name('select.contact_types');
+
+                    Route::get('customer-types/select-list', [ ContactController::class, 'customerTypeSelectList'])
+                                    ->name('select.customer_types');
+                });
+
+        Route::prefix('leads')
+                ->name('lead.')
+                ->group( function () {
+
+                    Route::get('/lists', [LeadController::class, 'index'])
+                                    ->middleware('permission:Lead List|Only Assigned Lead List')
+                                    ->name('index');
+
+                    Route::get('{lead}/edit', [LeadController::class, 'edit'])
+                                    ->middleware('permission:Update Lead')
+                                    ->name('edit');
+
+                    Route::get('{lead}/view', [LeadController::class, 'view'])
+                                    ->middleware('permission:View Lead')
+                                    ->name('view');
+
+                    Route::post('store', [LeadController::class, 'store'])
+                                    ->middleware('permission:Add Lead|Update Lead')
+                                    ->name('store');
+
+                    Route::post('{lead}/add-comment', [LeadController::class, 'addLeadComment'])
+                                    ->middleware('permission:Can Comment')
+                                    ->name('add.lead_comment');
+
+                    // Route::post('{lead}/delete', [LeadController::class, 'delete'])
+                    //                 ->middleware('permission:Remove Lead')
+                    //                 ->name('delete');
+
+                    Route::get('lead-source/select-list', [ LeadController::class, 'leadSourceSelectList'])
+                                    ->name('select.lead_source');
+
+                    Route::get('lead-status/select-list', [ LeadController::class, 'leadStatusSelectList'])
+                                    ->name('select.lead_status');
+
+                    Route::get('company-branch/select-list', [ LeadController::class, 'companyBranchSelectList'])
+                                    ->name('select.company_banch');
+                    Route::get('company-members/select-list', [ LeadController::class, 'companyMembersSelectList'])
+                                    ->name('select.company_member');
+                });
+
+
+        Route::prefix('properties')
+        ->name('property.')
+        ->group( function () {
+
+            Route::get('/lists', [PropertyController::class, 'index'])
+                            ->middleware('permission:Property List|Only Assigned Property List')
+                            ->name('index');
+
+            Route::get('{property}/edit', [PropertyController::class, 'edit'])
+                            ->middleware('permission:Update Property')
+                            ->name('edit');
+
+            Route::get('{property}/view', [PropertyController::class, 'view'])
+                            ->middleware('permission:View Property')
+                            ->name('view');
+
+            Route::post('store', [PropertyController::class, 'store'])
+                            ->middleware('permission:Add Property|Update Property')
+                            ->name('store');
+
+            Route::get('{property}/documents', [PropertyController::class, 'getDocumentList'])
+                            ->middleware('permission:Document Attach to Property')
+                            ->name('document_lists');
+
+            Route::get('{property}/documents/select-lists', [PropertyController::class, 'getDocumentListForSelectList'])
+                            ->middleware('permission:Document Attach to Property')
+                            ->name('document.select_lists');
+
+
+            Route::get('lists/form-select-lists', [PropertyController::class, 'createFormSelectList'])
+                            ->name('create_form_lists');
+
+            Route::get('select-lists/get', [PropertyController::class, 'getPropertyForSelectList'])
+                            ->name('get_select_lists');
+
+            // Route::post('{Property}/delete', [PropertyController::class, 'delete'])
+            //                 ->middleware('permission:Remove Property')
+            //                 ->name('delete');
+        });
+
+        Route::prefix('documents')
+        ->name('document.')
+        ->group( function () {
+
+            Route::get('/lists', [DocumentController::class, 'index'])
+                            ->middleware('permission:Document List')
+                            ->name('index');
+
+            Route::get('{document}/edit', [DocumentController::class, 'edit'])
+                            ->middleware('permission:Update Document')
+                            ->name('edit');
+
+            Route::post('store', [DocumentController::class, 'store'])
+                            ->middleware('permission:Add Document|Update Document')
+                            ->name('store');
+
+            Route::post('attach-property', [DocumentController::class, 'attachDocument'])
+                                ->middleware('permission:Document Attach to Property')
+                                ->name('attach_property');
+            Route::post('{document}/detach-property', [DocumentController::class, 'deletePropertyDocument'])
+                                ->middleware('permission:Document Attach to Property')
+                                ->name('detach_property');
+            // Route::post('{document}/delete', [DocumentController::class, 'delete'])
+            //                 ->middleware('permission:Remove Document')
+            //                 ->name('delete');
+
+        });
+    });
 
 });

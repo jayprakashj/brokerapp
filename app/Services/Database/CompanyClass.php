@@ -19,6 +19,37 @@ class CompanyClass {
         $this->memberClass = new MemberClass();
     }
 
+    public function getCompaniesForCompanyUser ( $perPage = 24 ) {
+
+        $companies = Company::with(['authMember'])
+                                ->whereHas('members', function ( $q ) {
+                                    $q->whereUserId( auth()->id() )
+                                        ->acceptedInvite();
+                                })
+                                ->paginate($perPage);
+        return $companies;
+    }
+
+    public function getCompaniesForIndividualUser ( $perPage = 24 ) {
+
+        $companies = Company::with(['authMember'])
+                                ->whereHas('members', function ( $q ) {
+                                    $q->whereUserId( auth()->id() )
+                                        ->acceptedInvite()
+                                        ->notOwner();
+                                })
+                                ->paginate($perPage);
+        return $companies;
+    }
+
+    public function fetchCompaniesList ( $user, $perPage = 24 ){
+        if( $user->isTypeIndividual() ){
+            return $this->getCompaniesForIndividualUser( $perPage );
+        }else{
+
+            return $this->getCompaniesForCompanyUser( $perPage );
+        }
+    }
 
     public function create ( User $user, $request, $default = false ) {
 
@@ -58,10 +89,16 @@ class CompanyClass {
         if( is_null( $user ) ){
             $user = auth()->user();
         }
-        CompanyMember::where('user_id', $user->id )
-                        ->update([
+        $companyMember = CompanyMember::where('user_id', $user->id );
+
+        if( $user->isTypeIndividual() ){
+            $companyMember = $companyMember->notOwner();
+        }
+
+        $companyMember->update([
                             'is_default' => DB::raw( '( company_id = '. $company->id .' )')
                         ]);
+
         $user->refresh();
 
         \Helper::setDefaultCompanySessionTeam();
@@ -88,9 +125,9 @@ class CompanyClass {
         $company->email = $request->input('email');
         $company->mobile = $request->input('mobile');
         $company->address = $request->input('address');
-        if( $company->id && !$company->isDefault() ){
-            $company->status = $request->input('status');
-        }
+        // if( $company->id && !$company->isDefault() ){
+        //     $company->status = $request->input('status');
+        // }
         $company->save();
         if( $request->filled('logo') ){
             $logoFile = 'tmp_media/' . $request->input('logo');

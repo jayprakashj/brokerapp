@@ -10,14 +10,16 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Helper;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model implements HasMedia
 {
     use HasFactory,
+        SoftDeletes,
         HasActive,
         InteractsWithMedia;
 
-    protected $defaultImage = '/images/100x100.png';
+    protected $defaultImage = '/images/user-placeholder.png';
 
     public function registerMediaCollections(Media $media = null): void
     {

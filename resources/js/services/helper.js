@@ -7,6 +7,20 @@ export default {
         app.config.globalProperties.$perPage = 24;
         app.config.globalProperties.$authUser = window.authUser;
         app.config.globalProperties.$permissions = permission;
+        app.config.globalProperties.$genders = [
+            {
+                id: 'male',
+                name: 'Male'
+            },
+            {
+                id: 'female',
+                name: 'Female'
+            },
+            {
+                id: 'other',
+                name: 'Other'
+            }
+        ];
         var canPermission = ( permissions, checkGlobal = false, allInclude = false  ) => {
             var isExists = false;
             const allowedPermissions = checkGlobal ? globalPermissions : userPermissions;

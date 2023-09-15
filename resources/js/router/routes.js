@@ -11,6 +11,18 @@ import MemberList from  '@/components/members/MemberList.vue'
 import MemberCreate from  '@/components/members/MemberCreate.vue'
 import BranchList from  '@/components/company_branch/BranchList.vue'
 import BranchCreate from  '@/components/company_branch/BranchCreate.vue'
+import ContactList from  '@/components/contacts/ContactList.vue'
+import ContactCreate from  '@/components/contacts/ContactCreate.vue'
+import LeadList from  '@/components/leads/LeadList.vue'
+import LeadCreate from  '@/components/leads/LeadCreate.vue'
+import LeadView from  '@/components/leads/LeadView.vue'
+import PropertyList from  '@/components/property/PropertyList.vue'
+import PropertyCreate from  '@/components/property/PropertyCreate.vue'
+import PropertyView from  '@/components/property/PropertyView.vue'
+import PropertyDocumentList from  '@/components/property/PropertyDocumentList.vue'
+import DocumentList from  '@/components/documents/DocumentList.vue'
+import DocumentCreate from  '@/components/documents/DocumentCreate.vue'
+import ProjectList from  '@/components/projects/ProjectList.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -18,11 +30,7 @@ import Unauthorize from  '@/components/errors/Unauthorize.vue'
 const routes = [
     {
         path: '/',
-        name: 'home',
-        component: Dashboard,
-        meta:{
-            title: 'Home'
-        }
+        redirect:'/dashboard'
     },
     {
         path: '/dashboard',
@@ -162,6 +170,150 @@ const routes = [
         }
     },
     {
+        path: '/contact',
+        name: 'contact_lists',
+        component: ContactList,
+        meta:{
+            title: 'Contact Management',
+            permissions: [ permission.CONTACT_LIST ]
+        },
+    },
+    {
+        path: '/contact/create',
+        name: 'contact_create',
+        component: ContactCreate,
+        meta: {
+            title: 'Contact Create',
+            permissions: [ permission.ADD_CONTACT ]
+        }
+    },
+    {
+        path: '/contact/edit/:id',
+        name: 'contact_edit',
+        component: ContactCreate,
+        meta: {
+            title: 'Contact Edit',
+            permissions: [ permission.UPDATE_CONTACT ]
+        }
+    },
+    {
+        path: '/lead',
+        name: 'lead_lists',
+        component: LeadList,
+        meta:{
+            title: 'Lead Management',
+            permissions: [ permission.LEAD_LIST, permission.ONLY_ASSIGNED_LEAD_LIST ]
+        },
+    },
+    {
+        path: '/lead/create',
+        name: 'lead_create',
+        component: LeadCreate,
+        meta: {
+            title: 'Lead Create',
+            permissions: [ permission.ADD_LEAD ]
+        }
+    },
+    {
+        path: '/lead/edit/:id',
+        name: 'lead_edit',
+        component: LeadCreate,
+        meta: {
+            title: 'Lead Edit',
+            permissions: [ permission.UPDATE_LEAD ]
+        }
+    },
+    {
+        path: '/lead/view/:id',
+        name: 'lead_view',
+        component: LeadView,
+        meta: {
+            title: 'Lead View',
+            permissions: [ permission.VIEW_LEAD ]
+        }
+    },
+    {
+        path: '/property',
+        name: 'property_lists',
+        component: PropertyList,
+        meta:{
+            title: 'Property Management',
+            permissions: [ permission.PROPERTY_LIST, permission.ONLY_ASSIGNED_PROPERTY_LIST ]
+        },
+    },
+    {
+        path: '/property/create',
+        name: 'property_create',
+        component: PropertyCreate,
+        meta: {
+            title: 'Property Create',
+            permissions: [ permission.ADD_PROPERTY ]
+        }
+    },
+    {
+        path: '/property/edit/:id',
+        name: 'property_edit',
+        component: PropertyCreate,
+        meta: {
+            title: 'Property Edit',
+            permissions: [ permission.UPDATE_PROPERTY ]
+        }
+    },
+    {
+        path: '/property/view/:id',
+        name: 'property_view',
+        component: PropertyView,
+        meta: {
+            title: 'Property View',
+            permissions: [ permission.VIEW_PROPERTY ]
+        }
+    },
+    {
+        path: '/property/:id/documents',
+        name: 'property_document',
+        component: PropertyDocumentList,
+        meta: {
+            title: 'Property Document',
+            permissions: [ permission.DOCUMENT_ATTACH_TO_PROPERTY ]
+        }
+    },
+    {
+        path: '/document',
+        name: 'document_lists',
+        component: DocumentList,
+        meta:{
+            title: 'Document Management',
+            permissions: [ permission.DOCUMENT_LIST]
+        },
+    },
+    {
+        path: '/document/create',
+        name: 'document_create',
+        component: DocumentCreate,
+        meta: {
+            title: 'Document Create',
+            permissions: [ permission.ADD_DOCUMENT ]
+        }
+    },
+    {
+        path: '/document/edit/:id',
+        name: 'document_edit',
+        component: DocumentCreate,
+        meta: {
+            title: 'Document Edit',
+            permissions: [ permission.UPDATE_DOCUMENT ]
+        }
+    },
+    {
+        path: '/project',
+        name: 'project_lists',
+        component: ProjectList,
+        meta:{
+            title: 'Project Management',
+            // permissions: [ ]
+        },
+    },
+    {
         path: '/401',
         name: '401',
         component: Unauthorize,
@@ -170,12 +322,16 @@ const routes = [
         }
     },
     {
-        path: '/:pathMatch(.*)*',
+        path: '/404',
         name: '404',
         component: NotFound,
         meta:{
-            title: '404'
+            title: '404 - Not Found'
         }
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/404'
     },
 ];
 

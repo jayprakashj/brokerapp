@@ -11,7 +11,7 @@ class SpatiePermission extends Permission
 {
 
     public function scopeExceptDefaultPermission ( $q ) {
-        return $q->whereNotIn( 'group_name', ['Company', 'User']);
+        return $q->whereNotIn( 'group_name', ['Company']);
     }
 
     public function subPermissions () {

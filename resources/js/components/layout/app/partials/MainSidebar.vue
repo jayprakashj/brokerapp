@@ -48,12 +48,12 @@
                                 <img class="rounded-full" :src="currentUser.logo_url" alt="avatar">
                             </div>
                             <div>
-                                <a href="#"
+                                <router-link to="/profile"
                                     class="text-base font-medium text-slate-700 hover:text-primary focus:text-primary dark:text-navy-100 dark:hover:text-accent-light dark:focus:text-accent-light">
                                     {{ currentUser.name }}
-                                </a>
+                                </router-link>
                                 <p class="text-xs text-slate-400 dark:text-navy-300">
-                                    Admin
+                                    {{ currentUser.role_name || '' }}
                                 </p>
                             </div>
                         </div>
@@ -118,7 +118,6 @@
 
 <script>
 
-import permission from '@/constants/permissions' ;
 import { mapGetters } from 'vuex';
 
 export default {
@@ -141,6 +140,14 @@ export default {
                     checkGlobalPermission: true,
                 },
                 {
+                    name: 'Branch',
+                    route: '/branch',
+                    iconClass: 'fa-network-wired',
+                    permission: [ this.$permissions.BRANCH_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
                     name: 'Roles',
                     route: '/role',
                     iconClass: 'fa-user-gear',
@@ -157,11 +164,43 @@ export default {
                     checkGlobalPermission: false,
                 },
                 {
-                    name: 'Branch',
-                    route: '/branch',
+                    name: 'Property Management',
+                    route: '/property',
                     iconClass: 'fa-building',
-                    permission: [ this.$permissions.BRANCH_LIST ],
+                    permission: [ this.$permissions.PROPERTY_LIST, this.$permissions.ONLY_ASSIGNED_PROPERTY_LIST ],
                     ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
+                    name: 'Document Management',
+                    route: '/document',
+                    iconClass: 'fa-folder',
+                    permission: [ this.$permissions.DOCUMENT_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
+                    name: 'Lead Management',
+                    route: '/lead',
+                    iconClass: 'fa-bullseye',
+                    permission: [ this.$permissions.LEAD_LIST,this.$permissions.ONLY_ASSIGNED_LEAD_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
+                    name: 'Contacts',
+                    route: '/contact',
+                    iconClass: 'fa-phone',
+                    permission: [ this.$permissions.CONTACT_LIST ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
+                    name: 'Projects',
+                    route: '/project',
+                    iconClass: 'fa-file-invoice',
+                    // permission: [ this.$permissions.CONTACT_LIST ],
+                    ignorePermission: true,
                     checkGlobalPermission: false,
                 }
             ]

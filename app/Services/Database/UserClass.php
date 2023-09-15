@@ -50,7 +50,9 @@ class UserClass {
 
         $company = $this->companyClass->createWithUserRegistration( (new Company), $user,  $request );
 
-        $companyMember = $this->memberClass->createWithUserRegistration( $company, $user, CompanyMember::FLAG_IS_DEFAULT_YES, CompanyMember::INVITE_STATUS_ACCEPT  );
+        $isDefault = $user->isTypeIndividual() ? CompanyMember::FLAG_IS_DEFAULT_NO : CompanyMember::FLAG_IS_DEFAULT_YES;
+
+        $companyMember = $this->memberClass->createWithUserRegistration( $company, $user, $isDefault, CompanyMember::INVITE_STATUS_ACCEPT  );
 
         $user->setRelation('ownedCompany', $company );
 
@@ -141,6 +143,49 @@ class UserClass {
     public function updatePassword ( User $user, $request ) {
         $user->password = $request->input('new_password');
         $user->save();
+
+        return $user;
+    }
+
+    public function createMember ( $request, $memberType = User::TYPE_INDIVIDUAL ){
+
+        $user = new User();
+
+        $user->type = $memberType;
+        $user->status = User::$STATUS_ACTIVE;
+        $user->email_verified_at = now();
+
+        $user = $this->createOrUpdateMemberUser( $user, $request );
+
+        return $user;
+    }
+
+    public function updateMember ( User $user, $request ){
+
+        $user = $this->createOrUpdateMemberUser( $user, $request );
+
+        return $user;
+    }
+
+    public function createOrUpdateMemberUser ( User $user, $request ) {
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->mobile = $request->input('mobile');
+        $user->address = $request->input('address');
+        if( $request->filled( 'password') ){
+            $user->password = $request->input('password');
+        }
+        $user->save();
+
+        if( $request->filled('logo') ){
+            $logoFile = 'tmp_media/' . $request->input('logo');
+            if( Storage::disk('public')->has( $logoFile ) ){
+                $user->addMediaFromDisk( $logoFile, 'public')->toMediaCollection('logo');
+            }
+        }
+
+        // Mail::to( $user->email )->send( new UserRegisterMail( $user ) );
 
         return $user;
     }
