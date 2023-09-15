@@ -85,6 +85,34 @@ class Lead extends Model
         });
     }
 
+    public function scopeMyCustomOrderBy ( $q, $key = 'updated_at', $order = 'desc' ){
+        if( $key == 'assign_to_name' ){
+            $key = User::select('name')->whereColumn('id', 'leads.assigned_to')->limit(1);
+        }
+        if( empty( $key ) ){
+            $key = 'updated_at';
+        }
+        if( empty( $order ) ){
+            $order = 'desc';
+        }
+        return $q->orderBy( $key, $order );
+    }
+
+    public function scopeMyCustomFilter ( $q, $column = 'updated_at', $value ){
+
+        if( $column == 'company_branch' ){
+            $q->whereRelation( 'companyBranch', 'id', '=', $value );
+        }
+        if( $column == 'company_branch' ){
+            $q->whereRelation( 'companyBranch', 'id', '=', $value );
+        }
+        if( $column == 'company_branch' ){
+            $q->whereRelation( 'companyBranch', 'id', '=', $value );
+        }
+        // $q->where( $column, 'LIKE', '%' . $value . '%');
+        return $q;
+    }
+
     public function isConfidential(){
         return $this->is_confidential == self::CONFIDENTIAL_YES;
     }

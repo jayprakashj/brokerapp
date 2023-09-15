@@ -42,11 +42,18 @@
         <template v-if="lists?.data?.length">
             <div class="card grow items-center p-4 sm:p-5 " v-for="(item, idx) in lists.data" :key="'member_'+idx">
                 <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                    {{ item.name }}
+                    {{ item.title }}
                 </h3>
                 <p class="text-xs+">{{ item.company_name }} </p>
                 <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
                 <div class="grow space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                            <i class="fa fa-user text-xs"></i>
+                        </div>
+                        <p>{{ item.name }}</p>
+                    </div>
                     <div class="flex items-center space-x-4">
                         <div
                             class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
@@ -74,6 +81,13 @@
                             <i class="fa fa-building text-xs"></i>
                         </div>
                         <p>{{ item.property_name }}</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                            <i class="fa fa-user-gear text-xs"></i>
+                        </div>
+                        <p>{{ item.assigned_to }}</p>
                     </div>
                 </div>
                 <div class="mt-5 space-x-2">
