@@ -196,8 +196,8 @@ export default {
                     checkGlobalPermission: false,
                 },
                 {
-                    name: 'Projects',
-                    route: '/project',
+                    name: 'Project Visits',
+                    route: '/project-visit',
                     iconClass: 'fa-file-invoice',
                     // permission: [ this.$permissions.CONTACT_LIST ],
                     ignorePermission: true,
