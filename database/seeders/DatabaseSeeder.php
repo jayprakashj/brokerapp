@@ -31,6 +31,10 @@ class DatabaseSeeder extends Seeder
                 PropertyFacingListSeeder::class,
                 PropertyObligationListSeeder::class,
                 PropertyImageTypeListSeeder::class,
+                PropertySeeder::class,
+                ContactSeeder::class,
+                LeadSeeder::class,
+                DocumentSeeder::class,
             ]
         );
     }
