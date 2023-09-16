@@ -32,7 +32,7 @@
       </div>
     </div>
     <template v-if="breadcrumbs && breadcrumbs.length">
-        <div class="hidden h-full py-1 sm:flex">
+        <div class="hidden h-full py-1 ">
             <div class="h-full w-px bg-slate-300 dark:bg-navy-600"></div>
         </div>
         <ul class="hidden flex-wrap items-center space-x-2 sm:flex">
