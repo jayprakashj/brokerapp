@@ -120,6 +120,16 @@ export default {
             'userPermissions'
         ])
     },
+    methods:{
+        logout(){
+            this.$request.logout()
+                .then(
+                    () => {
+                        window.location.href = '/login';
+                    }
+                )
+        },
+    }
 }
 </script>
 
