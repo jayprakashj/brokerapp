@@ -133,16 +133,6 @@ export default {
             'globalPermissions',
             'userPermissions'
         ])
-    },
-    methods:{
-        logout(){
-            this.$request.logout()
-                .then(
-                    () => {
-                        window.location.href = '/login';
-                    }
-                )
-        },
     }
 }
 </script>
