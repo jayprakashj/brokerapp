@@ -38,7 +38,13 @@ const permissions = {
     VIEW_DOCUMENT: 'View Document',
     ADD_DOCUMENT: 'Add Document',
     UPDATE_DOCUMENT: 'Update Document',
-    REMOVE_DOCUMENT: 'Remove Document'
+    REMOVE_DOCUMENT: 'Remove Document',
+    PROJECT_LIST:'Project List',
+    ONLY_ASSIGNED_PROJECT_LIST:'Only Assigned Project List',
+    VIEW_PROJECT:'View Project',
+    ADD_PROJECT:'Add Project',
+    UPDATE_PROJECT:'Update Project',
+    REMOVE_PROJECT:'Remove Project'
 }
 
 export default permissions;

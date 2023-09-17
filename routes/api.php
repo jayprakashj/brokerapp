@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
 use App\Http\Controllers\Auth\AuthController;
@@ -256,6 +257,33 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             //                 ->name('delete');
 
         });
+
+        Route::prefix('projects')
+        ->name('project.')
+        ->group( function () {
+
+            Route::get('/lists', [ProjectController::class, 'index'])
+                            ->middleware('permission:Project List|Only Assigned Project List')
+                            ->name('index');
+
+            Route::get('{project}/edit', [ProjectController::class, 'edit'])
+                            ->middleware('permission:Update Property')
+                            ->name('edit');
+
+            Route::get('{project}/view', [ProjectController::class, 'view'])
+                            ->middleware('permission:View Project')
+                            ->name('view');
+
+            Route::post('store', [ProjectController::class, 'store'])
+                            ->middleware('permission:Add Project|Update Project')
+                            ->name('store');
+
+
+            // Route::post('{Property}/delete', [PropertyController::class, 'delete'])
+            //                 ->middleware('permission:Remove Property')
+            //                 ->name('delete');
+        });
+
     });
 
 });

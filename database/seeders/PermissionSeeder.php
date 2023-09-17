@@ -199,6 +199,33 @@ class PermissionSeeder extends Seeder
         ]);
 
 
+
+        Permission::create([
+            'name' => 'Project List',
+            'group_name' => 'Project',
+        ]);
+
+        Permission::create([
+            'name' => 'Only Assigned Project List',
+            'group_name' => 'Project',
+        ]);
+        Permission::create([
+            'name' => 'View Project',
+            'group_name' => 'Project',
+        ]);
+        Permission::create([
+            'name' => 'Add Project',
+            'group_name' => 'Project',
+        ]);
+        Permission::create([
+            'name' => 'Update Project',
+            'group_name' => 'Project',
+        ]);
+        Permission::create([
+            'name' => 'Remove Project',
+            'group_name' => 'Project',
+        ]);
+
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 

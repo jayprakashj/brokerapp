@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
                 ContactSeeder::class,
                 LeadSeeder::class,
                 DocumentSeeder::class,
+                ProjectSeeder::class,
             ]
         );
     }

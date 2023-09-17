@@ -22,7 +22,8 @@ import PropertyView from  '@/components/property/PropertyView.vue'
 import PropertyDocumentList from  '@/components/property/PropertyDocumentList.vue'
 import DocumentList from  '@/components/documents/DocumentList.vue'
 import DocumentCreate from  '@/components/documents/DocumentCreate.vue'
-import ProjectList from  '@/components/projects/ProjectList.vue'
+import ProjectList from  '@/components/project/ProjectList.vue'
+import ProjectCreate from  '@/components/project/ProjectCreate.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -305,13 +306,31 @@ const routes = [
         }
     },
     {
-        path: '/project-visit',
+        path: '/project',
         name: 'project_lists',
         component: ProjectList,
         meta:{
-            title: 'Project Visits',
-            // permissions: [ ]
+            title: 'Project Management',
+            permissions: [ permission.PROJECT_LIST, permission.ONLY_ASSIGNED_PROJECT_LIST ]
         },
+    },
+    {
+        path: '/project/create',
+        name: 'project_create',
+        component: ProjectCreate,
+        meta: {
+            title: 'Project Create',
+            permissions: [ permission.ADD_PROJECT ]
+        }
+    },
+    {
+        path: '/project/edit/:id',
+        name: 'project_edit',
+        component: ProjectCreate,
+        meta: {
+            title: 'Project Edit',
+            permissions: [ permission.UPDATE_PROJECT ]
+        }
     },
     {
         path: '/401',

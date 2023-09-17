@@ -332,5 +332,22 @@ const apis = {
     attachPropertyToDocument: ( data ) => {
         return http.post( `documents/attach-property`, data );
     },
+    getProjectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('projects/lists', config);
+
+    },
+    getProjectDetail: ( id ) => {
+        return http.get(`projects/${id}/edit` );
+    },
+    createProject: ( data ) => {
+        return http.post('projects/store', data);
+    },
+    deleteProject: ( id ) => {
+        return http.post( `projects/${id}/delete` );
+    },
 }
 export default apis;
