@@ -46,7 +46,7 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Name</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -60,7 +60,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Mobile</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -75,7 +75,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
                             </label>
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Email</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -90,6 +90,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
                             </label>
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.role"
                                         form-label="Role"
                                         placeholder="Select Role"
@@ -101,6 +102,7 @@
                                         :error-msg="errors?.role"
                                     />
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.company_branch"
                                         form-label="Company Branch"
                                         placeholder="Select Branch"
@@ -113,7 +115,7 @@
                                     />
 
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Password</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -127,7 +129,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.password?.length">{{ errors.password.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Confirm Password</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -141,7 +143,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.confirm_password?.length">{{ errors.confirm_password.at(0) }}</span>
                             </label>
-                            <label class="block col-span-2">
+                            <label class="block h-full col-span-2">
                                 <span>Address</span>
                                 <label class="block">
                                     <textarea

@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                            <label class="block col-span-2" >
+                            <label class="block h-full col-span-2" >
                                 <span>Title</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -45,7 +45,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.title?.length">{{ errors.title.at(0) }}</span>
                             </label>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Name</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -59,7 +59,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Mobile</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -74,7 +74,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
                             </label>
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Email</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -89,7 +89,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
                             </label>
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>City</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -105,6 +105,7 @@
                             </label>
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.company_branch"
                                         form-label="Company Branch"
                                         placeholder="Select Branch"
@@ -120,6 +121,7 @@
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.property"
                                         form-label="Property"
                                         placeholder="Select Property"
@@ -131,7 +133,7 @@
                                         :error-msg="errors?.property"
                                     />
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Interest In</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -145,7 +147,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.interest_in?.length">{{ errors.interest_in.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Purpose</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -159,7 +161,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.purpose?.length">{{ errors.purpose.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Budget</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -175,6 +177,7 @@
                             </label>
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.lead_source"
                                         form-label="Lead Source"
                                         value-field="name"
@@ -186,7 +189,7 @@
                                         :selected-options="formData.lead_source"
                                         :error-msg="errors?.lead_source"
                                     />
-                            <label class="block col-span-2">
+                            <label class="block h-full col-span-2">
                                 <span>Keywords</span>
                                 <label class="block">
                                     <textarea
@@ -199,7 +202,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.keywords?.length">{{ errors.keywords.at(0) }}</span>
                             </label>
-                            <label class="block col-span-2">
+                            <label class="block h-full col-span-2">
                                 <span>Remark</span>
                                 <label class="block">
                                     <textarea
@@ -214,6 +217,7 @@
                             </label>
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.lead_status"
                                         value-field="name"
                                         form-label="Lead Status"
@@ -227,6 +231,7 @@
                                     />
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.assigned_to"
                                         form-label="Assign To"
                                         placeholder="Select Assign To"
@@ -238,7 +243,7 @@
                                         :error-msg="errors?.assigned_to"
                                     />
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Followup Date </span>
                                 <span class="relative mt-1.5 flex">
                                     <input

@@ -46,7 +46,7 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Name</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -60,7 +60,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Mobile</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -75,7 +75,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
                             </label>
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Email</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -90,6 +90,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
                             </label>
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.gender"
                                         form-label="Gender"
                                         placeholder="Select Gender"
@@ -98,6 +99,7 @@
                                         :error-msg="errors?.gender"
                                     />
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.contact_type"
                                         form-label="Contact Type"
                                         placeholder="Select Contact Type"
@@ -110,6 +112,7 @@
                                         :error-msg="errors?.contact_type"
                                     />
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.customer_type"
                                         form-label="Customer Type"
                                         placeholder="Select Customer Type"
@@ -124,7 +127,7 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                            <label class="block col-span-2">
+                            <label class="block h-full col-span-2">
                                 <span>Address</span>
                                 <label class="block">
                                     <textarea
@@ -137,7 +140,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.address?.length">{{ errors.address.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>City</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -151,7 +154,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.city?.length">{{ errors.city.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Locality</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -165,7 +168,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.locality?.length">{{ errors.locality.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Pincode</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -179,7 +182,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.pincode?.length">{{ errors.pincode.at(0) }}</span>
                             </label>
-                            <label class="block col-span-2">
+                            <label class="block h-full col-span-2">
                                 <span>Comment</span>
                                 <label class="block">
                                     <textarea

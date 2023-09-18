@@ -25,7 +25,7 @@
                         <div class="card mt-2 p-4 sm:p-5 col-span-8">
 
                             <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Name</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -39,7 +39,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Building Name</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -53,7 +53,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.building_name?.length">{{ errors.building_name.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Unit No.</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -65,6 +65,7 @@
                                     <span class="text-tiny+ text-error" v-if="errors?.unit_no?.length">{{ errors.unit_no.at(0) }}</span>
                                 </label>
                                 <input-tom-select
+                                            class="h-full"
                                             v-model="formData.company_branch"
                                             form-label="Company Branch"
                                             placeholder="Select Branch"
@@ -76,6 +77,7 @@
                                             :error-msg="errors?.company_branch"
                                         />
                                 <input-tom-select
+                                            class="h-full"
                                             v-model="formData.property_type"
                                             form-label="Property Type"
                                             placeholder="Select Property Type"
@@ -84,6 +86,7 @@
                                             :error-msg="errors?.property_type"
                                         />
                                 <input-tom-select
+                                            class="h-full"
                                             v-model="formData.property_transaction"
                                             form-label="Property Transaction"
                                             placeholder="Select Property Transactions"
@@ -92,6 +95,7 @@
                                             :error-msg="errors?.property_transaction"
                                         />
                                 <input-tom-select
+                                            class="h-full"
                                             v-model="formData.property_furnishing"
                                             form-label="Property Furnishing"
                                             placeholder="Select Property Furnishing"
@@ -100,6 +104,7 @@
                                             :error-msg="errors?.property_furnishing"
                                         />
                                 <input-tom-select
+                                            class="h-full"
                                             v-model="formData.property_facing"
                                             form-label="Property Facing"
                                             placeholder="Select Property Facing"
@@ -108,7 +113,7 @@
                                             :error-msg="errors?.property_facing"
                                         />
 
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Suitable For</span>
                                     <span class="relative flex">
                                         <input
@@ -122,7 +127,7 @@
                             </div>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                                <label class="block col-span-2">
+                                <label class="block h-full col-span-2">
                                     <span>Address</span>
                                     <label class="block">
                                         <textarea
@@ -135,7 +140,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.address?.length">{{ errors.address.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>City</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -149,7 +154,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.city?.length">{{ errors.city.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Locality</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -166,7 +171,7 @@
                             </div>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 items-center">
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Bedrooms</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -180,7 +185,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.bedrooms?.length">{{ errors.bedrooms.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Master Bedrooms</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -194,7 +199,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.master_bedrooms?.length">{{ errors.master_bedrooms.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Guest Bedrooms</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -208,7 +213,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.guest_room?.length">{{ errors.guest_room.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Child Bedrooms</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -222,7 +227,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.child_room?.length">{{ errors.child_room.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Other Rooms</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -240,7 +245,7 @@
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
 
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Bathrooms</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -254,7 +259,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.bathrooms?.length">{{ errors.bathrooms.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Common Bathrooms</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -268,7 +273,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.common_bathrooms?.length">{{ errors.common_bathrooms.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Ensult Bathrooms</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -287,7 +292,7 @@
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 items-center">
 
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Sellable Area</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -297,7 +302,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.sellable_area?.length">{{ errors.sellable_area.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Builtup Area</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -307,7 +312,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.builtup_area?.length">{{ errors.builtup_area.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Carpet Area</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -317,7 +322,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.carpet_area?.length">{{ errors.carpet_area.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Plot Area</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -332,7 +337,7 @@
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
 
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Price</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -346,7 +351,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.price?.length">{{ errors.price.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Negotiable Amount</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -360,7 +365,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.negotiable_amount?.length">{{ errors.negotiable_amount.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Security Deposit</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -379,7 +384,7 @@
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
 
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Property Floor</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -389,7 +394,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.property_floor?.length">{{ errors.property_floor.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Total Floor</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -399,7 +404,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.total_floor?.length">{{ errors.total_floor.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>No of Parking</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -409,7 +414,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.no_of_parking?.length">{{ errors.no_of_parking.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>No of Lift</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -424,7 +429,7 @@
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
 
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Lease Period</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -434,7 +439,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.lease_period?.length">{{ errors.lease_period.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Lease Expiry Date</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -448,7 +453,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.lease_expiry_date?.length">{{ errors.lease_expiry_date.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Availability</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -458,7 +463,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.availability?.length">{{ errors.availability.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Ownership</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -474,6 +479,7 @@
                             <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
 
                                 <input-tom-select
+                                            class="h-full"
                                             v-model="formData.property_obligation"
                                             form-label="Property Obligation"
                                             placeholder="Select Property Obligation"
@@ -481,7 +487,7 @@
                                             :selected-options="selected.property_obligation"
                                             :error-msg="errors?.property_obligation"
                                         />
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Age of Property</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -491,7 +497,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.age_of_property?.length">{{ errors.age_of_property.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Workstation</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -501,7 +507,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.workstation?.length">{{ errors.workstation.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Conference Room</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -511,7 +517,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.conference_room?.length">{{ errors.conference_room.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Reception</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -526,7 +532,7 @@
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-12 gap-4 sm:grid-cols-12 items-center">
 
-                                <label class="block col-span-12" >
+                                <label class="block h-full col-span-12" >
                                     <span>Walk Through Link</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -541,7 +547,7 @@
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-12 gap-4 sm:grid-cols-12 items-center">
 
-                                <label class="block col-span-6 mt-2">
+                                <label class="block h-full col-span-6 mt-2">
                                     <span>Amenities</span>
                                     <label class="block">
                                         <textarea
@@ -554,7 +560,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.amenities?.length">{{ errors.amenities.at(0) }}</span>
                                 </label>
-                                <label class="block col-span-6 mt-2">
+                                <label class="block h-full col-span-6 mt-2">
                                     <span>Unique Feature</span>
                                     <label class="block">
                                         <textarea
