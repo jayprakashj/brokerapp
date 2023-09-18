@@ -145,6 +145,22 @@ const apis = {
         return http.get('properties/lists/form-select-lists', config);
 
     },
+    projectFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('projects/lists/form-select-lists', config);
+
+    },
+    propertyFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('properties/lists/form-select-lists', config);
+
+    },
     getCompanyList: ( params) => {
         let config = {};
         if( params ) {
@@ -342,6 +358,9 @@ const apis = {
     },
     getProjectDetail: ( id ) => {
         return http.get(`projects/${id}/edit` );
+    },
+    getProjectViewDetail: ( id ) => {
+        return http.get(`projects/${id}/view` );
     },
     createProject: ( data ) => {
         return http.post('projects/store', data);

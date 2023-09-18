@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Api\Property;
+namespace App\Http\Requests\Api\Project;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class AddProjectRequest extends FormRequest
 {
@@ -26,7 +25,7 @@ class AddProjectRequest extends FormRequest
 
         $rules =  [
             //
-            'name' => [
+            'title' => [
                 'required'
             ],
             'total_unit' => [
@@ -37,10 +36,6 @@ class AddProjectRequest extends FormRequest
             ],
             'locality' => [
                 'required'
-            ],
-            'price' => [
-                'required',
-                'numeric'
             ],
 
             'company_branch' => [

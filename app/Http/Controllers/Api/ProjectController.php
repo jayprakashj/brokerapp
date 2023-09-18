@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Property\AddProjectRequest;
+use App\Http\Requests\Api\Project\AddProjectRequest;
 use App\Http\Resources\Api\Project\ProjectEditResource;
 use App\Http\Resources\Api\Project\ProjectPaginationResource;
-use App\Http\Resources\Api\Property\PropertyViewResource;
+use App\Http\Resources\Api\Project\ProjectViewResource;
+use App\Http\Resources\Api\Property\PropertyImageTypeListForSelectList;
 use App\Models\Project;
+use App\Models\PropertyImageTypeList;
 use App\Services\Database\ProjectClass;
 use Illuminate\Http\Request;
 
@@ -34,6 +36,14 @@ class ProjectController extends Controller
         if( !$project->checkAuthorization() ){
             return response()->json( [], 404 );
         }
+        $project->load([
+            'media',
+            'assignToUser',
+            'companyBranch',
+            'projectTowers',
+            'projectPlans',
+            'projectCharges',
+        ]);
         return new ProjectEditResource( $project );
     }
 
@@ -41,7 +51,7 @@ class ProjectController extends Controller
         if( !$project->checkAuthorization() ){
             return response()->json( [], 404 );
         }
-        return new PropertyViewResource( $project );
+        return new ProjectViewResource( $project );
     }
 
     public function store (AddProjectRequest $request ) {
@@ -81,4 +91,12 @@ class ProjectController extends Controller
         return response()->json( $response , $code);
     }
 
+    public function createFormSelectList ( Request $request ){
+        $propertyImgTypes = PropertyImageTypeList::select('id', 'name')->get();
+
+        $data = [
+            'property_img_types' => PropertyImageTypeListForSelectList::collection( $propertyImgTypes ),
+        ];
+        return response()->json( $data, 200 );
+    }
 }

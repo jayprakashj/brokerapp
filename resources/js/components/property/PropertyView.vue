@@ -659,7 +659,6 @@ export default {
             this.show.modal = true;
         },
         closeModal () {
-            console.log("HEREE");
             this.show.modal = false;
         }
     }

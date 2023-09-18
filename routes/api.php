@@ -278,9 +278,10 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                             ->middleware('permission:Add Project|Update Project')
                             ->name('store');
 
-
-            // Route::post('{Property}/delete', [PropertyController::class, 'delete'])
-            //                 ->middleware('permission:Remove Property')
+            Route::get('lists/form-select-lists', [ProjectController::class, 'createFormSelectList'])
+                            ->name('create_form_lists');
+            // Route::post('{project}/delete', [ProjectController::class, 'delete'])
+            //                 ->middleware('permission:Remove Project')
             //                 ->name('delete');
         });
 

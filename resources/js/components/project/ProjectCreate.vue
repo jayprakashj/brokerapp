@@ -25,44 +25,44 @@
                         <div class="card mt-2 p-4 sm:p-5 col-span-8">
 
                             <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                                <label class="block" >
-                                    <span>Name</span>
+                                <label class="block h-full" >
+                                    <span>Title</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
                                             class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Name" type="text" name="name" v-model="formData.name">
+                                            placeholder="Title" type="text" name="title" v-model="formData.title">
                                         <span
                                             class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
                                             <i class="fa fa-home text-base"></i>
                                         </span>
                                     </span>
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
+                                    <span class="text-tiny+ text-error" v-if="errors?.title?.length">{{ errors.title.at(0) }}</span>
                                 </label>
-                                <label class="block" >
-                                    <span>Building Name</span>
+                                <label class="block h-full" >
+                                    <span>RERA Reg. No.</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
                                             class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Building Name" type="text" name="building_name" v-model="formData.building_name">
+                                            placeholder="RERA Reg No" type="text" name="rera_reg_no" v-model="formData.rera_reg_no">
                                         <span
                                             class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
                                             <i class="fa fa-building text-base"></i>
                                         </span>
                                     </span>
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.building_name?.length">{{ errors.building_name.at(0) }}</span>
+                                    <span class="text-tiny+ text-error" v-if="errors?.rera_reg_no?.length">{{ errors.rera_reg_no.at(0) }}</span>
                                 </label>
-                                <label class="block" >
-                                    <span>Unit No.</span>
+                                <label class="block h-full" >
+                                    <span>Project No.</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
                                             class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Unit No" type="text" name="unit_no" v-model="formData.unit_no">
+                                            placeholder="Project No" type="text" name="project_no" v-model="formData.project_no">
 
                                     </span>
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.unit_no?.length">{{ errors.unit_no.at(0) }}</span>
+                                    <span class="text-tiny+ text-error" v-if="errors?.project_no?.length">{{ errors.project_no.at(0) }}</span>
                                 </label>
                                 <input-tom-select
                                             v-model="formData.company_branch"
@@ -75,54 +75,180 @@
                                             :selected-options="selected.company_branch_data"
                                             :error-msg="errors?.company_branch"
                                         />
-                                <input-tom-select
-                                            v-model="formData.property_type"
-                                            form-label="Property Type"
-                                            placeholder="Select Property Type"
-                                            :options="options.property_types"
-                                            :selected-item="selected.property_type"
-                                            :error-msg="errors?.property_type"
-                                        />
-                                <input-tom-select
-                                            v-model="formData.property_transaction"
-                                            form-label="Property Transaction"
-                                            placeholder="Select Property Transactions"
-                                            :options="options.property_transactions"
-                                            :selected-item="selected.property_transaction"
-                                            :error-msg="errors?.property_transaction"
-                                        />
-                                <input-tom-select
-                                            v-model="formData.property_furnishing"
-                                            form-label="Property Furnishing"
-                                            placeholder="Select Property Furnishing"
-                                            :options="options.property_furnishes"
-                                            :selected-item="selected.property_furnishing"
-                                            :error-msg="errors?.property_furnishing"
-                                        />
-                                <input-tom-select
-                                            v-model="formData.property_facing"
-                                            form-label="Property Facing"
-                                            placeholder="Select Property Facing"
-                                            :options="options.property_facing_list"
-                                            :selected-item="selected.property_facing"
-                                            :error-msg="errors?.property_facing"
-                                        />
-
-                                <label class="block" >
-                                    <span>Suitable For</span>
+                                <label class="block h-full" >
+                                    <span>Commencement Certificate</span>
                                     <span class="relative flex">
                                         <input
                                             class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Suitable For" type="text" name="suitable_for" v-model="formData.suitable_for">
+                                            placeholder="Commencement Certificate" type="text" name="commencement_certificate" v-model="formData.commencement_certificate">
 
                                     </span>
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.suitable_for?.length">{{ errors.suitable_for.at(0) }}</span>
+                                    <span class="text-tiny+ text-error" v-if="errors?.commencement_certificate?.length">{{ errors.commencement_certificate.at(0) }}</span>
+                                </label>
+                                <label class="block h-full" >
+                                    <span>Occupancy Certificate</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Occupancy Certificate" type="text" name="occupancy_certificate" v-model="formData.occupancy_certificate">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.occupancy_certificate?.length">{{ errors.occupancy_certificate.at(0) }}</span>
                                 </label>
                             </div>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                                <label class="block col-span-2">
+                                <label class="block h-full" >
+                                    <span>Total Unit</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Total Unit" type="text" name="total_unit" v-model="formData.total_unit">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.total_unit?.length">{{ errors.total_unit.at(0) }}</span>
+                                </label>
+                                <label class="block h-full" >
+                                    <span>Launch Date</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="DD/MM/YYYY" type="date" name="launch_date" v-model="formData.launch_date">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.launch_date?.length">{{ errors.launch_date.at(0) }}</span>
+                                </label>
+                                <label class="block h-full" >
+                                    <span>Completion Date</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="DD/MM/YYYY" type="date" name="completion_date" v-model="formData.completion_date">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.completion_date?.length">{{ errors.completion_date.at(0) }}</span>
+                                </label>
+                                <label class="block h-full" >
+                                    <span>Project Area</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Project Area" type="text" name="project_area" v-model="formData.project_area">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.project_area?.length">{{ errors.project_area.at(0) }}</span>
+                                </label>
+                                <label class="block h-full" >
+                                    <span>Developer Name</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Developer Name" type="text" name="developer_name" v-model="formData.developer_name">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.developer_name?.length">{{ errors.developer_name.at(0) }}</span>
+                                </label>
+                                <label class="block h-full" >
+                                    <span>Approved By</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Approved By" type="text" name="approved_by" v-model="formData.approved_by">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.approved_by?.length">{{ errors.approved_by.at(0) }}</span>
+                                </label>
+                                <label class="block h-full" >
+                                    <span>Open Space</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Open Space" type="text" name="open_space" v-model="formData.open_space">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.open_space?.length">{{ errors.open_space.at(0) }}</span>
+                                </label>
+                            </div>
+                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                            <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+
+                                <label class="block h-full" >
+                                    <span>Availability</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Availability" type="text" name="availability" v-model="formData.availability">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.availability?.length">{{ errors.availability.at(0) }}</span>
+                                </label>
+                                <label class="block h-full" >
+                                    <span>Availability Date</span>
+                                    <span class="relative flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="DD/MM/YYYY" type="date" name="availability_date" v-model="formData.availability_date">
+
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.availability_date?.length">{{ errors.availability_date.at(0) }}</span>
+                                </label>
+                            </div>
+                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 items-center">
+                                <label class="block h-full">
+                                    <span>Specification</span>
+                                    <label class="block">
+                                        <textarea
+                                        rows="4"
+                                        placeholder="Specification"
+                                        v-model="formData.specification"
+                                        class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        ></textarea>
+                                    </label>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.specification?.length">{{ errors.specification.at(0) }}</span>
+                                </label>
+                                <label class="block h-full">
+                                    <span>Description</span>
+                                    <label class="block">
+                                        <textarea
+                                        rows="4"
+                                        placeholder="Description"
+                                        v-model="formData.description"
+                                        class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        ></textarea>
+                                    </label>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.description?.length">{{ errors.description.at(0) }}</span>
+                                </label>
+                                <label class="block h-full">
+                                    <span>Remark</span>
+                                    <label class="block">
+                                        <textarea
+                                        rows="4"
+                                        placeholder="Remark"
+                                        v-model="formData.remark"
+                                        class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        ></textarea>
+                                    </label>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.remark?.length">{{ errors.remark.at(0) }}</span>
+                                </label>
+                            </div>
+                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                            <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+                                <label class="block h-full col-span-2">
                                     <span>Address</span>
                                     <label class="block">
                                         <textarea
@@ -135,7 +261,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.address?.length">{{ errors.address.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>City</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -149,7 +275,7 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.city?.length">{{ errors.city.at(0) }}</span>
                                 </label>
-                                <label class="block" >
+                                <label class="block h-full" >
                                     <span>Locality</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -163,370 +289,39 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.locality?.length">{{ errors.locality.at(0) }}</span>
                                 </label>
-                            </div>
-                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                            <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 items-center">
-                                <label class="block" >
-                                    <span>Bedrooms</span>
+                                <label class="block h-full" >
+                                    <span>Landmark</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
                                             class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Bedrooms" type="text" name="bedrooms" v-model="formData.bedrooms">
+                                            placeholder="Landmark" type="text" name="landmark" v-model="formData.landmark">
                                         <span
                                             class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-bed text-base"></i>
+                                            <i class="fa fa-location-dot text-base"></i>
                                         </span>
                                     </span>
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.bedrooms?.length">{{ errors.bedrooms.at(0) }}</span>
+                                    <span class="text-tiny+ text-error" v-if="errors?.landmark?.length">{{ errors.landmark.at(0) }}</span>
                                 </label>
-                                <label class="block" >
-                                    <span>Master Bedrooms</span>
+                                <label class="block h-full" >
+                                    <span>Building</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
                                             class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Master Bedrooms" type="text" name="master_bedrooms" v-model="formData.master_bedrooms">
+                                            placeholder="Building" type="text" name="building" v-model="formData.building">
                                         <span
                                             class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-bed text-base"></i>
+                                            <i class="fa fa-building text-base"></i>
                                         </span>
                                     </span>
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.master_bedrooms?.length">{{ errors.master_bedrooms.at(0) }}</span>
+                                    <span class="text-tiny+ text-error" v-if="errors?.building?.length">{{ errors.building.at(0) }}</span>
                                 </label>
-                                <label class="block" >
-                                    <span>Guest Bedrooms</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Guest Bedrooms" type="text" name="guest_room" v-model="formData.guest_room">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-bed text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.guest_room?.length">{{ errors.guest_room.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Child Bedrooms</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Child Bedrooms" type="text" name="child_room" v-model="formData.child_room">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-bed text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.child_room?.length">{{ errors.child_room.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Other Rooms</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Other Rooms" type="text" name="other_room" v-model="formData.other_room">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-bed text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.other_room?.length">{{ errors.other_room.at(0) }}</span>
-                                </label>
-                            </div>
-                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                            <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
-
-                                <label class="block" >
-                                    <span>Bathrooms</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Bathrooms" type="text" name="bathrooms" v-model="formData.bathrooms">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-bath text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.bathrooms?.length">{{ errors.bathrooms.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Common Bathrooms</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Common Bathrooms" type="text" name="common_bathrooms" v-model="formData.common_bathrooms">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-bath text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.common_bathrooms?.length">{{ errors.common_bathrooms.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Ensult Bathrooms</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Ensult Bathrooms" type="text" name="ensult_bathrooms" v-model="formData.ensult_bathrooms">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-bath text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.ensult_bathrooms?.length">{{ errors.ensult_bathrooms.at(0) }}</span>
-                                </label>
-
-                            </div>
-                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                            <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 items-center">
-
-                                <label class="block" >
-                                    <span>Sellable Area</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Sellable Area" type="text" name="sellable_area" v-model="formData.sellable_area">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.sellable_area?.length">{{ errors.sellable_area.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Builtup Area</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Builtup Area" type="text" name="builtup_area" v-model="formData.builtup_area">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.builtup_area?.length">{{ errors.builtup_area.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Carpet Area</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Carpet Area" type="text" name="carpet_area" v-model="formData.carpet_area">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.carpet_area?.length">{{ errors.carpet_area.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Plot Area</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Plot Area" type="text" name="plot_area" v-model="formData.plot_area">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.plot_area?.length">{{ errors.plot_area.at(0) }}</span>
-                                </label>
-
-                            </div>
-                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                            <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
-
-                                <label class="block" >
-                                    <span>Price</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Price" type="text" name="price" v-model="formData.price">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-inr text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.price?.length">{{ errors.price.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Negotiable Amount</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Negotiable Amount" type="text" name="negotiable_amount" v-model="formData.negotiable_amount">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-inr text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.negotiable_amount?.length">{{ errors.negotiable_amount.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Security Deposit</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Security Deposit" type="text" name="security_deposit" v-model="formData.security_deposit">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-inr text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.security_deposit?.length">{{ errors.security_deposit.at(0) }}</span>
-                                </label>
-
-                            </div>
-                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                            <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
-
-                                <label class="block" >
-                                    <span>Property Floor</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Property Floor" type="text" name="property_floor" v-model="formData.property_floor">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.property_floor?.length">{{ errors.property_floor.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Total Floor</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Total Floor" type="text" name="total_floor" v-model="formData.total_floor">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.total_floor?.length">{{ errors.total_floor.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>No of Parking</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="No of Parking" type="text" name="no_of_parking" v-model="formData.no_of_parking">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.no_of_parking?.length">{{ errors.no_of_parking.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>No of Lift</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2  placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="No of Lift" type="text" name="no_of_lift" v-model="formData.no_of_lift">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.no_of_lift?.length">{{ errors.no_of_lift.at(0) }}</span>
-                                </label>
-
-                            </div>
-                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                            <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
-
-                                <label class="block" >
-                                    <span>Lease Period</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Lease Period" type="text" name="lease_period" v-model="formData.lease_period">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.lease_period?.length">{{ errors.lease_period.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Lease Expiry Date</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Lease Expiry Date" type="date" name="lease_expiry_date" v-model="formData.lease_expiry_date">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-calendar text-base"></i>
-                                        </span>
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.lease_expiry_date?.length">{{ errors.lease_expiry_date.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Availability</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Availability" type="text" name="availability" v-model="formData.availability">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.availability?.length">{{ errors.availability.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Ownership</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Ownership" type="text" name="ownership" v-model="formData.ownership">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.ownership?.length">{{ errors.ownership.at(0) }}</span>
-                                </label>
-
-                            </div>
-                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                            <div class="grid grid-cols-3 gap-4 sm:grid-cols-3 items-center">
-
-                                <input-tom-select
-                                            v-model="formData.property_obligation"
-                                            form-label="Property Obligation"
-                                            placeholder="Select Property Obligation"
-                                            :options="options.property_obligations"
-                                            :selected-options="selected.property_obligation"
-                                            :error-msg="errors?.property_obligation"
-                                        />
-                                <label class="block" >
-                                    <span>Age of Property</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Age of Property" type="text" name="age_of_property" v-model="formData.age_of_property">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.age_of_property?.length">{{ errors.age_of_property.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Workstation</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Workstation" type="text" name="workstation" v-model="formData.workstation">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.workstation?.length">{{ errors.workstation.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Conference Room</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Conference Room" type="text" name="conference_room" v-model="formData.conference_room">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.conference_room?.length">{{ errors.conference_room.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Reception</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Reception" type="text" name="reception" v-model="formData.reception">
-                                    </span>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.reception?.length">{{ errors.reception.at(0) }}</span>
-                                </label>
-
                             </div>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-12 gap-4 sm:grid-cols-12 items-center">
 
-                                <label class="block col-span-12" >
+                                <label class="block h-full col-span-12" >
                                     <span>Walk Through Link</span>
                                     <span class="relative mt-1.5 flex">
                                         <input
@@ -536,12 +331,22 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.walk_through_link?.length">{{ errors.walk_through_link.at(0) }}</span>
                                 </label>
+                                <label class="block h-full col-span-12" >
+                                    <span>Virtual Tour Link</span>
+                                    <span class="relative mt-1.5 flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Virtual Tour Link" type="text" name="virtual_tour" v-model="formData.virtual_tour">
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.virtual_tour?.length">{{ errors.virtual_tour.at(0) }}</span>
+                                </label>
 
                             </div>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-12 gap-4 sm:grid-cols-12 items-center">
 
-                                <label class="block col-span-6 mt-2">
+                                <label class="block h-full col-span-12 mt-2">
                                     <span>Amenities</span>
                                     <label class="block">
                                         <textarea
@@ -554,19 +359,6 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.amenities?.length">{{ errors.amenities.at(0) }}</span>
                                 </label>
-                                <label class="block col-span-6 mt-2">
-                                    <span>Unique Feature</span>
-                                    <label class="block">
-                                        <textarea
-                                        rows="4"
-                                        placeholder="Unique Feature"
-                                        v-model="formData.unique_feature"
-                                        class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        ></textarea>
-                                    </label>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.unique_feature?.length">{{ errors.unique_feature.at(0) }}</span>
-                                </label>
 
                             </div>
                         </div>
@@ -574,31 +366,6 @@
 
                             <!-- <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div> -->
                             <div class="  items-center">
-
-                                <div class="flex-wrap items-start space-y-2 pt-2 sm:flex sm:space-x-5 sm:space-y-0" >
-                                    <label class="inline-flex items-center space-x-2">
-                                        <input
-                                            name="is_verified"
-                                            class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
-                                            type="checkbox"
-                                            :value="1"
-                                            v-model="formData.is_verified"
-                                            >
-                                        <span>Is Verified?</span>
-                                    </label>
-                                </div>
-                                <div class="flex-wrap items-start space-y-2 pt-2 sm:flex sm:space-x-5 sm:space-y-0 mb-3" >
-                                    <label class="inline-flex items-center space-x-2">
-                                        <input
-                                            name="is_document_verified"
-                                            class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
-                                            type="checkbox"
-                                            :value="1"
-                                            v-model="formData.is_document_verified"
-                                            >
-                                        <span>Is Document Verified?</span>
-                                    </label>
-                                </div>
 
                                 <input-tom-select
                                         v-model="formData.assign_to"
@@ -612,45 +379,6 @@
                                         :error-msg="errors?.assign_to"
                                     />
 
-                                <label class="block col-span-2 mt-2">
-                                    <span>Description</span>
-                                    <label class="block">
-                                        <textarea
-                                        rows="4"
-                                        placeholder="Description"
-                                        v-model="formData.description"
-                                        class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        ></textarea>
-                                    </label>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.description?.length">{{ errors.description.at(0) }}</span>
-                                </label>
-                                <label class="block col-span-2 mt-2">
-                                    <span>Remark</span>
-                                    <label class="block">
-                                        <textarea
-                                        rows="4"
-                                        placeholder="Remark"
-                                        v-model="formData.remark"
-                                        class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        ></textarea>
-                                    </label>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.remark?.length">{{ errors.remark.at(0) }}</span>
-                                </label>
-                                <label class="block col-span-2 mt-2">
-                                    <span>Internal Note</span>
-                                    <label class="block">
-                                        <textarea
-                                        rows="4"
-                                        placeholder="Internal Note"
-                                        v-model="formData.internal_note"
-                                        class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        ></textarea>
-                                    </label>
-
-                                    <span class="text-tiny+ text-error" v-if="errors?.internal_note?.length">{{ errors.internal_note.at(0) }}</span>
-                                </label>
                             </div>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="space-y-4">
@@ -697,50 +425,262 @@
                                     <span class="text-tiny+ text-error" v-if="errors?.owner_email?.length">{{ errors.owner_email.at(0) }}</span>
                                 </label>
                             </div>
-                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                            <div class="space-y-4">
-                                <label class="block" >
-                                    <span>Refer By Name</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Refer By Name" type="text" name="refer_by_name" v-model="formData.refer_by_name">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-user text-base"></i>
-                                        </span>
-                                    </span>
+                        </div>
+                        <div class="card mt-2 p-4 sm:p-5 col-span-12">
+                            <div
+                                class="col-span-12 flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
+                                <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
+                                    Project Tower
+                                    <button
+                                        @click="addProjectTower"
+                                        type="button"
+                                        class="btn h-6 font-light bg-primary/10 text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
+                                    >
+                                    <small class="h6">
+                                        <i class="fa fa-plus"></i> Add New
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.refer_by_name?.length">{{ errors.refer_by_name.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Refer By Phone</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Refer By Phone" type="text" name="refer_by_phone" v-model="formData.refer_by_phone">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-phone text-base"></i>
-                                        </span>
-                                    </span>
+                                    </small>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div class="is-scrollbar-hidden min-w-full overflow-x-auto mt-2">
+                                <table class="is-hoverable w-full text-left">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Tower Name
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Completion Date
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.refer_by_phone?.length">{{ errors.refer_by_phone.at(0) }}</span>
-                                </label>
-                                <label class="block" >
-                                    <span>Refer By Email</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Refer By Email" type="text" name="refer_by_email" v-model="formData.refer_by_email">
-                                        <span
-                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                            <i class="fa fa-envelope text-base"></i>
-                                        </span>
-                                    </span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in formData.project_towers" :key="'project_towers_' + idx">
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Tower Name" type="text" :name="'project_towers['+idx+'][tower_name]'" v-model="item.tower_name">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="DD/MM/YYYY" type="date" :name="'project_towers['+idx+'][completion_date]'" v-model="item.completion_date">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <button
+                                                        type="button"
+                                                        @click="removeProjectTower(idx)"
+                                                        class="btn h-9 w-9 p-0 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
+                                                    >
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card mt-2 p-4 sm:p-5 col-span-12">
+                            <div
+                                class="col-span-12 flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
+                                <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
+                                    Project Plan
+                                    <button
+                                        @click="addProjectPlan"
+                                        type="button"
+                                        class="btn h-6 font-light bg-primary/10 text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
+                                    >
+                                    <small class="h6">
+                                        <i class="fa fa-plus"></i> Add New
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.refer_by_email?.length">{{ errors.refer_by_email.at(0) }}</span>
-                                </label>
+                                    </small>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div class="is-scrollbar-hidden min-w-full overflow-x-auto mt-2">
+                                <table class="is-hoverable w-full text-left">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Tower
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Type
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                BHK
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Area
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Price
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Basic Price
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in formData.project_plans" :key="'project_plans_' + idx">
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Tower" type="text" :name="'project_plans['+idx+'][tower]'" v-model="item.tower">
+
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Type" type="text" :name="'project_plans['+idx+'][type]'" v-model="item.type">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="BHK" type="text" :name="'project_plans['+idx+'][bhk]'" v-model="item.bhk">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Area" type="text" :name="'project_plans['+idx+'][area]'" v-model="item.area">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Price" type="text" :name="'project_plans['+idx+'][price]'" v-model="item.price">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Basic Price" type="text" :name="'project_plans['+idx+'][basic_price]'" v-model="item.basic_price">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <button
+                                                        type="button"
+                                                        @click="removeProjectPlan(idx)"
+                                                        class="btn h-9 w-9 p-0 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
+                                                    >
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card mt-2 p-4 sm:p-5 col-span-12">
+                            <div
+                                class="col-span-12 flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
+                                <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
+                                    Project Charges
+                                    <button
+                                        @click="addProjectCharge"
+                                        type="button"
+                                        class="btn h-6 font-light bg-primary/10 text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
+                                    >
+                                    <small class="h6">
+                                        <i class="fa fa-plus"></i> Add New
+
+                                    </small>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div class="is-scrollbar-hidden min-w-full overflow-x-auto mt-2">
+                                <table class="is-hoverable w-full text-left">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Charges
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Description
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Price
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+                                                Escalation From
+                                            </th>
+                                            <th
+                                                class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                                            >
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in formData.project_charges" :key="'project_charges_' + idx">
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Charges" type="text" :name="'project_charges['+idx+'][charges]'" v-model="item.charges">
+
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <textarea
+                                                    rows="4"
+                                                    placeholder="Description"
+                                                    v-model="item.description"
+                                                    class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                ></textarea>
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Price" type="text" :name="'project_charges['+idx+'][price]'" v-model="item.price">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <input
+                                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                    placeholder="Escalation From" type="text" :name="'project_charges['+idx+'][escalation_from]'" v-model="item.escalation_from">
+                                            </td>
+                                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                                <button
+                                                        type="button"
+                                                        @click="removeProjectCharge(idx)"
+                                                        class="btn h-9 w-9 p-0 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
+                                                    >
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="card mt-2 p-4 sm:p-5 col-span-12" v-for="(imgType, idx ) in formDataImagesKeys" :key="'images_'+idx">
@@ -803,72 +743,45 @@ export default {
             isShowPopper: false,
             errors: {},
             options:{
-                'property_types': [],
-                'property_transactions': [],
-                'oroperty_furnishes': [],
-                'property_facing_list': [],
-                'property_obligations': [],
                 'property_img_types': [],
             },
             formData:{
-                name: '',
-                building_name: null,
-                unit_no: null,
+                title: null,
+                rera_reg_no: null,
+                project_no: null,
+                launch_date: null,
+                completion_date: null,
                 company_branch: null,
-                assign_to: null,
-                property_type: null,
-                property_transaction: null,
-                property_furnishing: null,
-                is_verified: 0,
-                is_document_verified: 0,
-                address: null,
-                city: null,
-                locality: null,
+                project_area: null,
+                developer_name: null,
+                approved_by: null,
+                open_space: null,
+                total_unit: null,
+                availability: null,
+                availability_date: null,
+                commencement_certificate: null,
+                occupancy_certificate: null,
+                specification: null,
                 description: null,
                 remark: null,
-                internal_note: null,
-                unique_feature: null,
-                suitable_for: null,
-                bedrooms: null,
-                master_bedrooms: null,
-                guest_room: null,
-                child_room: null,
-                other_room: null,
-                bathrooms: null,
-                common_bathrooms: null,
-                ensult_bathrooms: null,
-                sellable_area: null,
-                builtup_area: null,
-                carpet_area: null,
-                plot_area: null,
-                terrace_area: null,
-                area_range: null,
-                price: null,
-                negotiable_amount: null,
-                security_deposit: null,
-                property_floor: null,
-                total_floor: null,
-                property_facing: null,
-                lease_period: null,
-                lease_expiry_date: null,
-                availability: null,
-                ownership: null,
-                no_of_parking: null,
-                no_of_lift: null,
-                property_obligation: null,
-                age_of_property: null,
-                workstation: null,
-                conference_room: null,
-                reception: null,
-                walk_through_link: null,
+                landmark: null,
+                city: null,
+                locality: null,
+                building: null,
+                address: null,
                 amenities: null,
                 owner_name: null,
                 owner_email: null,
                 owner_phone: null,
-                refer_by_name: null,
-                refer_by_email: null,
-                refer_by_phone: null,
-                images: {}
+                assign_to: null,
+                owner_name: null,
+                owner_email: null,
+                owner_phone: null,
+                walk_through_link: null,
+                images: {},
+                project_towers: [],
+                project_plans: [],
+                project_charges: [],
             },
             rolesList: [],
             loading:{
@@ -879,12 +792,7 @@ export default {
             },
             selected:{
                 company_branch_data: {},
-                assign_user_data: {},
-                property_type: null,
-                property_transaction: null,
-                property_furnishing: null,
-                property_facing: null,
-                property_obligation: null,
+                assign_user_data: {}
             },
         }
     },
@@ -907,18 +815,15 @@ export default {
         },
         validationSchema(){
             let fields = {
-                name: Yup.string()
+                title: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
+                description: Yup.string()
                             .nullable(true)
                             .required('Required'),
                 company_branch: Yup.string()
                                 .nullable(true)
                                 .required('Required'),
-                property_type: Yup.string()
-                                .nullable(true)
-                                .required('Required'),
-                property_transaction: Yup.string()
-                                        .nullable(true)
-                                        .required('Required'),
                 address: Yup.string()
                             .nullable(true)
                             .required('Required'),
@@ -926,9 +831,6 @@ export default {
                             .nullable(true)
                             .required('Required'),
                 locality: Yup.string()
-                            .nullable(true)
-                            .required('Required'),
-                price: Yup.string()
                             .nullable(true)
                             .required('Required'),
 
@@ -976,7 +878,7 @@ export default {
         },
         loadSelectListData(){
             this.$store.commit('setGlobalLoaderOn');
-            this.$request.propertyFormDropdownList()
+            this.$request.projectFormDropdownList()
                         .then(
                             ( res ) => {
                                 if( res.data ){
@@ -1109,7 +1011,76 @@ export default {
 
                 }
             }
-        }
+        },
+        addProjectTower(){
+            const defaultData = {
+                tower_name: null,
+                completion_date: null,
+            }
+            this.formData.project_towers.push( defaultData );
+        },
+        removeProjectTower( id ){
+            if( this.formData.project_towers?.length ){
+                this.$swal.fire({
+                    title: 'Are you sure you want to remove?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete.',
+                }).then(
+                    ( res ) =>{
+                        if( res.isConfirmed ){
+                            this.formData.project_towers.splice( id, 1 );
+                        }
+                    });
+            }
+        },
+        addProjectPlan(){
+            const defaultData = {
+                tower: null,
+                type: null,
+                area: null,
+                bhk: null,
+                price: null,
+                basic_price: null,
+            }
+            this.formData.project_plans.push( defaultData );
+        },
+        removeProjectPlan( id ){
+            if( this.formData.project_plans?.length ){
+                this.$swal.fire({
+                    title: 'Are you sure you want to remove?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete.',
+                }).then(
+                    ( res ) =>{
+                        if( res.isConfirmed ){
+                            this.formData.project_plans.splice( id, 1 );
+                        }
+                    });
+            }
+        },
+        addProjectCharge(){
+            const defaultData = {
+                charges: null,
+                description: null,
+                price: null,
+                escalation_from: null,
+            }
+            this.formData.project_charges.push( defaultData );
+        },
+        removeProjectCharge( id ){
+            if( this.formData.project_charges?.length ){
+                this.$swal.fire({
+                    title: 'Are you sure you want to remove?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete.',
+                }).then(
+                    ( res ) =>{
+                        if( res.isConfirmed ){
+                            this.formData.project_charges.splice( id, 1 );
+                        }
+                    });
+            }
+        },
     }
 }
 </script>

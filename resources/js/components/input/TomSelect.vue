@@ -213,7 +213,7 @@ export default {
         setSelectedValues () {
             if(this.selectedItem ){
                 if( this.isAjax ){
-                    // console.log("HERE");
+
                     if( Array.isArray( this.selectedItem ) ){
                         this.tomSelectInstance.addOptions( this.selectedOptions );
                     }else{

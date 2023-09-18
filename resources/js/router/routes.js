@@ -24,6 +24,7 @@ import DocumentList from  '@/components/documents/DocumentList.vue'
 import DocumentCreate from  '@/components/documents/DocumentCreate.vue'
 import ProjectList from  '@/components/project/ProjectList.vue'
 import ProjectCreate from  '@/components/project/ProjectCreate.vue'
+import ProjectView from  '@/components/project/ProjectView.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -330,6 +331,15 @@ const routes = [
         meta: {
             title: 'Project Edit',
             permissions: [ permission.UPDATE_PROJECT ]
+        }
+    },
+    {
+        path: '/project/view/:id',
+        name: 'project_view',
+        component: ProjectView,
+        meta: {
+            title: 'Project View',
+            permissions: [ permission.VIEW_PROJECT ]
         }
     },
     {
