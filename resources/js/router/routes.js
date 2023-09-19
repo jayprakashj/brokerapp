@@ -25,6 +25,9 @@ import DocumentCreate from  '@/components/documents/DocumentCreate.vue'
 import ProjectList from  '@/components/project/ProjectList.vue'
 import ProjectCreate from  '@/components/project/ProjectCreate.vue'
 import ProjectView from  '@/components/project/ProjectView.vue'
+import TaskList from  '@/components/tasks/TaskList.vue'
+import TaskCreate from  '@/components/tasks/TaskCreate.vue'
+import TaskView from  '@/components/tasks/TaskView.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -340,6 +343,42 @@ const routes = [
         meta: {
             title: 'Project View',
             permissions: [ permission.VIEW_PROJECT ]
+        }
+    },
+    {
+        path: '/task',
+        name: 'task_lists',
+        component: TaskList,
+        meta:{
+            title: 'Task Management',
+            permissions: [ permission.TASK_LIST, permission.ONLY_ASSIGNED_TASK_LIST ]
+        },
+    },
+    {
+        path: '/task/create',
+        name: 'task_create',
+        component: TaskCreate,
+        meta: {
+            title: 'Task Create',
+            permissions: [ permission.ADD_TASK ]
+        }
+    },
+    {
+        path: '/task/edit/:id',
+        name: 'task_edit',
+        component: TaskCreate,
+        meta: {
+            title: 'Task Edit',
+            permissions: [ permission.UPDATE_TASK ]
+        }
+    },
+    {
+        path: '/task/view/:id',
+        name: 'task_view',
+        component: TaskView,
+        meta: {
+            title: 'Task View',
+            permissions: [ permission.VIEW_TASK ]
         }
     },
     {

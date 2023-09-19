@@ -120,7 +120,15 @@ export default {
                     name: 'Project Management',
                     route: '/project',
                     iconClass: 'fa-file-invoice',
-                    // permission: [ this.$permissions.CONTACT_LIST ],
+                    permission: [ this.$permissions.PROJECT_LIST,this.$permissions.ONLY_ASSIGNED_PROJECT_LIST ],
+                    ignorePermission: true,
+                    checkGlobalPermission: false,
+                },
+                {
+                    name: 'Todo Task',
+                    route: '/task',
+                    iconClass: 'fa-tasks',
+                    permission: [ this.$permissions.TASK_LIST,this.$permissions.ONLY_ASSIGNED_TASK_LIST ],
                     ignorePermission: true,
                     checkGlobalPermission: false,
                 }

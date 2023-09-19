@@ -226,6 +226,33 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Project',
         ]);
 
+
+        Permission::create([
+            'name' => 'Task List',
+            'group_name' => 'Task',
+        ]);
+
+        Permission::create([
+            'name' => 'Only Assigned Task List',
+            'group_name' => 'Task',
+        ]);
+        Permission::create([
+            'name' => 'View Task',
+            'group_name' => 'Task',
+        ]);
+        Permission::create([
+            'name' => 'Add Task',
+            'group_name' => 'Task',
+        ]);
+        Permission::create([
+            'name' => 'Update Task',
+            'group_name' => 'Task',
+        ]);
+        Permission::create([
+            'name' => 'Remove Task',
+            'group_name' => 'Task',
+        ]);
+
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 

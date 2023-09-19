@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
+use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 
@@ -267,7 +268,7 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                             ->name('index');
 
             Route::get('{project}/edit', [ProjectController::class, 'edit'])
-                            ->middleware('permission:Update Property')
+                            ->middleware('permission:Update Project')
                             ->name('edit');
 
             Route::get('{project}/view', [ProjectController::class, 'view'])
@@ -282,6 +283,33 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                             ->name('create_form_lists');
             // Route::post('{project}/delete', [ProjectController::class, 'delete'])
             //                 ->middleware('permission:Remove Project')
+            //                 ->name('delete');
+        });
+
+        Route::prefix('tasks')
+        ->name('task.')
+        ->group( function () {
+
+            Route::get('/lists', [TaskController::class, 'index'])
+                            ->middleware('permission:Task List|Only Assigned Task List')
+                            ->name('index');
+
+            Route::get('{task}/edit', [TaskController::class, 'edit'])
+                            ->middleware('permission:Update Task')
+                            ->name('edit');
+
+            Route::get('{task}/view', [TaskController::class, 'view'])
+                            ->middleware('permission:View Task')
+                            ->name('view');
+
+            Route::post('store', [TaskController::class, 'store'])
+                            ->middleware('permission:Add Task|Update Task')
+                            ->name('store');
+
+            Route::get('statuses/select-lists', [TaskController::class, 'taskStatusSelectList'])
+                            ->name('task_status_select_list');
+            // Route::post('{task}/delete', [TaskController::class, 'delete'])
+            //                 ->middleware('permission:Remove Task')
             //                 ->name('delete');
         });
 

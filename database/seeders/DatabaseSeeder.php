@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\PropertyTransactionList;
+use App\Models\TaskStatus;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -36,6 +37,8 @@ class DatabaseSeeder extends Seeder
                 LeadSeeder::class,
                 DocumentSeeder::class,
                 ProjectSeeder::class,
+                TaskStatusSeeder::class,
+                TaskSeeder::class,
             ]
         );
     }

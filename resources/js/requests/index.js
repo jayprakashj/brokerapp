@@ -161,6 +161,14 @@ const apis = {
         return http.get('properties/lists/form-select-lists', config);
 
     },
+    taskStatusDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('tasks/statuses/select-lists', config);
+
+    },
     getCompanyList: ( params) => {
         let config = {};
         if( params ) {
@@ -367,6 +375,26 @@ const apis = {
     },
     deleteProject: ( id ) => {
         return http.post( `projects/${id}/delete` );
+    },
+    getTaskList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('tasks/lists', config);
+
+    },
+    getTaskDetail: ( id ) => {
+        return http.get(`tasks/${id}/edit` );
+    },
+    getTaskViewDetail: ( id ) => {
+        return http.get(`tasks/${id}/view` );
+    },
+    createTask: ( data ) => {
+        return http.post('tasks/store', data);
+    },
+    deleteTask: ( id ) => {
+        return http.post( `tasks/${id}/delete` );
     },
 }
 export default apis;
