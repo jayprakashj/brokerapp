@@ -54,6 +54,24 @@ class AddMemberRequest extends FormRequest
                             $clause->whereNot('id', $userId);
                         })
             ],
+            'secondary_mobile' => [
+                'nullable',
+                'digits:10',
+                Rule::unique('users', 'secondary_mobile')
+                        // ->where('company_id', \Helper::retrieveDefaultCompany()->id )
+                        ->when( $userId, function( $clause ) use ($userId) {
+                            $clause->whereNot('id', $userId);
+                        })
+            ],
+            'secondary_email' => [
+                'nullable',
+                'email',
+                Rule::unique('users', 'secondary_email')
+                        // ->where('company_id', \Helper::retrieveDefaultCompany()->id )
+                        ->when( $userId, function( $clause ) use ($userId) {
+                            $clause->whereNot('id', $userId);
+                        })
+            ],
             'company_branch' => [
                 'required',
                 Rule::exists('company_branches', 'id')
