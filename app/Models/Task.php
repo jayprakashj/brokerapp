@@ -32,6 +32,9 @@ class Task extends Model
         });
     }
 
+    public function isAssignedToMe(){
+        return $this->assign_to == auth()->id();
+    }
 
     public function checkAuthorization(){
         $user = auth()->user();
