@@ -253,6 +253,32 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Task',
         ]);
 
+        Permission::create([
+            'name' => 'Site Visit List',
+            'group_name' => 'Site Visit',
+        ]);
+
+        Permission::create([
+            'name' => 'Only Assigned Site Visit List',
+            'group_name' => 'Site Visit',
+        ]);
+        Permission::create([
+            'name' => 'View Site Visit',
+            'group_name' => 'Site Visit',
+        ]);
+        Permission::create([
+            'name' => 'Add Site Visit',
+            'group_name' => 'Site Visit',
+        ]);
+        Permission::create([
+            'name' => 'Update Site Visit',
+            'group_name' => 'Site Visit',
+        ]);
+        Permission::create([
+            'name' => 'Remove Site Visit',
+            'group_name' => 'Site Visit',
+        ]);
+
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 

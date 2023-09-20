@@ -51,6 +51,12 @@ const permissions = {
     ADD_TASK:'Add Task',
     UPDATE_TASK:'Update Task',
     REMOVE_TASK:'Remove Task',
+    SITE_VISIT_LIST:'Site Visit List',
+    ONLY_ASSIGNED_SITE_VISIT_LIST:'Only Assigned Site Visit List',
+    VIEW_SITE_VISIT:'View Site Visit',
+    ADD_SITE_VISIT:'Add Site Visit',
+    UPDATE_SITE_VISIT:'Update Site Visit',
+    REMOVE_SITE_VISIT:'Remove Site Visit',
 }
 
 export default permissions;

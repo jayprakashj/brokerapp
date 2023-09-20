@@ -99,4 +99,10 @@ class ProjectController extends Controller
         ];
         return response()->json( $data, 200 );
     }
+
+
+    public function getProjectForSelectList(){
+        $list = Project::select('id', 'name')->get();
+        return response()->json( $list, 200 );
+    }
 }

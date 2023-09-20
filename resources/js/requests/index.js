@@ -121,6 +121,14 @@ const apis = {
         return http.get('properties/select-lists/get', config);
 
     },
+    projectSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('projects/select-lists/get', config);
+
+    },
     companyBranchSelectList: ( params) => {
         let config = {};
         if( params ) {
@@ -395,6 +403,26 @@ const apis = {
     },
     deleteTask: ( id ) => {
         return http.post( `tasks/${id}/delete` );
+    },
+    getSiteVisitList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('site-visits/lists', config);
+
+    },
+    getSiteVisitDetail: ( id ) => {
+        return http.get(`site-visits/${id}/edit` );
+    },
+    getSiteVisitViewDetail: ( id ) => {
+        return http.get(`site-visits/${id}/view` );
+    },
+    createSiteVisit: ( data ) => {
+        return http.post('site-visits/store', data);
+    },
+    deleteSiteVisit: ( id ) => {
+        return http.post( `site-visits/${id}/delete` );
     },
 }
 export default apis;

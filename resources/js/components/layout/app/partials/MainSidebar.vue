@@ -131,6 +131,14 @@ export default {
                     permission: [ this.$permissions.TASK_LIST,this.$permissions.ONLY_ASSIGNED_TASK_LIST ],
                     ignorePermission: true,
                     checkGlobalPermission: false,
+                },
+                {
+                    name: 'Site Visits',
+                    route: '/site-visit',
+                    iconClass: 'fa-building-user',
+                    permission: [ this.$permissions.SITE_VISIT_LIST,this.$permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ],
+                    ignorePermission: true,
+                    checkGlobalPermission: false,
                 }
             ]
         }

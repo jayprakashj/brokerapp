@@ -28,6 +28,9 @@ import ProjectView from  '@/components/project/ProjectView.vue'
 import TaskList from  '@/components/tasks/TaskList.vue'
 import TaskCreate from  '@/components/tasks/TaskCreate.vue'
 import TaskView from  '@/components/tasks/TaskView.vue'
+import SiteVisitList from  '@/components/site_visits/SiteVisitList.vue'
+import SiteVisitCreate from  '@/components/site_visits/SiteVisitCreate.vue'
+import SiteVisitView from  '@/components/site_visits/SiteVisitView.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -379,6 +382,42 @@ const routes = [
         meta: {
             title: 'Task View',
             permissions: [ permission.VIEW_TASK ]
+        }
+    },
+    {
+        path: '/site-visit',
+        name: 'site_visit_lists',
+        component: SiteVisitList,
+        meta:{
+            title: 'Site Visit Management',
+            permissions: [ permission.SITE_VISIT_LIST, permission.ONLY_ASSIGNED_SITE_VISIT_LIST ]
+        },
+    },
+    {
+        path: '/site-visit/create',
+        name: 'site_visit_create',
+        component: SiteVisitCreate,
+        meta: {
+            title: 'Site Visit Create',
+            permissions: [ permission.ADD_SITE_VISIT ]
+        }
+    },
+    {
+        path: '/site-visit/edit/:id',
+        name: 'site_visit_edit',
+        component: SiteVisitCreate,
+        meta: {
+            title: 'Site Visit Edit',
+            permissions: [ permission.UPDATE_SITE_VISIT ]
+        }
+    },
+    {
+        path: '/site-visit/view/:id',
+        name: 'site_visit_view',
+        component: SiteVisitView,
+        meta: {
+            title: 'Site Visit View',
+            permissions: [ permission.VIEW_SITE_VISIT ]
         }
     },
     {
