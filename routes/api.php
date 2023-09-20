@@ -336,7 +336,8 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             Route::post('store', [SiteVisitController::class, 'store'])
                             ->middleware('permission:Add Site Visit|Update Site Visit')
                             ->name('store');
-
+            Route::get('lists/form-select-lists', [SiteVisitController::class, 'createFormSelectList'])
+                            ->name('create_form_lists');
             // Route::post('{siteVisit}/delete', [SiteVisitController::class, 'delete'])
             //                 ->middleware('permission:Remove Task')
             //                 ->name('delete');

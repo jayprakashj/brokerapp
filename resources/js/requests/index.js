@@ -169,6 +169,14 @@ const apis = {
         return http.get('properties/lists/form-select-lists', config);
 
     },
+    siteVisitFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('site-visits/lists/form-select-lists', config);
+
+    },
     taskStatusDropdownList: ( params) => {
         let config = {};
         if( params ) {

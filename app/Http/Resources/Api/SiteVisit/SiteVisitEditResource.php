@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Api\SiteVisit;
 
+use App\Http\Resources\Api\CompanyBranch\BranchListForSelectList;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SiteVisitEditResource extends JsonResource
@@ -16,16 +18,31 @@ class SiteVisitEditResource extends JsonResource
     {
         $data = [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'remark' => $this->remark,
+            'site_name' => $this->site_name,
+            'site_owner' => $this->site_owner,
+            'comments' => $this->comments,
             'assign_to' => $this->assign_to,
-            'scheduled_date' => $this->scheduled_date,
-            'status' => $this->status,
+            'type' => $this->type,
+            'visit_type' => $this->visit_type,
+            'source_manager' => $this->source_manager,
+            'closing_manager' => $this->closing_manager,
+            'location' => $this->location,
+            'time_in' => $this->time_in ? Carbon::parse( $this->time_in )->format('Y-m-d\TH:i') : null,
+            'time_out' => $this->time_out? Carbon::parse( $this->time_out )->format('Y-m-d\TH:i') : null,
+            'property_id' => $this->property_id,
+            'project_id' => $this->project_id,
         ];
-
+        if( !is_null( $this->company_branch_id ) ){
+            $data['company_branch_data'] = new BranchListForSelectList( $this->companyBranch );
+        }
         if( !is_null( $this->assignToUser ) ){
             $data['assign_user_data'] = $this->assignToUser->only(['id', 'name']);
+        }
+        if( !is_null( $this->property ) ){
+            $data['property_data'] = $this->property->only(['id', 'name']);
+        }
+        if( !is_null( $this->project ) ){
+            $data['project_data'] = $this->project->only(['id', 'title']);
         }
         return $data;
     }

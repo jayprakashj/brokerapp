@@ -40,11 +40,11 @@ class AddSiteVisitRequest extends FormRequest
             ],
             'time_in' => [
                 'nullable',
-                'date_format:Y-m-d H:i:s'
+                'date_format:Y-m-d\TH:i'
             ],
             'time_out' => [
                 'nullable',
-                'date_format:Y-m-d H:i:s'
+                'date_format:Y-m-d\TH:i'
             ],
 
             'property_id' => [
@@ -54,6 +54,7 @@ class AddSiteVisitRequest extends FormRequest
             ],
             'project_id' => [
                 'required_if:type,project',
+                'nullable',
                 Rule::exists('projects', 'id')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
