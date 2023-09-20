@@ -1,7 +1,7 @@
 <template>
     <page-header :title="pageTitle" :breadcrumbs="breadcrumbs" />
-    <div class="flex gap-4">
-        <div class="card p-4 w-7/12 sm:p-5 ">
+    <div class="flex place-content-center">
+        <div class="card p-4 w-8/12 sm:p-5 ">
             <div class="card">
                 <div
                     class="flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
@@ -23,40 +23,40 @@
                 </div>
                 <div class="p-4 sm:p-5">
                     <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                        <label class="block col-span-2" >
-                            <span>Title</span>
+                        <label class="block" >
+                            <span>Type</span>
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.title }}
+                                {{ formData.type }}
                             </p>
                         </label>
-                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
-                        <label class="block" >
-                            <span>Name</span>
+                        <label class="block" v-if="formData.property">
+                            <span>Property</span>
+
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.name }}
+                                {{ formData.property }}
                             </p>
                         </label>
-                        <label class="block" >
-                            <span>Mobile</span>
+                        <label class="block" v-if="formData.project">
+                            <span>Project</span>
 
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.mobile }}
-                            </p>
-                        </label>
-
-                        <label class="block" >
-                            <span>Email</span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.email }}
+                                {{ formData.project }}
                             </p>
                         </label>
 
                         <label class="block" >
-                            <span>City</span>
+                            <span>Site Name</span>
 
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.city }}
+                                {{ formData.site_name }}
+                            </p>
+                        </label>
+
+                        <label class="block" >
+                            <span>Site Owner</span>
+
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                {{ formData.site_owner }}
                             </p>
                         </label>
                         <label class="block" >
@@ -66,118 +66,49 @@
                                 {{ formData.company_branch }}
                             </p>
                         </label>
-
-                    </div>
-                    <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
                         <label class="block" >
-                            <span>Proeprty</span>
+                            <span>Location</span>
 
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.property_name }}
-                            </p>
-                        </label>
-                        <label class="block" >
-                            <span>Interest In</span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.interest_in }}
-                            </p>
-                        </label>
-                        <label class="block" >
-                            <span>Purpose</span>
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.purpose }}
-                            </p>
-                        </label>
-                        <label class="block" >
-                            <span>Budget</span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.budget }}
-                            </p>
-                        </label>
-                        <label class="block" >
-                            <span>Lead Source</span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.lead_source }}
-                            </p>
-                        </label>
-
-                        <label class="block col-span-2">
-                            <span>Keywords</span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                <pre>{{ formData.keywords }}</pre>
-                            </p>
-                        </label>
-                        <label class="block col-span-2">
-                            <span>Remark</span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                <pre>{{ formData.remark }}</pre>
-                            </p>
-
-                            <span class="text-tiny+ text-error" v-if="errors?.remark?.length">{{ errors.remark.at(0) }}</span>
-                        </label>
-
-                        <label class="block" >
-                            <span>Lead Status</span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.lead_status }}
-                            </p>
-                        </label>
-
-                        <label class="block" >
-                            <span>Followup Date </span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.followup_date }}
-                            </p>
-                        </label>
-                        <label class="block" >
-                            <span>Is Private? </span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                <i class="fa fa-lock text-red-500" v-if="formData.is_private"></i>
-                                <i class="fa fa-unlock-alt text-green-700" v-else></i>
-                            </p>
-                        </label>
-                        <label class="block" >
-                            <span>Is Protected? </span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                <i class="fa fa-lock text-red-500" v-if="formData.is_protected"></i>
-                                <i class="fa fa-unlock-alt text-green-700" v-else></i>
-                            </p>
-                        </label>
-                        <label class="block" >
-                            <span>Is Confidential? </span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                <i class="fa fa-lock text-red-500" v-if="formData.is_confidential"></i>
-                                <i class="fa fa-unlock-alt text-green-700" v-else></i>
+                                {{ formData.location }}
                             </p>
                         </label>
 
                     </div>
                     <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                     <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-
                         <label class="block" >
+                            <span>Source Manager</span>
+
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                {{ formData.source_manager_name }}
+                            </p>
+                        </label>
+                        <label class="block" >
+                            <span>Closing Manager</span>
+
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                {{ formData.closing_manager_name }}
+                            </p>
+                        </label>
+                        <label class="block col-span-2">
+                            <span>Comments</span>
+
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                <pre class="whitespace-pre-wrap break-words">{{ formData.comments }}</pre>
+                            </p>
+                        </label>
+
+
+                    </div>
+                    <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+
+                        <label class="block col-span-2" >
                             <span>Assigned To</span>
 
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.assigned_user }}
-                            </p>
-                        </label>
-                        <label class="block" >
-                            <span>Assigned Date</span>
-
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.assigned_date }}
+                                {{ formData.assign_user }}
                             </p>
                         </label>
                         <label class="block" >
@@ -227,20 +158,23 @@ export default {
             isShowPopper: false,
             errors: {},
             formData:{
-                title: '',
-                name: '',
-                mobile: null,
-                email: null,
-                city: null,
-                budget: null,
-                purpose: null,
-                assigned_to: null,
-                followup_date: null,
-                interest_in: null,
-                lead_source: null,
-                lead_status: null,
-                remark: null,
-                keywords: null,
+                site_name: null,
+                site_owner: null,
+                type: null,
+                property: null,
+                project: null,
+                comments: null,
+                assign_user: null,
+                time_in: null,
+                time_out: null,
+                location: null,
+                company_branch: null,
+                source_manager_name: null,
+                closing_manager_name: null,
+                created_user_name: null,
+                updated_user_name: null,
+                created_at_time: null,
+                updated_at_time: null,
             },
             rolesList: [],
             loading:{
@@ -294,7 +228,7 @@ export default {
             }
         },
         loadViewDetail( id ){
-            this.$request.getSiteVistViewDetail( id )
+            this.$request.getSiteVisitViewDetail( id )
                         .then(
                             ( res ) => {
                                 if( res.data ){
