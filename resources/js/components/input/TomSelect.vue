@@ -79,7 +79,7 @@ export default {
             default: null
         },
         selectedOptions:{
-            type: [ Array, String, Number ],
+            type: [ Object, Array, String, Number ],
             default: null
         },
         errorMsg:{
@@ -207,6 +207,7 @@ export default {
                     this.clearOptions()
                     this.tomSelectInstance.addOptions( this.options, this.allowCreate);
 
+                    this.setSelectedValues();
                 }
             )
         },
