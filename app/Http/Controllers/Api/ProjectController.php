@@ -51,6 +51,17 @@ class ProjectController extends Controller
         if( !$project->checkAuthorization() ){
             return response()->json( [], 404 );
         }
+        $project->load([
+            'siteVisits' => function ( $q ){
+                $q->with([
+                    'companyBranch',
+                    'sourceManagerUser',
+                    'closingManagerUser',
+                    'createdUser',
+                    'updatedUser'
+                ]);
+            }
+        ]);
         return new ProjectViewResource( $project );
     }
 

@@ -59,6 +59,10 @@ class Project extends Model implements HasMedia
         return $this->hasMany( ProjectCharge::class, 'project_id', 'id');
     }
 
+    public function siteVisits (){
+        return $this->hasMany( SiteVisit::class, 'project_id', 'id');
+    }
+
     public function scopeAssignToAuth ( $q, $boolean = 'and' ){
         return $q->where('assign_to', '=', auth()->id(), $boolean );
     }
