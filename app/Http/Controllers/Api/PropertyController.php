@@ -56,6 +56,17 @@ class PropertyController extends Controller
         if( !$property->checkAuthorization() ){
             return response()->json( [], 404 );
         }
+        $property->load([
+            'siteVisits' => function ( $q ){
+                $q->with([
+                    'companyBranch',
+                    'sourceManagerUser',
+                    'closingManagerUser',
+                    'createdUser',
+                    'updatedUser'
+                ]);
+            }
+        ]);
         return new PropertyViewResource( $property );
     }
 

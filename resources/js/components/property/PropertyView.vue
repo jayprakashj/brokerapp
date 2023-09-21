@@ -22,7 +22,7 @@
                         </router-link>
                         </div>
                     </div>
-                    <div class="card mt-2 p-4 sm:p-5 col-span-8">
+                    <div class="card mt-2 p-4 sm:p-5 col-span-7">
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
                             <label class="block" >
                                 <span>Name</span>
@@ -88,6 +88,25 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+
+                            <label class="block mt-2">
+                                <span>Is Verified?</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.is_verified ? 'Yes' : 'No' }}
+                                </p>
+                            </label>
+
+                            <label class="block mt-2">
+                                <span>Is Document Verified?</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.is_document_verified ? 'Yes' : 'No' }}
+                                </p>
+                            </label>
+                        </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
                             <label class="block col-span-2">
                                 <span>Address</span>
 
@@ -107,6 +126,30 @@
 
                                 <p class="text-xs+ text-slate-400 dark:text-navy-300" >
                                     {{ formData.locality }}
+                                </p>
+                            </label>
+                        </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+                            <label class="block">
+                                <span>Description</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    <pre class="whitespace-pre-wrap break-words">{{ formData.description }}</pre>
+                                </p>
+                            </label>
+                            <label class="block">
+                                <span>Remark</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    <pre class="whitespace-pre-wrap break-words">{{ formData.remark }}</pre>
+                                </p>
+                            </label>
+                            <label class="block">
+                                <span>Internal Note</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    <pre class="whitespace-pre-wrap break-words">{{ formData.internal_note }}</pre>
                                 </p>
                             </label>
                         </div>
@@ -340,6 +383,54 @@
 
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+                            <label class="block" >
+                                <span>Owner Name</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.owner_name }}
+                                </p>
+                            </label>
+                            <label class="block" >
+                                <span>Owner Phone</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.owner_phone }}
+                                </p>
+                            </label>
+                            <label class="block" >
+                                <span>Owner Email</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.owner_email }}
+                                </p>
+                            </label>
+                        </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+                            <label class="block" >
+                                <span>Refer By Name</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.refer_by_name }}
+                                </p>
+                            </label>
+                            <label class="block" >
+                                <span>Refer By Phone</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.refer_by_phone }}
+                                </p>
+                            </label>
+                            <label class="block" >
+                                <span>Refer By Email</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.refer_by_email }}
+                                </p>
+                            </label>
+                        </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-12 gap-4 sm:grid-cols-12 items-center">
 
                             <label class="block col-span-12" >
@@ -372,106 +463,84 @@
                             </label>
 
                         </div>
-                    </div>
-                    <div class="card mt-2 p-4 sm:p-5 col-span-4">
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
 
-                        <!-- <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div> -->
-                        <div class="  items-center">
-
-
-                            <label class="block col-span-6 mt-2">
-                                <span>Is Verified?</span>
-
-                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    {{ formData.is_verified ? 'Yes' : 'No' }}
-                                </p>
-                            </label>
-
-                            <label class="block col-span-6 mt-2">
-                                <span>Is Document Verified?</span>
-
-                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    {{ formData.is_document_verified ? 'Yes' : 'No' }}
-                                </p>
-                            </label>
-                            <label class="block col-span-6 mt-2">
+                            <label class="block col-span-2 mt-2">
                                 <span>Assign To</span>
 
                                 <p class="text-xs+ text-slate-400 dark:text-navy-300" >
                                     {{ formData.assign_user_data?.name || 'N/A' }}
                                 </p>
                             </label>
-
-                            <label class="block col-span-6 mt-2">
-                                <span>Description</span>
+                            <label class="block" >
+                                <span>Created By</span>
 
                                 <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    <pre>{{ formData.description }}</pre>
+                                    {{ formData.created_user_name }}
                                 </p>
                             </label>
-                            <label class="block col-span-6 mt-2">
-                                <span>Remark</span>
+                            <label class="block" >
+                                <span>Created At</span>
 
                                 <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    <pre>{{ formData.remark }}</pre>
+                                    {{ formData.created_at_time }}
                                 </p>
                             </label>
-                            <label class="block col-span-6 mt-2">
-                                <span>Internal Note</span>
+                            <label class="block" >
+                                <span>Updated By</span>
 
                                 <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    <pre>{{ formData.internal_note }}</pre>
+                                    {{ formData.updated_user_name }}
+                                </p>
+                            </label>
+                            <label class="block" >
+                                <span>Updated At</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.updated_at_time }}
                                 </p>
                             </label>
                         </div>
-                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                        <div class="space-y-4">
-                            <label class="block" >
-                                <span>Owner Name</span>
+                    </div>
 
-                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    {{ formData.owner_name }}
-                                </p>
-                            </label>
-                            <label class="block" >
-                                <span>Owner Phone</span>
+                    <div class="card mt-2 p-4 sm:p-5 col-span-5">
+                        <h5 class="text-xl font-medium text-gray-900 dark:text-white">Site Visits</h5>
+                        <!-- <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div> -->
+                        <div class="px-4 pt-2 pb-4" v-if="formData?.site_visits?.length">
+                            <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.site_visits" :key="'site_visit_'+index">
+                                <div class="flex items-center space-x-2 sm:space-x-3">
+                                    <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100">
+                                        {{ item.site_name }}
+                                    </h2>
+                                </div>
+                                <p class="mt-1"><i class="fa fa-location-dot"></i> {{ item.location }}</p>
+                                <div class="mt-1 flex items-end justify-between">
+                                    <div class="flex flex-wrap items-center font-inter text-xs">
+                                        <span class="flex items-center space-x-1">
+                                            <i class="fa fa-clock"></i>
+                                            <span>{{ item.time_in }}</span>
+                                        </span>
+                                        <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                        <span class="flex items-center space-x-1">
+                                            <i class="fa fa-clock"></i>
+                                            <span>{{ item.time_out }}</span>
+                                        </span>
+                                        <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                        <div class="badge space-x-2.5 px-1">
+                                            <span>{{ item.visit_type }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_SITE_VISIT ] )" :to="'/site-visit/view/' + item.id" class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                                            <i class="fa fa-external-link"></i>
+                                        </router-link>
 
-                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    {{ formData.owner_phone }}
-                                </p>
-                            </label>
-                            <label class="block" >
-                                <span>Owner Email</span>
-
-                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    {{ formData.owner_email }}
-                                </p>
-                            </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
-                        <div class="space-y-4">
-                            <label class="block" >
-                                <span>Refer By Name</span>
-
-                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    {{ formData.refer_by_name }}
-                                </p>
-                            </label>
-                            <label class="block" >
-                                <span>Refer By Phone</span>
-
-                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    {{ formData.refer_by_phone }}
-                                </p>
-                            </label>
-                            <label class="block" >
-                                <span>Refer By Email</span>
-
-                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                    {{ formData.refer_by_email }}
-                                </p>
-                            </label>
-                        </div>
+                        <no-data-found v-else />
                     </div>
                     <div class="card mt-2 p-4 sm:p-5 col-span-12">
                         <div
