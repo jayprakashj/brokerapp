@@ -66,6 +66,10 @@ class Property extends Model implements HasMedia
         return $this->hasMany( Lead::class, 'property_id', 'id');
     }
 
+    public function latestLeads (){
+        return $this->leads()->latest();
+    }
+
     public function documents (){
         return $this->hasMany( Document::class, 'property_id', 'id');
     }

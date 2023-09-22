@@ -76,6 +76,7 @@ class PropertyViewResource extends JsonResource
             'refer_by_phone' => $this->refer_by_phone ?? '-',
             'images' => [],
             'site_visits' => SiteVisitListResource::collection( $this->siteVisits ),
+            'leads' => LeadListResource::collection( $this->latestLeads ),
             'created_user_name' => $this->createdUser->name  ?? 'N/A',
             'updated_user_name' => $this->updatedUser->name ?? 'N/A',
             'created_at_time' => $this->created_at->format('d-m-Y h:i a'),

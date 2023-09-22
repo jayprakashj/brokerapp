@@ -65,7 +65,8 @@ class PropertyController extends Controller
                     'createdUser',
                     'updatedUser'
                 ]);
-            }
+            },
+            'latestLeads.lastComment'
         ]);
         return new PropertyViewResource( $property );
     }

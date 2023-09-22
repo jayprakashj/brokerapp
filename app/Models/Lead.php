@@ -70,6 +70,10 @@ class Lead extends Model
         return $this->comments()->latest();
     }
 
+    public function lastComment (){
+        return $this->hasOne( LeadComment::class, 'lead_id', 'id')->latest();
+    }
+
     public function scopeAssignedToAuth ( $q, $boolean = 'and' ){
         return $q->where('assigned_to', '=', auth()->id(), $boolean );
     }
