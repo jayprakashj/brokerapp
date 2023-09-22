@@ -567,7 +567,7 @@
                                                     {{ item.title }}
                                                 </h2>
                                             </div>
-                                            <p class="mt-1"><i class="fa fa-reply"></i> {{ item.comment }}</p>
+                                            <p class="mt-1"><pre class="whitespace-pre-wrap break-words"><i class="fa fa-comment"></i> {{ item.comment }}</pre> </p>
                                             <div class="mt-1 flex items-end justify-between">
                                                 <div class="flex flex-wrap items-center font-inter text-xs">
                                                     <span class="flex items-center space-x-1">
