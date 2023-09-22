@@ -15,7 +15,7 @@ class SiteVisitClass {
 
     public function getDefaultCompanySiteVisits ( $perPage = 24, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
-        $lists = SiteVisit::query()->with(['company', 'companyBranch', 'property', 'project']);
+        $lists = SiteVisit::query()->with(['company', 'companyBranch', 'property', 'project', 'assignToUser']);
 
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignedToAuth();
