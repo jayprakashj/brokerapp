@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger('company_id');
             $table->bigInteger('contact_id');
             $table->bigInteger('property_id')->nullable();
+            $table->bigInteger('project_id')->nullable();
             $table->string('title');
             $table->string('customer_name');
             $table->bigInteger('customer_mobile');
@@ -46,6 +47,7 @@ return new class extends Migration
             $table->index('company_id');
             $table->index('contact_id');
             $table->index('property_id');
+            $table->index('project_id');
             $table->index('customer_mobile');
             $table->index('customer_email');
             $table->index('company_branch_id');

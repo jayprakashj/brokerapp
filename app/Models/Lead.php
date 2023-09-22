@@ -62,6 +62,10 @@ class Lead extends Model
         return $this->belongsTo( Property::class, 'property_id', 'id');
     }
 
+    public function project (){
+        return $this->belongsTo( Project::class, 'project_id', 'id');
+    }
+
     public function comments (){
         return $this->hasMany( LeadComment::class, 'lead_id', 'id');
     }

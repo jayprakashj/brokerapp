@@ -71,10 +71,17 @@
                     <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                     <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
                         <label class="block" >
-                            <span>Proeprty</span>
+                            <span>Property</span>
 
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
                                 {{ formData.property_name }}
+                            </p>
+                        </label>
+                        <label class="block" >
+                            <span>Project</span>
+
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                {{ formData.project_name }}
                             </p>
                         </label>
                         <label class="block" >

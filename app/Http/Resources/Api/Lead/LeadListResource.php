@@ -20,6 +20,7 @@ class LeadListResource extends JsonResource
             'name' => $this->customer_name,
             'company_name' => $this->company->name ?? 'N/A',
             'property_name' => $this->property->name ?? 'N/A',
+            'project_name' => $this->project->title ?? 'N/A',
             'mobile' => $this->customer_mobile ?? 'N/A',
             'email' => $this->customer_email ?? 'N/A',
             'city' => $this->customer_city ?? 'N/A',

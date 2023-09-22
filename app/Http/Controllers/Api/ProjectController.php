@@ -60,7 +60,8 @@ class ProjectController extends Controller
                     'createdUser',
                     'updatedUser'
                 ]);
-            }
+            },
+            'latestLeads.lastComment'
         ]);
         return new ProjectViewResource( $project );
     }
@@ -113,7 +114,7 @@ class ProjectController extends Controller
 
 
     public function getProjectForSelectList(){
-        $list = Project::select('id', 'name')->get();
+        $list = Project::select('id', 'title as name')->get();
         return response()->json( $list, 200 );
     }
 }

@@ -63,6 +63,14 @@ class Project extends Model implements HasMedia
         return $this->hasMany( SiteVisit::class, 'project_id', 'id');
     }
 
+    public function leads (){
+        return $this->hasMany( Lead::class, 'project_id', 'id');
+    }
+
+    public function latestLeads (){
+        return $this->leads()->latest();
+    }
+
     public function scopeAssignToAuth ( $q, $boolean = 'and' ){
         return $q->where('assign_to', '=', auth()->id(), $boolean );
     }

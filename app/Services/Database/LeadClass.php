@@ -21,7 +21,7 @@ class LeadClass {
 
     public function getDefaultCompanyLeads ( $perPage = 24, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
-        $lists = Lead::query()->with(['companyBranch']);
+        $lists = Lead::query()->with(['companyBranch', 'property', 'project', 'assignToUser', 'updatedUser']);
 
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignedToAuth();
@@ -76,6 +76,7 @@ class LeadClass {
         $lead->contact_id = $this->findOrCreateContact( $user, $request )->id;
         $lead->company_branch_id = $request->input('company_branch');
         $lead->property_id = $request->input('property');
+        $lead->project_id = $request->input('project');
         $lead->customer_name = $request->input('name');
         $lead->customer_mobile = $request->input('mobile');
         $lead->customer_email = $request->input('email');

@@ -133,6 +133,19 @@
                                         :error-msg="errors?.property"
                                     />
 
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.project"
+                                        form-label="Project"
+                                        placeholder="Select Project"
+                                        :is-ajax="true"
+                                        request-name="projectSelectList"
+                                        :ajax-preload="true"
+                                        :selected-item="selected.project_data?.id"
+                                        :selected-options="selected.project_data"
+                                        :error-msg="errors?.project"
+                                    />
+
                             <label class="block h-full" >
                                 <span>Interest In</span>
                                 <span class="relative mt-1.5 flex">
@@ -392,6 +405,7 @@ export default {
                 remark: null,
                 keywords: null,
                 property: null,
+                project: null,
             },
             rolesList: [],
             loading:{
@@ -404,6 +418,7 @@ export default {
                 assigned_to: {},
                 company_branch_data: {},
                 property_data: {},
+                project_data: {},
             },
             selectedOptions:{
                 lead_source: [],
@@ -501,6 +516,7 @@ export default {
                                     this.selected.assigned_to = this.formData.assigned_to_data;
                                     this.selected.company_branch_data = this.formData.company_branch_data;
                                     this.selected.property_data = this.formData.property_data;
+                                    this.selected.project_data = this.formData.project_data;
                                 }
                             },
                             (err) => {

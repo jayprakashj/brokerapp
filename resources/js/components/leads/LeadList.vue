@@ -85,6 +85,13 @@
                     <div class="flex items-center space-x-4">
                         <div
                             class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                            <i class="fa fa-file-invoice text-xs"></i>
+                        </div>
+                        <p>{{ item.project_name }}</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div
+                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
                             <i class="fa fa-user-gear text-xs"></i>
                         </div>
                         <p>{{ item.assigned_to }}</p>

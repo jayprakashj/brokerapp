@@ -46,6 +46,10 @@ class LeadEditResource extends JsonResource
         if( !is_null( $this->property ) ){
             $data['property_data'] = $this->property->only(['id', 'name']);
         }
+        if( !is_null( $this->project ) ){
+            $this->project->name = $this->project->title;
+            $data['project_data'] = $this->project->only(['id', 'name']);
+        }
         return $data;
     }
 }

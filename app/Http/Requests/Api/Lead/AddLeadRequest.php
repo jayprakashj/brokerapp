@@ -87,6 +87,11 @@ class AddLeadRequest extends FormRequest
                 Rule::exists('properties', 'id')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
+            'project' => [
+                'nullable',
+                Rule::exists('projects', 'id')
+                        ->where('company_id', \Helper::retrieveDefaultCompany()->id )
+            ],
         ];
         return $rules;
     }

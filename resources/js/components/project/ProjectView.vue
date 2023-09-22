@@ -272,44 +272,108 @@
                         </div>
                     </div>
 
-                    <div class="card mt-2 p-4 sm:p-5 col-span-5">
-                        <h5 class="text-xl font-medium text-gray-900 dark:text-white">Site Visits</h5>
-                        <!-- <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div> -->
-                        <div class="px-4 pt-2 pb-4" v-if="formData?.site_visits?.length">
-                            <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.site_visits" :key="'site_visit_'+index">
-                                <div class="flex items-center space-x-2 sm:space-x-3">
-                                    <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100">
-                                        {{ item.site_name }}
-                                    </h2>
-                                </div>
-                                <p class="mt-1"><i class="fa fa-location-dot"></i> {{ item.location }}</p>
-                                <div class="mt-1 flex items-end justify-between">
-                                    <div class="flex flex-wrap items-center font-inter text-xs">
-                                        <span class="flex items-center space-x-1">
-                                            <i class="fa fa-clock"></i>
-                                            <span>{{ item.time_in }}</span>
-                                        </span>
-                                        <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
-                                        <span class="flex items-center space-x-1">
-                                            <i class="fa fa-clock"></i>
-                                            <span>{{ item.time_out }}</span>
-                                        </span>
-                                        <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
-                                        <div class="badge space-x-2.5 px-1">
-                                            <span>{{ item.visit_type }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center space-x-1">
-                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_SITE_VISIT ] )" :to="'/site-visit/view/' + item.id" class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
-                                            <i class="fa fa-external-link"></i>
-                                        </router-link>
 
+                    <div class="card mt-2 p-4 sm:p-5 col-span-5">
+                        <div class="tabs flex flex-col">
+                            <div class="is-scrollbar-hidden overflow-x-auto">
+                                <div class="border-b-2 border-slate-150 dark:border-navy-500">
+                                    <div class="tabs-list flex">
+                                        <button @click="changeTab('site_visits')"
+                                            :class="{'border-primary dark:border-accent text-primary dark:text-accent-light': activeTab === 'site_visits', 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100': (activeTab !== 'site_visits')}"
+                                            class="btn shrink-0 rounded-none border-b-2 px-3 py-2 font-medium">
+                                            Site Visits
+                                        </button>
+                                        <button @click="changeTab('leads')"
+                                            :class="{'border-primary dark:border-accent text-primary dark:text-accent-light' : activeTab === 'leads', 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100': (activeTab !== 'leads')}"
+                                            class="btn shrink-0 rounded-none border-b-2 px-3 py-2 font-medium">
+                                            Leads
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-content pt-4">
+                                <div v-show="activeTab === 'site_visits'" >
+                                    <div class="px-4 pt-2 pb-4" v-if="formData?.site_visits?.length">
+                                        <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.site_visits" :key="'site_visit_'+index">
+                                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                                <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100">
+                                                    {{ item.site_name }}
+                                                </h2>
+                                            </div>
+                                            <p class="mt-1"><i class="fa fa-location-dot"></i> {{ item.location }}</p>
+                                            <div class="mt-1 flex items-end justify-between">
+                                                <div class="flex flex-wrap items-center font-inter text-xs">
+                                                    <span class="flex items-center space-x-1">
+                                                        <i class="fa fa-clock"></i>
+                                                        <span>{{ item.time_in }}</span>
+                                                    </span>
+                                                    <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                                    <span class="flex items-center space-x-1">
+                                                        <i class="fa fa-clock"></i>
+                                                        <span>{{ item.time_out }}</span>
+                                                    </span>
+                                                    <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                                    <div class="badge space-x-2.5 px-1">
+                                                        <span>{{ item.visit_type }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center space-x-1">
+                                                    <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_SITE_VISIT ] )" :to="'/site-visit/view/' + item.id" class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                                                        <i class="fa fa-external-link"></i>
+                                                    </router-link>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <no-data-found v-else />
+                                </div>
+                                <div v-show="activeTab === 'leads'" >
+                                    <div class="px-4 pt-2 pb-4" v-if="formData?.leads?.length">
+                                        <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.leads" :key="'leads_'+index">
+                                            <div class="flex items-center space-x-2 sm:space-x-3">
+                                                <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100">
+                                                    {{ item.title }}
+                                                </h2>
+                                            </div>
+                                            <p class="mt-1"><pre class="whitespace-pre-wrap break-words"><i class="fa fa-comment"></i> {{ item.comment }}</pre> </p>
+                                            <div class="mt-1 flex items-end justify-between">
+                                                <div class="flex flex-wrap items-center font-inter text-xs">
+                                                    <span class="flex items-center space-x-1">
+                                                        <i class="fa fa-user"></i>
+                                                        <span>{{ item.name }}</span>
+                                                    </span>
+                                                    <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                                    <span class="flex items-center space-x-1">
+                                                        <i class="fa fa-phone"></i>
+                                                        <span>{{ item.mobile }}</span>
+                                                    </span>
+                                                    <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                                    <span class="flex items-center space-x-1">
+                                                        <i class="fa fa-envelope"></i>
+                                                        <span>{{ item.email }}</span>
+                                                    </span>
+                                                    <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                                    <div class="badge space-x-2.5 px-1 text-primary">
+                                                        <span>{{ item.status }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center space-x-1">
+                                                    <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_LEAD ] )" :to="'/lead/view/' + item.id" class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                                                        <i class="fa fa-external-link"></i>
+                                                    </router-link>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <no-data-found v-else />
+                                </div>
+
+                            </div>
                         </div>
-                        <no-data-found v-else />
                     </div>
+
                     <div class="card mt-2 p-4 sm:p-5 col-span-12">
                         <div
                             class="col-span-12 flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
@@ -576,7 +640,8 @@ export default {
             },
             show:{
                 modal: false
-            }
+            },
+            activeTab: 'site_visits'
         }
     },
     mounted(){
@@ -649,6 +714,9 @@ export default {
         },
         closeModal () {
             this.show.modal = false;
+        },
+        changeTab( tabKey ){
+            this.activeTab = tabKey;
         }
     }
 }
