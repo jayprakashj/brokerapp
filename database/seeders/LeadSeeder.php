@@ -45,8 +45,6 @@ class LeadSeeder extends Seeder
             $obj->created_by = $item->id;
             $obj->updated_by = $item->id;
             $obj->company_id = $item->defaultCompany->id;
-            $obj->property_id = $properties->random()->id;
-            $obj->project_id = $projects->random()->id;
             $obj->title = $faker->text( 10 );
             $obj->contact_id = $contactObj->id;
             $obj->company_branch_id = $companyBranches->random()->id;
@@ -68,6 +66,9 @@ class LeadSeeder extends Seeder
             $obj->followup_date = now()->addDay( $faker->randomDigit() )->format('Y-m-d');
             $obj->assigned_date = today();
             $obj->save();
+
+            $obj->properties()->sync( $properties->random( 3 )->pluck('id') );
+            $obj->projects()->sync( $projects->random( 3 )->pluck('id') );
 
             $leadComment = new LeadComment();
             $leadComment->user_id = $item->id;

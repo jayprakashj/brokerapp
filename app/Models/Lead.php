@@ -58,12 +58,12 @@ class Lead extends Model
         return $this->belongsTo( CompanyBranch::class, 'company_branch_id', 'id');
     }
 
-    public function property (){
-        return $this->belongsTo( Property::class, 'property_id', 'id');
+    public function properties (){
+        return $this->belongsToMany( Property::class, 'lead_property_pivot', 'lead_id', 'property_id');
     }
 
-    public function project (){
-        return $this->belongsTo( Project::class, 'project_id', 'id');
+    public function projects (){
+        return $this->belongsToMany( Project::class, 'lead_project_pivot', 'lead_id', 'project_id');
     }
 
     public function comments (){

@@ -4,7 +4,8 @@
         <select
             ref="tomSelect"
             :placeholder="placeholder"
-            class="mt-1.5 w-full">
+            class="mt-1.5 w-full"
+            :multiple="isMultiple">
         </select>
         <span class="text-tiny+ text-error" v-if="errorMessage?.length">{{ Array.isArray( errorMessage ) ? errorMessage.at(0): errorMessage }}</span>
     </label>
@@ -53,6 +54,10 @@ export default {
         tomOptions:{
             type: Object,
             default: () => {}
+        },
+        isMultiple:{
+            type: Boolean,
+            default: false
         },
         isAjax:{
             type: Boolean,
@@ -193,6 +198,9 @@ export default {
             this.tomSelectInstance.on("item_select", ( selectedItem ) => {
                 this.$emit( 'itemSelect', selectedItem )
             })
+            this.tomSelectInstance.on("item_remove", ( selectedItem ) => {
+                this.$emit( 'itemRemove', selectedItem )
+            })
             this.tomSelectInstance.on("clear", ( ) => {
                 this.$emit( 'clear' );
             })
@@ -212,22 +220,28 @@ export default {
             )
         },
         setSelectedValues () {
-            if(this.selectedItem ){
+            if(this.selectedOptions ){
                 if( this.isAjax ){
 
-                    if( Array.isArray( this.selectedItem ) ){
+                    if( Array.isArray( this.selectedOptions ) ){
                         this.tomSelectInstance.addOptions( this.selectedOptions );
                     }else{
                         this.tomSelectInstance.addOptions( [this.selectedOptions] );
 
                     }
+
                 }
+            }
+            if(this.selectedItem ){
 
                 if( Array.isArray( this.selectedItem ) ){
-                    this.tomSelectInstance.addItem( this.selectedItem );
+                    this.selectedItem.map( d => {
+
+                        this.tomSelectInstance.addItem( d );
+                    })
 
                 }else{
-                    this.tomSelectInstance.addItem( [this.selectedItem ] );
+                    this.tomSelectInstance.addItem( this.selectedItem  );
 
                 }
             }

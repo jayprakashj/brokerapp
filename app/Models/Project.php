@@ -64,7 +64,7 @@ class Project extends Model implements HasMedia
     }
 
     public function leads (){
-        return $this->hasMany( Lead::class, 'project_id', 'id');
+        return $this->belongsToMany( Lead::class, 'lead_project_pivot', 'project_id', 'lead_id');
     }
 
     public function latestLeads (){

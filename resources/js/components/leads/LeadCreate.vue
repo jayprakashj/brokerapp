@@ -128,9 +128,11 @@
                                         :is-ajax="true"
                                         request-name="propertySelectList"
                                         :ajax-preload="true"
-                                        :selected-item="selected.property_data?.id"
+                                        :is-multiple="true"
+                                        :selected-item="selected.property_data?.map( d => d.id)"
                                         :selected-options="selected.property_data"
                                         :error-msg="errors?.property"
+                                        @itemRemove="removePropertyItem"
                                     />
 
                             <input-tom-select
@@ -138,12 +140,14 @@
                                         v-model="formData.project"
                                         form-label="Project"
                                         placeholder="Select Project"
+                                        :is-multiple="true"
                                         :is-ajax="true"
                                         request-name="projectSelectList"
                                         :ajax-preload="true"
-                                        :selected-item="selected.project_data?.id"
+                                        :selected-item="selected.project_data?.map(d => d.id)"
                                         :selected-options="selected.project_data"
                                         :error-msg="errors?.project"
+                                        @itemRemove="removeProjectItem"
                                     />
 
                             <label class="block h-full" >
@@ -404,8 +408,8 @@ export default {
                 lead_status: null,
                 remark: null,
                 keywords: null,
-                property: null,
-                project: null,
+                property: [],
+                project: [],
             },
             rolesList: [],
             loading:{
@@ -417,8 +421,8 @@ export default {
                 lead_status: {},
                 assigned_to: {},
                 company_branch_data: {},
-                property_data: {},
-                project_data: {},
+                property_data: [],
+                project_data: [],
             },
             selectedOptions:{
                 lead_source: [],
@@ -610,6 +614,26 @@ export default {
                             }
                         )
         },
+        removePropertyItem( item ){
+            const findIdx = this.formData.property.findIndex( d => d == item );
+            const selectedIdx = this.selected.property_data.findIndex( d => d.id == item );
+            if( findIdx !== -1 ){
+                this.formData.property.splice( findIdx, 1 );
+            }
+            if( selectedIdx !== -1 ){
+                this.selected.property_data.splice( selectedIdx, 1 );
+            }
+        },
+        removeProjectItem( item ){
+            const findIdx = this.formData.project.findIndex( d => d == item );
+            const selectedIdx = this.selected.project_data.findIndex( d => d.id == item );
+            if( findIdx !== -1 ){
+                this.formData.project.splice( findIdx, 1 );
+            }
+            if( selectedIdx !== -1 ){
+                this.selected.project_data.splice( selectedIdx, 1 );
+            }
+        }
     }
 }
 </script>

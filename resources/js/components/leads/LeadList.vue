@@ -80,14 +80,70 @@
                             class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
                             <i class="fa fa-building text-xs"></i>
                         </div>
-                        <p>{{ item.property_name }}</p>
+                        <p v-if="item.property_name?.length" >
+
+                            <template v-if="item.property_name.length > 1">
+                                <tippy tag="button" >
+                                    <template #content >
+                                        <div class="flex space-x-3 rounded-lg bg-slate-150 p-3 dark:bg-navy-500">
+                                            <div>
+                                                <p class="font-medium text-slate-700 dark:text-navy-100" v-for="(data, index) in item.property_name" :key="'tippy_property_'+index">{{ data }}</p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <tempalte #default>
+                                        <span>
+                                            {{ item.property_name.at(0) }} +{{ item.property_name.length-1 }} more
+
+                                        </span>
+
+                                    </tempalte>
+
+                                </tippy>
+
+                            </template>
+                            <template v-else>
+                                {{ item.property_name.at(0) }}
+                            </template>
+                        </p>
+                        <p v-else>
+                            N/A
+                        </p>
                     </div>
                     <div class="flex items-center space-x-4">
                         <div
                             class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
                             <i class="fa fa-file-invoice text-xs"></i>
                         </div>
-                        <p>{{ item.project_name }}</p>
+                        <p v-if="item.project_name?.length" >
+
+                            <template v-if="item.project_name.length > 1">
+                                <tippy tag="button" >
+                                    <template #content >
+                                        <div class="flex space-x-3 rounded-lg bg-slate-150 p-3 dark:bg-navy-500">
+                                            <div>
+                                                <p class="font-medium text-slate-700 dark:text-navy-100" v-for="(data, index) in item.project_name" :key="'tippy_property_'+index">{{ data }}</p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <tempalte #default>
+                                        <span>
+                                            {{ item.project_name.at(0) }} +{{ item.project_name.length-1 }} more
+
+                                        </span>
+
+                                    </tempalte>
+
+                                </tippy>
+
+                            </template>
+                            <template v-else>
+                                {{ item.project_name.at(0) }}
+                            </template>
+                        </p>
+                        <p v-else>
+                            N/A
+                        </p>
                     </div>
                     <div class="flex items-center space-x-4">
                         <div

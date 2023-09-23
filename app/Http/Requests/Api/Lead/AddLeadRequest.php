@@ -82,12 +82,12 @@ class AddLeadRequest extends FormRequest
                 Rule::exists('lead_statuses', 'name')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
-            'property' => [
+            'property.*' => [
                 'nullable',
                 Rule::exists('properties', 'id')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
-            'project' => [
+            'project.*' => [
                 'nullable',
                 Rule::exists('projects', 'id')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
@@ -98,7 +98,8 @@ class AddLeadRequest extends FormRequest
 
     public function attributes(){
         return [
-
+            'property.*' => 'Property',
+            'project.*' => 'Project',
         ];
     }
 

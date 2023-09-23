@@ -63,7 +63,7 @@ class Property extends Model implements HasMedia
     }
 
     public function leads (){
-        return $this->hasMany( Lead::class, 'property_id', 'id');
+        return $this->belongsToMany( Lead::class, 'lead_property_pivot', 'property_id', 'lead_id');
     }
 
     public function latestLeads (){

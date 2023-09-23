@@ -25,8 +25,6 @@ class LeadViewResource extends JsonResource
             'remark' => $this->remark  ?? 'N/A',
             'keywords' => $this->keywords,
             'purpose' => $this->purpose ?? 'N/A',
-            'property_name' => $this->property->name ?? 'N/A',
-            'project_name' => $this->project->title ?? 'N/A',
             'interest_in' => $this->interest_in ?? 'N/A',
             'lead_source' => $this->lead_source,
             'lead_status' => $this->lead_status,
@@ -45,6 +43,12 @@ class LeadViewResource extends JsonResource
             'comments' => LeadCommentsResource::collection( $this->latestComments ),
         ];
 
+        if( $this->properties->count() ){
+            $data['property_names'] = $this->properties->pluck('name');
+        }
+        if( $this->projects->count() ){
+            $data['project_names'] = $this->projects->pluck('title');
+        }
         return $data;
     }
 }
