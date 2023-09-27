@@ -38,7 +38,25 @@ const permissions = {
     VIEW_DOCUMENT: 'View Document',
     ADD_DOCUMENT: 'Add Document',
     UPDATE_DOCUMENT: 'Update Document',
-    REMOVE_DOCUMENT: 'Remove Document'
+    REMOVE_DOCUMENT: 'Remove Document',
+    PROJECT_LIST:'Project List',
+    ONLY_ASSIGNED_PROJECT_LIST:'Only Assigned Project List',
+    VIEW_PROJECT:'View Project',
+    ADD_PROJECT:'Add Project',
+    UPDATE_PROJECT:'Update Project',
+    REMOVE_PROJECT:'Remove Project',
+    TASK_LIST:'Task List',
+    ONLY_ASSIGNED_TASK_LIST:'Only Assigned Task List',
+    VIEW_TASK:'View Task',
+    ADD_TASK:'Add Task',
+    UPDATE_TASK:'Update Task',
+    REMOVE_TASK:'Remove Task',
+    SITE_VISIT_LIST:'Site Visit List',
+    ONLY_ASSIGNED_SITE_VISIT_LIST:'Only Assigned Site Visit List',
+    VIEW_SITE_VISIT:'View Site Visit',
+    ADD_SITE_VISIT:'Add Site Visit',
+    UPDATE_SITE_VISIT:'Update Site Visit',
+    REMOVE_SITE_VISIT:'Remove Site Visit',
 }
 
 export default permissions;

@@ -20,6 +20,8 @@ class MemberListResource extends JsonResource
             'member_name' => $this->memberUser->name ?? 'N/A',
             'member_phone' => $this->memberUser->mobile ?? 'N/A',
             'email' => $this->email,
+            'secondary_mobile' => $this->memberUser->secondary_mobile,
+            'secondary_email' => $this->memberUser->secondary_email,
             'logo_url' => $this->memberUser ? $this->memberUser->getLogoUrl() : (User::getDefaultLogoUrl()),
             'creator' => $this->createdUser->name,
             'is_owned' => $this->isOwnerMe(),

@@ -121,6 +121,14 @@ const apis = {
         return http.get('properties/select-lists/get', config);
 
     },
+    projectSelectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('projects/select-lists/get', config);
+
+    },
     companyBranchSelectList: ( params) => {
         let config = {};
         if( params ) {
@@ -143,6 +151,38 @@ const apis = {
             config['search'] = params;
         }
         return http.get('properties/lists/form-select-lists', config);
+
+    },
+    projectFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('projects/lists/form-select-lists', config);
+
+    },
+    propertyFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('properties/lists/form-select-lists', config);
+
+    },
+    siteVisitFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('site-visits/lists/form-select-lists', config);
+
+    },
+    taskStatusDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('tasks/statuses/select-lists', config);
 
     },
     getCompanyList: ( params) => {
@@ -331,6 +371,66 @@ const apis = {
     },
     attachPropertyToDocument: ( data ) => {
         return http.post( `documents/attach-property`, data );
+    },
+    getProjectList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('projects/lists', config);
+
+    },
+    getProjectDetail: ( id ) => {
+        return http.get(`projects/${id}/edit` );
+    },
+    getProjectViewDetail: ( id ) => {
+        return http.get(`projects/${id}/view` );
+    },
+    createProject: ( data ) => {
+        return http.post('projects/store', data);
+    },
+    deleteProject: ( id ) => {
+        return http.post( `projects/${id}/delete` );
+    },
+    getTaskList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('tasks/lists', config);
+
+    },
+    getTaskDetail: ( id ) => {
+        return http.get(`tasks/${id}/edit` );
+    },
+    getTaskViewDetail: ( id ) => {
+        return http.get(`tasks/${id}/view` );
+    },
+    createTask: ( data ) => {
+        return http.post('tasks/store', data);
+    },
+    deleteTask: ( id ) => {
+        return http.post( `tasks/${id}/delete` );
+    },
+    getSiteVisitList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('site-visits/lists', config);
+
+    },
+    getSiteVisitDetail: ( id ) => {
+        return http.get(`site-visits/${id}/edit` );
+    },
+    getSiteVisitViewDetail: ( id ) => {
+        return http.get(`site-visits/${id}/view` );
+    },
+    createSiteVisit: ( data ) => {
+        return http.post('site-visits/store', data);
+    },
+    deleteSiteVisit: ( id ) => {
+        return http.post( `site-visits/${id}/delete` );
     },
 }
 export default apis;

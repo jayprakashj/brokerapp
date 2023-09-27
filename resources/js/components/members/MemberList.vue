@@ -34,6 +34,26 @@
                         <p>{{ item.company_branch }}</p>
                     </div>
                 </div>
+                <template v-if="item.secondary_mobile || item.secondary_email">
+
+                    <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
+                    <div class="grow space-y-4">
+                        <div class="flex items-center space-x-4" v-if="item.secondary_mobile">
+                            <div
+                                class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                                <i class="fa fa-phone text-xs"></i>
+                            </div>
+                            <p>{{ item.secondary_mobile }}</p>
+                        </div>
+                        <div class="flex items-center space-x-4" v-if="item.secondary_email">
+                            <div
+                                class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                                <i class="fa fa-envelope text-xs"></i>
+                            </div>
+                            <p>{{ item.secondary_email }}</p>
+                        </div>
+                    </div>
+                </template>
                 <div class="mt-5 space-x-2">
 
                     <router-link :to="'/member/edit/' + item.id"

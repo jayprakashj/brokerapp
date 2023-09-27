@@ -63,11 +63,19 @@ class Property extends Model implements HasMedia
     }
 
     public function leads (){
-        return $this->hasMany( Lead::class, 'property_id', 'id');
+        return $this->belongsToMany( Lead::class, 'lead_property_pivot', 'property_id', 'lead_id');
+    }
+
+    public function latestLeads (){
+        return $this->leads()->latest();
     }
 
     public function documents (){
         return $this->hasMany( Document::class, 'property_id', 'id');
+    }
+
+    public function siteVisits (){
+        return $this->hasMany( SiteVisit::class, 'property_id', 'id');
     }
 
     public function scopeAssignToAuth ( $q, $boolean = 'and' ){

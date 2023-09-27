@@ -46,7 +46,7 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Name</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -60,8 +60,21 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
                             </label>
-                            <label class="block" >
-                                <span>Mobile</span>
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.role"
+                                        form-label="Role"
+                                        placeholder="Select Role"
+                                        :is-ajax="true"
+                                        request-name="getRoleForMemberForm"
+                                        :ajax-preload="true"
+                                        :selected-item="selected.role_data?.id"
+                                        :selected-options="selected.role_data"
+                                        :error-msg="errors?.role"
+                                    />
+                            <div class="my-2 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
+                            <label class="block h-full" >
+                                <span>Primary Mobile</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
                                         class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
@@ -74,9 +87,8 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
                             </label>
-
-                            <label class="block" >
-                                <span>Email</span>
+                            <label class="block h-full" >
+                                <span>Primary Email</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
                                         class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
@@ -89,18 +101,40 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
                             </label>
+                            <div class="my-2 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
+                            <label class="block h-full" >
+                                <span>Secondary Mobile</span>
+                                <span class="relative mt-1.5 flex">
+                                    <input
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Secondary Mobile" type="text" name="secondary_mobile" v-model="formData.secondary_mobile">
+                                    <span
+                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                        <i class="fa fa-phone text-base"></i>
+                                    </span>
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.secondary_mobile?.length">{{ errors.secondary_mobile.at(0) }}</span>
+                            </label>
+
+
+                            <label class="block h-full" >
+                                <span>Secondary Email</span>
+                                <span class="relative mt-1.5 flex">
+                                    <input
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Email..." type="email" name="secondary_email" v-model="formData.secondary_email">
+                                    <span
+                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                        <i class="fa-regular fa-envelope text-base"></i>
+                                    </span>
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.secondary_email?.length">{{ errors.secondary_email.at(0) }}</span>
+                            </label>
+
                             <input-tom-select
-                                        v-model="formData.role"
-                                        form-label="Role"
-                                        placeholder="Select Role"
-                                        :is-ajax="true"
-                                        request-name="getRoleForMemberForm"
-                                        :ajax-preload="true"
-                                        :selected-item="selected.role_data?.id"
-                                        :selected-options="selected.role_data"
-                                        :error-msg="errors?.role"
-                                    />
-                            <input-tom-select
+                                        class="h-full"
                                         v-model="formData.company_branch"
                                         form-label="Company Branch"
                                         placeholder="Select Branch"
@@ -113,7 +147,7 @@
                                     />
 
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Password</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -127,7 +161,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.password?.length">{{ errors.password.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Confirm Password</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -141,7 +175,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.confirm_password?.length">{{ errors.confirm_password.at(0) }}</span>
                             </label>
-                            <label class="block col-span-2">
+                            <label class="block h-full col-span-2">
                                 <span>Address</span>
                                 <label class="block">
                                     <textarea
@@ -179,6 +213,8 @@ export default {
                 logo: null,
                 mobile: null,
                 email: null,
+                secondary_mobile: null,
+                secondary_email: null,
                 password: null,
                 address: null,
                 company_branch: null,
@@ -223,6 +259,9 @@ export default {
                             .nullable(true)
                             .required('Required')
                             .email( 'Must be a valid email address'),
+                secondary_email: Yup.string()
+                            .nullable(true)
+                            .email( 'Must be a valid email address'),
                 role: Yup.string()
                             .nullable(true)
                             .required('Required'),
@@ -232,6 +271,10 @@ export default {
                 mobile: Yup.string()
                             .nullable(true)
                             .required('Required')
+                            .min( 10, 'Must be 10 digits')
+                            .max( 10, 'Must be 10 digits'),
+                secondary_mobile: Yup.string()
+                            .nullable(true)
                             .min( 10, 'Must be 10 digits')
                             .max( 10, 'Must be 10 digits'),
                 password: Yup.string().nullable( true )
@@ -354,7 +397,6 @@ export default {
                                     ( e ) => {
                                         const err = {};
                                         if( e.inner?.length ){
-                                            console.log(e.inner);
                                             e.inner.forEach( ele => {
                                                 let keyPath = ele.path;
                                                 err[ keyPath ] = [ele.message]

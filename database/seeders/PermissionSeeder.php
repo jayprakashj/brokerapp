@@ -199,6 +199,86 @@ class PermissionSeeder extends Seeder
         ]);
 
 
+
+        Permission::create([
+            'name' => 'Project List',
+            'group_name' => 'Project',
+        ]);
+
+        Permission::create([
+            'name' => 'Only Assigned Project List',
+            'group_name' => 'Project',
+        ]);
+        Permission::create([
+            'name' => 'View Project',
+            'group_name' => 'Project',
+        ]);
+        Permission::create([
+            'name' => 'Add Project',
+            'group_name' => 'Project',
+        ]);
+        Permission::create([
+            'name' => 'Update Project',
+            'group_name' => 'Project',
+        ]);
+        Permission::create([
+            'name' => 'Remove Project',
+            'group_name' => 'Project',
+        ]);
+
+
+        Permission::create([
+            'name' => 'Task List',
+            'group_name' => 'Task',
+        ]);
+
+        Permission::create([
+            'name' => 'Only Assigned Task List',
+            'group_name' => 'Task',
+        ]);
+        Permission::create([
+            'name' => 'View Task',
+            'group_name' => 'Task',
+        ]);
+        Permission::create([
+            'name' => 'Add Task',
+            'group_name' => 'Task',
+        ]);
+        Permission::create([
+            'name' => 'Update Task',
+            'group_name' => 'Task',
+        ]);
+        Permission::create([
+            'name' => 'Remove Task',
+            'group_name' => 'Task',
+        ]);
+
+        Permission::create([
+            'name' => 'Site Visit List',
+            'group_name' => 'Site Visit',
+        ]);
+
+        Permission::create([
+            'name' => 'Only Assigned Site Visit List',
+            'group_name' => 'Site Visit',
+        ]);
+        Permission::create([
+            'name' => 'View Site Visit',
+            'group_name' => 'Site Visit',
+        ]);
+        Permission::create([
+            'name' => 'Add Site Visit',
+            'group_name' => 'Site Visit',
+        ]);
+        Permission::create([
+            'name' => 'Update Site Visit',
+            'group_name' => 'Site Visit',
+        ]);
+        Permission::create([
+            'name' => 'Remove Site Visit',
+            'group_name' => 'Site Visit',
+        ]);
+
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
 

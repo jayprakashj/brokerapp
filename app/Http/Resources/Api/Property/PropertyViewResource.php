@@ -74,7 +74,13 @@ class PropertyViewResource extends JsonResource
             'refer_by_name' => $this->refer_by_name ?? '-',
             'refer_by_email' => $this->refer_by_email ?? '-',
             'refer_by_phone' => $this->refer_by_phone ?? '-',
-            'images' => []
+            'images' => [],
+            'site_visits' => SiteVisitListResource::collection( $this->siteVisits ),
+            'leads' => LeadListResource::collection( $this->latestLeads ),
+            'created_user_name' => $this->createdUser->name  ?? 'N/A',
+            'updated_user_name' => $this->updatedUser->name ?? 'N/A',
+            'created_at_time' => $this->created_at->format('d-m-Y h:i a'),
+            'updated_at_time' => $this->created_at->format('d-m-Y h:i a'),
         ];
 
         if( !is_null( $this->assign_to ) ){

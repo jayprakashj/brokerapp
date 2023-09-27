@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique()->nullable();
             $table->string('mobile')->unique()->nullable();
+            $table->string('secondary_email')->nullable();
+            $table->string('secondary_mobile')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('type', ['individual', 'company'])->default('individual');
@@ -28,6 +30,8 @@ return new class extends Migration
             $table->index('type');
             $table->index('email');
             $table->index('mobile');
+            $table->index('secondary_email');
+            $table->index('secondary_mobile');
             $table->index('email_verified_at');
             $table->index('status');
         });

@@ -8,8 +8,11 @@ use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
+use App\Http\Controllers\Api\SiteVisitController;
+use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 
@@ -256,6 +259,90 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             //                 ->name('delete');
 
         });
+
+        Route::prefix('projects')
+        ->name('project.')
+        ->group( function () {
+
+            Route::get('/lists', [ProjectController::class, 'index'])
+                            ->middleware('permission:Project List|Only Assigned Project List')
+                            ->name('index');
+
+            Route::get('{project}/edit', [ProjectController::class, 'edit'])
+                            ->middleware('permission:Update Project')
+                            ->name('edit');
+
+            Route::get('{project}/view', [ProjectController::class, 'view'])
+                            ->middleware('permission:View Project')
+                            ->name('view');
+
+            Route::post('store', [ProjectController::class, 'store'])
+                            ->middleware('permission:Add Project|Update Project')
+                            ->name('store');
+
+            Route::get('lists/form-select-lists', [ProjectController::class, 'createFormSelectList'])
+                            ->name('create_form_lists');
+
+            Route::get('select-lists/get', [ProjectController::class, 'getProjectForSelectList'])
+                                ->name('get_select_lists');
+            // Route::post('{project}/delete', [ProjectController::class, 'delete'])
+            //                 ->middleware('permission:Remove Project')
+            //                 ->name('delete');
+        });
+
+        Route::prefix('tasks')
+        ->name('task.')
+        ->group( function () {
+
+            Route::get('/lists', [TaskController::class, 'index'])
+                            ->middleware('permission:Task List|Only Assigned Task List')
+                            ->name('index');
+
+            Route::get('{task}/edit', [TaskController::class, 'edit'])
+                            ->middleware('permission:Update Task')
+                            ->name('edit');
+
+            Route::get('{task}/view', [TaskController::class, 'view'])
+                            ->middleware('permission:View Task')
+                            ->name('view');
+
+            Route::post('store', [TaskController::class, 'store'])
+                            ->middleware('permission:Add Task|Update Task')
+                            ->name('store');
+
+            Route::get('statuses/select-lists', [TaskController::class, 'taskStatusSelectList'])
+                            ->name('task_status_select_list');
+            // Route::post('{task}/delete', [TaskController::class, 'delete'])
+            //                 ->middleware('permission:Remove Task')
+            //                 ->name('delete');
+        });
+
+        Route::prefix('site-visits')
+        ->name('site_visit.')
+        ->group( function () {
+
+            Route::get('/lists', [SiteVisitController::class, 'index'])
+                            ->middleware('permission:Site Visit List|Only Assigned Site Visit List')
+                            ->name('index');
+
+            Route::get('{siteVisit}/edit', [SiteVisitController::class, 'edit'])
+                            ->middleware('permission:Update Site Visit')
+                            ->name('edit');
+
+            Route::get('{siteVisit}/view', [SiteVisitController::class, 'view'])
+                            ->middleware('permission:View Site Visit')
+                            ->name('view');
+
+            Route::post('store', [SiteVisitController::class, 'store'])
+                            ->middleware('permission:Add Site Visit|Update Site Visit')
+                            ->name('store');
+            Route::get('lists/form-select-lists', [SiteVisitController::class, 'createFormSelectList'])
+                            ->name('create_form_lists');
+            // Route::post('{siteVisit}/delete', [SiteVisitController::class, 'delete'])
+            //                 ->middleware('permission:Remove Task')
+            //                 ->name('delete');
+        });
+
     });
 
 });

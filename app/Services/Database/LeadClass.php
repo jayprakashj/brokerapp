@@ -21,7 +21,7 @@ class LeadClass {
 
     public function getDefaultCompanyLeads ( $perPage = 24, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
-        $lists = Lead::query()->with(['companyBranch']);
+        $lists = Lead::query()->with(['companyBranch', 'properties', 'projects', 'assignToUser', 'updatedUser']);
 
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignedToAuth();
@@ -70,12 +70,9 @@ class LeadClass {
 
     public function createOrUpdate( Lead $lead, User $user, $request ){
 
-
-
         $lead->title = $request->input('title');
         $lead->contact_id = $this->findOrCreateContact( $user, $request )->id;
         $lead->company_branch_id = $request->input('company_branch');
-        $lead->property_id = $request->input('property');
         $lead->customer_name = $request->input('name');
         $lead->customer_mobile = $request->input('mobile');
         $lead->customer_email = $request->input('email');
@@ -97,6 +94,22 @@ class LeadClass {
             $lead->assigned_date = today();
         }
         $lead->save();
+
+        if( $request->filled('property') ){
+
+            $lead->properties()->sync( $request->input( 'property', [] ) );
+        }else{
+            $lead->properties()->detah();
+
+        }
+
+        if( $request->filled('project') ){
+
+            $lead->projects()->sync( $request->input( 'project', [] ) );
+        }else{
+            $lead->projects()->detah();
+
+        }
 
         if( !$lead->wasRecentlyCreated ){
             $this->leadCommentClass->createWithLeadUpdate( $lead, $user );

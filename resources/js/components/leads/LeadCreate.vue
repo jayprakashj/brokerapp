@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                            <label class="block col-span-2" >
+                            <label class="block h-full col-span-2" >
                                 <span>Title</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -45,7 +45,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.title?.length">{{ errors.title.at(0) }}</span>
                             </label>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Name</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -59,7 +59,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Mobile</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -74,7 +74,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
                             </label>
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Email</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -89,7 +89,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
                             </label>
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>City</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -105,6 +105,7 @@
                             </label>
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.company_branch"
                                         form-label="Company Branch"
                                         placeholder="Select Branch"
@@ -120,18 +121,36 @@
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.property"
                                         form-label="Property"
                                         placeholder="Select Property"
                                         :is-ajax="true"
                                         request-name="propertySelectList"
                                         :ajax-preload="true"
-                                        :selected-item="selected.property_data?.id"
+                                        :is-multiple="true"
+                                        :selected-item="selected.property_data?.map( d => d.id)"
                                         :selected-options="selected.property_data"
                                         :error-msg="errors?.property"
+                                        @itemRemove="removePropertyItem"
                                     />
 
-                            <label class="block" >
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.project"
+                                        form-label="Project"
+                                        placeholder="Select Project"
+                                        :is-multiple="true"
+                                        :is-ajax="true"
+                                        request-name="projectSelectList"
+                                        :ajax-preload="true"
+                                        :selected-item="selected.project_data?.map(d => d.id)"
+                                        :selected-options="selected.project_data"
+                                        :error-msg="errors?.project"
+                                        @itemRemove="removeProjectItem"
+                                    />
+
+                            <label class="block h-full" >
                                 <span>Interest In</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -145,7 +164,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.interest_in?.length">{{ errors.interest_in.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Purpose</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -159,7 +178,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.purpose?.length">{{ errors.purpose.at(0) }}</span>
                             </label>
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Budget</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -175,6 +194,7 @@
                             </label>
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.lead_source"
                                         form-label="Lead Source"
                                         value-field="name"
@@ -186,27 +206,27 @@
                                         :selected-options="formData.lead_source"
                                         :error-msg="errors?.lead_source"
                                     />
-                            <label class="block col-span-2">
+                            <label class="block h-full col-span-2">
                                 <span>Keywords</span>
                                 <label class="block">
                                     <textarea
                                     rows="4"
                                     placeholder="Keywords"
                                     v-model="formData.keywords"
-                                    class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                    class="form-textarea w-full rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                     ></textarea>
                                 </label>
 
                                 <span class="text-tiny+ text-error" v-if="errors?.keywords?.length">{{ errors.keywords.at(0) }}</span>
                             </label>
-                            <label class="block col-span-2">
+                            <label class="block h-full col-span-2">
                                 <span>Remark</span>
                                 <label class="block">
                                     <textarea
                                     rows="4"
                                     placeholder="Remark"
                                     v-model="formData.remark"
-                                    class="form-textarea w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                    class="form-textarea w-full rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                     ></textarea>
                                 </label>
 
@@ -214,6 +234,7 @@
                             </label>
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.lead_status"
                                         value-field="name"
                                         form-label="Lead Status"
@@ -227,6 +248,7 @@
                                     />
 
                             <input-tom-select
+                                        class="h-full"
                                         v-model="formData.assigned_to"
                                         form-label="Assign To"
                                         placeholder="Select Assign To"
@@ -238,7 +260,7 @@
                                         :error-msg="errors?.assigned_to"
                                     />
 
-                            <label class="block" >
+                            <label class="block h-full" >
                                 <span>Followup Date </span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -386,7 +408,8 @@ export default {
                 lead_status: null,
                 remark: null,
                 keywords: null,
-                property: null,
+                property: [],
+                project: [],
             },
             rolesList: [],
             loading:{
@@ -398,7 +421,8 @@ export default {
                 lead_status: {},
                 assigned_to: {},
                 company_branch_data: {},
-                property_data: {},
+                property_data: [],
+                project_data: [],
             },
             selectedOptions:{
                 lead_source: [],
@@ -496,6 +520,7 @@ export default {
                                     this.selected.assigned_to = this.formData.assigned_to_data;
                                     this.selected.company_branch_data = this.formData.company_branch_data;
                                     this.selected.property_data = this.formData.property_data;
+                                    this.selected.project_data = this.formData.project_data;
                                 }
                             },
                             (err) => {
@@ -549,7 +574,6 @@ export default {
                                     ( e ) => {
                                         const err = {};
                                         if( e.inner?.length ){
-                                            console.log(e.inner);
                                             e.inner.forEach( ele => {
                                                 let keyPath = ele.path;
                                                 err[ keyPath ] = [ele.message]
@@ -590,6 +614,26 @@ export default {
                             }
                         )
         },
+        removePropertyItem( item ){
+            const findIdx = this.formData.property.findIndex( d => d == item );
+            const selectedIdx = this.selected.property_data.findIndex( d => d.id == item );
+            if( findIdx !== -1 ){
+                this.formData.property.splice( findIdx, 1 );
+            }
+            if( selectedIdx !== -1 ){
+                this.selected.property_data.splice( selectedIdx, 1 );
+            }
+        },
+        removeProjectItem( item ){
+            const findIdx = this.formData.project.findIndex( d => d == item );
+            const selectedIdx = this.selected.project_data.findIndex( d => d.id == item );
+            if( findIdx !== -1 ){
+                this.formData.project.splice( findIdx, 1 );
+            }
+            if( selectedIdx !== -1 ){
+                this.selected.project_data.splice( selectedIdx, 1 );
+            }
+        }
     }
 }
 </script>

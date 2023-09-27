@@ -21,6 +21,8 @@ class MemberEditResource extends JsonResource
             'email' => $this->email,
             'mobile' => $this->memberUser->mobile,
             'address' => $this->memberUser->address,
+            'secondary_mobile' => $this->memberUser->secondary_mobile,
+            'secondary_email' => $this->memberUser->secondary_email,
             'role' => $this->role_id,
             'logo' => $this->memberUser->getLogoMediaId(),
             'logo_url' => $this->memberUser->getLogoUrl(),

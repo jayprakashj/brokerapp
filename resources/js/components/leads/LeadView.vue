@@ -70,11 +70,37 @@
                     </div>
                     <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                     <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
-                        <label class="block" >
-                            <span>Proeprty</span>
+                        <label class="block h-full" >
+                            <span>Property</span>
 
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.property_name }}
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300 gap-2 flex mt-3" v-if="formData?.property_names?.length">
+                                <div
+                                    v-for="(item, idx) in formData.property_names"
+                                    :key="'property_name_' + idx"
+                                    class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light"
+                                >
+                                    {{ item }}
+                                </div>
+                            </p>
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300 pt-3" v-else>
+                                N/A
+                            </p>
+                        </label>
+                        <label class="block h-full" >
+                            <span>Project</span>
+
+
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300 gap-2 flex mt-3" v-if="formData?.project_names?.length">
+                                <div
+                                    v-for="(item, idx) in formData.project_names"
+                                    :key="'project_name_' + idx"
+                                    class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light"
+                                >
+                                    {{ item }}
+                                </div>
+                            </p>
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300 pt-3" v-else>
+                                N/A
                             </p>
                         </label>
                         <label class="block" >

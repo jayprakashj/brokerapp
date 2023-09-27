@@ -172,6 +172,8 @@ class UserClass {
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->mobile = $request->input('mobile');
+        $user->secondary_email = $request->input('secondary_email');
+        $user->secondary_mobile = $request->input('secondary_mobile');
         $user->address = $request->input('address');
         if( $request->filled( 'password') ){
             $user->password = $request->input('password');

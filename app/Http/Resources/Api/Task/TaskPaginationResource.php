@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Resources\Api\Task;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class TaskPaginationResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        $data = [
+            'current_page' => $this->currentPage(),
+            'data' => TaskListResource::collection( $this->items() ),
+            'per_page' => $this->perPage(),
+            'total_records' => $this->total(),
+        ];
+
+        return $data;
+    }
+}

@@ -22,7 +22,15 @@ import PropertyView from  '@/components/property/PropertyView.vue'
 import PropertyDocumentList from  '@/components/property/PropertyDocumentList.vue'
 import DocumentList from  '@/components/documents/DocumentList.vue'
 import DocumentCreate from  '@/components/documents/DocumentCreate.vue'
-import ProjectList from  '@/components/projects/ProjectList.vue'
+import ProjectList from  '@/components/project/ProjectList.vue'
+import ProjectCreate from  '@/components/project/ProjectCreate.vue'
+import ProjectView from  '@/components/project/ProjectView.vue'
+import TaskList from  '@/components/tasks/TaskList.vue'
+import TaskCreate from  '@/components/tasks/TaskCreate.vue'
+import TaskView from  '@/components/tasks/TaskView.vue'
+import SiteVisitList from  '@/components/site_visits/SiteVisitList.vue'
+import SiteVisitCreate from  '@/components/site_visits/SiteVisitCreate.vue'
+import SiteVisitView from  '@/components/site_visits/SiteVisitView.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -305,13 +313,112 @@ const routes = [
         }
     },
     {
-        path: '/project-visit',
+        path: '/project',
         name: 'project_lists',
         component: ProjectList,
         meta:{
-            title: 'Project Visits',
-            // permissions: [ ]
+            title: 'Project Management',
+            permissions: [ permission.PROJECT_LIST, permission.ONLY_ASSIGNED_PROJECT_LIST ]
         },
+    },
+    {
+        path: '/project/create',
+        name: 'project_create',
+        component: ProjectCreate,
+        meta: {
+            title: 'Project Create',
+            permissions: [ permission.ADD_PROJECT ]
+        }
+    },
+    {
+        path: '/project/edit/:id',
+        name: 'project_edit',
+        component: ProjectCreate,
+        meta: {
+            title: 'Project Edit',
+            permissions: [ permission.UPDATE_PROJECT ]
+        }
+    },
+    {
+        path: '/project/view/:id',
+        name: 'project_view',
+        component: ProjectView,
+        meta: {
+            title: 'Project View',
+            permissions: [ permission.VIEW_PROJECT ]
+        }
+    },
+    {
+        path: '/task',
+        name: 'task_lists',
+        component: TaskList,
+        meta:{
+            title: 'Task Management',
+            permissions: [ permission.TASK_LIST, permission.ONLY_ASSIGNED_TASK_LIST ]
+        },
+    },
+    {
+        path: '/task/create',
+        name: 'task_create',
+        component: TaskCreate,
+        meta: {
+            title: 'Task Create',
+            permissions: [ permission.ADD_TASK ]
+        }
+    },
+    {
+        path: '/task/edit/:id',
+        name: 'task_edit',
+        component: TaskCreate,
+        meta: {
+            title: 'Task Edit',
+            permissions: [ permission.UPDATE_TASK ]
+        }
+    },
+    {
+        path: '/task/view/:id',
+        name: 'task_view',
+        component: TaskView,
+        meta: {
+            title: 'Task View',
+            permissions: [ permission.VIEW_TASK ]
+        }
+    },
+    {
+        path: '/site-visit',
+        name: 'site_visit_lists',
+        component: SiteVisitList,
+        meta:{
+            title: 'Site Visit Management',
+            permissions: [ permission.SITE_VISIT_LIST, permission.ONLY_ASSIGNED_SITE_VISIT_LIST ]
+        },
+    },
+    {
+        path: '/site-visit/create',
+        name: 'site_visit_create',
+        component: SiteVisitCreate,
+        meta: {
+            title: 'Site Visit Create',
+            permissions: [ permission.ADD_SITE_VISIT ]
+        }
+    },
+    {
+        path: '/site-visit/edit/:id',
+        name: 'site_visit_edit',
+        component: SiteVisitCreate,
+        meta: {
+            title: 'Site Visit Edit',
+            permissions: [ permission.UPDATE_SITE_VISIT ]
+        }
+    },
+    {
+        path: '/site-visit/view/:id',
+        name: 'site_visit_view',
+        component: SiteVisitView,
+        meta: {
+            title: 'Site Visit View',
+            permissions: [ permission.VIEW_SITE_VISIT ]
+        }
     },
     {
         path: '/401',

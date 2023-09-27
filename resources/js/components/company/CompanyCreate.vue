@@ -45,7 +45,7 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 items-center">
-                            <label class="block">
+                            <label class="block h-full">
                                 <span>Company name</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -59,7 +59,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.company_name?.length">{{ errors.company_name.at(0) }}</span>
                             </label>
-                            <label class="block">
+                            <label class="block h-full">
                                 <span>PAN No.</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -69,7 +69,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.pan_no?.length">{{ errors.pan_no.at(0) }}</span>
                             </label>
-                            <label class="block">
+                            <label class="block h-full">
                                 <span>GST No.</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -79,7 +79,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.gst_no?.length">{{ errors.gst_no.at(0) }}</span>
                             </label>
-                            <label class="block">
+                            <label class="block h-full">
                                 <span>Email</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -93,7 +93,7 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
                             </label>
-                            <label class="block">
+                            <label class="block h-full">
                                 <span>Mobile</span>
                                 <span class="relative mt-1.5 flex">
                                     <input
@@ -109,7 +109,7 @@
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
                             </label>
 
-                            <label class="block">
+                            <label class="block h-full">
                                 <span>Address</span>
                                 <label class="block">
                                     <textarea

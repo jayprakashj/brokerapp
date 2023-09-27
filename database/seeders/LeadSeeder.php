@@ -10,6 +10,7 @@ use App\Models\Lead;
 use App\Models\LeadComment;
 use App\Models\LeadSource;
 use App\Models\LeadStatus;
+use App\Models\Project;
 use App\Models\Property;
 use App\Models\Scopes\CompanyIdScope;
 use Faker\Generator as Faker;
@@ -33,6 +34,7 @@ class LeadSeeder extends Seeder
         $leadStatus = LeadStatus::withoutGlobalScope(CompanyIdScope::class)->get();
         $companyBranches = CompanyBranch::withoutGlobalScope(CompanyIdScope::class)->get();
         $properties = Property::withoutGlobalScope(CompanyIdScope::class)->get();
+        $projects = Project::withoutGlobalScope(CompanyIdScope::class)->get();
         $contacts = Contact::withoutGlobalScope(CompanyIdScope::class)->get();
         $users = User::with('defaultCompany')->typeCompany()->get();
         for($i = 0; $i < 8; $i++){
@@ -43,7 +45,6 @@ class LeadSeeder extends Seeder
             $obj->created_by = $item->id;
             $obj->updated_by = $item->id;
             $obj->company_id = $item->defaultCompany->id;
-            $obj->property_id = $properties->random()->id;
             $obj->title = $faker->text( 10 );
             $obj->contact_id = $contactObj->id;
             $obj->company_branch_id = $companyBranches->random()->id;
@@ -65,6 +66,9 @@ class LeadSeeder extends Seeder
             $obj->followup_date = now()->addDay( $faker->randomDigit() )->format('Y-m-d');
             $obj->assigned_date = today();
             $obj->save();
+
+            $obj->properties()->sync( $properties->random( 3 )->pluck('id') );
+            $obj->projects()->sync( $projects->random( 3 )->pluck('id') );
 
             $leadComment = new LeadComment();
             $leadComment->user_id = $item->id;

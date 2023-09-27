@@ -58,8 +58,12 @@ class Lead extends Model
         return $this->belongsTo( CompanyBranch::class, 'company_branch_id', 'id');
     }
 
-    public function property (){
-        return $this->belongsTo( Property::class, 'property_id', 'id');
+    public function properties (){
+        return $this->belongsToMany( Property::class, 'lead_property_pivot', 'lead_id', 'property_id');
+    }
+
+    public function projects (){
+        return $this->belongsToMany( Project::class, 'lead_project_pivot', 'lead_id', 'project_id');
     }
 
     public function comments (){
@@ -68,6 +72,10 @@ class Lead extends Model
 
     public function latestComments (){
         return $this->comments()->latest();
+    }
+
+    public function lastComment (){
+        return $this->hasOne( LeadComment::class, 'lead_id', 'id')->latest();
     }
 
     public function scopeAssignedToAuth ( $q, $boolean = 'and' ){
