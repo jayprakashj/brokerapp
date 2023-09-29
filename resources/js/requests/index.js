@@ -185,6 +185,14 @@ const apis = {
         return http.get('tasks/statuses/select-lists', config);
 
     },
+    getDashboardData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('data/dashboard', config);
+
+    },
     getCompanyList: ( params) => {
         let config = {};
         if( params ) {

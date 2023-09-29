@@ -45,9 +45,18 @@ class SiteVisit extends Model
         return $this->belongsTo( User::class, 'assign_to', 'id');
     }
 
+
+    public function scopeAssignToAuth ( $q, $boolean = 'and' ){
+        return $q->where('assign_to', '=', auth()->id(), $boolean );
+    }
+
+    public function scopeCreatedByAuth ( $q, $boolean = 'and' ){
+        return $q->where('created_by','=', auth()->id(), $boolean );
+    }
+
     public function scopeCreatedByOrAssignedToAuth ( $q ){
         return $q->where(function( $whereQry ){
-            $whereQry->assignedToAuth( 'or' )
+            $whereQry->assignToAuth( 'or' )
                         ->createdByAuth( 'or' );
         });
     }

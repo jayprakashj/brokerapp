@@ -38,6 +38,13 @@ class SiteVisitViewResource extends JsonResource
         if( !is_null( $this->assignToUser ) ){
             $data['assign_user'] = $this->assignToUser->name;
         }
+        if( !is_null( $this->project ) ){
+
+            $data['project_data'] = $this->project->only(['id','title','rera_reg_no','project_no','address','city','locality','landmark','building']);
+        }
+        if( !is_null( $this->property ) ){
+            $data['property_data'] = $this->property->only(['id','name','building_name','unit_no','property_type','address','city','locality']);
+        }
         return $data;
     }
 }
