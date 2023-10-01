@@ -7,8 +7,8 @@ use App\Models\Property;
 use App\Models\PropertyFacingList;
 use App\Models\PropertyFurnishList;
 use App\Models\PropertyObligationList;
+use App\Models\PropertySubTypeList;
 use App\Models\PropertyTransactionList;
-use App\Models\PropertyTypeList;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
@@ -54,7 +54,7 @@ class PropertyClass {
         $property->company_branch_id = $request->input('company_branch');
         $property->assign_to = $request->input('assign_to');
 
-        $property->property_type = PropertyTypeList::whereName( $request->input('property_type') )->first()->name;
+        $property->property_type = PropertySubTypeList::whereName( $request->input('property_type') )->first()->name;
         $property->property_transaction = PropertyTransactionList::whereName( $request->input('property_transaction') )->first()->name;
         $property->property_furnishing = PropertyFurnishList::whereName( $request->input('property_furnishing') )->first()->name ?? null;
         $property->property_facing = PropertyFacingList::whereName( $request->input('property_facing') )->first()->name ?? null;

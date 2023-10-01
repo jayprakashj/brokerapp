@@ -105,6 +105,9 @@ export default {
         options( nv ){
             this.refreshOptions();
         },
+        tomOptions( nv ){
+            this.init();
+        },
         selectedItem ( nv ) {
             this.setSelectedValues()
         },
@@ -122,6 +125,9 @@ export default {
             )
         },
         initTomSelect(){
+            if( this.tomSelectInstance ){
+                this.tomSelectInstance.destroy();
+            }
             let renderOptions;
             var defaultOptions = {
                 valueField: this.valueField,

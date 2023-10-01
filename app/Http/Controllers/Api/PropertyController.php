@@ -12,6 +12,7 @@ use App\Http\Resources\Api\Property\PropertyFurnishListForSelectList;
 use App\Http\Resources\Api\Property\PropertyImageTypeListForSelectList;
 use App\Http\Resources\Api\Property\PropertyObligationListForSelectList;
 use App\Http\Resources\Api\Property\PropertyPaginationResource;
+use App\Http\Resources\Api\Property\PropertySubTypeListResource;
 use App\Http\Resources\Api\Property\PropertyTransactionListForSelectList;
 use App\Http\Resources\Api\Property\PropertyTypeListForSelectList;
 use App\Http\Resources\Api\Property\PropertyViewResource;
@@ -21,6 +22,7 @@ use App\Models\PropertyFacingList;
 use App\Models\PropertyFurnishList;
 use App\Models\PropertyImageTypeList;
 use App\Models\PropertyObligationList;
+use App\Models\PropertySubTypeList;
 use App\Models\PropertyTransactionList;
 use App\Models\PropertyTypeList;
 use App\Services\Database\PropertyClass;
@@ -110,7 +112,8 @@ class PropertyController extends Controller
 
 
     public function createFormSelectList ( Request $request ){
-        $propertyTypes = PropertyTypeList::select('id', 'name')->get();
+        $propertyTypes = PropertyTypeList::select('id', 'name')->orderBy('name')->get();
+        $propertySubTypes = PropertySubTypeList::select('id', 'property_type_id', 'name')->get();
         $propertyTransactions = PropertyTransactionList::select('id', 'name')->get();
         $propertyFurnishes = PropertyFurnishList::select('id', 'name')->get();
         $propertyFacingList = PropertyFacingList::select('id', 'name')->get();
@@ -119,6 +122,7 @@ class PropertyController extends Controller
 
         $data = [
             'property_types' => PropertyTypeListForSelectList::collection( $propertyTypes ),
+            'property_sub_types' => PropertySubTypeListResource::collection($propertySubTypes),
             'property_transactions' => PropertyTransactionListForSelectList::collection( $propertyTransactions ),
             'property_furnishes' => PropertyFurnishListForSelectList::collection( $propertyFurnishes ),
             'property_facing_list' => PropertyFacingListForSelectList::collection( $propertyFacingList ),
