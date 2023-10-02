@@ -18,52 +18,57 @@
     <div class="col-span-12">
         <div >
             <div class=" py-3" v-show="showFilter">
-                <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
-                    <label class="block">
-                        <span>Role name:</span>
-                        <div class="relative mt-1.5 flex">
-                            <input
-                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                placeholder="Enter Role Name" type="text" v-model="filter.name">
-                        </div>
-                    </label>
+                <form @submit.prevent="applyfilter">
+                    <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
+                        <label class="block">
+                            <span>Role name:</span>
+                            <div class="relative mt-1.5 flex">
+                                <input
+                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                    placeholder="Enter Role Name" type="text" v-model="filter.name">
+                            </div>
+                        </label>
 
-                    <input-tom-select
-                            class="h-full"
-                            v-model="filter.permissions"
-                            form-label="Permission:"
-                            placeholder="Select Permissions"
-                            :is-multiple="true"
-                            :options="filterOptions.permissions"
-                            :selected-item="filter.permissions?.map(d => d.id)"
-                        />
-                    <input-tom-select
-                            class="h-full"
-                            v-model="filter.member"
-                            form-label="By Member:"
-                            placeholder="Select"
-                            :options="filterOptions.members"
-                            :selected-item="filter.member"
-                        />
-                </div>
-                <div class="mt-4 space-x-2 text-right ">
-                    <button
-                        @click="showFilter = false"
-                        class="btn font-medium text-slate-700 hover:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-100 dark:hover:bg-navy-300/20 dark:active:bg-navy-300/25">
-                        Close
-                    </button>
+                        <input-tom-select
+                                class="h-full"
+                                v-model="filter.permissions"
+                                form-label="Permission:"
+                                placeholder="Select Permissions"
+                                :is-multiple="true"
+                                :options="filterOptions.permissions"
+                                :selected-item="filter.permissions?.map(d => d.id)"
+                            />
+                        <input-tom-select
+                                class="h-full"
+                                v-model="filter.member"
+                                form-label="By Member:"
+                                placeholder="Select"
+                                :options="filterOptions.members"
+                                :selected-item="filter.member"
+                            />
+                    </div>
+                    <div class="mt-4 space-x-2 text-right ">
+                        <button
+                            type="button"
+                            @click="showFilter = false"
+                            class="btn font-medium text-slate-700 hover:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-100 dark:hover:bg-navy-300/20 dark:active:bg-navy-300/25">
+                            Close
+                        </button>
 
-                    <button
-                        class="btn bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90" @click="applyFilter">
-                        Apply
-                    </button>
-                    <button
-                        class="btn space-x-2 rounded-full bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90" @click="resetFilter"
-                    >
-                        <i class="fa fa-refresh"></i>
-                        <span>Reset</span>
-                    </button>
-                </div>
+                        <button
+                            type="submit"
+                            class="btn bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90" @click="applyFilter">
+                            Apply
+                        </button>
+                        <button
+                            type="button"
+                            class="btn space-x-2 rounded-full bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90" @click="resetFilter"
+                        >
+                            <i class="fa fa-refresh"></i>
+                            <span>Reset</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="card mt-3">

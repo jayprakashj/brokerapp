@@ -17,74 +17,79 @@
     <div>
         <div >
             <div class=" py-3" v-show="showFilter">
-                <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
-                    <label class="block">
-                        <span>Name:</span>
-                        <div class="relative mt-1.5 flex">
-                            <input
-                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                placeholder="Enter Name" type="text" v-model="filter.name">
-                        </div>
-                    </label>
-                    <input-tom-select
-                            class="h-full"
-                            v-model="filter.role"
-                            form-label="By Role:"
-                            placeholder="Select"
-                            :options="filterOptions.roles"
-                            :selected-item="filter.role"
-                        />
-                    <input-tom-select
-                            class="h-full"
-                            v-model="filter.company_branch"
-                            form-label="By Company Branch:"
-                            placeholder="Select"
-                            :options="filterOptions.company_branches"
-                            :selected-item="filter.company_branch"
-                        />
-                    <label class="block">
-                        <span>Mobile:</span>
-                        <div class="relative mt-1.5 flex">
-                            <input
-                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                placeholder="Enter Mobile" type="text" v-model="filter.mobile">
-                                <span
-                                    class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                    <i class="fa fa-phone text-base"></i>
-                                </span>
-                        </div>
-                    </label>
-                    <label class="block">
-                        <span>Email:</span>
-                        <div class="relative mt-1.5 flex">
-                            <input
-                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                placeholder="Enter Email" type="text" v-model="filter.email">
-                                <span
-                                    class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                    <i class="fa fa-envelope text-base"></i>
-                                </span>
-                        </div>
-                    </label>
-                </div>
-                <div class="mt-4 space-x-2 text-right ">
-                    <button
-                        @click="showFilter = false"
-                        class="btn font-medium text-slate-700 hover:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-100 dark:hover:bg-navy-300/20 dark:active:bg-navy-300/25">
-                        Close
-                    </button>
+                <form @submit.prevent="applyfilter">
+                    <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
+                        <label class="block">
+                            <span>Name:</span>
+                            <div class="relative mt-1.5 flex">
+                                <input
+                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                    placeholder="Enter Name" type="text" v-model="filter.name">
+                            </div>
+                        </label>
+                        <input-tom-select
+                                class="h-full"
+                                v-model="filter.role"
+                                form-label="By Role:"
+                                placeholder="Select"
+                                :options="filterOptions.roles"
+                                :selected-item="filter.role"
+                            />
+                        <input-tom-select
+                                class="h-full"
+                                v-model="filter.company_branch"
+                                form-label="By Company Branch:"
+                                placeholder="Select"
+                                :options="filterOptions.company_branches"
+                                :selected-item="filter.company_branch"
+                            />
+                        <label class="block">
+                            <span>Mobile:</span>
+                            <div class="relative mt-1.5 flex">
+                                <input
+                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                    placeholder="Enter Mobile" type="text" v-model="filter.mobile">
+                                    <span
+                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                        <i class="fa fa-phone text-base"></i>
+                                    </span>
+                            </div>
+                        </label>
+                        <label class="block">
+                            <span>Email:</span>
+                            <div class="relative mt-1.5 flex">
+                                <input
+                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                    placeholder="Enter Email" type="text" v-model="filter.email">
+                                    <span
+                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                        <i class="fa fa-envelope text-base"></i>
+                                    </span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="mt-4 space-x-2 text-right ">
+                        <button
+                            type="button"
+                            @click="showFilter = false"
+                            class="btn font-medium text-slate-700 hover:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-100 dark:hover:bg-navy-300/20 dark:active:bg-navy-300/25">
+                            Close
+                        </button>
 
-                    <button
-                        class="btn bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90" @click="applyFilter">
-                        Apply
-                    </button>
-                    <button
-                        class="btn space-x-2 rounded-full bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90" @click="resetFilter"
-                    >
-                        <i class="fa fa-refresh"></i>
-                        <span>Reset</span>
-                    </button>
-                </div>
+                        <button
+                            type="submit"
+                            class="btn bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90" @click="applyFilter">
+                            Apply
+                        </button>
+                        <button
+                            type="button"
+                            class="btn space-x-2 rounded-full bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90" @click="resetFilter"
+                        >
+                            <i class="fa fa-refresh"></i>
+                            <span>Reset</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="card mt-3">
