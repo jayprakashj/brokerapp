@@ -241,15 +241,22 @@ export default {
             if(this.selectedItem ){
 
                 if( Array.isArray( this.selectedItem ) ){
-                    this.selectedItem.map( d => {
+                    if( this.selectedItem?.length ){
 
-                        this.tomSelectInstance.addItem( d );
-                    })
+                        this.selectedItem.map( d => {
+
+                            this.tomSelectInstance.addItem( d );
+                        })
+                    }else{
+                        this.tomSelectInstance.clear();
+                    }
 
                 }else{
                     this.tomSelectInstance.addItem( this.selectedItem  );
 
                 }
+            }else{
+                this.tomSelectInstance.clear();
             }
         }
     }

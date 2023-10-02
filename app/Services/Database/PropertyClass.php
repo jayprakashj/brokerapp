@@ -19,13 +19,15 @@ class PropertyClass {
     {
     }
 
-    public function getDefaultCompanyProperties ( $perPage = 24, $onlyAssignedTo = false) {
+    public function getDefaultCompanyProperties ( $request, $onlyAssignedTo = false) {
 
-        $lists = Property::query()->with(['company','companyBranch']);
+        $lists = Property::query()->with(['company','companyBranch', 'assignToUser', 'updatedUser']);
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignToAuth();
         }
-        $lists = $lists->paginate( $perPage );
+        $lists = $lists->customFilter( $request->input('filter') )
+                        ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                        ->paginate( $request->input('per_page', 24 ) );
 
         return $lists;
     }

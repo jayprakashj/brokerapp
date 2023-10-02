@@ -339,6 +339,14 @@ const apis = {
         return http.get('properties/lists', config);
 
     },
+    propertyFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('properties/filter-data', config);
+
+    },
     getPropertyDetail: ( id ) => {
         return http.get(`properties/${id}/edit` );
     },

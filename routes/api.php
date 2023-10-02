@@ -229,6 +229,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             Route::get('select-lists/get', [PropertyController::class, 'getPropertyForSelectList'])
                             ->name('get_select_lists');
 
+            Route::get('filter-data', [PropertyController::class, 'getPropertyFilterData'])
+                            ->name('filter_data');
+
             // Route::post('{Property}/delete', [PropertyController::class, 'delete'])
             //                 ->middleware('permission:Remove Property')
             //                 ->name('delete');

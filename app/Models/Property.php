@@ -8,6 +8,7 @@ use App\Models\Relations\OwnerUserRelation;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -84,6 +85,156 @@ class Property extends Model implements HasMedia
 
     public function scopeCreatedByAuth ( $q, $boolean = 'and' ){
         return $q->where('created_by','=', auth()->id(), $boolean );
+    }
+
+    public function scopeCustomSort( $q, $sortColumn, $sortOrder = 'asc' ){
+        if( !empty( $sortColumn ) ){
+            switch( $sortColumn ){
+                case 'name':
+                    $q->orderBy( 'name', $sortOrder);
+                    break;
+                case 'company_name':
+                    $q->orderBy( Company::select('name')->whereColumn('id', 'properties.company_id')->limit(1) , $sortOrder);
+                    break;
+                case 'company_branch':
+                    $q->orderBy( CompanyBranch::select('name')->whereColumn('id', 'properties.company_branch_id')->limit(1) , $sortOrder);
+                    break;
+                case 'assign_to':
+                    $q->orderBy( User::select('name')->whereColumn('id', 'properties.assign_to')->limit(1) , $sortOrder);
+                    break;
+                case 'updated_by':
+                    $q->orderBy( User::select('name')->whereColumn('id', 'properties.updated_by')->limit(1) , $sortOrder);
+                    break;
+                case 'updated_at':
+                    $q->orderBy( 'updated_at', $sortOrder);
+                    break;
+                case 'city':
+                    $q->orderBy( 'city' , $sortOrder);
+                    break;
+                case 'locality':
+                    $q->orderBy( 'locality' , $sortOrder);
+                    break;
+                case 'property_type':
+                    $q->orderBy( 'property_type' , $sortOrder);
+                    break;
+                case 'property_transaction':
+                    $q->orderBy( 'property_transaction' , $sortOrder);
+                    break;
+                case 'is_verified':
+                    $q->orderBy( 'is_verified' , $sortOrder);
+                    break;
+            }
+        }
+
+        return $q;
+    }
+
+    public function scopeFilterPropertyNameLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('name', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterCityLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('city', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterLocalityLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('locality', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterPropertyType ( $q, $value, $boolean = 'and' ){
+        return $q->where('property_type', '=', $value, $boolean);
+    }
+
+    public function scopeFilterPropertyTransaction ( $q, $value, $boolean = 'and' ){
+        return $q->where('property_transaction', '=',$value, $boolean);
+    }
+
+    public function scopeFilterIsVerified ( $q, $value, $boolean = 'and' ){
+        return $q->where('is_verified', '=', $value, $boolean);
+    }
+
+    public function scopeFilterCompanyBranch ( $q, $value, $boolean = 'and' ){
+        return $q->where('company_branch_id', '=', $value, $boolean);
+    }
+
+    public function scopeFilterAssignTo ( $q, $value, $boolean = 'and' ){
+        return $q->where('assign_to', '=', $value, $boolean);
+    }
+
+    public function scopeFilterUpdatedBy ( $q, $value, $boolean = 'and' ){
+        return $q->where('updated_by', '=', $value, $boolean);
+    }
+
+    public function scopeFilterDate ( $q, $column, $value ){
+        if( !empty( $value ) && is_array( $value ) ){
+            if( is_array( $value ) ){
+                if( count( $value ) == 2 ){
+                    return $q->whereBetween( DB::Raw( 'DATE('.$column.')'), $value);
+                }
+                if( count( $value ) == 1 ){
+                    return $q->whereDate( $column, $value);
+                }
+
+            }else{
+
+                return $q->whereDate( $column, $value);
+            }
+        }
+        return $q;
+    }
+
+    // public function scopeFilterCompanyBranch ( $q, $value, $boolean = 'and' ){
+    //     return $q->{$boolean == 'or' ? 'whereRelation' : 'orWhereRelation'}('companyBranch', 'id', '=', $value);
+    // }
+
+    public function scopeCustomFilter( $q, $filter ){
+
+        if( !empty( $filter ) ){
+            $propertyName = data_get( $filter, 'name' );
+            $companyBranch = data_get( $filter, 'company_branch' );
+            $city = data_get( $filter, 'city' );
+            $locality = data_get( $filter, 'locality' );
+            $propertyType = data_get( $filter, 'property_type' );
+            $propertyTransaction = data_get( $filter, 'property_transaction' );
+            $isVerified = data_get( $filter, 'is_verified' );
+            $assignTo = data_get( $filter, 'assign_to' );
+            $updatedBy = data_get( $filter, 'updated_by' );
+            $updatedAt = data_get( $filter, 'updated_at' );
+
+            if( !empty( $propertyName ) ){
+                $q->filterPropertyNameLike( $propertyName );
+            }
+            if( !empty( $companyBranch ) ){
+                $q->filterCompanyBranchLike( $companyBranch );
+            }
+            if( !empty( $city ) ){
+                $q->filterCityLike( $city );
+            }
+            if( !empty( $locality ) ){
+                $q->filterLocalityLike( $locality );
+            }
+            if( !empty( $propertyType ) ){
+                $q->filterPropertyType( $propertyType );
+            }
+            if( !empty( $propertyTransaction ) ){
+                $q->filterPropertyTransaction( $propertyTransaction );
+            }
+            if( !is_null( $isVerified ) ){
+                $q->filterIsVerified( $isVerified );
+            }
+            if( !is_null( $assignTo ) ){
+                $q->filterAssignTo( $assignTo );
+            }
+            if( !is_null( $updatedBy ) ){
+                $q->filterUpdatedBy( $updatedBy );
+            }
+            if( !is_null( $updatedAt ) ){
+                $dt = explode(' to ', $updatedAt);
+                $q->filterDate( 'updated_at',$dt );
+            }
+        }
+
+        return $q;
     }
 
     public function scopeCreatedByOrAssignToAuth ( $q ){

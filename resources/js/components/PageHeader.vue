@@ -53,6 +53,7 @@
             </li>
         </ul>
     </template>
+    <slot name="actionContainer"></slot>
     <div class="flex items-center space-x-2" v-if="searchEnabled || filterEnabled">
       <label class="relative hidden sm:flex" v-if="searchEnabled">
         <input
