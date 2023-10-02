@@ -36,6 +36,7 @@
                         form-label="Company Branch:"
                         placeholder="Select Branch"
                         :options="filterOptions.company_branches"
+                        :selected-item="filter.company_branch"
                     />
                     <label class="block">
                         <span>City:</span>
