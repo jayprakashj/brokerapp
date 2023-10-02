@@ -365,15 +365,9 @@ export default {
         resetFilter(){
             this.filter = {
                 name: null,
-                company_branch: null,
-                city: null,
-                locality: null,
-                property_type: null,
-                property_transaction: null,
-                is_verified: null,
-                assign_to: null,
-                updated_by: null,
-                updated_at: null,
+                mobile: null,
+                email: null,
+                city: null
             };
             this.resetAndLoadList();
         }
