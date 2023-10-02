@@ -11,7 +11,7 @@ class CompanyBranchClass {
         $branches = CompanyBranch::with(['company', 'updatedUser'])
                             ->customFilter( $request->input('filter') )
                             ->customSort( $request->input('sort_by'), $request->input('sort_order'))
-                            ->paginate( $request->input('per_page', 24 ) );
+                            ->paginate( $request->input('per_page', config('app.per_page') ) );
         return $branches;
     }
 
