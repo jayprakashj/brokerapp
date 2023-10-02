@@ -954,7 +954,6 @@ export default {
                     optgroupField: 'property_type_id',
                     render:{
                         optgroup_header: ( data, escape ) => {
-                            console.log('optgroup_header', data.label);
                             return '<div class="border-gray-700 p-2 font-bold text-primary border-b mb-1">' + escape(data.label) + '</div>';
                         }
                     }
