@@ -24,6 +24,8 @@ class BranchListResource extends JsonResource
             'address' => $this->address,
             'city' => $this->city,
             'state' => $this->state,
+            'updated_by' => $this->updatedUser->name ?? 'N/A',
+            'updated_at_time' => $this->updated_at->format('d-m-Y h:i a'),
 
         ];
 

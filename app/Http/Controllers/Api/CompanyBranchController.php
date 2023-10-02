@@ -21,7 +21,7 @@ class CompanyBranchController extends Controller
 
     public function index ( Request $request ) {
 
-        $branches = $this->companyBranchClass->getDefaultCompanyBranches( $request->input('per_page', 24 ));
+        $branches = $this->companyBranchClass->getDefaultCompanyBranches( $request );
         return new BranchPaginationResource( $branches );
     }
 

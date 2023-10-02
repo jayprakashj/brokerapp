@@ -7,8 +7,11 @@ use App\Models\CompanyBranch;
 
 class CompanyBranchClass {
 
-    public function getDefaultCompanyBranches ( $perPage = 24 ) {
-        $branches = CompanyBranch::with('company')->paginate( $perPage );
+    public function getDefaultCompanyBranches ( $request ) {
+        $branches = CompanyBranch::with(['company', 'updatedUser'])
+                            ->customFilter( $request->input('filter') )
+                            ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                            ->paginate( $request->input('per_page', 24 ) );
         return $branches;
     }
 
