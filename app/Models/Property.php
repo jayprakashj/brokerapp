@@ -172,7 +172,7 @@ class Property extends Model implements HasMedia
                 $q->filterPropertyNameLike( $propertyName );
             }
             if( !empty( $companyBranch ) ){
-                $q->filterCompanyBranchLike( $companyBranch );
+                $q->filterCompanyBranch( $companyBranch );
             }
             if( !empty( $city ) ){
                 $q->filterCityLike( $city );
