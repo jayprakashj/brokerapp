@@ -104,6 +104,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                     Route::get('roles', [MemberController::class, 'getRoles'])
                                     ->name('members_roles_list');
 
+                    Route::get('filter-data', [MemberController::class, 'getFilterData'])
+                                            ->name('filter_data');
+
                 });
 
         Route::prefix('branches')

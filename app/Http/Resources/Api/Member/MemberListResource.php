@@ -30,6 +30,7 @@ class MemberListResource extends JsonResource
             'role_name' => $this->role->name ?? '',
             'is_accepted' => $this->isAccepted(),
             'company_branch' => $this->companyBranch->name ?? 'N/A',
+            'updated_at_time' => $this->updated_at->format('d-m-Y h:i a'),
 
         ];
 

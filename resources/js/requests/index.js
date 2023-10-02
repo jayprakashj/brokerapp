@@ -261,6 +261,14 @@ const apis = {
         return http.get('members/lists', config);
 
     },
+    memberFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('members/filter-data', config);
+
+    },
     getMemberDetail: ( id ) => {
         return http.get(`members/${id}/edit` );
 

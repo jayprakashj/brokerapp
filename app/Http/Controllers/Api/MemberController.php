@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddMemberRequest;
-use App\Http\Requests\CompanyCreateRequest;
 use App\Http\Resources\Api\Member\InvitationDataResource;
 use App\Http\Resources\Api\Member\MemberEditResource;
 use App\Http\Resources\Api\Member\MemberPaginationResource;
 use App\Http\Resources\Api\Member\RolesListResource;
-use App\Models\Company;
+use App\Models\CompanyBranch;
 use App\Models\CompanyMember;
-use App\Models\User;
+use App\Models\Role;
 use App\Services\Database\MemberClass;
 use Illuminate\Http\Request;
 
@@ -26,7 +25,7 @@ class MemberController extends Controller
 
     public function index ( Request $request ) {
 
-        $members = $this->memberClass->getDefaultCompanyMembers( $request->input('per_page', 24 ));
+        $members = $this->memberClass->getDefaultCompanyMembers( $request );
 
         return new MemberPaginationResource( $members );
     }
@@ -105,5 +104,17 @@ class MemberController extends Controller
 
         }
         return response()->json( $response , $code);
+    }
+
+    public function getFilterData ( Request $request ){
+        $roles = Role::select('id', 'name')->get();
+        $companyBranch = CompanyBranch::select('id', 'name')->get();
+
+        $data = [
+            'roles' => $roles,
+            'company_branches' => $companyBranch,
+
+        ];
+        return response()->json( $data, 200 );
     }
 }
