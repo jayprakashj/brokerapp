@@ -286,83 +286,91 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in lists.data" :key="'property_'+idx">
-                            <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
-                                {{ item.name }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.company_name }}
+                        <template v-if="lists?.data?.length">
+                            <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in lists.data" :key="'property_'+idx">
+                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
+                                    {{ item.name }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.company_name }}
+                                </td>
+
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.company_branch }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.city }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.locality }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.property_type }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.property_transaction }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    <div class="flex gap-2 items-center" :class="{'text-red-500': !item.is_verified, 'text-success': item.is_verified}">
+
+                                        <template v-if="item.is_verified">
+                                            <div
+
+                                                class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-sucess dark:bg-accent-light/10 dark:text-accent-light">
+                                                <i class="fa fa-check text-xs"></i>
+                                            </div>
+                                            <p> Verified </p>
+
+                                        </template>
+                                        <template v-else>
+                                            <div
+
+                                                class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-red-500 dark:bg-accent-light/10 dark:text-accent-light">
+                                                <i class="fa fa-close text-xs"></i>
+                                            </div>
+                                            <p> Not Verified </p>
+
+                                        </template>
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.assign_to }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.updated_by }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.updated_at_time }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5" v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_PROPERTY, $permissions.VIEW_PROPERTY, $permissions.REMOVE_PROPERTY, $permissions.DOCUMENT_ATTACH_TO_PROPERTY ] )">
+                                    <div class="flex gap-2">
+
+                                        <router-link :to="'/property/edit/' + item.id"
+                                            v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_PROPERTY ] )"
+                                            class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-primary hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                                            <i class="fa fa-pencil"></i>
+
+                                        </router-link>
+                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_PROPERTY ] )" :to="'/property/view/' + item.id" class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                                            <i class="far fa-eye"></i>
+                                        </router-link>
+                                        <button v-if="false && userPermissions.isPermissionsAllowed([ $permissions.REMOVE_PROPERTY ] )"
+                                                @click="removeItem( item.id )"
+                                            class="btn rounded-full bg-error font-medium text-red-500 hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.DOCUMENT_ATTACH_TO_PROPERTY ] )" :to="'/property/' + item.id + '/documents'" class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                                                <i class="fa fa-folder"></i>
+                                        </router-link>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                        <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-else``>
+                            <td class="whitespace-nowrap px-4 py-3 sm:px-5 col-span-8">
+                                <no-data-found />
                             </td>
 
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.company_branch }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.city }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.locality }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.property_type }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.property_transaction }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                <div class="flex gap-2 items-center" :class="{'text-red-500': !item.is_verified, 'text-success': item.is_verified}">
-
-                                    <template v-if="item.is_verified">
-                                        <div
-
-                                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-sucess dark:bg-accent-light/10 dark:text-accent-light">
-                                            <i class="fa fa-check text-xs"></i>
-                                        </div>
-                                        <p> Verified </p>
-
-                                    </template>
-                                    <template v-else>
-                                        <div
-
-                                            class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-red-500 dark:bg-accent-light/10 dark:text-accent-light">
-                                            <i class="fa fa-close text-xs"></i>
-                                        </div>
-                                        <p> Not Verified </p>
-
-                                    </template>
-                                </div>
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.assign_to }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.updated_by }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                {{ item.updated_at_time }}
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5" v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_PROPERTY, $permissions.VIEW_PROPERTY, $permissions.REMOVE_PROPERTY, $permissions.DOCUMENT_ATTACH_TO_PROPERTY ] )">
-                                <div class="flex gap-2">
-
-                                    <router-link :to="'/property/edit/' + item.id"
-                                        v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_PROPERTY ] )"
-                                        class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-primary hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                                        <i class="fa fa-pencil"></i>
-
-                                    </router-link>
-                                    <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_PROPERTY ] )" :to="'/property/view/' + item.id" class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                                        <i class="far fa-eye"></i>
-                                    </router-link>
-                                    <button v-if="false && userPermissions.isPermissionsAllowed([ $permissions.REMOVE_PROPERTY ] )"
-                                            @click="removeItem( item.id )"
-                                        class="btn rounded-full bg-error font-medium text-red-500 hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                    <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.DOCUMENT_ATTACH_TO_PROPERTY ] )" :to="'/property/' + item.id + '/documents'" class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                                            <i class="fa fa-folder"></i>
-                                    </router-link>
-                                </div>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -380,8 +388,12 @@
 <script>
 import { mapGetters } from 'vuex' ;
 import flatPickr from 'vue-flatpickr-component';
+import sortFilterMethodsMixin from '@/mixin/FilterSortMethodsMixin.js';
 
 export default {
+    mixins:[
+        sortFilterMethodsMixin
+    ],
     components:{
         flatPickr
     },
@@ -543,26 +555,6 @@ export default {
                             }
                         )
         },
-        applySort( column ){
-            if( this.sortColumn == column ){
-                if( this.sortOrder == 'asc'){
-                    this.sortOrder = 'desc';
-                }else{
-                    this.sortOrder = 'asc';
-
-                }
-            }else{
-                this.sortColumn = column;
-                this.sortOrder = 'asc';
-            }
-
-            this.page = 1;
-            this.loadListsData();
-        },
-        applyFilter(){
-            this.page = 1;
-            this.loadListsData();
-        },
         resetFilter(){
             this.filter = {
                 name: null,
@@ -576,8 +568,7 @@ export default {
                 updated_by: null,
                 updated_at: null,
             };
-            this.page = 1;
-            this.loadListsData();
+            this.resetAndLoadList();
         }
     }
 }
