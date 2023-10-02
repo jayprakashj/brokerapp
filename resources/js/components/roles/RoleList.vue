@@ -36,7 +36,6 @@
                             :is-multiple="true"
                             :options="filterOptions.permissions"
                             :selected-item="filter.permissions?.map(d => d.id)"
-                            @itemRemove="removeFilterPermission"
                         />
                     <input-tom-select
                             class="h-full"
