@@ -1,54 +1,208 @@
 <template>
-    <page-header :title="pageTitle" :menus="menus" />
-    <div class="col-span-12 space-y-4 sm:space-y-5">
-        <template v-if="lists?.data?.length">
+    <page-header :title="pageTitle" :menus="menus" >
+        <template v-slot:actionContainer >
+            <div class="flex items-center space-x-2">
 
-            <div class="rounded-lg  border border-slate-150 dark:border-navy-500" v-for="(item, idx) in lists.data" :key="'role_'+idx" >
-                <div @click="expanded = item.id"
-                    class="flex cursor-pointer bg-slate-150  items-center justify-between px-4 py-4 text-base font-medium text-slate-700 dark:text-navy-100 sm:px-5">
-                    <p>
-                        {{ item.name }}
-                        <div class="badge bg-primary text-white text-xs dark:bg-accent ml-2" v-if="item.users_count > 0">
-                            {{ item.users_count }} Members
-                        </div>
-                    </p>
-                    <div :class="{'-rotate-180': !(expanded == item.id) }"
-                        class="text-sm font-normal leading-none text-slate-400 transition-transform duration-300 dark:text-navy-300">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-                <div v-show="(expanded == item.id )" >
-                    <div class="px-4 py-4 sm:px-5">
+                <div class="flex">
 
-                        <p class="space-x-1">
-                            <span v-for="(permission, index) in item.permissions"
-                                :key="'permission_tag_' +index"
-                                class="tag rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light">
-                                {{ permission }}
-                            </span>
-                        </p>
-                        <div class="mt-4 flex space-x-4">
-                            <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_ROLE ] )" :to="'/role/edit/' + item.id"
-                                class="btn h-7 w-7 rounded-full bg-slate-150 p-0 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                                <i class="fa fa-pencil"></i>
-                            </router-link>
-                            <button
-                                v-if="userPermissions.isPermissionsAllowed( $permissions.REMOVE_ROLE )"
-                                @click="removeRole( item )"
-                                class="btn h-7 w-7 rounded-full bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90"
-                                :class="{'bg-red-400 cursor-not-allowed': item.users_count > 0 }"
-                                >
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <button
+                        @click="showFilter = !showFilter"
+                        class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                        <i class="fa fa-filter"></i>
+                    </button>
                 </div>
             </div>
-
         </template>
-        <no-data-found v-else />
+    </page-header>
+
+    <div class="col-span-12">
+        <div >
+            <div class=" py-3" v-show="showFilter">
+                <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
+                    <label class="block">
+                        <span>Role name:</span>
+                        <div class="relative mt-1.5 flex">
+                            <input
+                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                placeholder="Enter Role Name" type="text" v-model="filter.name">
+                        </div>
+                    </label>
+
+                    <input-tom-select
+                            class="h-full"
+                            v-model="filter.permissions"
+                            form-label="Permission:"
+                            placeholder="Select Permissions"
+                            :is-multiple="true"
+                            :options="filterOptions.permissions"
+                            :selected-item="filter.permissions?.map(d => d.id)"
+                            @itemRemove="removeFilterPermission"
+                        />
+                    <input-tom-select
+                            class="h-full"
+                            v-model="filter.member"
+                            form-label="By Member:"
+                            placeholder="Select"
+                            :options="filterOptions.members"
+                            :selected-item="filter.member"
+                        />
+                </div>
+                <div class="mt-4 space-x-2 text-right ">
+                    <button
+                        @click="showFilter = false"
+                        class="btn font-medium text-slate-700 hover:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-100 dark:hover:bg-navy-300/20 dark:active:bg-navy-300/25">
+                        Close
+                    </button>
+
+                    <button
+                        class="btn bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90" @click="applyFilter">
+                        Apply
+                    </button>
+                    <button
+                        class="btn space-x-2 rounded-full bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90" @click="resetFilter"
+                    >
+                        <i class="fa fa-refresh"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
+                <table class="is-hoverable w-full text-left">
+                    <thead>
+                        <tr>
+                            <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('name')">
+                                <div class="flex gap-3 items-center">
+                                    Role Name
+                                    <template v-if="sortColumn == 'name'">
+                                        <i class="fa fa-arrow-down-short-wide" v-if="sortOrder == 'asc'"></i>
+                                        <i class="fa fa-arrow-up-short-wide" v-else></i>
+
+                                    </template>
+                                    <i class="fa fa-sort" v-else></i>
+                                </div>
+                            </th>
+                            <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                Permissions
+                            </th>
+
+                            <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('mobile')">
+                                <div class="flex gap-3 items-center">
+                                    Members
+                                </div>
+                            </th>
+
+                            <th
+                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')">
+                                <div class="flex gap-3 items-center">
+                                    Updated At
+                                    <template v-if="sortColumn == 'updated_at'">
+                                        <i class="fa fa-arrow-down-short-wide" v-if="sortOrder == 'asc'"></i>
+                                        <i class="fa fa-arrow-up-short-wide" v-else></i>
+
+                                    </template>
+                                    <i class="fa fa-sort" v-else></i>
+                                </div>
+                            </th>
+                            <th
+                                v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_ROLE, $permissions.REMOVE_ROLE ] )"
+                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-if="lists?.data?.length">
+
+                            <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in lists.data" :key="'property_'+idx">
+                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
+                                    {{ item.name }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5" >
+
+                                    <tippy tag="button" v-if="item.permissions_count">
+                                        <template #content >
+                                            <div class="flex space-x-4 rounded-lg bg-slate-150 p-3 dark:bg-navy-500">
+                                                <div class="mb-1">
+                                                    <p class="font-medium text-slate-700 dark:text-navy-100" v-for="(data, index) in item.permissions" :key="'permissions_'+index">{{ data }}</p>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <tempalte #default>
+                                            <div class="badge rounded-full bg-info/10 text-info dark:bg-info/15">
+                                                {{ item.permissions_count }}
+                                            </div>
+
+                                        </tempalte>
+
+                                    </tippy>
+                                    <div class="badge rounded-full bg-info/10 text-info dark:bg-info/15" v-else>
+                                        {{ item.permissions_count }}
+                                    </div>
+                                </td>
+
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    <tippy tag="button" v-if="item.users_count" >
+                                        <template #content >
+                                            <div class="flex space-x-3 rounded-lg bg-slate-150 p-3 dark:bg-navy-500">
+                                                <div>
+                                                    <p class="font-medium text-slate-700 dark:text-navy-100" v-for="(data, index) in item.members" :key="'members_'+index">{{ data }}</p>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <tempalte #default>
+                                            <div class="badge rounded-full border border-info text-info">
+                                                {{ item.users_count }}
+                                            </div>
+
+                                        </tempalte>
+
+                                    </tippy>
+                                    <div class="badge rounded-full border border-info text-info" v-else>
+                                        {{ item.users_count }}
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.updated_at_time }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5" v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_ROLE, $permissions.REMOVE_ROLE ] )">
+                                    <div class="flex gap-2">
+
+                                        <router-link :to="'/role/edit/' + item.id"
+                                            v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_ROLE ] )"
+                                            class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-primary hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                                            <i class="fa fa-pencil"></i>
+
+                                        </router-link>
+                                        <button v-if="false && userPermissions.isPermissionsAllowed([ $permissions.REMOVE_ROLE ] )"
+                                                @click="removeItem( item.id )"
+                                            class="btn rounded-full bg-error font-medium text-red-500 hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                        <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-else``>
+                            <td class="whitespace-nowrap px-4 py-3 sm:px-5 col-span-8">
+                                <no-data-found />
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex flex-col justify-between space-y-4 px-4 py-4 sm:flex-row sm:items-center sm:space-y-0 sm:px-5">
+                <div class="text-xs+">{{ lists?.first_item ?? 0 }} - {{ lists?.last_item ?? 0 }} of {{ lists?.total_records ?? 0 }} entries</div>
+                <pagination :total-records="lists?.total_records" :per-page="lists?.per_page" :current-page="page" @pageChange="updatePage"></pagination>
+            </div>
+        </div>
     </div>
-    <pagination :total-records="lists?.total_records" :per-page="lists?.per_page" :current-page="page" @pageChange="updatePage"></pagination>
 </template>
 
 <script>
@@ -74,9 +228,8 @@ export default {
             filterOptions: {},
             filter: {
                 name: null,
-                mobile: null,
-                email: null,
-                city: null
+                permissions: [],
+                member: null,
             },
         }
     },
@@ -106,13 +259,17 @@ export default {
     },
     methods:{
         init () {
-            this.loadListData();
+            this.loadListsData();
+            this.loadfilterOptionsData();
         },
-        loadListData(){
+        loadListsData(){
             this.$store.commit('setGlobalLoaderOn')
             const params = {
                 per_page: this.$perPage,
-                page: this.page
+                page: this.page,
+                filter: this.filter,
+                sort_by: this.sortColumn,
+                sort_order: this.sortOrder
             }
             this.$request.getRoleList( params )
                         .then(
@@ -132,7 +289,7 @@ export default {
         },
 		updatePage( pageNum ){
 			this.page = pageNum;
-            this.loadListData();
+            this.loadListsData();
 		},
         removeRole ( item ){
             if( item.users_count <= 0 ){
@@ -154,7 +311,7 @@ export default {
                                             if( res.data?.message ){
                                                 message = res.data.message;
                                             }
-                                            this.loadListData();
+                                            this.loadListsData();
                                             this.$toast.info( message );
                                         },
                                         ( err ) => {
@@ -175,7 +332,33 @@ export default {
                         }
                     );
                 }
-            }
+        },
+        loadfilterOptionsData(){
+            this.$store.commit('setGlobalLoaderOn');
+            this.$request.roleFilterData()
+                        .then(
+                            ( res ) => {
+                                if( res.data ){
+                                    this.filterOptions = Object.assign( {}, res.data);
+                                }
+                            },
+                            (err) => {
+                                this.$toast.error('Err! There is something wrong. Please retry.');
+                            }
+                        ).finally(
+                            () => {
+                                this.$store.commit('setGlobalLoaderOff');
+                            }
+                        )
+        },
+        resetFilter(){
+            this.filter = {
+                name: null,
+                permissions: [],
+                member: null,
+            };
+            this.resetAndLoadList();
+        }
     }
 }
 </script>

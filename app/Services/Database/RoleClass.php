@@ -2,20 +2,19 @@
 
 namespace App\Services\Database;
 
-use App\Models\Company;
-use App\Models\CompanyUserPivot;
+use App\Models\Role;
 use App\Models\User;
 use Helper;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class RoleClass {
 
-    public function getAllAuthUserRoles ( $perPage = 24 ) {
-        return Role::with(['permissions'])
-                        ->withCount('users')
-                        ->where('company_id', Helper::retrieveDefaultCompany()->id )
-                        ->paginate( $perPage );
+    public function getAllAuthUserRoles ( $request ) {
+        return Role::with(['permissions', 'users'])
+                        ->withCount(['users', 'permissions'])
+                        ->customFilter( $request->input('filter') )
+                        ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                        ->paginate( $request->input('per_page', config('app.per_page') ) );
     }
 
 

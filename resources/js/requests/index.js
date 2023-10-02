@@ -233,6 +233,14 @@ const apis = {
         return http.get('roles/lists', config);
 
     },
+    roleFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('roles/filter-data', config);
+
+    },
     getRoleDetail: ( id ) => {
         return http.get(`roles/${id}/edit` );
 

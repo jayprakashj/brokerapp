@@ -18,7 +18,10 @@ class RoleListResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'users_count' => $this->users_count,
-            'permissions' => $this->permissions->pluck('name')
+            'permissions_count' => $this->permissions_count,
+            'members' => $this->users->pluck('name'),
+            'permissions' => $this->permissions->pluck('name'),
+            'updated_at_time' => $this->updated_at->format('d-m-Y h:i a'),
         ];
 
         return $data;

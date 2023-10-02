@@ -73,6 +73,8 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                     Route::post('{role}/delete', [RoleManagementController::class, 'delete'])
                             ->middleware('permission:Remove Role')
                             ->name('delete');
+                    Route::get('filter-data', [RoleManagementController::class, 'getFilterData'])
+                            ->name('filter_data');
 
                 });
 
