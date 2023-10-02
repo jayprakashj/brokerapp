@@ -38,7 +38,7 @@ class PropertySeeder extends Seeder
         $propertyObligation = PropertyObligationList::withoutGlobalScope(CompanyIdScope::class)->get();
 
         $users = User::with('defaultCompany')->typeCompany()->get();
-        for($i = 0; $i < 8; $i++){
+        for($i = 0; $i < 20; $i++){
             $item = $users->random();
             $paragraphs = $faker->paragraphs(rand(2, 6));
             $content = '<b>' . $faker->text( 10 ) . '</b>';
@@ -49,7 +49,7 @@ class PropertySeeder extends Seeder
             $obj = new Property();
             $obj->user_id = $item->id;
             $obj->created_by = $item->id;
-            $obj->updated_by = $item->id;
+            $obj->updated_by = $users->random()->id;
             $obj->company_id = $item->defaultCompany->id;
 
             $obj->name = $faker->text( 10 );
