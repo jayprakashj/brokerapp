@@ -54,15 +54,30 @@
 <script>
 
 import { mapGetters } from 'vuex' ;
+import sortFilterMethodsMixin from '@/mixin/FilterSortMethodsMixin.js';
 
 export default {
+    mixins:[
+        sortFilterMethodsMixin
+    ],
+
     data(){
         return {
             expanded: null,
             pageTitle: 'Role Management',
             isShowPopper: false,
             page: 1,
-            lists:{}
+            lists:{},
+            showFilter: false,
+            sortColumn: 'updated_at',
+            sortOrder: 'desc',
+            filterOptions: {},
+            filter: {
+                name: null,
+                mobile: null,
+                email: null,
+                city: null
+            },
         }
     },
     created(){
