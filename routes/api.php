@@ -156,6 +156,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                     Route::get('customer-types/select-list', [ ContactController::class, 'customerTypeSelectList'])
                                     ->name('select.customer_types');
+
+                    Route::get('filter-data', [ContactController::class, 'getFilterData'])
+                                            ->name('filter_data');
                 });
 
         Route::prefix('leads')

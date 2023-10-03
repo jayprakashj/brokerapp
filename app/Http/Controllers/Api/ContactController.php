@@ -7,6 +7,8 @@ use App\Http\Requests\Api\Contact\AddContactRequest;
 use App\Http\Resources\Api\Contact\ContactEditResource;
 use App\Http\Resources\Api\Contact\ContactPaginationResource;
 use App\Models\Contact;
+use App\Models\ContactType;
+use App\Models\CustomerType;
 use App\Services\Database\ContactClass;
 use App\Services\Database\ContactTypeClass;
 use App\Services\Database\CustomerTypeClass;
@@ -27,7 +29,7 @@ class ContactController extends Controller
 
     public function index ( Request $request ) {
 
-        $branches = $this->contactClass->getDefaultList( $request->input('per_page', 24 ));
+        $branches = $this->contactClass->getDefaultList( $request );
         return new ContactPaginationResource( $branches );
     }
 
@@ -77,5 +79,18 @@ class ContactController extends Controller
         $list = $this->customerTypeClass->getByName( $request->input('search'));
         // $list = $this->customerTypeClass->getLists();
         return response()->json( $list, 200 );
+    }
+
+
+    public function getFilterData ( Request $request ){
+        $contactTypes = ContactType::get();
+        $customerTypes = CustomerType::get();
+
+        $data = [
+            'contact_types' => $contactTypes,
+            'customer_types' => $customerTypes,
+
+        ];
+        return response()->json( $data, 200 );
     }
 }

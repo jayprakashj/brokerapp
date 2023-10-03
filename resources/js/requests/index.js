@@ -315,6 +315,15 @@ const apis = {
         return http.get('contacts/lists', config);
 
     },
+    contactFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('contacts/filter-data', config);
+
+    },
+
     getContactDetail: ( id ) => {
         return http.get(`contacts/${id}/edit` );
     },
