@@ -19,7 +19,7 @@ class LeadClass {
         $this->leadCommentClass = new LeadCommentClass;
     }
 
-    public function getDefaultCompanyLeads ( $perPage = 24, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
+    public function getDefaultCompanyLeads ( $request, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
         $lists = Lead::query()->with(['companyBranch', 'properties', 'projects', 'assignToUser', 'updatedUser']);
 
@@ -29,7 +29,9 @@ class LeadClass {
             $lists->createdByAuth();
         }
 
-        $lists = $lists->paginate( $perPage );
+        $lists = $lists->customFilter( $request->input('filter') )
+                    ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                    ->paginate( $request->input('per_page', config('app.per_page') ) );
 
         return $lists;
     }

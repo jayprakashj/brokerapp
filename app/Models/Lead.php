@@ -5,13 +5,14 @@ namespace App\Models;
 use App\Models\Relations\CompanyRelation;
 use App\Models\Relations\CreatedUpdatedUserRelation;
 use App\Models\Relations\OwnerUserRelation;
+use App\Models\Scopes\CommonFilter;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lead extends Model
 {
-    use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes;
+    use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes, CommonFilter;
 
     const CONFIDENTIAL_YES = 1;
     const CONFIDENTIAL_NO = 0;
@@ -93,31 +94,161 @@ class Lead extends Model
         });
     }
 
-    public function scopeMyCustomOrderBy ( $q, $key = 'updated_at', $order = 'desc' ){
-        if( $key == 'assign_to_name' ){
-            $key = User::select('name')->whereColumn('id', 'leads.assigned_to')->limit(1);
+    public function scopeCustomSort( $q, $sortColumn, $sortOrder = 'asc' ){
+        if( !empty( $sortColumn ) ){
+            switch( $sortColumn ){
+                case 'title':
+                    $q->orderBy( 'title', $sortOrder);
+                    break;
+                case 'customer_name':
+                    $q->orderBy( 'customer_name', $sortOrder);
+                    break;
+                case 'company_branch':
+                    $q->orderBy( CompanyBranch::select('name')->whereColumn('id', 'leads.company_branch_id')->limit(1) , $sortOrder);
+                    break;
+                case 'assign_to':
+                    $q->orderBy( User::select('name')->whereColumn('id', 'leads.assigned_to')->limit(1) , $sortOrder);
+                    break;
+                case 'updated_by':
+                    $q->orderBy( User::select('name')->whereColumn('id', 'leads.updated_by')->limit(1) , $sortOrder);
+                    break;
+                case 'updated_at':
+                    $q->orderBy( 'updated_at', $sortOrder);
+                    break;
+                case 'city':
+                    $q->orderBy( 'customer_city' , $sortOrder);
+                    break;
+                case 'mobile':
+                    $q->orderBy( 'customer_mobile' , $sortOrder);
+                    break;
+                case 'email':
+                    $q->orderBy( 'customer_email' , $sortOrder);
+                    break;
+                case 'lead_source':
+                    $q->orderBy( 'lead_source' , $sortOrder);
+                    break;
+                case 'lead_status':
+                    $q->orderBy( 'lead_status' , $sortOrder);
+                    break;
+            }
         }
-        if( empty( $key ) ){
-            $key = 'updated_at';
-        }
-        if( empty( $order ) ){
-            $order = 'desc';
-        }
-        return $q->orderBy( $key, $order );
+
+        return $q;
     }
 
-    public function scopeMyCustomFilter ( $q, $column = 'updated_at', $value ){
+    public function scopeFilterTitleLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('title', 'LIKE', '%'. $value . '%', $boolean);
+    }
 
-        if( $column == 'company_branch' ){
-            $q->whereRelation( 'companyBranch', 'id', '=', $value );
+    public function scopeFilterCustomerNameLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('customer_name', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterMobileLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('customer_mobile', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterEmailLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('customer_email', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterCityLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('customer_city', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterLeadSource ( $q, $value, $boolean = 'and' ){
+        return $q->where('lead_source', '=', $value, $boolean);
+    }
+
+    public function scopeFilterLeadStatus ( $q, $value, $boolean = 'and' ){
+        return $q->where('lead_status', '=', $value, $boolean);
+    }
+
+    public function scopeFilterProjects ( $q, $value, $boolean = 'and' ){
+        if( !empty( $value ) ) {
+            if( is_array( $value ) ){
+                return $q->{$boolean == 'or' ? 'whereHas' : 'orWhereHas'}('projects', function( $subQry ) use ( $value ){
+                    $subQry->whereIn('project_id', $value);
+                });
+            }else{
+                $q->{$boolean == 'or' ? 'whereRelation' : 'orWhereRelation'}('project_id', 'id', '=', $value);
+            }
         }
-        if( $column == 'company_branch' ){
-            $q->whereRelation( 'companyBranch', 'id', '=', $value );
+        return $q;
+    }
+
+    public function scopeFilterProperties ( $q, $value, $boolean = 'and' ){
+        if( !empty( $value ) ) {
+            if( is_array( $value ) ){
+                return $q->{$boolean == 'or' ? 'whereHas' : 'orWhereHas'}('properties', function( $subQry ) use ( $value ){
+                    $subQry->whereIn('property_id', $value);
+                });
+            }else{
+                $q->{$boolean == 'or' ? 'whereRelation' : 'orWhereRelation'}('properties', 'property_id', '=', $value);
+            }
         }
-        if( $column == 'company_branch' ){
-            $q->whereRelation( 'companyBranch', 'id', '=', $value );
+        return $q;
+    }
+
+    public function scopeFilterAssignTo ( $q, $value, $boolean = 'and' ){
+        return $q->where('assigned_to', '=', $value, $boolean);
+    }
+
+    public function scopeCustomFilter( $q, $filter ){
+
+        if( !empty( $filter ) ){
+            $title = data_get( $filter, 'title' );
+            $companyBranch = data_get( $filter, 'company_branch' );
+            $customerName = data_get( $filter, 'customer_name' );
+            $mobile = data_get( $filter, 'mobile' );
+            $email = data_get( $filter, 'email' );
+            $city = data_get( $filter, 'city' );
+            $properties = data_get( $filter, 'properties' );
+            $projects = data_get( $filter, 'projects' );
+            $leadSource = data_get( $filter, 'lead_source' );
+            $leadStatus = data_get( $filter, 'lead_status' );
+            $assignTo = data_get( $filter, 'assign_to' );
+            $updatedAt = data_get( $filter, 'updated_at' );
+
+            if( !empty( $title ) ){
+                $q->filterTitleLike( $title );
+            }
+            if( !empty( $companyBranch ) ){
+                $q->filterCompanyBranch( $companyBranch );
+            }
+            if( !empty( $customerName ) ){
+                $q->filterCustomerNameLike( $customerName );
+            }
+            if( !empty( $mobile ) ){
+                $q->filterMobileLike( $mobile );
+            }
+            if( !empty( $email ) ){
+                $q->filterEmailLike( $email );
+            }
+            if( !empty( $city ) ){
+                $q->filterCityLike( $city );
+            }
+            if( !empty( $leadSource ) ){
+                $q->filterLeadSource( $leadSource );
+            }
+            if( !empty( $leadStatus ) ){
+                $q->filterLeadStatus( $leadStatus );
+            }
+            if( !empty( $projects ) ){
+                $q->filterProjects( $projects );
+            }
+            if( !empty( $properties ) ){
+                $q->filterProperties( $properties );
+            }
+            if( !is_null( $assignTo ) ){
+                $q->filterAssignTo( $assignTo );
+            }
+            if( !is_null( $updatedAt ) ){
+                $dt = explode(' to ', $updatedAt);
+                $q->filterDate( 'updated_at',$dt );
+            }
         }
-        // $q->where( $column, 'LIKE', '%' . $value . '%');
+
         return $q;
     }
 

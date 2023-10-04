@@ -199,6 +199,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                                     ->name('select.company_banch');
                     Route::get('company-members/select-list', [ LeadController::class, 'companyMembersSelectList'])
                                     ->name('select.company_member');
+
+                    Route::get('filter-data', [LeadController::class, 'getFilterData'])
+                                        ->name('filter_data');
                 });
 
 

@@ -26,9 +26,11 @@ class LeadListResource extends JsonResource
             'city' => $this->customer_city ?? 'N/A',
             'branch' => $this->companyBranch->name ?? 'N/A',
             'followup_date' => $this->followup_date ?? 'N/A',
-            'status' => $this->followup_date ?? 'N/A',
+            'status' => $this->lead_status ?? 'N/A',
+            'lead_source' => $this->lead_source ?? 'N/A',
             'assigned_to' => $this->assignToUser->name ?? 'N/A',
             'updated_by' => $this->updatedUser->name ?? 'N/A',
+            'updated_at_time' => $this->updated_at->format('d-m-Y h:i a'),
 
         ];
 

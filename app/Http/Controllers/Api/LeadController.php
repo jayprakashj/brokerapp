@@ -3,25 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Contact\AddContactRequest;
 use App\Http\Requests\Api\Lead\AddLeadCommentRequest;
 use App\Http\Requests\Api\Lead\AddLeadRequest;
 use App\Http\Resources\Api\CompanyBranch\BranchListForSelectList;
-use App\Http\Resources\Api\Contact\ContactEditResource;
-use App\Http\Resources\Api\Contact\ContactPaginationResource;
 use App\Http\Resources\Api\Lead\LeadEditResource;
 use App\Http\Resources\Api\Lead\LeadPaginationResource;
 use App\Http\Resources\Api\Lead\LeadViewResource;
 use App\Http\Resources\Api\Member\MemberSelectListResource;
-use App\Models\Contact;
+use App\Models\CompanyBranch;
 use App\Models\Lead;
 use App\Models\LeadSource;
 use App\Models\LeadStatus;
+use App\Models\Project;
+use App\Models\Property;
+use App\Models\User;
 use App\Services\Database\CompanyBranchClass;
 use App\Services\Database\MemberClass;
-use App\Services\Database\ContactClass;
-use App\Services\Database\ContactTypeClass;
-use App\Services\Database\CustomerTypeClass;
 use App\Services\Database\LeadClass;
 use Illuminate\Http\Request;
 
@@ -45,7 +42,7 @@ class LeadController extends Controller
         if( $user->isCompanyAdmin() ){
             $onlyAssignedTo = false;
         }
-        $branches = $this->leadClass->getDefaultCompanyLeads( $request->input('per_page', 24 ), $onlyAssignedTo);
+        $branches = $this->leadClass->getDefaultCompanyLeads( $request, $onlyAssignedTo);
         return new LeadPaginationResource( $branches );
     }
 
@@ -133,5 +130,26 @@ class LeadController extends Controller
     public function companyMembersSelectList ( Request $request ){
         $list = $this->memberClass->getMembersListForSelectList();
         return MemberSelectListResource::collection( $list );
+    }
+
+
+    public function getFilterData ( Request $request ){
+        $members = User::select('id', 'name')->get();
+        $companyBranch = CompanyBranch::select('id', 'name')->get();
+        $properties = Property::select('id', 'name')->get();
+        $projects = Project::select('id', 'title as name')->get();
+        $leadStatus = LeadStatus::select('id', 'name')->get();
+        $leadSource = LeadSource::select('id', 'name')->get();
+
+        $data = [
+            'members' => $members,
+            'company_branches' => $companyBranch,
+            'properties' => $properties,
+            'projects' => $projects,
+            'lead_statuses' => $leadStatus,
+            'lead_sources' => $leadSource
+
+        ];
+        return response()->json( $data, 200 );
     }
 }

@@ -341,6 +341,14 @@ const apis = {
         return http.get('leads/lists', config);
 
     },
+    leadFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/filter-data', config);
+
+    },
     getLeadDetail: ( id ) => {
         return http.get(`leads/${id}/edit` );
     },
