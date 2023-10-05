@@ -485,7 +485,7 @@ export default {
                 lead_source: null,
                 lead_status: null,
                 assign_to: null,
-                updated_at: null,
+                updated_at: null
             },
         }
     },
@@ -609,9 +609,18 @@ export default {
         },
         resetFilter(){
             this.filter = {
-                name: null,
-                permissions: [],
-                member: null,
+                title: null,
+                customer_name: null,
+                properties: [],
+                projects: [],
+                company_branch: null,
+                mobile: null,
+                email: null,
+                city: null,
+                lead_source: null,
+                lead_status: null,
+                assign_to: null,
+                updated_at: null
             };
             this.resetAndLoadList();
         }
