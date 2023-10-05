@@ -413,7 +413,7 @@
                                 <td class="whitespace-nowrap px-4 py-3 sm:px-5" v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD, $permissions.REMOVE_LEAD, $permissions.VIEW_LEAD ] )">
                                     <div class="flex gap-2">
 
-                                        <router-link :to="'/role/edit/' + item.id"
+                                        <router-link :to="'/lead/edit/' + item.id"
                                             v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD ] )"
                                             class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-primary hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
                                             <i class="fa fa-pencil"></i>
