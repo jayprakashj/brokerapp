@@ -8,8 +8,10 @@ use App\Http\Resources\Api\Project\ProjectEditResource;
 use App\Http\Resources\Api\Project\ProjectPaginationResource;
 use App\Http\Resources\Api\Project\ProjectViewResource;
 use App\Http\Resources\Api\Property\PropertyImageTypeListForSelectList;
+use App\Models\CompanyBranch;
 use App\Models\Project;
 use App\Models\PropertyImageTypeList;
+use App\Models\User;
 use App\Services\Database\ProjectClass;
 use Illuminate\Http\Request;
 
@@ -28,7 +30,7 @@ class ProjectController extends Controller
         if( $user->isCompanyAdmin() ){
             $onlyAssignedTo = false;
         }
-        $list = $this->projectClass->getDefaultCompanyProjects( $request->input('per_page', 24 ), $onlyAssignedTo );
+        $list = $this->projectClass->getDefaultCompanyProjects( $request, $onlyAssignedTo );
         return new ProjectPaginationResource( $list );
     }
 
@@ -116,5 +118,17 @@ class ProjectController extends Controller
     public function getProjectForSelectList(){
         $list = Project::select('id', 'title as name')->get();
         return response()->json( $list, 200 );
+    }
+
+    public function getFilterData ( Request $request ){
+        $members = User::select('id', 'name')->get();
+        $companyBranch = CompanyBranch::select('id', 'name')->get();
+
+        $data = [
+            'members' => $members,
+            'company_branches' => $companyBranch,
+
+        ];
+        return response()->json( $data, 200 );
     }
 }

@@ -429,6 +429,14 @@ const apis = {
         return http.get('projects/lists', config);
 
     },
+    projectFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('projects/filter-data', config);
+
+    },
     getProjectDetail: ( id ) => {
         return http.get(`projects/${id}/edit` );
     },

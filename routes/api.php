@@ -304,6 +304,8 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             // Route::post('{project}/delete', [ProjectController::class, 'delete'])
             //                 ->middleware('permission:Remove Project')
             //                 ->name('delete');
+            Route::get('filter-data', [ProjectController::class, 'getFilterData'])
+                                        ->name('filter_data');
         });
 
         Route::prefix('tasks')
