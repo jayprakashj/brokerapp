@@ -17,7 +17,7 @@
 
     <div class="col-span-12">
         <div >
-            <div class=" py-3" v-show="showFilter">
+            <div class="card p-3 py-3" v-show="showFilter">
                 <form @submit.prevent="applyfilter">
                     <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
                         <label class="block">
