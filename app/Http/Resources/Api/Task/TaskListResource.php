@@ -21,6 +21,8 @@ class TaskListResource extends JsonResource
             'scheduled_date' => $this->scheduled_date ?? 'N/A',
             'assign_user' => $this->assignToUser->name ?? 'N/A',
             'status' => $this->status ?? 'N/A',
+            'remark' => $this->remark ?? 'N/A',
+            'updated_at_time' => $this->updated_at->format('d-m-Y h:i a')
 
         ];
 

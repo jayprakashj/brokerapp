@@ -12,7 +12,7 @@ class TaskClass {
     {
     }
 
-    public function getDefaultCompanyTasks ( $perPage = 24, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
+    public function getDefaultCompanyTasks ( $request, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
         $lists = Task::query()->with(['company']);
 
@@ -22,7 +22,9 @@ class TaskClass {
             $lists->createdByAuth();
         }
 
-        $lists = $lists->paginate( $perPage );
+        $lists = $lists->customFilter( $request->input('filter') )
+                        ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                        ->paginate( $request->input('per_page', config('app.per_page') ) );
 
         return $lists;
     }

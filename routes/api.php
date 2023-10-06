@@ -333,6 +333,8 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             // Route::post('{task}/delete', [TaskController::class, 'delete'])
             //                 ->middleware('permission:Remove Task')
             //                 ->name('delete');
+            Route::get('filter-data', [TaskController::class, 'getFilterData'])
+                                ->name('filter_data');
         });
 
         Route::prefix('site-visits')

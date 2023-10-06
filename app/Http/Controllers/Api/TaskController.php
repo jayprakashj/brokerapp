@@ -10,6 +10,7 @@ use App\Http\Resources\Api\Task\TaskStatusListForSelectList;
 use App\Http\Resources\Api\Task\TaskViewResource;
 use App\Models\Task;
 use App\Models\TaskStatus;
+use App\Models\User;
 use App\Services\Database\TaskClass;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class TaskController extends Controller
         if( $user->isCompanyAdmin() ){
             $onlyAssignedTo = false;
         }
-        $branches = $this->taskClass->getDefaultCompanyTasks( $request->input('per_page', 24 ), $onlyAssignedTo);
+        $branches = $this->taskClass->getDefaultCompanyTasks( $request, $onlyAssignedTo);
         return new TaskPaginationResource( $branches );
     }
 
@@ -87,6 +88,18 @@ class TaskController extends Controller
     public function taskStatusSelectList ( Request $request ){
         $list = TaskStatus::select('id', 'name')->get();
         return TaskStatusListForSelectList::collection( $list );
+    }
+
+    public function getFilterData ( Request $request ){
+        $members = User::select('id', 'name')->get();
+        $statuses = TaskStatus::select('id', 'name')->get();;
+
+        $data = [
+            'members' => $members,
+            'statuses' => TaskStatusListForSelectList::collection( $statuses )
+
+        ];
+        return response()->json( $data, 200 );
     }
 
 }

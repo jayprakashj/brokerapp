@@ -457,6 +457,14 @@ const apis = {
         return http.get('tasks/lists', config);
 
     },
+    taskFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('tasks/filter-data', config);
+
+    },
     getTaskDetail: ( id ) => {
         return http.get(`tasks/${id}/edit` );
     },

@@ -376,9 +376,10 @@ export default {
         },
         resetFilter(){
             this.filter = {
-                name: null,
-                permissions: [],
-                member: null,
+                title: null,
+                company_branch: null,
+                city: null,
+                assign_to: null,
             };
             this.resetAndLoadList();
         }
