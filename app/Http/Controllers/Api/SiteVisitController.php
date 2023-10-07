@@ -4,23 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\SiteVisit\AddSiteVisitRequest;
-use App\Http\Requests\Api\Task\AddTaskRequest;
 use App\Http\Resources\Api\Member\MemberSelectListResource;
 use App\Http\Resources\Api\SiteVisit\SiteVisitEditResource;
 use App\Http\Resources\Api\SiteVisit\SiteVisitPaginationResource;
 use App\Http\Resources\Api\SiteVisit\SiteVisitViewResource;
-use App\Http\Resources\Api\Task\TaskEditResource;
-use App\Http\Resources\Api\Task\TaskPaginationResource;
-use App\Http\Resources\Api\Task\TaskStatusListForSelectList;
-use App\Http\Resources\Api\Task\TaskViewResource;
+use App\Models\CompanyBranch;
 use App\Models\Project;
 use App\Models\Property;
 use App\Models\SiteVisit;
-use App\Models\Task;
-use App\Models\TaskStatus;
+use App\Models\User;
 use App\Services\Database\MemberClass;
 use App\Services\Database\SiteVisitClass;
-use App\Services\Database\TaskClass;
 use Illuminate\Http\Request;
 
 class SiteVisitController extends Controller
@@ -41,7 +35,7 @@ class SiteVisitController extends Controller
         if( $user->isCompanyAdmin() ){
             $onlyAssignedTo = false;
         }
-        $branches = $this->siteVisitClass->getDefaultCompanySiteVisits( $request->input('per_page', 24 ), $onlyAssignedTo);
+        $branches = $this->siteVisitClass->getDefaultCompanySiteVisits( $request, $onlyAssignedTo);
         return new SiteVisitPaginationResource( $branches );
     }
 
@@ -101,26 +95,9 @@ class SiteVisitController extends Controller
         $projectList = Project::select('id', 'title as name')->get();
         $members = $this->memberClass->getMembersListForSelectList();
 
-        $visitTypes = [
-            [
-                'id' => 'Direct Visit',
-                'name' => 'Direct Visit'
-            ],
-            [
-                'id' => 'Line Visit',
-                'name' => 'Line Visit'
-            ]
-        ];
-        $types = [
-            [
-                'id' => 'property',
-                'name' => 'Property'
-            ],
-            [
-                'id' => 'project',
-                'name' => 'Project'
-            ]
-        ];
+        $visitTypes = SiteVisit::VISIT_TYPES;
+        $types =  SiteVisit::TYPES;
+
         $data = [
             'properties' => $propertyList,
             'projects' => $projectList,
@@ -131,6 +108,23 @@ class SiteVisitController extends Controller
         return response()->json( $data, 200 );
     }
 
+    public function getFilterData ( Request $request ){
+        $members = User::select('id', 'name')->get();
+        $companyBranch = CompanyBranch::select('id', 'name')->get();
+        $properties = Property::select('id', 'name')->get();
+        $projects = Project::select('id', 'title as name')->get();
+
+        $data = [
+            'members' => $members,
+            'company_branches' => $companyBranch,
+            'properties' => $properties,
+            'projects' => $projects,
+            'visit_types' => SiteVisit::VISIT_TYPES,
+            'types' => SiteVisit::TYPES,
+
+        ];
+        return response()->json( $data, 200 );
+    }
 
 
 }

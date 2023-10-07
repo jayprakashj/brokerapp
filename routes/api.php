@@ -361,6 +361,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             // Route::post('{siteVisit}/delete', [SiteVisitController::class, 'delete'])
             //                 ->middleware('permission:Remove Task')
             //                 ->name('delete');
+
+            Route::get('filter-data', [SiteVisitController::class, 'getFilterData'])
+                                ->name('filter_data');
         });
 
     });

@@ -13,9 +13,18 @@ class SiteVisitClass {
     {
     }
 
-    public function getDefaultCompanySiteVisits ( $perPage = 24, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
+    public function getDefaultCompanySiteVisits ( $request, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
-        $lists = SiteVisit::query()->with(['company', 'companyBranch', 'property', 'project', 'assignToUser']);
+        $lists = SiteVisit::query()
+                        ->with([
+                            'company',
+                            'companyBranch',
+                            'property',
+                            'project',
+                            'assignToUser',
+                            'sourceManagerUser',
+                            'closingManagerUser'
+                        ]);
 
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignedToAuth();
@@ -23,7 +32,9 @@ class SiteVisitClass {
             $lists->createdByAuth();
         }
 
-        $lists = $lists->paginate( $perPage );
+        $lists = $lists->customFilter( $request->input('filter') )
+                    ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                    ->paginate( $request->input('per_page', config('app.per_page') ) );
 
         return $lists;
     }

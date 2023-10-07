@@ -485,6 +485,14 @@ const apis = {
         return http.get('site-visits/lists', config);
 
     },
+    taskFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('site-visits/filter-data', config);
+
+    },
     getSiteVisitDetail: ( id ) => {
         return http.get(`site-visits/${id}/edit` );
     },

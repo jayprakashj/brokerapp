@@ -15,7 +15,11 @@ trait CommonFilter {
     }
 
     public function scopeFilterAssignTo ( $q, $value, $boolean = 'and' ){
-        return $q->{ is_array( $value) ? 'whereIn': 'where'}('assign_to', '=', $value, $boolean);
+
+        if( is_array( $value ) ){
+            return $q->whereIn( 'assign_to', $value, $boolean );
+        }
+        return $q->where('assign_to', '=', $value, $boolean);
     }
 
     public function scopeFilterUpdatedBy ( $q, $value, $boolean = 'and' ){
