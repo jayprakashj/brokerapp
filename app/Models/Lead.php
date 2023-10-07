@@ -14,6 +14,9 @@ class Lead extends Model
 {
     use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes, CommonFilter;
 
+    const DEFAULT_LEAD_STATUS = 'In Progress';
+    const DEFAULT_LEAD_SOURCE = 'Own Website';
+
     const CONFIDENTIAL_YES = 1;
     const CONFIDENTIAL_NO = 0;
 
@@ -37,6 +40,18 @@ class Lead extends Model
         self::IS_PROTECTED_YES => 'Yes',
         self::IS_PROTECTED_NO => 'No',
     ];
+
+    const ENQUIRY_TYPES = [
+        'buy' => 'Buy',
+        'sell' => 'Sell',
+        'rent_tenant' => 'Rent ( Tenant )',
+        'rent_owner' => 'Rent ( Owner )',
+    ];
+
+    protected $casts = [
+        'property_type' => 'array',
+    ];
+
 
     /**
      * The "booted" method of the model.

@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\User;
 use NumberFormatter;
+use App\Models\Company;
+use Illuminate\Support\Str;
 
 class HelperService {
 
@@ -59,6 +61,8 @@ class HelperService {
             if( !is_null( $defaultCompany ) ){
                 return $defaultCompany;
             }
+        }else{
+            return Company::first();
         }
 
         return null;
@@ -69,6 +73,21 @@ class HelperService {
         if( !empty( $data ) ){
             foreach( $data as $key => $value ){
                 $result[] = $key . ' : ' . $value;
+            }
+        }
+
+        return $result;
+    }
+
+    public function convertChangesData( $data ){
+        $result = [];
+        if( !empty( $data ) ){
+            foreach( $data as $key => $value ){
+                $key = Str::title(Str::replace('_', ' ', $key ));
+                if( is_array( $value ) ){
+                    $value = implode( ', ', $value );
+                }
+                $result[$key] = $value;
             }
         }
 

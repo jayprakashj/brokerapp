@@ -44,6 +44,18 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.title?.length">{{ errors.title.at(0) }}</span>
                             </label>
+                            <input-tom-select
+                                    key="property_type_select"
+                                    class="h-full"
+                                    v-model="formData.property_type"
+                                    form-label="Property Type"
+                                    placeholder="Select Property Type"
+                                    :is-multiple="true"
+                                    :tomOptions="propertyTypeTomOptions"
+                                    :options="options.property_sub_types"
+                                    :selected-item="formData.property_type"
+                                    :error-msg="errors?.property_type"
+                                />
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
                             <label class="block h-full" >
                                 <span>Name</span>
@@ -109,9 +121,7 @@
                                         v-model="formData.company_branch"
                                         form-label="Company Branch"
                                         placeholder="Select Branch"
-                                        :is-ajax="true"
-                                        request-name="companyBranchSelectList"
-                                        :ajax-preload="true"
+                                        :options="options.company_branches"
                                         :selected-item="selected.company_branch_data?.id"
                                         :selected-options="selected.company_branch_data"
                                         :error-msg="errors?.company_branch"
@@ -121,30 +131,28 @@
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
 
                             <input-tom-select
+                                        key="properties_select"
                                         class="h-full"
                                         v-model="formData.property"
                                         form-label="Property"
                                         placeholder="Select Property"
-                                        :is-ajax="true"
-                                        request-name="propertySelectList"
-                                        :ajax-preload="true"
+                                        :options="options.properties"
                                         :is-multiple="true"
-                                        :selected-item="selected.property_data?.map( d => d.id)"
+                                        :selected-item="formData.property"
                                         :selected-options="selected.property_data"
                                         :error-msg="errors?.property"
                                         @itemRemove="removePropertyItem"
                                     />
 
                             <input-tom-select
+                                        key="projects_select"
                                         class="h-full"
                                         v-model="formData.project"
                                         form-label="Project"
                                         placeholder="Select Project"
                                         :is-multiple="true"
-                                        :is-ajax="true"
-                                        request-name="projectSelectList"
-                                        :ajax-preload="true"
-                                        :selected-item="selected.project_data?.map(d => d.id)"
+                                        :options="options.projects"
+                                        :selected-item="formData.project"
                                         :selected-options="selected.project_data"
                                         :error-msg="errors?.project"
                                         @itemRemove="removeProjectItem"
@@ -194,14 +202,13 @@
                             </label>
 
                             <input-tom-select
+                                        key="lead_source_select"
                                         class="h-full"
                                         v-model="formData.lead_source"
                                         form-label="Lead Source"
                                         value-field="name"
                                         placeholder="Select Lead Source"
-                                        :is-ajax="true"
-                                        request-name="leadSourceSelectList"
-                                        :ajax-preload="true"
+                                        :options="options.lead_sources"
                                         :selected-item="formData.lead_source"
                                         :selected-options="formData.lead_source"
                                         :error-msg="errors?.lead_source"
@@ -234,27 +241,25 @@
                             </label>
 
                             <input-tom-select
+                                        key="lead_status_select"
                                         class="h-full"
                                         v-model="formData.lead_status"
                                         value-field="name"
                                         form-label="Lead Status"
                                         placeholder="Select Lead Status"
-                                        :is-ajax="true"
-                                        request-name="leadStatusSelectList"
-                                        :ajax-preload="true"
+                                        :options="options.lead_statuses"
                                         :selected-item="formData.lead_status"
                                         :selected-options="formData.lead_status"
                                         :error-msg="errors?.lead_status"
                                     />
 
                             <input-tom-select
+                                        key="assign_to_select"
                                         class="h-full"
                                         v-model="formData.assigned_to"
                                         form-label="Assign To"
                                         placeholder="Select Assign To"
-                                        :is-ajax="true"
-                                        request-name="companyMembersSelectList"
-                                        :ajax-preload="true"
+                                        :options="options.members"
                                         :selected-item="selected.assigned_to?.id"
                                         :selected-options="selected.assigned_to"
                                         :error-msg="errors?.assigned_to"
@@ -408,6 +413,7 @@ export default {
                 lead_status: null,
                 remark: null,
                 keywords: null,
+                property_type: [],
                 property: [],
                 project: [],
             },
@@ -430,6 +436,16 @@ export default {
                 assigned_to: [],
                 company_branch_data: [],
 
+            },
+            options:{
+                members: [],
+                company_branches: [],
+                property_types: [],
+                property_sub_types: [],
+                lead_sources: [],
+                lead_statuses: [],
+                properties: [],
+                projects: [],
             },
             show:{
                 commentForm: false
@@ -499,10 +515,23 @@ export default {
             const yup = Yup.object().shape( fields );
 
             return yup;
+        },
+        propertyTypeTomOptions () {
+            let options = {
+                    optgroups: this.options.property_types,
+                    optgroupField: 'property_type_id',
+                    render:{
+                        optgroup_header: ( data, escape ) => {
+                            return '<div class="border-gray-700 p-2 font-bold text-primary border-b mb-1">' + escape(data.label) + '</div>';
+                        }
+                    }
+                };
+            return options;
         }
     },
     methods:{
         init () {
+            this.loadSelectListData();
             if( this.$route?.params?.id ){
                 this.loadEditFormDetail( this.$route.params.id );
 
@@ -521,6 +550,25 @@ export default {
                                     this.selected.company_branch_data = this.formData.company_branch_data;
                                     this.selected.property_data = this.formData.property_data;
                                     this.selected.project_data = this.formData.project_data;
+                                }
+                            },
+                            (err) => {
+                                this.$toast.error('Err! There is something wrong. Please retry.');
+                            }
+                        ).finally(
+                            () => {
+                                this.$store.commit('setGlobalLoaderOff');
+                            }
+                        )
+        },
+
+        loadSelectListData(){
+            this.$store.commit('setGlobalLoaderOn');
+            this.$request.leadFormDropdownList()
+                        .then(
+                            ( res ) => {
+                                if( res.data ){
+                                    this.options = Object.assign( this.options, res.data);
                                 }
                             },
                             (err) => {

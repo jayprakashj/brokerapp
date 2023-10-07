@@ -32,9 +32,16 @@
          */
         localStorage.getItem("_x_darkMode_on") === "true" &&
         document.documentElement.classList.add("dark");
+        @if( auth()->user() )
         var authUser = @json( auth()->user()->getDataForVueApp() );
-        var userPermissions = @json( auth()->user()->getAllPermissions()->pluck('name') );
         var globalPermissions = @json( $globalPermissions ?? [] );
+        var userPermissions = @json( auth()->user()->getAllPermissions()->pluck('name') );
+        @else
+        var authUser = {};
+        var globalPermissions = [];
+        var userPermissions = [];
+        @endif
+        var enquiryTypes = @json( $enquiryTypes ?? [] );
     </script>
 
     @isset($head)

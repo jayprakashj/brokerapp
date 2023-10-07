@@ -31,6 +31,7 @@ import TaskView from  '@/components/tasks/TaskView.vue'
 import SiteVisitList from  '@/components/site_visits/SiteVisitList.vue'
 import SiteVisitCreate from  '@/components/site_visits/SiteVisitCreate.vue'
 import SiteVisitView from  '@/components/site_visits/SiteVisitView.vue'
+import EnquiryForm from  '@/components/enquiry/EnquiryForm.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -39,6 +40,15 @@ const routes = [
     {
         path: '/',
         redirect:'/dashboard'
+    },
+
+    {
+        path: '/customer/enquiry/:type',
+        name: 'customer_enquiry',
+        component: EnquiryForm,
+        meta: {
+            title: 'Customer Enquiry'
+        }
     },
     {
         path: '/dashboard',

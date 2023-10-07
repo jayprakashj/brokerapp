@@ -177,6 +177,22 @@ const apis = {
         return http.get('site-visits/lists/form-select-lists', config);
 
     },
+    leadFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/lists/form-select-lists', config);
+
+    },
+    enquiryFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('enquiry/form-select-lists', config);
+
+    },
     taskStatusDropdownList: ( params) => {
         let config = {};
         if( params ) {
@@ -504,6 +520,9 @@ const apis = {
     },
     deleteSiteVisit: ( id ) => {
         return http.post( `site-visits/${id}/delete` );
+    },
+    createEnquiryRequest: ( data ) => {
+        return http.post('submit/enquiry-form', data);
     },
 }
 export default apis;

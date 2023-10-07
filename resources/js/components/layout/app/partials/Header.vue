@@ -3,8 +3,31 @@
     <!-- App Header  -->
     <div class="header-container relative flex w-full bg-white dark:bg-navy-750 print:hidden">
         <!-- Header Items -->
-        <div class="flex w-full items-center justify-end">
+        <div class="flex w-full items-center justify-between">
             <!-- Left: Sidebar Toggle Button -->
+            <div >
+
+                <popper-dropdown :popper-btn-class="'!w-[9rem] space-x-2 bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90'">
+                    <template v-slot:popper_btn>
+                        <span>Enquiry Form</span>
+                        <i class="fa fa-caret-down"></i>
+                    </template>
+                    <template v-slot:default="popperSlotOptions">
+                        <div
+                            class="popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700">
+                            <ul>
+                                <li v-for="(item, index) in $enquiryTypes" :key="'enquiry_menu_'+index">
+                                    <router-link :to="'/customer/enquiry/' + item.id"
+                                        @click="popperSlotOptions.closePopper"
+                                        target="_blank"
+                                        class="flex  items-center px-3 h-8 pr-12 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100">Enquiry for {{ item.title }} <i class="ml-2 fa fa-external-link"></i></router-link>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </template>
+                </popper-dropdown>
+            </div>
             <div class="h-7 w-max" v-if="false">
                 <button
                     class="menu-toggle ml-0.5 flex h-7 w-7 flex-col justify-center space-y-1.5 text-primary outline-none focus:outline-none dark:text-accent-light/80"

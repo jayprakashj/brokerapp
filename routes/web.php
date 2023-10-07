@@ -38,6 +38,8 @@ Route::middleware('guest')->group( function () {
 });
 
 
+Route::get('customer/enquiry/{type?}', [ DashboardController::class, 'loadVueApp'])->name('vue_app.customer_enquiry');
+
 Route::middleware(['auth', 'set_default_company'])->group( function (){
     Route::get('{any?}/{slug?}/{id?}', [ DashboardController::class, 'loadVueApp'])->name('vue_app');
 });

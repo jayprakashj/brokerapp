@@ -32,6 +32,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::post('submit/enquiry-form', [LeadController::class, 'submitEnquiryForm'])->name('enquiry_form.submit');
+
+Route::get('enquiry/form-select-lists', [LeadController::class, 'enquiryFormSelectList'])->name('enquiry_form_lists');
+
 Route::middleware(['auth' , 'set_default_company' ])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -199,6 +204,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                                     ->name('select.company_banch');
                     Route::get('company-members/select-list', [ LeadController::class, 'companyMembersSelectList'])
                                     ->name('select.company_member');
+
+                    Route::get('lists/form-select-lists', [LeadController::class, 'createFormSelectList'])
+                                    ->name('create_form_lists');
 
                     Route::get('filter-data', [LeadController::class, 'getFilterData'])
                                         ->name('filter_data');

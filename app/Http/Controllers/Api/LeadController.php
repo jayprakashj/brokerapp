@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Enquiry\AddEnquiryRequest;
 use App\Http\Requests\Api\Lead\AddLeadCommentRequest;
 use App\Http\Requests\Api\Lead\AddLeadRequest;
 use App\Http\Resources\Api\CompanyBranch\BranchListForSelectList;
@@ -10,12 +11,16 @@ use App\Http\Resources\Api\Lead\LeadEditResource;
 use App\Http\Resources\Api\Lead\LeadPaginationResource;
 use App\Http\Resources\Api\Lead\LeadViewResource;
 use App\Http\Resources\Api\Member\MemberSelectListResource;
+use App\Http\Resources\Api\Property\PropertySubTypeListResource;
+use App\Http\Resources\Api\Property\PropertyTypeListForSelectList;
 use App\Models\CompanyBranch;
 use App\Models\Lead;
 use App\Models\LeadSource;
 use App\Models\LeadStatus;
 use App\Models\Project;
 use App\Models\Property;
+use App\Models\PropertySubTypeList;
+use App\Models\PropertyTypeList;
 use App\Models\User;
 use App\Services\Database\CompanyBranchClass;
 use App\Services\Database\MemberClass;
@@ -86,6 +91,26 @@ class LeadController extends Controller
         return response()->json( $response, $code );
     }
 
+    public function submitEnquiryForm ( AddEnquiryRequest $request ) {
+        if( in_array( $request->input('enquiry_type'), array_keys( Lead::ENQUIRY_TYPES ) ) ){
+
+            $response = [
+                'message' => 'Success! Enquiry form request submitted successfully.'
+            ];
+            $code = 200;
+
+            $this->leadClass->storeEnquiryForm( $request );
+        }else{
+
+            $response = [
+                'message' => 'Oops! Invalid request.'
+            ];
+            $code = 500;
+        }
+
+        return response()->json( $response, $code );
+    }
+
 
     public function delete ( Lead $lead ) {
         $code = 500;
@@ -149,6 +174,40 @@ class LeadController extends Controller
             'lead_statuses' => $leadStatus,
             'lead_sources' => $leadSource
 
+        ];
+        return response()->json( $data, 200 );
+    }
+
+    public function createFormSelectList ( Request $request ){
+        $members = User::select('id', 'name')->get();
+        $companyBranch = CompanyBranch::select('id', 'name')->get();
+        $propertyTypes = PropertyTypeList::select('id', 'name')->orderBy('name')->get();
+        $propertySubTypes = PropertySubTypeList::select('id', 'property_type_id', 'name')->get();
+        $leadSources = LeadSource::select('id', 'name')->get();
+        $leadStatuses = LeadStatus::select('id', 'name')->get();
+        $properties = Property::select('id', 'name')->get();
+        $projects = Project::select('id', 'title as name')->get();
+
+        $data = [
+            'members' => $members,
+            'company_branches' => $companyBranch,
+            'property_types' => PropertyTypeListForSelectList::collection( $propertyTypes ),
+            'property_sub_types' => PropertySubTypeListResource::collection($propertySubTypes),
+            'lead_sources' => $leadSources,
+            'lead_statuses' => $leadStatuses,
+            'properties' => $properties,
+            'projects' => $projects
+        ];
+        return response()->json( $data, 200 );
+    }
+
+    public function enquiryFormSelectList ( Request $request ){
+        $propertyTypes = PropertyTypeList::select('id', 'name')->orderBy('name')->get();
+        $propertySubTypes = PropertySubTypeList::select('id', 'property_type_id', 'name')->get();
+
+        $data = [
+            'property_types' => PropertyTypeListForSelectList::collection( $propertyTypes ),
+            'property_sub_types' => PropertySubTypeListResource::collection($propertySubTypes)
         ];
         return response()->json( $data, 200 );
     }

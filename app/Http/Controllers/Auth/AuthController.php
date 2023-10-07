@@ -9,6 +9,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserRegistrationRequest;
+use App\Models\Lead;
 use App\Models\User;
 use App\Services\Database\UserClass;
 use Exception;
@@ -27,7 +28,9 @@ class AuthController extends Controller
     }
 
     public function viewLogin () {
-        return view('auth.login');
+        $enquiryTypes = \Helper::convertArrayIntoAssociative( Lead::ENQUIRY_TYPES );
+
+        return view('auth.login', compact( 'enquiryTypes' ) );
     }
 
     public function viewRegister () {

@@ -2,6 +2,7 @@
     <label :class="classNames">
         <span v-if="formLabel">{{ formLabel }}</span>
         <select
+            :key="formLabel"
             ref="tomSelect"
             :placeholder="placeholder"
             class="mt-1.5 w-full"

@@ -34,6 +34,7 @@ class LeadCommentClass {
         if( !empty( $changesField ) ){
             $changesField = Arr::except( $changesField, 'updated_at');
             if( !empty( $changesField ) ){
+                $changesField = \Helper::convertChangesData( $changesField );
                 $comment = \Helper::combineKeyValue( $changesField );
                 $leadComment = new LeadComment();
                 $leadComment->user_id = \Helper::retrieveDefaultCompany()->owned_by ?? null;

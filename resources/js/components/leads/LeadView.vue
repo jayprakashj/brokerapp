@@ -29,6 +29,19 @@
                                 {{ formData.title }}
                             </p>
                         </label>
+                        <label class="block " >
+                            <span>Enquiry Type</span>
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                {{ formData.enquiry_type }}
+                            </p>
+                        </label>
+                        <label class="block " >
+                            <span>Property Type</span>
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                {{ formData.property_type }}
+                            </p>
+                        </label>
+
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
                         <label class="block" >
                             <span>Name</span>
