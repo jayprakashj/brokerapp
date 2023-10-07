@@ -86,10 +86,10 @@
                     Sign In
                 </button>
                 <div class="mt-4 text-center text-xs+" x-data="{open: false}" @click.outside="open = false">
-                    <button id="dropdownDefaultButton" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" x-on:click="open = !open">
+                    <button id="dropdownDefaultButton" class="btn bg-primary/10 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25" type="button" x-on:click="open = !open">
                         Enquiry Form <i class="ml-2.5 fa fa-caret-down"></i>
                     </button>
-                    <div id="dropdown" x-show="open" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-50 dark:bg-gray-700 m-auto mt-1" >
+                    <div id="dropdown" x-show="open" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-50 dark:bg-gray-700 m-auto mt-1 absolute ml-12" >
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 " aria-labelledby="dropdownDefaultButton">
                             @foreach ($enquiryTypes as $item)
 
