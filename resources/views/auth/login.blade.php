@@ -85,6 +85,21 @@
                     class="btn mt-10 h-10 w-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
                     Sign In
                 </button>
+                <div class="mt-4 text-center text-xs+" x-data="{open: false}" @click.outside="open = false">
+                    <button id="dropdownDefaultButton" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" x-on:click="open = !open">
+                        Enquiry Form <i class="ml-2.5 fa fa-caret-down"></i>
+                    </button>
+                    <div id="dropdown" x-show="open" class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-50 dark:bg-gray-700 m-auto mt-1" >
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200 " aria-labelledby="dropdownDefaultButton">
+                            @foreach ($enquiryTypes as $item)
+
+                            <li >
+                                <a href="{{ route('vue_app.customer_enquiry', ['type' => data_get( $item, 'id')]) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Enquiry for {{ data_Get( $item, 'title') }}</a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
                 {{-- <div class="mt-4 text-center text-xs+">
                     <p class="line-clamp-1">
                         <span>Dont have Account?</span>

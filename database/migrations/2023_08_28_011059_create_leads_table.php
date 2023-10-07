@@ -32,8 +32,11 @@ return new class extends Migration
             $table->string('purpose')->nullable();
             $table->string('interest_in')->nullable();
             $table->string('lead_source')->nullable();
+            $table->json('property_type')->nullable();
             $table->tinyInteger('is_private')->default(0)->comment('0: No, 1: Yes');
             $table->tinyInteger('is_protected')->default(0)->comment('0: No, 1: Yes');
+            $table->tinyInteger('is_enquiry')->default(0)->comment('0: No, 1: Yes');
+            $table->string('enquiry_type')->nullable();
             $table->string('lead_status')->nullable();
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by');
@@ -57,6 +60,8 @@ return new class extends Migration
             $table->index('lead_status');
             $table->index('is_private');
             $table->index('is_protected');
+            $table->index('is_enquiry');
+            $table->index('enquiry_type');
         });
     }
 

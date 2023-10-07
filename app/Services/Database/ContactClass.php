@@ -18,8 +18,17 @@ class ContactClass {
         $this->contactTypeClass = new ContactTypeClass;
     }
 
-    public function getDefaultList ( $perPage = 24 ) {
-        $lists = Contact::with('company')->paginate( $perPage );
+    public function getDefaultList ( $request ) {
+        $lists = Contact::with([
+                    'company',
+                    'updatedUser',
+                    'contactType',
+                    'customerType'
+                ])
+                ->customFilter( $request->input('filter') )
+                ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                ->paginate( $request->input('per_page', config('app.per_page') ) );
+
         return $lists;
     }
 

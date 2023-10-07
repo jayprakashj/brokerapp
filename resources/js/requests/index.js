@@ -177,6 +177,22 @@ const apis = {
         return http.get('site-visits/lists/form-select-lists', config);
 
     },
+    leadFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/lists/form-select-lists', config);
+
+    },
+    enquiryFormDropdownList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('enquiry/form-select-lists', config);
+
+    },
     taskStatusDropdownList: ( params) => {
         let config = {};
         if( params ) {
@@ -233,6 +249,14 @@ const apis = {
         return http.get('roles/lists', config);
 
     },
+    roleFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('roles/filter-data', config);
+
+    },
     getRoleDetail: ( id ) => {
         return http.get(`roles/${id}/edit` );
 
@@ -251,6 +275,14 @@ const apis = {
             config['params'] = params;
         }
         return http.get('members/lists', config);
+
+    },
+    memberFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('members/filter-data', config);
 
     },
     getMemberDetail: ( id ) => {
@@ -299,6 +331,15 @@ const apis = {
         return http.get('contacts/lists', config);
 
     },
+    contactFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('contacts/filter-data', config);
+
+    },
+
     getContactDetail: ( id ) => {
         return http.get(`contacts/${id}/edit` );
     },
@@ -314,6 +355,14 @@ const apis = {
             config['params'] = params;
         }
         return http.get('leads/lists', config);
+
+    },
+    leadFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('leads/filter-data', config);
 
     },
     getLeadDetail: ( id ) => {
@@ -337,6 +386,14 @@ const apis = {
             config['params'] = params;
         }
         return http.get('properties/lists', config);
+
+    },
+    propertyFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('properties/filter-data', config);
 
     },
     getPropertyDetail: ( id ) => {
@@ -388,6 +445,14 @@ const apis = {
         return http.get('projects/lists', config);
 
     },
+    projectFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('projects/filter-data', config);
+
+    },
     getProjectDetail: ( id ) => {
         return http.get(`projects/${id}/edit` );
     },
@@ -406,6 +471,14 @@ const apis = {
             config['params'] = params;
         }
         return http.get('tasks/lists', config);
+
+    },
+    taskFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('tasks/filter-data', config);
 
     },
     getTaskDetail: ( id ) => {
@@ -428,6 +501,14 @@ const apis = {
         return http.get('site-visits/lists', config);
 
     },
+    taskFilterData: ( params) => {
+        let config = {};
+        if( params ) {
+            config['search'] = params;
+        }
+        return http.get('site-visits/filter-data', config);
+
+    },
     getSiteVisitDetail: ( id ) => {
         return http.get(`site-visits/${id}/edit` );
     },
@@ -439,6 +520,9 @@ const apis = {
     },
     deleteSiteVisit: ( id ) => {
         return http.post( `site-visits/${id}/delete` );
+    },
+    createEnquiryRequest: ( data ) => {
+        return http.post('submit/enquiry-form', data);
     },
 }
 export default apis;

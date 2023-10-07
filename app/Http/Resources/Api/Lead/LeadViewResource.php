@@ -18,6 +18,7 @@ class LeadViewResource extends JsonResource
         $data = [
             'id' => $this->id,
             'title' => $this->title,
+            'enquiry_type' => $this->enquiry_type ?? '-',
             'name' => $this->customer_name,
             'mobile' => $this->customer_mobile,
             'email' => $this->customer_email  ?? 'N/A',
@@ -41,6 +42,7 @@ class LeadViewResource extends JsonResource
             'created_at_time' => $this->created_at->format('d-m-Y h:i a'),
             'updated_at_time' => $this->created_at->format('d-m-Y h:i a'),
             'comments' => LeadCommentsResource::collection( $this->latestComments ),
+            'property_type' => $this->property_type ? implode(', ', $this->property_type ) : 'N/A',
         ];
 
         if( $this->properties->count() ){

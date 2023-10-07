@@ -81,7 +81,8 @@
                                             v-model="formData.property_type"
                                             form-label="Property Type"
                                             placeholder="Select Property Type"
-                                            :options="options.property_types"
+                                            :tomOptions="propertyTypeTomOptions"
+                                            :options="options.property_sub_types"
                                             :selected-item="selected.property_type"
                                             :error-msg="errors?.property_type"
                                         />
@@ -810,6 +811,7 @@ export default {
             errors: {},
             options:{
                 'property_types': [],
+                'property_sub_types': [],
                 'property_transactions': [],
                 'oroperty_furnishes': [],
                 'property_facing_list': [],
@@ -945,6 +947,18 @@ export default {
         },
         formDataImagesKeys () {
             return Object.keys( this.formData.images );
+        },
+        propertyTypeTomOptions () {
+            let options = {
+                    optgroups: this.options.property_types,
+                    optgroupField: 'property_type_id',
+                    render:{
+                        optgroup_header: ( data, escape ) => {
+                            return '<div class="border-gray-700 p-2 font-bold text-primary border-b mb-1">' + escape(data.label) + '</div>';
+                        }
+                    }
+                };
+            return options;
         }
     },
     methods:{

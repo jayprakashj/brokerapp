@@ -24,7 +24,9 @@ class PropertyListResource extends JsonResource
             'property_type' => $this->property_type ?? 'N/A',
             'property_transaction' => $this->property_transaction ?? 'N/A',
             'is_verified' => $this->is_verified ?? false,
-
+            'assign_to' => $this->assignToUser->name ?? 'Unassigned',
+            'updated_by' => $this->updatedUser->name ?? 'N/A',
+            'updated_at_time' => $this->updated_at->format('d-m-Y h:i a'),
 
         ];
 

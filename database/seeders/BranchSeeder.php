@@ -24,21 +24,33 @@ class BranchSeeder extends Seeder
 
         $users = User::with('defaultCompany')->typeCompany()->get();
         foreach( $users as $item ){
-            for($i = 0; $i < 1; $i++){
-                $branch = new CompanyBranch();
-                $branch->user_id = $item->id;
-                $branch->created_by = $item->id;
-                $branch->updated_by = $item->id;
-                $branch->company_id = $item->defaultCompany->id;
-                $branch->name = 'Head Branch';
-                $branch->email = Str::slug($faker->text( 12 ), '_' ) . '@mailinator.com';
-                $branch->mobile = $faker->numberBetween( 1111111111, 9999999999);
-                $branch->address = $faker->text( 22 );
-                $branch->city = $faker->text( 10 );
-                $branch->state = $faker->text( 6 );
-                $branch->save();
+            $branch = new CompanyBranch();
+            $branch->user_id = $item->id;
+            $branch->created_by = $item->id;
+            $branch->updated_by = $item->id;
+            $branch->company_id = $item->defaultCompany->id;
+            $branch->name = 'Head Branch';
+            $branch->email = Str::slug($faker->text( 12 ), '_' ) . '@mailinator.com';
+            $branch->mobile = $faker->numberBetween( 1111111111, 9999999999);
+            $branch->address = $faker->text( 22 );
+            $branch->city = $faker->text( 10 );
+            $branch->state = $faker->text( 6 );
+            $branch->save();
+            // for($i = 0; $i < 10; $i++){
+            //     $branch = new CompanyBranch();
+            //     $branch->user_id = $item->id;
+            //     $branch->created_by = $item->id;
+            //     $branch->updated_by = $users->random()->id;
+            //     $branch->company_id = $item->defaultCompany->id;
+            //     $branch->name = $faker->word();
+            //     $branch->email = Str::slug($faker->text( 12 ), '_' ) . '@mailinator.com';
+            //     $branch->mobile = $faker->numberBetween( 1111111111, 9999999999);
+            //     $branch->address = $faker->text( 22 );
+            //     $branch->city = $faker->text( 10 );
+            //     $branch->state = $faker->text( 6 );
+            //     $branch->save();
 
-            }
+            // }
         }
     }
 }

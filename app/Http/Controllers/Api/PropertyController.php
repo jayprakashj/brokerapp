@@ -12,17 +12,21 @@ use App\Http\Resources\Api\Property\PropertyFurnishListForSelectList;
 use App\Http\Resources\Api\Property\PropertyImageTypeListForSelectList;
 use App\Http\Resources\Api\Property\PropertyObligationListForSelectList;
 use App\Http\Resources\Api\Property\PropertyPaginationResource;
+use App\Http\Resources\Api\Property\PropertySubTypeListResource;
 use App\Http\Resources\Api\Property\PropertyTransactionListForSelectList;
 use App\Http\Resources\Api\Property\PropertyTypeListForSelectList;
 use App\Http\Resources\Api\Property\PropertyViewResource;
+use App\Models\CompanyBranch;
 use App\Models\Document;
 use App\Models\Property;
 use App\Models\PropertyFacingList;
 use App\Models\PropertyFurnishList;
 use App\Models\PropertyImageTypeList;
 use App\Models\PropertyObligationList;
+use App\Models\PropertySubTypeList;
 use App\Models\PropertyTransactionList;
 use App\Models\PropertyTypeList;
+use App\Models\User;
 use App\Services\Database\PropertyClass;
 use Illuminate\Http\Request;
 
@@ -41,7 +45,7 @@ class PropertyController extends Controller
         if( $user->isCompanyAdmin() ){
             $onlyAssignedTo = false;
         }
-        $list = $this->propertyClass->getDefaultCompanyProperties( $request->input('per_page', 24 ), $onlyAssignedTo );
+        $list = $this->propertyClass->getDefaultCompanyProperties( $request, $onlyAssignedTo );
         return new PropertyPaginationResource( $list );
     }
 
@@ -110,7 +114,8 @@ class PropertyController extends Controller
 
 
     public function createFormSelectList ( Request $request ){
-        $propertyTypes = PropertyTypeList::select('id', 'name')->get();
+        $propertyTypes = PropertyTypeList::select('id', 'name')->orderBy('name')->get();
+        $propertySubTypes = PropertySubTypeList::select('id', 'property_type_id', 'name')->get();
         $propertyTransactions = PropertyTransactionList::select('id', 'name')->get();
         $propertyFurnishes = PropertyFurnishList::select('id', 'name')->get();
         $propertyFacingList = PropertyFacingList::select('id', 'name')->get();
@@ -119,11 +124,33 @@ class PropertyController extends Controller
 
         $data = [
             'property_types' => PropertyTypeListForSelectList::collection( $propertyTypes ),
+            'property_sub_types' => PropertySubTypeListResource::collection($propertySubTypes),
             'property_transactions' => PropertyTransactionListForSelectList::collection( $propertyTransactions ),
             'property_furnishes' => PropertyFurnishListForSelectList::collection( $propertyFurnishes ),
             'property_facing_list' => PropertyFacingListForSelectList::collection( $propertyFacingList ),
             'property_obligations' => PropertyObligationListForSelectList::collection( $propertyObligations ),
             'property_img_types' => PropertyImageTypeListForSelectList::collection( $propertyImgTypes ),
+        ];
+        return response()->json( $data, 200 );
+    }
+
+
+    public function getPropertyFilterData ( Request $request ){
+        $propertyTypes = PropertyTypeList::select('id', 'name')->orderBy('name')->get();
+        $propertySubTypes = PropertySubTypeList::select('id', 'property_type_id', 'name')->get();
+        $propertyTransactions = PropertyTransactionList::select('id', 'name')->get();
+        $members = User::select('id', 'name')->get();
+        $companyBranch = CompanyBranch::select('id', 'name')->get();
+        $isVerifiedList = \Helper::convertArrayIntoAssociative( Property::IS_VERIFIED_LIST );
+
+        $data = [
+            'property_types' => PropertyTypeListForSelectList::collection( $propertyTypes ),
+            'property_sub_types' => PropertySubTypeListResource::collection($propertySubTypes),
+            'property_transactions' => PropertyTransactionListForSelectList::collection( $propertyTransactions ),
+            'members' => $members,
+            'company_branches' => $companyBranch,
+            'is_verified_list' => $isVerifiedList
+
         ];
         return response()->json( $data, 200 );
     }

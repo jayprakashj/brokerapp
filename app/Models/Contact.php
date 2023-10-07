@@ -49,6 +49,101 @@ class Contact extends Model implements HasMedia
         return $this->belongsTo( CustomerType::class, 'customer_type_id', 'id');
     }
 
+    public function scopeCustomSort( $q, $sortColumn, $sortOrder = 'asc' ){
+        if( !empty( $sortColumn ) ){
+            switch( $sortColumn ){
+                case 'name':
+                    $q->orderBy( 'name', $sortOrder);
+                    break;
+                case 'contact_type':
+                    $q->orderBy( ContactType::select('name')->whereColumn('id', 'contacts.contact_type_id')->limit(1) , $sortOrder);
+                    break;
+                case 'customer_type':
+                    $q->orderBy( CustomerType::select('name')->whereColumn('id', 'contacts.customer_type_id')->limit(1) , $sortOrder);
+                    break;
+                case 'updated_by':
+                    $q->orderBy( User::select('name')->whereColumn('id', 'contacts.updated_by')->limit(1) , $sortOrder);
+                    break;
+                case 'updated_at':
+                    $q->orderBy( 'updated_at', $sortOrder);
+                    break;
+                case 'city':
+                    $q->orderBy( 'city' , $sortOrder);
+                    break;
+                case 'email':
+                    $q->orderBy( 'email' , $sortOrder);
+                    break;
+                case 'mobile':
+                    $q->orderBy( 'mobile' , $sortOrder);
+                    break;
+            }
+        }
+
+        return $q;
+    }
+
+    public function scopeCustomFilter( $q, $filter ){
+
+        if( !empty( $filter ) ){
+            $name = data_get( $filter, 'name' );
+            $mobile = data_get( $filter, 'mobile' );
+            $email = data_get( $filter, 'email' );
+            $city = data_get( $filter, 'city' );
+            $gender = data_get( $filter, 'gender' );
+            $contactType = data_get( $filter, 'contact_type' );
+            $customerType = data_get( $filter, 'customer_type' );
+            if( !empty( $name ) ){
+                $q->filterNameLike( $name );
+            }
+            if( !empty( $mobile ) ){
+                $q->filterMobileLike( $mobile );
+            }
+            if( !empty( $email ) ){
+                $q->filterEmailLike( $email );
+            }
+            if( !empty( $city ) ){
+                $q->filterCityLike( $city );
+            }
+            if( !empty( $gender ) ){
+                $q->filterGender( $gender );
+            }
+            if( !empty( $contactType ) ){
+                $q->filterContactType( $contactType );
+            }
+            if( !empty( $customerType ) ){
+                $q->filterCustomerType( $customerType );
+            }
+        }
+        return $q;
+    }
+
+    public function scopeFilterNameLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('name', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterCityLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('city', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterMobileLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('mobile', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterEmailLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('email', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterGender ( $q, $value, $boolean = 'and' ){
+        return $q->where('gender', '=', $value, $boolean);
+    }
+
+    public function scopeFilterContactType ( $q, $value, $boolean = 'and' ){
+        return $q->where('contact_type_id', '=', $value, $boolean);
+    }
+
+    public function scopeFilterCustomerType ( $q, $value, $boolean = 'and' ){
+        return $q->where('customer_type_id', '=', $value, $boolean);
+    }
 
     public function getLogoUrlAttribute () {
         return $this->getLogoUrl();

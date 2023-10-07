@@ -4,9 +4,10 @@ import permission from '@/constants/permissions' ;
 export default {
     install ( app, options) {
         app.config.globalProperties.$request = requests;
-        app.config.globalProperties.$perPage = 24;
+        app.config.globalProperties.$perPage = 8;
         app.config.globalProperties.$authUser = window.authUser;
         app.config.globalProperties.$permissions = permission;
+        app.config.globalProperties.$enquiryTypes = enquiryTypes;
         app.config.globalProperties.$genders = [
             {
                 id: 'male',

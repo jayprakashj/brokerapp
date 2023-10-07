@@ -50,7 +50,7 @@ class AddPropertyRequest extends FormRequest
             ],
             'property_type' => [
                 'required',
-                Rule::exists('property_type_lists', 'name')
+                Rule::exists('property_sub_type_lists', 'name')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
             'property_transaction' => [

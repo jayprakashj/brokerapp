@@ -22,7 +22,7 @@ class DocumentController extends Controller
 
     public function index ( Request $request ) {
 
-        $lists = $this->documentClass->getDefaultCompanyDocuments( $request->input('per_page', 24 ));
+        $lists = $this->documentClass->getDefaultCompanyDocuments( $request );
         return new DocumentPaginationResource( $lists );
     }
 

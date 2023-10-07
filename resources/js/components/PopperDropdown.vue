@@ -2,7 +2,8 @@
     <div :class="className" v-click-outside="closePopper">
         <button ref="popperRef"
             @click="isShowPopper = !isShowPopper"
-            class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+            class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+            :class="popperBtnClass">
             <slot name="popper_btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
@@ -31,6 +32,10 @@ export default {
             default: 'inline-flex popper-ref'
         },
         popperRootClass:{
+            type: String,
+            default: ''
+        },
+        popperBtnClass:{
             type: String,
             default: ''
         },

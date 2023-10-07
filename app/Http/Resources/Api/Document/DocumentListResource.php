@@ -18,7 +18,9 @@ class DocumentListResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name ?? 'N/A',
             'company_name' => $this->company->name ?? 'N/A',
-            'description' => $this->description ?? 'N/A'
+            'description' => $this->description ?? 'N/A',
+            'updated_by' => $this->updatedUser->name ?? 'N/A',
+            'updated_at_time' => $this->updated_at->format('d-m-Y h:i a'),
 
         ];
 

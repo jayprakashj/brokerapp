@@ -32,6 +32,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::post('submit/enquiry-form', [LeadController::class, 'submitEnquiryForm'])->name('enquiry_form.submit');
+
+Route::get('enquiry/form-select-lists', [LeadController::class, 'enquiryFormSelectList'])->name('enquiry_form_lists');
+
 Route::middleware(['auth' , 'set_default_company' ])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -73,6 +78,8 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                     Route::post('{role}/delete', [RoleManagementController::class, 'delete'])
                             ->middleware('permission:Remove Role')
                             ->name('delete');
+                    Route::get('filter-data', [RoleManagementController::class, 'getFilterData'])
+                            ->name('filter_data');
 
                 });
 
@@ -101,6 +108,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                     Route::get('roles', [MemberController::class, 'getRoles'])
                                     ->name('members_roles_list');
+
+                    Route::get('filter-data', [MemberController::class, 'getFilterData'])
+                                            ->name('filter_data');
 
                 });
 
@@ -151,6 +161,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
                     Route::get('customer-types/select-list', [ ContactController::class, 'customerTypeSelectList'])
                                     ->name('select.customer_types');
+
+                    Route::get('filter-data', [ContactController::class, 'getFilterData'])
+                                            ->name('filter_data');
                 });
 
         Route::prefix('leads')
@@ -191,6 +204,12 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
                                     ->name('select.company_banch');
                     Route::get('company-members/select-list', [ LeadController::class, 'companyMembersSelectList'])
                                     ->name('select.company_member');
+
+                    Route::get('lists/form-select-lists', [LeadController::class, 'createFormSelectList'])
+                                    ->name('create_form_lists');
+
+                    Route::get('filter-data', [LeadController::class, 'getFilterData'])
+                                        ->name('filter_data');
                 });
 
 
@@ -228,6 +247,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
 
             Route::get('select-lists/get', [PropertyController::class, 'getPropertyForSelectList'])
                             ->name('get_select_lists');
+
+            Route::get('filter-data', [PropertyController::class, 'getPropertyFilterData'])
+                            ->name('filter_data');
 
             // Route::post('{Property}/delete', [PropertyController::class, 'delete'])
             //                 ->middleware('permission:Remove Property')
@@ -290,6 +312,8 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             // Route::post('{project}/delete', [ProjectController::class, 'delete'])
             //                 ->middleware('permission:Remove Project')
             //                 ->name('delete');
+            Route::get('filter-data', [ProjectController::class, 'getFilterData'])
+                                        ->name('filter_data');
         });
 
         Route::prefix('tasks')
@@ -317,6 +341,8 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             // Route::post('{task}/delete', [TaskController::class, 'delete'])
             //                 ->middleware('permission:Remove Task')
             //                 ->name('delete');
+            Route::get('filter-data', [TaskController::class, 'getFilterData'])
+                                ->name('filter_data');
         });
 
         Route::prefix('site-visits')
@@ -343,6 +369,9 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             // Route::post('{siteVisit}/delete', [SiteVisitController::class, 'delete'])
             //                 ->middleware('permission:Remove Task')
             //                 ->name('delete');
+
+            Route::get('filter-data', [SiteVisitController::class, 'getFilterData'])
+                                ->name('filter_data');
         });
 
     });

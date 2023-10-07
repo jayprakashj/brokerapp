@@ -17,13 +17,15 @@ class ProjectClass {
     {
     }
 
-    public function getDefaultCompanyProjects ( $perPage = 24, $onlyAssignedTo = false) {
+    public function getDefaultCompanyProjects ( $request, $onlyAssignedTo = false) {
 
-        $lists = Project::query()->with(['company','companyBranch']);
+        $lists = Project::query()->with(['company','companyBranch', 'assignToUser','updatedUser']);
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignToAuth();
         }
-        $lists = $lists->paginate( $perPage );
+        $lists = $lists->customFilter( $request->input('filter') )
+                        ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                        ->paginate( $request->input('per_page', config('app.per_page') ) );
 
         return $lists;
     }

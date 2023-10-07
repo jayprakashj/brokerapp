@@ -22,10 +22,13 @@ class SiteVisitListResource extends JsonResource
             'property' => (!is_null( $this->property ) ? $this->property->name : 'N/A'),
             'project' => (!is_null( $this->project ) ? $this->project->title : 'N/A'),
             'assign_user' => $this->assignToUser->name ?? 'N/A',
+            'source_manager' => $this->sourceManagerUser->name ?? 'N/A',
+            'closing_manager' => $this->closingManagerUser->name ?? 'N/A',
             'visit_type' => $this->visit_type ?? 'N/A',
             'time_in' => $this->time_in ?? 'N/A',
             'time_out' => $this->time_out ?? 'N/A',
-
+            'location' => $this->location ?? 'N/A',
+            'updated_at_time' => $this->updated_at->format('d-m-Y h:i a'),
         ];
 
         return $data;

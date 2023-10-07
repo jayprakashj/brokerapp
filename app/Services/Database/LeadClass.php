@@ -2,6 +2,8 @@
 
 namespace App\Services\Database;
 
+use App\Models\Company;
+use App\Models\CompanyBranch;
 use App\Models\User;
 use App\Models\Lead;
 use App\Models\LeadSource;
@@ -19,7 +21,7 @@ class LeadClass {
         $this->leadCommentClass = new LeadCommentClass;
     }
 
-    public function getDefaultCompanyLeads ( $perPage = 24, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
+    public function getDefaultCompanyLeads ( $request, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
         $lists = Lead::query()->with(['companyBranch', 'properties', 'projects', 'assignToUser', 'updatedUser']);
 
@@ -29,11 +31,60 @@ class LeadClass {
             $lists->createdByAuth();
         }
 
-        $lists = $lists->paginate( $perPage );
+        $lists = $lists->customFilter( $request->input('filter') )
+                    ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                    ->paginate( $request->input('per_page', config('app.per_page') ) );
 
         return $lists;
     }
 
+
+    public function storeEnquiryForm ( $request ) {
+
+        $company = Company::first();
+        $contact =  $this->findOrCreateContact( $company->owner, $request );
+        $lead = Lead::where('contact_id', $contact->id)->first();
+        if( is_null( $lead ) ){
+            $lead = new Lead();
+        }
+        $lead->company_id = $company->id ?? null;
+        $lead->company_branch_id = CompanyBranch::first()->id;
+
+        $lead->user_id = $company->owned_by;
+        $lead->created_by = $company->owned_by;
+        $lead->updated_by = $company->owned_by;
+
+        $lead->contact_id = $contact->id;
+
+        $lead->is_enquiry = 1;
+        $lead->enquiry_type = Lead::ENQUIRY_TYPES[ $request->enquiry_type ];
+
+        $lead->title = 'Enquiry / '. $lead->enquiry_type;
+        $lead->customer_name = $request->input('name');
+        $lead->customer_mobile = $request->input('mobile');
+        $lead->customer_email = $request->input('email');
+        $lead->customer_city = $request->input('city');
+        $lead->remark = $request->input('remark');
+        $lead->interest_in = $request->input('interest_in');
+        $lead->budget = $request->input('budget');
+        $lead->property_type = $request->input('property_type');
+
+        $lead->lead_source = Lead::DEFAULT_LEAD_SOURCE;
+        $lead->lead_status = Lead::DEFAULT_LEAD_STATUS;
+
+        $lead->save();
+
+        if( !$lead->wasRecentlyCreated ){
+            $this->leadCommentClass->createWithLeadUpdate( $lead, $company->owner );
+            $lead->refresh();
+
+        }else{
+            $this->leadCommentClass->create( $lead, $request, $company->owner );
+
+        }
+
+        return $lead;
+    }
 
     public function create ( User $user, $request ) {
 
@@ -90,6 +141,8 @@ class LeadClass {
         $lead->lead_source = LeadSource::whereName( $request->input('lead_source') )->first()->name;
         $lead->lead_status = LeadStatus::whereName( $request->input('lead_status') )->first()->name;
         $lead->followup_date = $request->input('followup_date');
+        $lead->property_type = $request->input('property_type');
+
         if( $lead->isDirty( 'assigned_to' ) ){
             $lead->assigned_date = today();
         }

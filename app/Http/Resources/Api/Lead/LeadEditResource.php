@@ -35,6 +35,9 @@ class LeadEditResource extends JsonResource
             'followup_date' => $this->followup_date,
             'assigned_date' => $this->assigned_date,
             'comments' => LeadCommentsResource::collection( $this->latestComments ),
+            'property_type' => $this->property_type,
+            'property' => [],
+            'project' => [],
         ];
 
         if( !is_null( $this->company_branch_id ) ){
@@ -45,8 +48,10 @@ class LeadEditResource extends JsonResource
         }
         if( $this->properties->count() ){
             $data['property_data'] = $this->properties->map->only(['id', 'name']);
+            $data['property'] = $this->properties->pluck('id');
         }
         if( $this->projects->count() ){
+            $data['project'] = $this->projects->pluck('id');
             $data['project_data'] = $this->projects->map( function( $item ) {
                                         $item->name = $item->title;
                                         return $item->only(['id', 'name']);

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Relations\CompanyRelation;
 use App\Models\Relations\CreatedUpdatedUserRelation;
 use App\Models\Relations\OwnerUserRelation;
+use App\Models\Scopes\CommonFilter;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,7 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Project extends Model implements HasMedia
 {
-    use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes, InteractsWithMedia;
+    use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes, InteractsWithMedia, CommonFilter;
 
 
     /**
@@ -77,6 +78,64 @@ class Project extends Model implements HasMedia
 
     public function scopeCreatedByAuth ( $q, $boolean = 'and' ){
         return $q->where('created_by','=', auth()->id(), $boolean );
+    }
+
+    public function scopeCustomSort( $q, $sortColumn, $sortOrder = 'asc' ){
+        if( !empty( $sortColumn ) ){
+            switch( $sortColumn ){
+                case 'title':
+                    $q->orderBy( 'title', $sortOrder);
+                    break;
+                case 'project_no':
+                    $q->orderBy( 'project_no', $sortOrder);
+                    break;
+                case 'city':
+                    $q->orderBy( 'city', $sortOrder);
+                    break;
+                case 'company_branch':
+                    $q->orderBy( CompanyBranch::select('name')->whereColumn('id', 'projects.company_branch_id')->limit(1) , $sortOrder);
+                    break;
+                case 'assign_to':
+                    $q->orderBy( User::select('name')->whereColumn('id', 'projects.assign_to')->limit(1) , $sortOrder);
+                    break;
+                case 'updated_at':
+                    $q->orderBy( 'updated_at', $sortOrder);
+                    break;
+            }
+        }
+
+        return $q;
+    }
+
+    public function scopeCustomFilter( $q, $filter ){
+
+        if( !empty( $filter ) ){
+            $title = data_get( $filter, 'title' );
+            $companyBranch = data_get( $filter, 'company_branch' );
+            $assignTo = data_get( $filter, 'assign_to' );
+            $city = data_get( $filter, 'city' );
+            if( !empty( $title ) ){
+                $q->filterTitleLike( $title );
+            }
+            if( !empty( $companyBranch ) ){
+                $q->filterCompanyBranch( $companyBranch );
+            }
+            if( !is_null( $assignTo ) ){
+                $q->filterAssignTo( $assignTo );
+            }
+            if( !empty( $city ) ){
+                $q->filterCityLike( $city );
+            }
+        }
+        return $q;
+    }
+
+    public function scopeFilterTitleLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('title', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterCityLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('city', 'LIKE', '%'. $value . '%', $boolean);
     }
 
     public function scopeCreatedByOrAssignToAuth ( $q ){

@@ -15,8 +15,8 @@ class PropertyTypeListForSelectList extends JsonResource
     public function toArray($request)
     {
         $data = [
-            'id' => $this->name,
-            'name' => $this->name,
+            'value' => $this->id,
+            'label' => $this->name,
 
         ];
 

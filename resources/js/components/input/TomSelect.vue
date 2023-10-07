@@ -2,6 +2,7 @@
     <label :class="classNames">
         <span v-if="formLabel">{{ formLabel }}</span>
         <select
+            :key="formLabel"
             ref="tomSelect"
             :placeholder="placeholder"
             class="mt-1.5 w-full"
@@ -105,6 +106,9 @@ export default {
         options( nv ){
             this.refreshOptions();
         },
+        tomOptions( nv ){
+            this.init();
+        },
         selectedItem ( nv ) {
             this.setSelectedValues()
         },
@@ -122,6 +126,9 @@ export default {
             )
         },
         initTomSelect(){
+            if( this.tomSelectInstance ){
+                this.tomSelectInstance.destroy();
+            }
             let renderOptions;
             var defaultOptions = {
                 valueField: this.valueField,
@@ -235,15 +242,22 @@ export default {
             if(this.selectedItem ){
 
                 if( Array.isArray( this.selectedItem ) ){
-                    this.selectedItem.map( d => {
+                    if( this.selectedItem?.length ){
 
-                        this.tomSelectInstance.addItem( d );
-                    })
+                        this.selectedItem.map( d => {
+
+                            this.tomSelectInstance.addItem( d );
+                        })
+                    }else{
+                        this.tomSelectInstance.clear();
+                    }
 
                 }else{
                     this.tomSelectInstance.addItem( this.selectedItem  );
 
                 }
+            }else{
+                this.tomSelectInstance.clear();
             }
         }
     }

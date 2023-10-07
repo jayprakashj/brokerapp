@@ -14,10 +14,12 @@ class DocumentClass {
     {
     }
 
-    public function getDefaultCompanyDocuments ( $perPage = 24 ) {
+    public function getDefaultCompanyDocuments ( $request ) {
 
-        $lists = Document::query()->with(['company'])->whereNull('property_id');
-        $lists = $lists->paginate( $perPage );
+        $lists = Document::query()->with(['company','updatedUser'])->whereNull('property_id');
+        $lists = $lists->customFilter( $request->input('filter') )
+                        ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                        ->paginate( $request->input('per_page', config('app.per_page') ) );
 
         return $lists;
     }

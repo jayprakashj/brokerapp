@@ -21,4 +21,9 @@ class PropertyTypeList extends Model
         static::addGlobalScope(new CompanyIdScope);
     }
 
+
+    public function subTypes () {
+        return $this->hasMany( PropertySubTypeList::class, 'property_type_id', 'id');
+    }
+
 }

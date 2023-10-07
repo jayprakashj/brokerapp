@@ -19,6 +19,8 @@ class PropertyPaginationResource extends JsonResource
             'data' => PropertyListResource::collection( $this->items() ),
             'per_page' => $this->perPage(),
             'total_records' => $this->total(),
+            'first_item' => $this->firstItem(),
+            'last_item' => $this->lastItem(),
         ];
 
         return $data;

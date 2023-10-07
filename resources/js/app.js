@@ -150,6 +150,9 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 import ClickOutside from "@/directives/clickOutside";
 
+import 'flatpickr/dist/flatpickr.css';
+// import 'flatpickr/dist/themes/material_blue.css';
+
 if( document.getElementById("broker-app")){
 
     const app = createApp( App )

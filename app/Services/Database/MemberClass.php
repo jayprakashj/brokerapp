@@ -18,14 +18,17 @@ class MemberClass {
     //     $this->userClass = new UserClass;
     // }
 
-    public function getDefaultCompanyMembers ( $perPage = 24 ) {
+    public function getDefaultCompanyMembers ( $request ) {
         $members = CompanyMember::with([
                             'company',
                             'companyBranch',
                             'memberUser',
                             'role'
-                        ])->currentDefaultCompany()
-                        ->paginate( $perPage );
+                        ])
+                        ->currentDefaultCompany()
+                        ->customFilter( $request->input('filter') )
+                        ->customSort( $request->input('sort_by'), $request->input('sort_order'))
+                        ->paginate( $request->input('per_page', config('app.per_page') ) );
         return $members;
     }
 

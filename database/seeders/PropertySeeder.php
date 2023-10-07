@@ -9,8 +9,8 @@ use App\Models\Property;
 use App\Models\PropertyFacingList;
 use App\Models\PropertyFurnishList;
 use App\Models\PropertyObligationList;
+use App\Models\PropertySubTypeList;
 use App\Models\PropertyTransactionList;
-use App\Models\PropertyTypeList;
 use App\Models\Scopes\CompanyIdScope;
 use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
@@ -31,14 +31,14 @@ class PropertySeeder extends Seeder
         $faker = app( Faker::class );
 
         $companyBranches = CompanyBranch::withoutGlobalScope(CompanyIdScope::class)->get();
-        $propertyTypes = PropertyTypeList::withoutGlobalScope(CompanyIdScope::class)->get();
+        $propertyTypes = PropertySubTypeList::withoutGlobalScope(CompanyIdScope::class)->get();
         $propertyTransactions = PropertyTransactionList::withoutGlobalScope(CompanyIdScope::class)->get();
         $propertyFurnishes = PropertyFurnishList::withoutGlobalScope(CompanyIdScope::class)->get();
         $propertyFacings = PropertyFacingList::withoutGlobalScope(CompanyIdScope::class)->get();
         $propertyObligation = PropertyObligationList::withoutGlobalScope(CompanyIdScope::class)->get();
-        
+
         $users = User::with('defaultCompany')->typeCompany()->get();
-        for($i = 0; $i < 8; $i++){
+        for($i = 0; $i < 20; $i++){
             $item = $users->random();
             $paragraphs = $faker->paragraphs(rand(2, 6));
             $content = '<b>' . $faker->text( 10 ) . '</b>';
@@ -49,19 +49,19 @@ class PropertySeeder extends Seeder
             $obj = new Property();
             $obj->user_id = $item->id;
             $obj->created_by = $item->id;
-            $obj->updated_by = $item->id;
+            $obj->updated_by = $users->random()->id;
             $obj->company_id = $item->defaultCompany->id;
-            
+
             $obj->name = $faker->text( 10 );
             $obj->company_branch_id = $companyBranches->random()->id;
-            
+
             $obj->assign_to = $users->random()->id;
             $obj->property_type = $propertyTypes->random()->name;
             $obj->property_transaction = $propertyTransactions->random()->name;
             $obj->property_furnishing = $propertyFurnishes->random()->name;
             $obj->property_facing = $propertyFacings->random()->name;
             $obj->property_obligation = $propertyObligation->random()->name;
-            
+
             $obj->building_name = $faker->text( 10 );
             $obj->unit_no = $faker->text( 6 );
             $obj->is_verified = $faker->boolean();

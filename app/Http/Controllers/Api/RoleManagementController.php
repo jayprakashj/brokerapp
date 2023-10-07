@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CompanyCreateRequest;
 use App\Http\Requests\RoleCreateRequest;
 use App\Http\Resources\Api\Permission\GroupPermissionListResource;
+use App\Http\Resources\Api\Permission\PermissionResource;
 use App\Http\Resources\Api\Role\RoleEditResource;
 use App\Http\Resources\Api\Role\RolePaginationResource;
-use App\Models\Company;
 use App\Models\SpatiePermission;
+use App\Models\User;
 use App\Services\Database\RoleClass;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -24,7 +24,7 @@ class RoleManagementController extends Controller
     }
 
     public function index ( Request $request ) {
-        $roles = $this->roleClass->getAllAuthUserRoles( $request->input('per_page', 10));
+        $roles = $this->roleClass->getAllAuthUserRoles( $request );
 
         return new RolePaginationResource( $roles );
     }
@@ -104,5 +104,19 @@ class RoleManagementController extends Controller
 
         }
         return response()->json( $response , $code);
+    }
+
+
+    public function getFilterData ( Request $request ){
+        $permissions = SpatiePermission::exceptDefaultPermission()
+                                        ->get();
+        $members = User::select('id', 'name')->get();
+
+        $data = [
+            'members' => $members,
+            'permissions' => PermissionResource::collection( $permissions )
+
+        ];
+        return response()->json( $data, 200 );
     }
 }

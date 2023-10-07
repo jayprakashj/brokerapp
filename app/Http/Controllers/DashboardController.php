@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SpatiePermission;
 use App\Http\Controllers\Controller;
+use App\Models\Lead;
 
 class DashboardController extends Controller
 {
@@ -52,9 +53,15 @@ class DashboardController extends Controller
     }
 
     public function loadVueApp (){
-        $globalPermissions = SpatiePermission::GlobalPermissions()->get()->pluck('name');
 
-        return view('components.layouts.vue-app', compact( 'globalPermissions' ) );
+        $globalPermissions = [];
+        if( auth()->user() ){
+
+            $globalPermissions = SpatiePermission::GlobalPermissions()->get()->pluck('name');
+        }
+        $enquiryTypes = \Helper::convertArrayIntoAssociative( Lead::ENQUIRY_TYPES );
+
+        return view('components.layouts.vue-app', compact( 'globalPermissions', 'enquiryTypes' ) );
     }
 
     public function viewDashboard () {

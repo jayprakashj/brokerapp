@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\CompanyIdScope;
+use App\Models\Scopes\CommonFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 
 class CompanyMember extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, CommonFilter;
 
     const INVITE_STATUS_PENDING = 0;
     const INVITE_STATUS_ACCEPT = 1;
@@ -107,6 +107,76 @@ class CompanyMember extends Model
         return $q;
     }
 
+    public function scopeCustomSort( $q, $sortColumn, $sortOrder = 'asc' ){
+        if( !empty( $sortColumn ) ){
+            switch( $sortColumn ){
+                case 'name':
+                    $q->orderBy( User::select('name')->whereColumn('id', 'company_members.user_id')->limit(1), $sortOrder);
+                    break;
+                case 'role':
+                    $q->orderBy( Role::select('name')->whereColumn('id', 'company_members.role_id')->limit(1) , $sortOrder);
+                    break;
+                case 'updated_at':
+                    $q->orderBy( 'updated_at', $sortOrder);
+                    break;
+                case 'company_branch':
+                    $q->orderBy( CompanyBranch::select('name')->whereColumn('id', 'company_members.company_branch_id')->limit(1) , $sortOrder);
+                    break;
+                case 'email':
+                    $q->orderBy( 'email' , $sortOrder);
+                    break;
+                case 'mobile':
+                    $q->orderBy( User::select('mobile')->whereColumn('id', 'company_members.user_id')->limit(1), $sortOrder);
+                    break;
+            }
+        }
+
+        return $q;
+    }
+
+
+    public function scopeCustomFilter( $q, $filter ){
+
+        if( !empty( $filter ) ){
+            $name = data_get( $filter, 'name' );
+            $mobile = data_get( $filter, 'mobile' );
+            $email = data_get( $filter, 'email' );
+            $role = data_get( $filter, 'role' );
+            $companyBranch = data_get( $filter, 'company_branch' );
+            if( !empty( $name ) ){
+                $q->filterNameLike( $name );
+            }
+            if( !empty( $mobile ) ){
+                $q->filterMobileLike( $mobile );
+            }
+            if( !empty( $email ) ){
+                $q->filterEmailLike( $email );
+            }
+            if( !empty( $companyBranch ) ){
+                $q->filterCompanyBranch( $companyBranch );
+            }
+            if( !empty( $role ) ){
+                $q->filterRole( $role );
+            }
+        }
+        return $q;
+    }
+
+    public function scopeFilterNameLike ( $q, $value, $boolean = 'and' ){
+        return $q->{$boolean == 'or' ? 'orWhereRelation' : 'whereRelation'}('memberUser','name', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterRole ( $q, $value, $boolean = 'and' ){
+        return $q->where('role_id', '=', $value, $boolean);
+    }
+
+    public function scopeFilterMobileLike ( $q, $value, $boolean = 'and' ){
+        return $q->{$boolean == 'or' ? 'orWhereRelation' : 'whereRelation'}('memberUser','mobile', 'LIKE', '%'. $value . '%', $boolean);
+    }
+
+    public function scopeFilterEmailLike ( $q, $value, $boolean = 'and' ){
+        return $q->where('email', 'LIKE', '%'. $value . '%', $boolean);
+    }
     public function isOwner () {
         return $this->is_owner == self::FLAG_IS_OWNER_YES;
     }
