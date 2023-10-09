@@ -2,6 +2,7 @@
 
 namespace App\Services\Database;
 
+use App\Events\NewLeadEvent;
 use App\Models\Company;
 use App\Models\CompanyBranch;
 use App\Models\User;
@@ -172,6 +173,8 @@ class LeadClass {
             $this->leadCommentClass->create( $lead, $request, $user );
 
         }
+
+        NewLeadEvent::dispatch( $lead );
 
         return $lead;
     }

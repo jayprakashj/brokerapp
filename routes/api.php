@@ -50,6 +50,8 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
         Route::post('{company}/set-default', [CompanyController::class, 'makeDefault'])->name('set_default');
         Route::post('{company}/change-status', [CompanyController::class, 'changeStatus'])->name('change_status');
         Route::get('{company}/edit', [CompanyController::class, 'edit'])->name('edit');
+        Route::get('setting', [CompanyController::class, 'getCompanySetting'])->name('setting')->middleware('permission:Company Setting');
+        Route::post('setting', [CompanyController::class, 'updateCompanySetting'])->name('update_setting')->middleware('permission:Company Setting');
         Route::post('store', [CompanyController::class, 'store'])->name('store');
 
     });

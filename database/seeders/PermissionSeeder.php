@@ -39,6 +39,10 @@ class PermissionSeeder extends Seeder
             'group_name' => 'Company',
         ]);
         Permission::create([
+            'name' => 'Company Setting',
+            'group_name' => 'Company',
+        ]);
+        Permission::create([
             'name' => 'Company Update',
             'group_name' => 'Company',
         ]);

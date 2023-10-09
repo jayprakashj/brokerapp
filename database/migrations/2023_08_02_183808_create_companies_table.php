@@ -19,6 +19,10 @@ return new class extends Migration
             $table->bigInteger('mobile')->nullable();
             $table->string('email')->nullable();
             $table->text('address')->nullable();
+            $table->text('lead_email')->nullable();
+            $table->text('property_email')->nullable();
+            $table->tinyInteger('enable_lead_notification')->default( 0 );
+            $table->tinyInteger('enable_property_notification')->default( 0 );
             $table->tinyInteger('status')->default( 1 );
             $table->bigInteger('owned_by');
             $table->timestamps();
@@ -30,6 +34,8 @@ return new class extends Migration
             $table->index('gst_no');
             $table->index('mobile');
             $table->index('email');
+            $table->index('enable_lead_notification');
+            $table->index('enable_property_notification');
 
         });
     }

@@ -150,4 +150,16 @@ class CompanyClass {
         $company->save();
         return $company;
     }
+
+    public function updateCompanySettings( $request ){
+        $company = \Helper::retrieveDefaultCompany();
+
+        $company->enable_lead_notification = $request->input('enable_lead_notification') == 1 ? 1: 0;
+        $company->enable_property_notification = $request->input('enable_property_notification') == 1 ? 1: 0;
+        $company->lead_email = $request->input('lead_email');
+        $company->property_email = $request->input('property_email');
+        $company->save();
+
+        return $company;
+    }
 }

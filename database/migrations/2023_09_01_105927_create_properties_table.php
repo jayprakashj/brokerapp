@@ -73,6 +73,9 @@ return new class extends Migration
             $table->string('refer_by_phone')->nullable();
             $table->date('assign_date')->nullable();
             $table->bigInteger('assign_to')->nullable();
+            $table->date('notification_start_date')->nullable();
+            $table->date('notification_end_date')->nullable();
+            $table->text('notification_message')->nullable();
             $table->bigInteger('created_by');
             $table->bigInteger('updated_by');
             $table->timestamps();
@@ -116,6 +119,8 @@ return new class extends Migration
             $table->index('refer_by_name');
             $table->index('refer_by_email');
             $table->index('refer_by_phone');
+            $table->index('notification_start_date');
+            $table->index('notification_end_date');
             $table->index('created_by');
             $table->index('updated_by');
         });

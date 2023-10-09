@@ -236,7 +236,16 @@ const apis = {
         return http.post(`company/${id}/set-default`);
 
     },
+    updateCompanySetting: (data) => {
 
+        return http.post(`company/setting`, data);
+
+    },
+
+    getCompanySetting: ( ) => {
+        return http.get(`company/setting` );
+
+    },
     getPermissions: () => {
         return http.get('fetch/permissions');
 
