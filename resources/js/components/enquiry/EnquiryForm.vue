@@ -110,19 +110,36 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.interest_in?.length">{{ errors.interest_in.at(0) }}</span>
                             </label>
+
                             <label class="block h-full" >
                                 <span>Budget</span>
-                                <span class="relative mt-1.5 flex">
-                                    <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        placeholder="Budget ( 1 Lacs - 5 Lacs )" type="text" name="budget" v-model="formData.budget">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-inr text-base"></i>
-                                    </span>
+                                <span class="relative flex gap-2">
+                                    <div class="h-full">
+                                        <span class="relative mt-1.5 flex">
+                                            <input
+                                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                placeholder="Min Budget" type="text" name="min_budget" v-model="formData.min_budget">
+                                            <span
+                                                class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                                <i class="fa fa-inr text-base"></i>
+                                            </span>
+                                        </span>
+                                        <span class="text-tiny+ text-error" v-if="errors?.min_budget?.length">{{ errors.min_budget.at(0) }}</span>
+                                    </div>
+                                    <div class="h-full">
+                                        <span class="relative mt-1.5 flex">
+                                            <input
+                                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                placeholder="Max Budget" type="text" name="max_budget" v-model="formData.max_budget">
+                                            <span
+                                                class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                                <i class="fa fa-inr text-base"></i>
+                                            </span>
+                                        </span>
+                                        <span class="text-tiny+ text-error" v-if="errors?.max_budget?.length">{{ errors.max_budget.at(0) }}</span>
+                                    </div>
                                 </span>
 
-                                <span class="text-tiny+ text-error" v-if="errors?.budget?.length">{{ errors.budget.at(0) }}</span>
                             </label>
 
                             <label class="block h-full col-span-2">
@@ -164,7 +181,8 @@ export default {
                 mobile: null,
                 email: null,
                 city: null,
-                budget: null,
+                min_budget: null,
+                max_budget: null,
                 interest_in: null,
                 remark: null,
                 property_type: []
@@ -236,9 +254,20 @@ export default {
                 remark: Yup.string()
                             .nullable(true)
                             .required('Required'),
-                budget: Yup.string()
+
+                min_budget: Yup.number()
+                            .positive()
+                            .typeError('Must be a valid digit')
                             .nullable(true)
-                            .required('Required'),
+                            .required('Required')
+                            .min(1, 'Must be greater than 1'),
+
+                max_budget: Yup.number()
+                            .positive()
+                            .typeError('Must be a valid digit')
+                            .nullable(true)
+                            .required('Required')
+                            .min(1, 'Must be greater than 1'),
 
             }
 

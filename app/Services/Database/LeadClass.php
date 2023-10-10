@@ -67,7 +67,8 @@ class LeadClass {
         $lead->customer_city = $request->input('city');
         $lead->remark = $request->input('remark');
         $lead->interest_in = $request->input('interest_in');
-        $lead->budget = $request->input('budget');
+        $lead->min_budget = $request->input('min_budget');
+        $lead->max_budget = $request->input('max_budget');
         $lead->property_type = $request->input('property_type');
 
         $lead->lead_source = Lead::DEFAULT_LEAD_SOURCE;
@@ -133,7 +134,8 @@ class LeadClass {
         $lead->keywords = $request->input('keywords');
         $lead->interest_in = $request->input('interest_in');
         $lead->purpose = $request->input('purpose');
-        $lead->budget = $request->input('budget');
+        $lead->min_budget = $request->input('min_budget');
+        $lead->max_budget = $request->input('max_budget');
         $lead->assigned_to = $request->input('assigned_to');
         $lead->is_confidential = $request->filled('is_confidential') && $request->is_confidential ? Lead::CONFIDENTIAL_YES : Lead::CONFIDENTIAL_NO;
         $lead->is_private = $request->filled('is_private') && $request->is_private ? Lead::IS_PRIVATE_YES : Lead::IS_PRIVATE_NO;

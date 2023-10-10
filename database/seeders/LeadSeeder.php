@@ -56,7 +56,8 @@ class LeadSeeder extends Seeder
             $obj->keywords = $faker->text( 10 );
             $obj->interest_in = $faker->text( 6 );
             $obj->purpose = $faker->text( 10 );
-            $obj->budget = $faker->numberBetween( 10000, 99999);;
+            $obj->min_budget = $faker->numberBetween( 10000, 2500000);
+            $obj->max_budget = $faker->numberBetween( $obj->min_budget, 10000000);
             $obj->assigned_to = $users->random()->id;
             $obj->is_confidential = $faker->boolean();
             $obj->is_private = $faker->boolean();

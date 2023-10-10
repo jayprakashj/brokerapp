@@ -133,7 +133,7 @@
                             <span>Budget</span>
 
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
-                                {{ formData.budget }}
+                                <i class="fa fa-inr"></i> {{ formData.min_budget }} - <i class="fa fa-inr"></i> {{ formData.max_budget }}
                             </p>
                         </label>
                         <label class="block" >

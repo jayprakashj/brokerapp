@@ -50,6 +50,17 @@ class AddEnquiryRequest extends FormRequest
                 Rule::exists('property_sub_type_lists', 'name')
                         ->where('company_id', (Company::first()->id ?? null) )
             ],
+            'min_budget' => [
+                'required',
+                'integer',
+                'min:1',
+                'lt:max_budget',
+            ],
+            'max_budget' => [
+                'required',
+                'integer',
+                'gt:min_budget'
+            ]
         ];
         if( $this->filled('enquiry_type') && in_array( $this->input('enquiry_type'), [ 'buy', 'rent_tenant'] )){
             $rules['interest_in'] = 'required';

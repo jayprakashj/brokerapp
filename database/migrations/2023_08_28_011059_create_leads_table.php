@@ -24,7 +24,8 @@ return new class extends Migration
             $table->bigInteger('company_branch_id')->nullable();
             $table->bigInteger('assigned_to')->nullable();
             $table->date('assigned_date')->nullable();
-            $table->string('budget')->nullable();
+            $table->bigInteger('min_budget')->default(0)->nullable();
+            $table->bigInteger('max_budget')->default(0)->nullable();
             $table->text('remark')->nullable();
             $table->text('keywords')->nullable();
             $table->tinyInteger('is_confidential')->default(0)->comment('0: No, 1: Yes');
@@ -62,6 +63,8 @@ return new class extends Migration
             $table->index('is_protected');
             $table->index('is_enquiry');
             $table->index('enquiry_type');
+            $table->index('min_budget');
+            $table->index('max_budget');
         });
     }
 
