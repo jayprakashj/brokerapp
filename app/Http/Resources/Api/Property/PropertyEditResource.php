@@ -74,6 +74,9 @@ class PropertyEditResource extends JsonResource
             'refer_by_name' => $this->refer_by_name,
             'refer_by_email' => $this->refer_by_email,
             'refer_by_phone' => $this->refer_by_phone,
+            'notification_start_date' => $this->notification_start_date,
+            'notification_end_date' => $this->notification_end_date,
+            'notification_message' => $this->notification_message,
             'images' => []
         ];
 

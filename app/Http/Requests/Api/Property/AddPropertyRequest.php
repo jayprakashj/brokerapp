@@ -16,6 +16,17 @@ class AddPropertyRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        //
+        if( !$this->filled( 'notification_start_date') ){
+            $this->offsetUnset('notification_start_date');
+        }
+        if( !$this->filled( 'notification_end_date') ){
+            $this->offsetUnset('notification_end_date');
+        }
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,6 +34,7 @@ class AddPropertyRequest extends FormRequest
      */
     public function rules(): array
     {
+
 
         $rules =  [
             //
@@ -78,6 +90,19 @@ class AddPropertyRequest extends FormRequest
                 Rule::exists('company_members', 'user_id')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
+            'notification_start_date' => [
+                'required_with:notification_end_date',
+                'date'
+            ],
+            'notification_end_date' => [
+                'required_with:notification_start_date',
+                'date',
+                'after_or_equal:notification_start_date'
+            ],
+            'notification_message' => [
+                'required_with:notification_start_date',
+
+            ]
         ];
         return $rules;
     }

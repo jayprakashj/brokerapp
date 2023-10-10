@@ -9,6 +9,7 @@ use App\Models\Scopes\CommonFilter;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -209,6 +210,17 @@ class Property extends Model implements HasMedia
             $whereQry->assignToAuth( 'or' )
                         ->createdByAuth( 'or' );
         });
+    }
+
+
+    public function scopeFilterByNotificationDate ( $q, $date = null ){
+        if( is_null( $date ) ){
+            $date = today();
+        }
+        return $q->whereBetweenColumns( DB::raw('"' . $date->format('Y-m-d') . '"'), [
+            'notification_start_date',
+            'notification_end_date'
+        ]);
     }
 
     public function isVerified () {

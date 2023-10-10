@@ -113,6 +113,9 @@ class PropertyClass {
         $property->refer_by_email = $request->input('refer_by_email');
         $property->refer_by_phone = $request->input('refer_by_phone');
         $property->updated_by = $user->id;
+        $property->notification_start_date = $request->input('notification_start_date');
+        $property->notification_end_date = $request->input('notification_end_date');
+        $property->notification_message = $request->input('notification_message');
 
         if( $property->isDirty( 'assign_to' ) ){
             $property->assign_date = today();

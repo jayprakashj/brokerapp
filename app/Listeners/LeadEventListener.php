@@ -31,6 +31,7 @@ class LeadEventListener implements ShouldQueue
             if( $lead->assignToUser ){
                 $emails[] = $lead->assignToUser->email;
             }
+            $emails = array_filter( $emails );
             $emails = array_unique( $emails );
 
             $mailObj = new LeadGenerateMail( $lead );
