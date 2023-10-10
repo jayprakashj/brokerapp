@@ -72,3 +72,10 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - npm ci
 - npm run build
 - php artisan queue:listen
+
+
+# Property Notification ( Scheduled on Morning at 7 AM )
+
+- php artisan migrate:fresh --seed
+- php artisan schedule:run
+- php artisan queue:listen
