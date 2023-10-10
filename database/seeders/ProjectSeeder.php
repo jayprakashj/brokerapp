@@ -38,6 +38,37 @@ class ProjectSeeder extends Seeder
 
         $companyBranches = CompanyBranch::withoutGlobalScope(CompanyIdScope::class)->get();
         $users = User::with('defaultCompany')->typeCompany()->get();
+
+        $projectsName = [
+            'The Green Parmeshwar',
+            'Empire Skypark',
+            'Swara Skyline',
+            'The Q',
+            'Viaan Skyrise',
+            'Samanvay Anantam',
+            'Anandam Greens',
+            'Param Sapphire',
+            'Sangini Aura',
+            'Pramukh Amaya',
+            'Siddhi Vinayak Elements'
+        ];
+        $localities = [
+            'Jagatpur',
+            'Science City',
+            'Akota',
+            'Umeta',
+            'Harni',
+            'Pal',
+            'Palanpur',
+            'Jahangirabad',
+        ];
+        $cities = [
+            'Ahmedabad',
+            'Surat',
+            'Vadodara',
+            'Gandhinagar',
+            'Bharuch',
+        ];
         for($i = 0; $i < 8; $i++){
 
             $item = $users->random();
@@ -48,9 +79,9 @@ class ProjectSeeder extends Seeder
             $obj->created_by = $item->id;
             $obj->updated_by = $item->id;
             $obj->company_id = $item->defaultCompany->id;
-            $obj->title = $faker->text( 10 );
-            $obj->rera_reg_no = $faker->text( 10 );
-            $obj->project_no = $faker->text( 10 );
+            $obj->title = Arr::Random( $projectsName );
+            $obj->rera_reg_no = substr( str_shuffle('ABCDEFGHIJKL1234567890'),0,8 );;
+            $obj->project_no = substr( str_shuffle('ABCDEFGHIJKL1234567890MNOPQRSTUVWXYZ'),0,8 );
             $obj->launch_date = now()->subDays( $faker->numberBetween( 30, 900) )->format('Y-m-d');
             $obj->completion_date = now()->addDays( $faker->numberBetween( 30, 900) )->format('Y-m-d');
             $obj->company_branch_id = $companyBranches->random()->id;
@@ -67,8 +98,8 @@ class ProjectSeeder extends Seeder
             $obj->description = implode("\n", $faker->paragraphs( 5 ));
             $obj->remark = $faker->text( 20 );
             $obj->landmark = $faker->text( 6 );
-            $obj->city = $faker->text( 6 );
-            $obj->locality = $faker->text( 6 );
+            $obj->city = Arr::Random( $cities );
+            $obj->locality = Arr::Random( $localities );
             $obj->building = $faker->text( 6 );
             $obj->address = $faker->text( 16 );
             $obj->amenities = $faker->text( 6 );
