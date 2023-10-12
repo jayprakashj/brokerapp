@@ -6,9 +6,11 @@ use App\Models\Company;
 use App\Http\Controllers\Controller;
 use App\Services\Database\CompanyClass;
 use App\Http\Requests\CompanyCreateRequest;
+use App\Http\Requests\UpdateCompanySettingRequest;
 use App\Http\Resources\Api\Company\CompanyEditResource;
 use App\Http\Resources\Api\Company\DefaultCompanyResource;
 use App\Http\Resources\Api\Company\CompanyPaginationResource;
+use App\Http\Resources\Api\Company\CompanySettingResource;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -146,6 +148,23 @@ class CompanyController extends Controller
                 'message' => 'Error! Default company can not change the status.'
             ];
         }
+
+        return response()->json( $response, $code );
+    }
+
+    public function getCompanySetting(){
+
+        $data = new CompanySettingResource( \Helper::retrieveDefaultCompany() );
+        return response()->json( $data, 200 );
+    }
+
+    public function updateCompanySetting( UpdateCompanySettingRequest $request ){
+        $code = 200;
+        $response = [
+            'message' => 'Success! Company Setting has been updated.'
+        ];
+
+        $this->companyClass->updateCompanySettings( $request );
 
         return response()->json( $response, $code );
     }

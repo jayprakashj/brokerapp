@@ -5,6 +5,7 @@ import ProfileUpdate from  '@/components/profile/ProfileUpdate.vue'
 import ChangePassword from  '@/components/profile/ChangePassword.vue'
 import CompanyList from  '@/components/company/CompanyList.vue'
 import CompanyCreate from  '@/components/company/CompanyCreate.vue'
+import CompanySetting from  '@/components/company/CompanySetting.vue'
 import RoleList from  '@/components/roles/RoleList.vue'
 import RoleCreate from  '@/components/roles/RoleCreate.vue'
 import MemberList from  '@/components/members/MemberList.vue'
@@ -65,6 +66,15 @@ const routes = [
         meta:{
             title: 'Profile'
         }
+    },
+    {
+        path: '/company/setting',
+        name: 'company_setting',
+        component: CompanySetting,
+        meta:{
+            title: 'Company Setting'
+        },
+        permissions: [ permission.COMPANY_SETTING ]
     },
     {
         path: '/change-password',

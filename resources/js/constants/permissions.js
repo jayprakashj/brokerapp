@@ -3,6 +3,7 @@ const permissions = {
     COMPANY_LIST: 'Company List',
     COMPANY_CHANGE_STATUS: 'Company Change Status',
     COMPANY_UPDATE: 'Company Update',
+    COMPANY_SETTING: 'Company Setting',
     MEMBER_LIST: 'Member List',
     ADD_MEMBER: 'Add Member',
     UPDATE_MEMBER: 'Update Member',

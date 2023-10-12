@@ -56,6 +56,17 @@
                                     :selected-item="formData.property_type"
                                     :error-msg="errors?.property_type"
                                 />
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.enquiry_type"
+                                        form-label="Enquiry Type"
+                                        placeholder="Select Type"
+                                        value-field="title"
+                                        display-field="title"
+                                        :options="options.enquiry_types"
+                                        :selected-item="formData.enquiry_type"
+                                        :error-msg="errors?.enquiry_type"
+                                    />
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
                             <label class="block h-full" >
                                 <span>Name</span>
@@ -188,17 +199,33 @@
                             </label>
                             <label class="block h-full" >
                                 <span>Budget</span>
-                                <span class="relative mt-1.5 flex">
-                                    <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        placeholder="Budget ( 1 Lacs - 5 Lacs )" type="text" name="budget" v-model="formData.budget">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-inr text-base"></i>
-                                    </span>
+                                <span class="relative flex gap-2">
+                                    <div class="h-full">
+                                        <span class="relative mt-1.5 flex">
+                                            <input
+                                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                placeholder="Min Budget" type="text" name="min_budget" v-model="formData.min_budget">
+                                            <span
+                                                class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                                <i class="fa fa-inr text-base"></i>
+                                            </span>
+                                        </span>
+                                        <span class="text-tiny+ text-error" v-if="errors?.min_budget?.length">{{ errors.min_budget.at(0) }}</span>
+                                    </div>
+                                    <div class="h-full">
+                                        <span class="relative mt-1.5 flex">
+                                            <input
+                                                class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                                placeholder="Max Budget" type="text" name="max_budget" v-model="formData.max_budget">
+                                            <span
+                                                class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                                <i class="fa fa-inr text-base"></i>
+                                            </span>
+                                        </span>
+                                        <span class="text-tiny+ text-error" v-if="errors?.max_budget?.length">{{ errors.max_budget.at(0) }}</span>
+                                    </div>
                                 </span>
 
-                                <span class="text-tiny+ text-error" v-if="errors?.budget?.length">{{ errors.budget.at(0) }}</span>
                             </label>
 
                             <input-tom-select
@@ -404,7 +431,8 @@ export default {
                 mobile: null,
                 email: null,
                 city: null,
-                budget: null,
+                min_budget: null,
+                max_budget: null,
                 purpose: null,
                 assigned_to: null,
                 followup_date: null,
@@ -413,6 +441,7 @@ export default {
                 lead_status: null,
                 remark: null,
                 keywords: null,
+                enquiry_type: null,
                 property_type: [],
                 property: [],
                 project: [],
@@ -446,6 +475,7 @@ export default {
                 lead_statuses: [],
                 properties: [],
                 projects: [],
+                enquiry_types: [],
             },
             show:{
                 commentForm: false
@@ -502,6 +532,9 @@ export default {
                 lead_status: Yup.string()
                             .nullable(true)
                             .required('Required'),
+                enquiry_type: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
                 mobile: Yup.string()
                             .nullable(true)
                             .required('Required')
@@ -510,6 +543,20 @@ export default {
                 email: Yup.string()
                             .nullable(true)
                             .email( 'Must be a valid email address'),
+
+                min_budget: Yup.number()
+                            .positive()
+                            .typeError('Must be a valid digit')
+                            .nullable(true)
+                            .required('Required')
+                            .min(1, 'Must be greater than 1'),
+
+                max_budget: Yup.number()
+                            .positive()
+                            .typeError('Must be a valid digit')
+                            .nullable(true)
+                            .required('Required')
+                            .min(1, 'Must be greater than 1'),
 
             }
             const yup = Yup.object().shape( fields );

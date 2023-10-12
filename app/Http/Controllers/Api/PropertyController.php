@@ -121,6 +121,7 @@ class PropertyController extends Controller
         $propertyFacingList = PropertyFacingList::select('id', 'name')->get();
         $propertyObligations = PropertyObligationList::select('id', 'name')->get();
         $propertyImgTypes = PropertyImageTypeList::select('id', 'name')->get();
+        $availabilities = \Helper::convertArrayIntoAssociative( Property::AVAILABILITIES_LIST, 'id', 'name' );
 
         $data = [
             'property_types' => PropertyTypeListForSelectList::collection( $propertyTypes ),
@@ -130,6 +131,7 @@ class PropertyController extends Controller
             'property_facing_list' => PropertyFacingListForSelectList::collection( $propertyFacingList ),
             'property_obligations' => PropertyObligationListForSelectList::collection( $propertyObligations ),
             'property_img_types' => PropertyImageTypeListForSelectList::collection( $propertyImgTypes ),
+            'availabilities' => $availabilities,
         ];
         return response()->json( $data, 200 );
     }

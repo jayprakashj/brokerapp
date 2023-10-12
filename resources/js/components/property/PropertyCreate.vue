@@ -454,16 +454,16 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.lease_expiry_date?.length">{{ errors.lease_expiry_date.at(0) }}</span>
                                 </label>
-                                <label class="block h-full" >
-                                    <span>Availability</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Availability" type="text" name="availability" v-model="formData.availability">
-                                    </span>
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.availability?.length">{{ errors.availability.at(0) }}</span>
-                                </label>
+                                <input-tom-select
+                                            class="h-full"
+                                            v-model="formData.availability"
+                                            form-label="Availability"
+                                            placeholder="Select Availability"
+                                            :options="options.availabilities"
+                                            :selected-item="formData.availability"
+                                            :error-msg="errors?.availability"
+                                        />
                                 <label class="block h-full" >
                                     <span>Ownership</span>
                                     <span class="relative mt-1.5 flex">
@@ -749,6 +749,50 @@
                                     <span class="text-tiny+ text-error" v-if="errors?.refer_by_email?.length">{{ errors.refer_by_email.at(0) }}</span>
                                 </label>
                             </div>
+                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                            <div class="space-y-4">
+                                <label class="block" >
+                                    <span>Notification Start Date</span>
+                                    <span class="relative mt-1.5 flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Notification Start Date" type="date" name="notification_start_date" v-model="formData.notification_start_date">
+                                        <span
+                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                            <i class="fa fa-calendar text-base"></i>
+                                        </span>
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.notification_start_date?.length">{{ errors.notification_start_date.at(0) }}</span>
+                                </label>
+                                <label class="block" >
+                                    <span>Notification End Date</span>
+                                    <span class="relative mt-1.5 flex">
+                                        <input
+                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Notification End Date" type="date" name="notification_end_date" v-model="formData.notification_end_date">
+                                        <span
+                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                            <i class="fa fa-calendar text-base"></i>
+                                        </span>
+                                    </span>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.notification_end_date?.length">{{ errors.notification_end_date.at(0) }}</span>
+                                </label>
+                                <label class="block ">
+                                    <span>Message in Notification</span>
+                                    <label class="block">
+                                        <textarea
+                                        rows="4"
+                                        placeholder="Message"
+                                        v-model="formData.notification_message"
+                                        class="form-textarea w-full rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        ></textarea>
+                                    </label>
+
+                                    <span class="text-tiny+ text-error" v-if="errors?.notification_message?.length">{{ errors.notification_message.at(0) }}</span>
+                                </label>
+                            </div>
                         </div>
                         <div class="card mt-2 p-4 sm:p-5 col-span-12" v-for="(imgType, idx ) in formDataImagesKeys" :key="'images_'+idx">
                             <div
@@ -817,6 +861,7 @@ export default {
                 'property_facing_list': [],
                 'property_obligations': [],
                 'property_img_types': [],
+                'availabilities': [],
             },
             formData:{
                 name: '',
@@ -876,6 +921,9 @@ export default {
                 refer_by_name: null,
                 refer_by_email: null,
                 refer_by_phone: null,
+                notification_start_date: null,
+                notification_end_date: null,
+                notification_message: null,
                 images: {}
             },
             rolesList: [],

@@ -187,6 +187,7 @@ class LeadController extends Controller
         $leadStatuses = LeadStatus::select('id', 'name')->get();
         $properties = Property::select('id', 'name')->get();
         $projects = Project::select('id', 'title as name')->get();
+        $enquiryTypes = \Helper::convertArrayIntoAssociative( Lead::ENQUIRY_TYPES );
 
         $data = [
             'members' => $members,
@@ -196,7 +197,8 @@ class LeadController extends Controller
             'lead_sources' => $leadSources,
             'lead_statuses' => $leadStatuses,
             'properties' => $properties,
-            'projects' => $projects
+            'projects' => $projects,
+            'enquiry_types' => $enquiryTypes
         ];
         return response()->json( $data, 200 );
     }

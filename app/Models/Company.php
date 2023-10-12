@@ -99,4 +99,20 @@ class Company extends Model implements HasMedia
 
         return null;
     }
+
+    public function isLeadNotificationOn(){
+        return $this->enable_lead_notification == 1;
+    }
+
+    public function isPropertyNotificationOn(){
+        return $this->enable_property_notification == 1;
+    }
+
+    public function leadEmailsArr () {
+        return explode( ',', $this->lead_email );
+    }
+
+    public function propertyEmailsArr () {
+        return explode( ',', $this->property_email );
+    }
 }

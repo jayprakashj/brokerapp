@@ -431,6 +431,30 @@
                             </label>
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+                            <label class="block" >
+                                <span>Notification Start Date</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.notification_start_date }}
+                                </p>
+                            </label>
+                            <label class="block" >
+                                <span>Notification End Date</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.notification_end_date }}
+                                </p>
+                            </label>
+                            <label class="block" >
+                                <span>Notification Message</span>
+
+                                <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                    {{ formData.notification_message }}
+                                </p>
+                            </label>
+                        </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-12 gap-4 sm:grid-cols-12 items-center">
 
                             <label class="block col-span-12" >

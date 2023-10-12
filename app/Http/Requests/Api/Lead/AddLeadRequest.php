@@ -49,6 +49,10 @@ class AddLeadRequest extends FormRequest
             'purpose' => [
                 'required'
             ],
+            'enquiry_type' => [
+                'required',
+                Rule::in( array_values( Lead::ENQUIRY_TYPES ) )
+            ],
             'email' => [
                 'nullable',
                 'email',
@@ -92,6 +96,17 @@ class AddLeadRequest extends FormRequest
                 Rule::exists('projects', 'id')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
+            'min_budget' => [
+                'required',
+                'integer',
+                'min:1',
+                'lt:max_budget',
+            ],
+            'max_budget' => [
+                'required',
+                'integer',
+                'gt:min_budget'
+            ]
         ];
         return $rules;
     }
