@@ -1,5 +1,5 @@
 <template>
-    <PreLoader v-if="$store.state.default.globalLoader" />
+
     <div id="root" class="min-h-100vh flex grow bg-slate-50 dark:bg-navy-900" x-cloak>
         <!-- Sidebar -->
         <div class="sidebar print:hidden">
@@ -23,15 +23,13 @@ import MainSidebar from '@/components/layout/app/partials/MainSidebar.vue';
 import Header from '@/components/layout/app/partials/Header.vue';
 import MobileSearchBar from '@/components/layout/app/partials/MobileSearchBar.vue';
 import RightSidebar from '@/components/layout/app/partials/RightSidebar.vue';
-import PreLoader from '@/components/layout/app/partials/PreLoader.vue';
 
 export default {
     components:{
         MainSidebar,
         Header,
         MobileSearchBar,
-        RightSidebar,
-        PreLoader
+        RightSidebar
     }
 }
 </script>

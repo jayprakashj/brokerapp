@@ -85,6 +85,8 @@ class LeadClass {
 
         }
 
+        NewLeadEvent::dispatch( $lead );
+
         return $lead;
     }
 

@@ -284,7 +284,7 @@ export default {
     methods:{
         init () {
             this.loadSelectListData();
-            // this.$store.commit('setGlobalLoaderOff');
+            this.$store.commit('setGlobalLoaderOff');
         },
         submitForm () {
             if( this.loading.formSubmit ){
