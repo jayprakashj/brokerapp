@@ -264,7 +264,7 @@
                             <button @click="changeTab('property_references')"
                                 :class="{'border-primary dark:border-accent text-primary dark:text-accent-light' : activeTab === 'property_references', 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100': (activeTab !== 'property_references')}"
                                 class="btn shrink-0 rounded-none border-b-2 px-3 py-2 font-medium">
-                                Property References
+                                Suggested Properties
                             </button>
                         </div>
                     </div>
