@@ -30,6 +30,7 @@ class LeadEditResource extends JsonResource
             'lead_status' => $this->lead_status,
             'min_budget' => $this->min_budget,
             'max_budget' => $this->max_budget,
+            'enquiry_type' => $this->enquiry_type,
             'is_confidential' => $this->isConfidential(),
             'is_private' => $this->isPrivate(),
             'is_protected' => $this->isProtected(),

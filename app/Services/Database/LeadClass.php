@@ -145,6 +145,7 @@ class LeadClass {
         $lead->lead_status = LeadStatus::whereName( $request->input('lead_status') )->first()->name;
         $lead->followup_date = $request->input('followup_date');
         $lead->property_type = $request->input('property_type');
+        $lead->enquiry_type = $request->enquiry_type;
 
         if( $lead->isDirty( 'assigned_to' ) ){
             $lead->assigned_date = today();

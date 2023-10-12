@@ -49,6 +49,10 @@ class AddLeadRequest extends FormRequest
             'purpose' => [
                 'required'
             ],
+            'enquiry_type' => [
+                'required',
+                Rule::in( array_values( Lead::ENQUIRY_TYPES ) )
+            ],
             'email' => [
                 'nullable',
                 'email',

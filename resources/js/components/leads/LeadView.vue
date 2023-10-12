@@ -86,7 +86,7 @@
                         <label class="block h-full" >
                             <span>Property</span>
 
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300 gap-2 flex mt-3" v-if="formData?.property_names?.length">
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300 gap-2 flex flex-wrap mt-3" v-if="formData?.property_names?.length">
                                 <div
                                     v-for="(item, idx) in formData.property_names"
                                     :key="'property_name_' + idx"
@@ -103,7 +103,7 @@
                             <span>Project</span>
 
 
-                            <p class="text-xs+ text-slate-400 dark:text-navy-300 gap-2 flex mt-3" v-if="formData?.project_names?.length">
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300 gap-2 flex flex-wrap mt-3" v-if="formData?.project_names?.length">
                                 <div
                                     v-for="(item, idx) in formData.project_names"
                                     :key="'project_name_' + idx"
@@ -252,56 +252,127 @@
             </div>
         </div>
         <div class="card p-4 w-7/12 sm:p-5 ">
-            <div class="card">
-                <div
-                    class="flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
-                    <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
-                       History
-                    </h2>
-                    <div class="flex justify-center space-x-2">
-                        <button
-                            @click="showCommentForm"
-                            v-if="userPermissions.isPermissionsAllowed([ $permissions.CAN_COMMENT ] )"
-                            class="btn bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
-                            >
-                            <i class="fa fa-comments mr-2"></i> Add Comment
-                        </button>
+            <div class="tabs flex flex-col">
+                <div class="is-scrollbar-hidden overflow-x-auto">
+                    <div class="border-b-2 border-slate-150 dark:border-navy-500">
+                        <div class="tabs-list flex">
+                            <button @click="changeTab('history')"
+                                :class="{'border-primary dark:border-accent text-primary dark:text-accent-light': activeTab === 'history', 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100': (activeTab !== 'history')}"
+                                class="btn shrink-0 rounded-none border-b-2 px-3 py-2 font-medium">
+                                History
+                            </button>
+                            <button @click="changeTab('property_references')"
+                                :class="{'border-primary dark:border-accent text-primary dark:text-accent-light' : activeTab === 'property_references', 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100': (activeTab !== 'property_references')}"
+                                class="btn shrink-0 rounded-none border-b-2 px-3 py-2 font-medium">
+                                Property References
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="p-4 sm:p-5">
-                    <ol class="timeline [--size:1.5rem]" v-if="formData?.comments?.length">
-                        <li class="timeline-item" v-for="(item, index) in formData.comments" :key="'comments_'+index">
-                            <div class="timeline-item-point rounded-full bg-slate-300 dark:bg-navy-400">
+                <div class="tab-content pt-4">
+                    <div v-show="activeTab === 'history'" >
+                        <div
+                            class="flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
+                            <div class="flex justify-end space-x-2">
+                                <button
+                                    @click="showCommentForm"
+                                    v-if="userPermissions.isPermissionsAllowed([ $permissions.CAN_COMMENT ] )"
+                                    class="btn bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
+                                    >
+                                    <i class="fa fa-comments mr-2"></i> Add Comment
+                                </button>
                             </div>
+                        </div>
+                        <div class="p-4 sm:p-5">
+                            <ol class="timeline [--size:1.5rem]" v-if="formData?.comments?.length">
+                                <li class="timeline-item" v-for="(item, index) in formData.comments" :key="'comments_'+index">
+                                    <div class="timeline-item-point rounded-full bg-slate-300 dark:bg-navy-400">
+                                    </div>
 
-                            <div class="timeline-item-content flex-1 pl-4 sm:pl-8">
-                                <div class="flex flex-col justify-between pb-2 sm:flex-row sm:pb-0">
-                                    <p class="pb-2 font-medium leading-none text-slate-600 dark:text-navy-100 sm:pb-0">
-                                        {{ item.created_user }}
-                                    </p>
-                                    <span class="text-xs text-slate-400 dark:text-navy-300">{{ item.created_time }}</span>
+                                    <div class="timeline-item-content flex-1 pl-4 sm:pl-8">
+                                        <div class="flex flex-col justify-between pb-2 sm:flex-row sm:pb-0">
+                                            <p class="pb-2 font-medium leading-none text-slate-600 dark:text-navy-100 sm:pb-0">
+                                                {{ item.created_user }}
+                                            </p>
+                                            <span class="text-xs text-slate-400 dark:text-navy-300">{{ item.created_time }}</span>
+                                        </div>
+                                        <p class="py-1"><pre>{{ item.comment }}</pre></p>
+                                        <div class="mt-4" >
+                                            <span class="font-medium text-slate-600 dark:text-navy-100">
+                                                Status:
+                                            </span>
+                                            <span class="text-xs text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent">
+                                                {{ item.status }}
+                                            </span>
+                                        </div>
+                                        <div class="mt-4" v-if="item.followup_date">
+                                            <span class="font-medium text-slate-600 dark:text-navy-100">
+                                                Followup Date:
+                                            </span>
+                                            <span class="text-xs text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent">
+                                                {{ item.followup_date }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                            <no-data-found message="No history found." v-else />
+                        </div>
+                    </div>
+                    <div v-show="activeTab === 'property_references'" >
+                        <div class="px-4 pt-2 pb-4" v-if="formData?.property_references?.length">
+                            <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.property_references" :key="'site_visit_'+index">
+                                <div class="flex items-center space-x-2 sm:space-x-3">
+                                    <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100">
+                                        {{ item.name }}
+                                    </h2>
                                 </div>
-                                <p class="py-1"><pre>{{ item.comment }}</pre></p>
-                                <div class="mt-4" >
-                                    <span class="font-medium text-slate-600 dark:text-navy-100">
-                                        Status:
-                                    </span>
-                                    <span class="text-xs text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent">
-                                        {{ item.status }}
-                                    </span>
+                                <p class="mt-1 mb-1"><i class="fa fa-building"></i> {{ item.building_name }}</p>
+                                <p class="mt-1"><i class="fa fa-location-dot"></i> {{ item.address }}</p>
+                                <div class="mt-2 grid grid-col-2 sm:grid-col-1">
+                                    <div class="mr-4 mb-1 inline-flex items-center space-x-2 font-inter">
+                                        <div class="h-2 w-2 rounded-full bg-primary dark:bg-accent"></div>
+                                        <div class="flex space-x-1 text-xs leading-6">
+                                            <span class="font-medium text-slate-700 dark:text-navy-100">Owner Name</span>
+                                            <span>{{ item.owner_name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mr-4 mb-1 inline-flex items-center space-x-2 font-inter">
+                                        <div class="h-2 w-2 rounded-full bg-primary dark:bg-accent"></div>
+                                        <div class="flex space-x-1 text-xs leading-6">
+                                            <span class="font-medium text-slate-700 dark:text-navy-100">Owner Mobile</span>
+                                            <span>{{ item.owner_phone }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mt-4" v-if="item.followup_date">
-                                    <span class="font-medium text-slate-600 dark:text-navy-100">
-                                        Followup Date:
-                                    </span>
-                                    <span class="text-xs text-primary hover:text-primary-focus dark:text-accent-light dark:hover:text-accent">
-                                        {{ item.followup_date }}
-                                    </span>
+                                <div class="mt-1 flex items-end justify-between">
+                                    <div class="flex flex-wrap items-center font-inter text-xs">
+                                        <span class="flex items-center space-x-1">
+                                            <i class="fa fa-inr"></i>
+                                            <span>{{ item.price }}</span>
+                                        </span>
+                                        <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                        <span class="flex items-center space-x-1">
+                                            <i class="fa fa-location"></i>
+                                            <span>{{ item.locality }}</span>
+                                        </span>
+                                        <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                        <span class="flex items-center space-x-1">
+                                            <i class="fa fa-city"></i>
+                                            <span>{{ item.city }}</span>
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_PROPERTY ] )" :to="'/property/view/' + item.id" class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                                            <i class="fa fa-external-link"></i>
+                                        </router-link>
+
+                                    </div>
                                 </div>
                             </div>
-                        </li>
-                    </ol>
-                    <no-data-found message="No history found." v-else />
+                        </div>
+                        <no-data-found v-else />
+                    </div>
                 </div>
             </div>
         </div>
@@ -364,7 +435,8 @@ export default {
             },
             show:{
                 commentForm: false
-            }
+            },
+            activeTab: 'history'
         }
     },
     mounted(){
@@ -422,6 +494,9 @@ export default {
 
             this.hideCommentForm();
             this.loadViewDetail( this.$route.params.id );
+        },
+        changeTab( tabKey ){
+            this.activeTab = tabKey;
         }
     }
 }

@@ -35,6 +35,11 @@ class Property extends Model implements HasMedia
         self::IS_DOCUMENT_VERIFIED_NO => 'No',
     ];
 
+    const AVAILABILITIES_LIST = [
+        'Yes' => 'Yes',
+        'No' => 'No',
+    ];
+
     /**
      * The "booted" method of the model.
      */
@@ -78,6 +83,10 @@ class Property extends Model implements HasMedia
 
     public function siteVisits (){
         return $this->hasMany( SiteVisit::class, 'property_id', 'id');
+    }
+
+    public function scopeAvailabilityYes ( $q, $boolean = 'and' ){
+        return $q->where('availability', '=', 'Yes', $boolean );
     }
 
     public function scopeAssignToAuth ( $q, $boolean = 'and' ){
@@ -143,10 +152,17 @@ class Property extends Model implements HasMedia
     }
 
     public function scopeFilterPropertyType ( $q, $value, $boolean = 'and' ){
+        if( is_array( $value ) ){
+
+            return $q->whereIn('property_type',  $value, $boolean);
+        }
         return $q->where('property_type', '=', $value, $boolean);
     }
 
     public function scopeFilterPropertyTransaction ( $q, $value, $boolean = 'and' ){
+        if( is_array( $value ) ){
+            return $q->whereIn('property_transaction',$value, $boolean);
+        }
         return $q->where('property_transaction', '=',$value, $boolean);
     }
 

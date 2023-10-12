@@ -454,16 +454,16 @@
 
                                     <span class="text-tiny+ text-error" v-if="errors?.lease_expiry_date?.length">{{ errors.lease_expiry_date.at(0) }}</span>
                                 </label>
-                                <label class="block h-full" >
-                                    <span>Availability</span>
-                                    <span class="relative mt-1.5 flex">
-                                        <input
-                                            class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="Availability" type="text" name="availability" v-model="formData.availability">
-                                    </span>
 
-                                    <span class="text-tiny+ text-error" v-if="errors?.availability?.length">{{ errors.availability.at(0) }}</span>
-                                </label>
+                                <input-tom-select
+                                            class="h-full"
+                                            v-model="formData.availability"
+                                            form-label="Availability"
+                                            placeholder="Select Availability"
+                                            :options="options.availabilities"
+                                            :selected-item="formData.availability"
+                                            :error-msg="errors?.availability"
+                                        />
                                 <label class="block h-full" >
                                     <span>Ownership</span>
                                     <span class="relative mt-1.5 flex">
@@ -861,6 +861,7 @@ export default {
                 'property_facing_list': [],
                 'property_obligations': [],
                 'property_img_types': [],
+                'availabilities': [],
             },
             formData:{
                 name: '',

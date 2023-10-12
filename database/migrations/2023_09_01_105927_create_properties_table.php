@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('unit_no')->nullable();
             $table->tinyInteger('is_verified')->default(0)->nullable()->comment('0: No, 1: Yes');
             $table->tinyInteger('is_document_verified')->default(0)->nullable()->comment('0: No, 1: Yes');
+            $table->tinyInteger('is_sold')->default(0)->nullable()->comment('0: No, 1: Yes');
             $table->text('address')->nullable();
             $table->string('city')->nullable();
             $table->string('locality')->nullable();
@@ -92,6 +93,7 @@ return new class extends Migration
             $table->index('building_name');
             $table->index('is_verified');
             $table->index('is_document_verified');
+            $table->index('is_sold');
             $table->index('city');
             $table->index('locality');
             $table->index('bedrooms');

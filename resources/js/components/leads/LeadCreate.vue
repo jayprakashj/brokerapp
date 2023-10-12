@@ -56,6 +56,17 @@
                                     :selected-item="formData.property_type"
                                     :error-msg="errors?.property_type"
                                 />
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.enquiry_type"
+                                        form-label="Enquiry Type"
+                                        placeholder="Select Type"
+                                        value-field="title"
+                                        display-field="title"
+                                        :options="options.enquiry_types"
+                                        :selected-item="formData.enquiry_type"
+                                        :error-msg="errors?.enquiry_type"
+                                    />
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500 col-span-2"></div>
                             <label class="block h-full" >
                                 <span>Name</span>
@@ -430,6 +441,7 @@ export default {
                 lead_status: null,
                 remark: null,
                 keywords: null,
+                enquiry_type: null,
                 property_type: [],
                 property: [],
                 project: [],
@@ -463,6 +475,7 @@ export default {
                 lead_statuses: [],
                 properties: [],
                 projects: [],
+                enquiry_types: [],
             },
             show:{
                 commentForm: false
@@ -517,6 +530,9 @@ export default {
                             .nullable(true)
                             .required('Required'),
                 lead_status: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
+                enquiry_type: Yup.string()
                             .nullable(true)
                             .required('Required'),
                 mobile: Yup.string()

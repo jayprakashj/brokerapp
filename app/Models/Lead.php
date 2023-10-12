@@ -287,4 +287,41 @@ class Lead extends Model
         $user = auth()->user();
         return ($user->isCompanyAdmin() || ($user->can('Only Assigned Lead List') && $this->isAssignedToMe()));
     }
+
+    public function getPropertySuggestions(){
+        if( in_array( $this->enquiry_type, [ 'Buy', 'Rent ( Tenant )' ])){
+            $propertyTransaction = 'Rental';
+            if( $this->enquiry_type == 'Buy'){
+                $propertyTransaction = ['Sell', 'Resell'];
+
+            }
+            $filter = [
+                'property_type' => $this->property_type,
+                'city' => $this->customer_city,
+                'price' => [
+                    $this->min_budget,
+                    $this->max_budget
+                ]
+            ];
+
+            $orderByPropertyType = 'WHEN property_type IN ( "' . implode('", "',data_get( $filter, 'property_type', [] )) . '" ) THEN 1';
+            $orderByCity = 'WHEN city LIKE "%' . data_get( $filter, 'city', null ) . '%" THEN 2';
+            $properties = Property::where( function( $q ) use( $filter ){
+                                    $q->filterPropertyType( data_get( $filter, 'property_type', [] ), 'or')
+                                            ->filterCityLike( data_get( $filter, 'city', [] ), 'or');
+                                } )
+                                ->whereBetween('price', data_get( $filter, 'price', [] ))
+                                ->filterPropertyTransaction( $propertyTransaction )
+                                ->orderBy('price')
+                                ->availabilityYes()
+                                ->orderByRaw(
+                                    'CASE ' .$orderByPropertyType. ' ' . $orderByCity . ' END'
+                                )
+                                ->latest()
+                                ->limit( 20 )
+                                ->get();
+            return $properties;
+        }
+        return [];
+    }
 }

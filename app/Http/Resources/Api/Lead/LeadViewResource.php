@@ -44,6 +44,7 @@ class LeadViewResource extends JsonResource
             'updated_at_time' => $this->created_at->format('d-m-Y h:i a'),
             'comments' => LeadCommentsResource::collection( $this->latestComments ),
             'property_type' => $this->property_type ? implode(', ', $this->property_type ) : 'N/A',
+            'property_references' => PropertyReferenceListResource::collection( $this->getPropertySuggestions() )
         ];
 
         if( $this->properties->count() ){
