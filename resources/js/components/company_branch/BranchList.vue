@@ -8,7 +8,7 @@
                     <button
                         @click="showFilter = !showFilter"
                         class="btn h-9 w-9 rounded-full bg-primary p-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                        <i class="fa fa-filter"></i>
+                        <i class="fa fa-search"></i>
                     </button>
                 </div>
             </div>
