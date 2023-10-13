@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\Dashboard;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LeadListResource extends JsonResource
@@ -16,12 +17,14 @@ class LeadListResource extends JsonResource
     {
         $data = [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => Str::limit($this->title, 25),
+            'full_title' => $this->title,
             'name' => $this->customer_name,
             'mobile' => $this->customer_mobile ?? 'N/A',
             'email' => $this->customer_email ?? 'N/A',
             'status' => $this->lead_status ?? 'N/A',
-            'comment' => $this->lastComment->comment ?? 'N/A',
+            'comment' => Str::limit($this->lastComment->comment ?? 'N/A', 50 ),
+            'full_comment' => $this->lastComment->comment ?? 'N/A',
             'updated_at' => $this->updated_at->format('d M, Y h:i a')
 
         ];

@@ -1,110 +1,112 @@
 <template>
     <page-header :title="pageTitle" />
 
-    <div class="grid grid-cols-12 gap-4 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6">
-        <div class="col-span-5 pb-4">
-            <div class="px-4 pt-2 pb-4 mt-3 grid grid-cols-12 gap-3 px-4 gap-y-5">
-                <div class="col-span-6 card p-4.5 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROPERTY_LIST, $permissions.ONLY_ASSIGNED_PROPERTY_LIST ] )">
+    <div class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
+        <div class="col-span-12 pb-4">
+            <div class="px-4 pt-2 pb-4 mt-3 grid grid-cols-4 gap-3 px-4 gap-y-5 items-center">
+                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROPERTY_LIST, $permissions.ONLY_ASSIGNED_PROPERTY_LIST ] )">
                     <div class="flex items-center justify-between">
 
                         <div>
-                            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
+                            <p class="text-4xl font-bold text-success dark:text-navy-100">
                                 {{ data.property_count }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Properties</p>
                         </div>
-                        <div class="mask is-star flex h-10 w-10 shrink-0 items-center justify-center bg-success">
-                            <i class="fa fa-building text-white"></i>
+                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-success/10">
+                            <i class="fa text-2xl fa-building text-success"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-6 card p-4.5 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROJECT_LIST, $permissions.ONLY_ASSIGNED_PROJECT_LIST ] )">
+                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROJECT_LIST, $permissions.ONLY_ASSIGNED_PROJECT_LIST ] )">
                     <div class="flex items-center justify-between">
 
                         <div>
-                            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
+                            <p class="text-4xl font-bold text-primary dark:text-navy-100">
                                 {{ data.project_count }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Projects</p>
                         </div>
-                        <div class="mask is-star flex h-10 w-10 shrink-0 items-center justify-center bg-primary">
-                            <i class="fa fa-file-invoice text-white"></i>
+                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-primary/10">
+                            <i class="fa text-2xl fa-file-invoice text-primary"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-6 card p-4.5 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.MEMBER_LIST] )">
+                <div class=" card p-8 justify-center hidden" v-if="userPermissions.isPermissionsAllowed([ $permissions.MEMBER_LIST] )">
                     <div class="flex items-center justify-between">
 
                         <div>
-                            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
+                            <p class="text-4xl font-bold text-info dark:text-navy-100">
                                 {{ data.member_count }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Members</p>
                         </div>
-                        <div class="mask is-star flex h-10 w-10 shrink-0 items-center justify-center bg-info">
-                            <i class="fa fa-users text-white"></i>
+                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-info/10">
+                            <i class="fa text-2xl fa-users text-info"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-6 card p-4.5 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.BRANCH_LIST] )">
+                <div class=" card p-8 justify-center hidden" v-if="userPermissions.isPermissionsAllowed([ $permissions.BRANCH_LIST] )">
                     <div class="flex items-center justify-between">
 
                         <div>
-                            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
+                            <p class="text-4xl font-bold text-gray dark:text-navy-100">
                                 {{ data.branch_count }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Branches</p>
                         </div>
-                        <div class="mask is-star flex h-10 w-10 shrink-0 items-center justify-center bg-gray-800">
-                            <i class="fa fa-network-wired text-white"></i>
+                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-gray-800/10">
+                            <i class="fa text-2xl fa-network-wired text-gray"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-6 card p-4.5 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.CONTACT_LIST] )">
+                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
                     <div class="flex items-center justify-between">
 
                         <div>
-                            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
-                                {{ data.contact_count }}
-                            </p>
-                            <p class="text-xs+ line-clamp-1">Contacts</p>
-                        </div>
-                        <div class="mask is-star flex h-10 w-10 shrink-0 items-center justify-center bg-warning">
-                            <i class="fa fa-phone text-white"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-span-6 col-start-1 card p-4.5 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
-                    <div class="flex items-center justify-between">
-
-                        <div>
-                            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
+                            <p class="text-4xl font-bold text-slate-900 dark:text-navy-100">
                                 {{ data.month_leads }}
                             </p>
                             <p class="text-xs+ line-clamp-1">This Month Leads</p>
                         </div>
-                        <div class="mask is-star flex h-10 w-10 shrink-0 items-center justify-center bg-slate-900/60">
-                            <i class="fa fa-bullseye text-white"></i>
+                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-slate-900/10">
+                            <i class="fa text-2xl fa-bullseye text-slate-900"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-6 card p-4.5 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.SITE_VISIT_LIST, $permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ] )">
+                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.SITE_VISIT_LIST, $permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ] )">
                     <div class="flex items-center justify-between">
 
                         <div>
-                            <p class="text-base font-semibold text-slate-700 dark:text-navy-100">
+                            <p class="text-4xl font-bold text-red-800 dark:text-navy-100">
                                 {{ data.month_site_visits }}
                             </p>
                             <p class="text-xs+ line-clamp-1">This Month Site Visits</p>
                         </div>
-                        <div class="mask is-star flex h-10 w-10 shrink-0 items-center justify-center bg-red-800">
-                            <i class="fa fa-building-user text-white"></i>
+                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-red-800/10">
+                            <i class="fa text-2xl fa-building-user text-red-800"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" card p-8 justify-center hidden" v-if="userPermissions.isPermissionsAllowed([ $permissions.CONTACT_LIST] )">
+                    <div class="flex items-center justify-between">
+
+                        <div>
+                            <p class="text-4xl font-bold text-warning dark:text-navy-100">
+                                {{ data.contact_count }}
+                            </p>
+                            <p class="text-xs+ line-clamp-1">Contacts</p>
+                        </div>
+                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-warning/10">
+                            <i class="fa text-2xl fa-phone text-warning"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card p-4 sm:p-5 col-span-7  max-h-[400px] overflow-x-auto" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,this.$permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
+
+        <div class="card p-4 sm:p-5 col-span-7  max-h-[400px] overflow-x-auto" v-if="false && userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,this.$permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
             <div
                 class="col-span-12 flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
                 <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
@@ -157,6 +159,66 @@
             <no-data-found v-else />
         </div>
     </div>
+
+    <div class="mt-4 grid grid-cols-12 gap-4 bg-slate-150 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 -ml-[4rem] -mr-[4rem]"  v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,this.$permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
+            <div class="col-span-12 flex flex-col px-[var(--margin-x)] transition-all duration-[.25s] lg:col-span-3 lg:pr-0">
+                <h2 class="text-base font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100 lg:text-xl">
+                    Today's Leads
+                </h2>
+
+                <p class="mt-3 grow">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus obcaecati similique iste architecto excepturi error vel assumenda! Dolore vitae, saepe fugit omnis incidunt, est autem odit, perferendis et commodi illo?
+                </p>
+
+            </div>
+            <div
+                class="col-span-12 flex space-x-4 overflow-x-auto px-[var(--margin-x)] transition-all duration-[.25s] lg:col-span-9 lg:pl-0">
+                <template v-if="data?.today_leads?.length">
+                    <div class="card w-72 shrink-0 space-y-1 rounded-xl p-4 sm:px-1  grow " v-for="(item, idx) in data?.today_leads" :key="'today_lead_'+idx">
+                        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100 text-center" :title="item.full_title">
+                            {{ item.title }}
+                        </h3>
+                        <p class="text-xs+ text-center">
+                            {{ item.name }}
+                        </p>
+                        <div class="my-4 !mt-4 !mb-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grow space-y-4">
+                            <div class="flex pl-6 space-x-4">
+                                <div
+                                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                                    <i class="fa fa-phone text-xs"></i>
+                                </div>
+                                <p>{{ item.mobile }}</p>
+                            </div>
+                            <div class="flex pl-6 space-x-4">
+                                <div
+                                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                                    <i class="fa fa-envelope text-xs"></i>
+                                </div>
+                                <p>{{ item.email }}</p>
+                            </div>
+                            <div class="flex pl-6 space-x-4">
+                                <div
+                                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
+                                    <i class="fa fa-comment text-xs"></i>
+                                </div>
+                                <p :title="item.full_comment">{{ item.comment }}</p>
+                            </div>
+                        </div>
+                        <div class="mt-5 space-x-2 text-center">
+
+                            <router-link
+                                v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_LEAD ] )"
+                                :to="'/lead/view/' + item.id"
+                                class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                                <span> View Detail </span>
+                            </router-link>
+                        </div>
+                    </div>
+                </template>
+                <no-data-found v-else />
+            </div>
+        </div>
 </template>
 
 <script>

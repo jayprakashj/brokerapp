@@ -7,7 +7,7 @@
 
                     <button
                         @click="showFilter = !showFilter"
-                        class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                        class="btn h-9 w-9 rounded-full bg-primary p-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
                         <i class="fa fa-filter"></i>
                     </button>
                 </div>
@@ -86,12 +86,12 @@
             </div>
         </div>
         <div class="card mt-3">
-            <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
+            <div class="min-w-full overflow-x-auto">
                 <table class="is-hoverable w-full text-left">
                     <thead>
                         <tr>
                             <th
-                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('title')">
+                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('title')">
                                 <div class="flex gap-3 items-center">
                                     Title
                                     <template v-if="sortColumn == 'title'">
@@ -133,7 +133,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('assign_to')">
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('assign_to')">
                                 <div class="flex gap-3 items-center">
                                     Assign To
                                     <template v-if="sortColumn == 'assign_to'">
@@ -145,7 +145,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')">
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')" :class="{'rounded-tr-lg': !userPermissions.isPermissionsAllowed([ $permissions.UPDATE_TASK, $permissions.REMOVE_TASK ] )}">
                                 <div class="flex gap-3 items-center">
                                     Updated At
                                     <template v-if="sortColumn == 'updated_at'">
