@@ -23,7 +23,7 @@ class DashboardClass {
         $projectCount = Project::query();
         $monthLeads = Lead::query()->whereMonth('updated_at', date('m'));
         $monthSiteVisits = SiteVisit::query()->whereMonth('created_at', date('m'));
-        $todaysLeads = Lead::with('lastComment')->whereDate('updated_at', today());
+        $todaysLeads = Lead::with('lastComment')->whereDate('updated_at', '<=', today());
 
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Property List') ){
             $propertyCount->createdByOrAssignToAuth();

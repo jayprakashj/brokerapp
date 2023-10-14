@@ -1,14 +1,19 @@
 <template>
-    <page-header :title="pageTitle" :menus="menus" >
+    <page-header :title="pageTitle" >
         <template v-slot:actionContainer >
             <div class="flex items-center space-x-2">
+                <router-link to="/property/create"
+                    class="btn space-x-2 rounded-full bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                    <i class="fa fa-plus"></i>
+                    <span>Add New</span>
+                </router-link>
 
                 <div class="flex">
 
                     <button
                         @click="showFilter = !showFilter"
-                        class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
-                        <i class="fa fa-filter"></i>
+                        class="btn h-9 w-9 rounded-full bg-primary p-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                        <i class="fa fa-search"></i>
                     </button>
                 </div>
             </div>
@@ -154,12 +159,12 @@
             </div>
         </div>
         <div class="card mt-3">
-            <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
+            <div class="min-w-full overflow-x-auto">
                 <table class="is-hoverable w-full text-left">
                     <thead>
                         <tr>
                             <th
-                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('name')">
+                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('name')">
                                 <div class="flex gap-3 items-center">
                                     Property Name
                                     <template v-if="sortColumn == 'name'">
@@ -224,7 +229,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('property_transaction')">
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('property_transaction')">
                                 <div class="flex gap-3 items-center">
                                     Property Transaction
                                     <template v-if="sortColumn == 'property_transaction'">
@@ -236,7 +241,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('is_verified')">
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('is_verified')">
                                 <div class="flex gap-3 items-center">
                                     Is Verified?
                                     <template v-if="sortColumn == 'is_verified'">
@@ -249,7 +254,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('assign_to')">
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('assign_to')">
                                 <div class="flex gap-3 items-center">
                                     Assign To
                                     <template v-if="sortColumn == 'assign_to'">
@@ -261,7 +266,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_by')">
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_by')">
                                 <div class="flex gap-3 items-center">
                                     Updated By
                                     <template v-if="sortColumn == 'updated_by'">
@@ -273,7 +278,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')">
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')">
                                 <div class="flex gap-3 items-center">
                                     Updated At
                                     <template v-if="sortColumn == 'updated_at'">
