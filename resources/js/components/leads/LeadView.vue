@@ -320,56 +320,102 @@
                         </div>
                     </div>
                     <div v-show="activeTab === 'property_references'" >
-                        <div class="px-4 pt-2 pb-4" v-if="formData?.property_references?.length">
-                            <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.property_references" :key="'site_visit_'+index">
-                                <div class="flex items-center space-x-2 sm:space-x-3">
-                                    <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100">
-                                        {{ item.name }}
-                                    </h2>
-                                </div>
-                                <p class="mt-1 mb-1"><i class="fa fa-building"></i> {{ item.building_name }}</p>
-                                <p class="mt-1"><i class="fa fa-location-dot"></i> {{ item.address }}</p>
-                                <div class="mt-2 grid grid-col-2 sm:grid-col-1">
-                                    <div class="mr-4 mb-1 inline-flex items-center space-x-2 font-inter">
-                                        <div class="h-2 w-2 rounded-full bg-primary dark:bg-accent"></div>
-                                        <div class="flex space-x-1 text-xs leading-6">
-                                            <span class="font-medium text-slate-700 dark:text-navy-100">Owner Name</span>
-                                            <span>{{ item.owner_name }}</span>
+                        <div v-if="formData?.property_references?.length">
+                            <div class="card border border-light shadow-none hover:shadow lg:flex-row" v-for="(item, index) in formData.property_references" :key="'site_visit_'+index">
+                                <!-- <img class="h-48 w-full shrink-0 rounded-t-lg bg-cover bg-center object-cover object-center lg:h-auto lg:w-48 lg:rounded-t-none lg:rounded-l-lg"
+                                    src="/images/object/object-2.jpg" alt="image"> -->
+                                <div class="flex w-full grow flex-col px-4 py-3 sm:px-5">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs+ text-info">{{ item.locality }}</span>
+                                        <div class="-mr-1.5 flex space-x-1">
+                                            <span class="text-2xl text-slate-500 font-bold"><i class="fa fa-inr"></i> {{ item.price }}</span>
                                         </div>
                                     </div>
-                                    <div class="mr-4 mb-1 inline-flex items-center space-x-2 font-inter">
-                                        <div class="h-2 w-2 rounded-full bg-primary dark:bg-accent"></div>
-                                        <div class="flex space-x-1 text-xs leading-6">
-                                            <span class="font-medium text-slate-700 dark:text-navy-100">Owner Mobile</span>
-                                            <span>{{ item.owner_phone }}</span>
-                                        </div>
+                                    <div>
+                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_PROPERTY ] )" :to="'/property/view/' + item.id"
+                                            class="text-lg font-medium text-slate-700 hover:text-primary focus:text-primary dark:text-navy-100 dark:hover:text-accent-light dark:focus:text-accent-light">{{ item.name }}</router-link>
+                                        <span v-else class="text-lg font-medium text-slate-700 hover:text-primary focus:text-primary dark:text-navy-100 dark:hover:text-accent-light dark:focus:text-accent-light">{{ item.name }}</span>
                                     </div>
-                                </div>
-                                <div class="mt-1 flex items-end justify-between">
-                                    <div class="flex flex-wrap items-center font-inter text-xs">
-                                        <span class="flex items-center space-x-1">
-                                            <i class="fa fa-inr"></i>
-                                            <span>{{ item.price }}</span>
-                                        </span>
-                                        <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
-                                        <span class="flex items-center space-x-1">
-                                            <i class="fa fa-location"></i>
-                                            <span>{{ item.locality }}</span>
-                                        </span>
-                                        <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
-                                        <span class="flex items-center space-x-1">
-                                            <i class="fa fa-city"></i>
-                                            <span>{{ item.city }}</span>
-                                        </span>
-                                    </div>
-                                    <div class="flex items-center space-x-1">
-                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_PROPERTY ] )" :to="'/property/view/' + item.id" class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
-                                            <i class="fa fa-external-link"></i>
-                                        </router-link>
+                                    <p class="mt-1 line-clamp-3 mb-2">
+                                        <i class="fa fa-building mr-1"></i> {{ item.building_name }}
+                                    </p>
+                                    <div class="flex justify-between">
+                                        <div class="mt-2 flex items-center text-xs">
+                                            <span class="flex items-center space-x-2 hover:text-slate-800 dark:hover:text-navy-100">
+                                                <div class="avatar h-6 w-6">
+                                                    <img class="rounded-full" src="/images/user-placeholder.png" alt="avatar">
+                                                </div>
+                                                <div>
 
+                                                    <span class="line-clamp-1 font-bold">{{ item.owner_name }}</span>
+                                                    <div class="line-clamp-1">{{ item.owner_phone }}</div>
+                                                </div>
+                                            </span>
+                                            <div class="mx-3 my-1 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                            <span class="shrink-0 text-slate-400 dark:text-navy-300">{{ item.city }}
+                                            </span>
+                                        </div>
+                                        <div class="mt-1 flex justify-end">
+                                            <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_PROPERTY ] )" :to="'/property/view/' + item.id"
+                                                class="btn px-2.5 py-1.5 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25">
+                                                View Detail
+                                            </router-link>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <template v-if="false">
+                                <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.property_references" :key="'site_visit_'+index">
+                                    <div class="flex items-center space-x-2 sm:space-x-3">
+                                        <h2 class="cursor-pointer text-slate-600 line-clamp-1 dark:text-navy-100">
+                                            {{ item.name }}
+                                        </h2>
+                                    </div>
+                                    <p class="mt-1 mb-1"><i class="fa fa-building"></i> {{ item.building_name }}</p>
+                                    <p class="mt-1"><i class="fa fa-location-dot"></i> {{ item.address }}</p>
+                                    <div class="mt-2 grid grid-col-2 sm:grid-col-1">
+                                        <div class="mr-4 mb-1 inline-flex items-center space-x-2 font-inter">
+                                            <div class="h-2 w-2 rounded-full bg-primary dark:bg-accent"></div>
+                                            <div class="flex space-x-1 text-xs leading-6">
+                                                <span class="font-medium text-slate-700 dark:text-navy-100">Owner Name</span>
+                                                <span>{{ item.owner_name }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mr-4 mb-1 inline-flex items-center space-x-2 font-inter">
+                                            <div class="h-2 w-2 rounded-full bg-primary dark:bg-accent"></div>
+                                            <div class="flex space-x-1 text-xs leading-6">
+                                                <span class="font-medium text-slate-700 dark:text-navy-100">Owner Mobile</span>
+                                                <span>{{ item.owner_phone }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-1 flex items-end justify-between">
+                                        <div class="flex flex-wrap items-center font-inter text-xs">
+                                            <span class="flex items-center space-x-1">
+                                                <i class="fa fa-inr"></i>
+                                                <span>{{ item.price }}</span>
+                                            </span>
+                                            <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                            <span class="flex items-center space-x-1">
+                                                <i class="fa fa-location"></i>
+                                                <span>{{ item.locality }}</span>
+                                            </span>
+                                            <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                            <span class="flex items-center space-x-1">
+                                                <i class="fa fa-city"></i>
+                                                <span>{{ item.city }}</span>
+                                            </span>
+                                        </div>
+                                        <div class="flex items-center space-x-1">
+                                            <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_PROPERTY ] )" :to="'/property/view/' + item.id" class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                                                <i class="fa fa-external-link"></i>
+                                            </router-link>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </template>
                         </div>
                         <no-data-found v-else />
                     </div>

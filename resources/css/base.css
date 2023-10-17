@@ -202,6 +202,10 @@ code.inline-code {
     @apply hidden;
 }
 
+h2.swal2-title{
+    line-height: 35px;
+}
+
 @supports selector(::-webkit-scrollbar) {
     .scrollbar-sm::-webkit-scrollbar {
         @apply h-1.5 w-1.5;

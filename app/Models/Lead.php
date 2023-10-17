@@ -182,11 +182,11 @@ class Lead extends Model
     public function scopeFilterProjects ( $q, $value, $boolean = 'and' ){
         if( !empty( $value ) ) {
             if( is_array( $value ) ){
-                return $q->{$boolean == 'or' ? 'whereHas' : 'orWhereHas'}('projects', function( $subQry ) use ( $value ){
+                return $q->{$boolean == 'and' ? 'whereHas' : 'orWhereHas'}('projects', function( $subQry ) use ( $value ){
                     $subQry->whereIn('project_id', $value);
                 });
             }else{
-                $q->{$boolean == 'or' ? 'whereRelation' : 'orWhereRelation'}('project_id', 'id', '=', $value);
+                $q->{$boolean == 'and' ? 'whereRelation' : 'orWhereRelation'}('project_id', 'id', '=', $value);
             }
         }
         return $q;
@@ -195,11 +195,11 @@ class Lead extends Model
     public function scopeFilterProperties ( $q, $value, $boolean = 'and' ){
         if( !empty( $value ) ) {
             if( is_array( $value ) ){
-                return $q->{$boolean == 'or' ? 'whereHas' : 'orWhereHas'}('properties', function( $subQry ) use ( $value ){
+                return $q->{$boolean == 'and' ? 'whereHas' : 'orWhereHas'}('properties', function( $subQry ) use ( $value ){
                     $subQry->whereIn('property_id', $value);
                 });
             }else{
-                $q->{$boolean == 'or' ? 'whereRelation' : 'orWhereRelation'}('properties', 'property_id', '=', $value);
+                $q->{$boolean == 'and' ? 'whereRelation' : 'orWhereRelation'}('properties', 'property_id', '=', $value);
             }
         }
         return $q;
