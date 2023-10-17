@@ -60,5 +60,33 @@ export default {
             return isExists;
         };
 
+        app.config.globalProperties.$checkIsObjectEmpty = function ( obj ) {
+            const objectData = Object.assign( {}, obj );
+            const keys = Object.keys( objectData );
+            keys.forEach( ( d ) => {
+                const keyVal = objectData[ d ];
+
+                if( keyVal == null || keyVal == "" || ( Array.isArray( keyVal ) && keyVal.length == 0 ) ){
+                    delete objectData[d];
+                }
+            });
+
+            return Object.keys( objectData ).length == 0;
+        }
+
+        app.config.globalProperties.$transformFilledOnly = function ( obj ) {
+            const objectData = Object.assign( {}, obj );
+            const keys = Object.keys( objectData );
+            keys.forEach( ( d ) => {
+                const keyVal = objectData[ d ];
+
+                if( keyVal == null || keyVal == "" || ( Array.isArray( keyVal ) && keyVal.length == 0 ) ){
+                    delete objectData[d];
+                }
+            });
+
+            return objectData;
+        }
+
     }
 }

@@ -533,5 +533,21 @@ const apis = {
     createEnquiryRequest: ( data ) => {
         return http.post('submit/enquiry-form', data);
     },
+
+    getSavedSearchList: ( params ) => {
+        let config = {};
+        if( params ) {
+            config = params;
+        }
+        return http.get(`save-search/get`, {params} );
+    },
+    createSavedSearch: ( data ) => {
+        return http.post('save-search/store', data);
+    },
+
+    deleteSavedSearch: ( id ) => {
+        return http.post( `save-search/${id}/delete` );
+    },
+
 }
 export default apis;

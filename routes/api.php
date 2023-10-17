@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
+use App\Http\Controllers\Api\SavedSearchController;
 use App\Http\Controllers\Api\SiteVisitController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Auth\AuthController;
@@ -375,6 +376,22 @@ Route::middleware(['auth' , 'set_default_company' ])->group(function () {
             Route::get('filter-data', [SiteVisitController::class, 'getFilterData'])
                                 ->name('filter_data');
         });
+
+        Route::prefix('save-search')
+                    ->name('save_search.')
+                    ->group( function () {
+
+                        Route::get('/get', [SavedSearchController::class, 'index'])
+                                                        ->name('index');
+
+
+                        Route::post('store', [SavedSearchController::class, 'store'])
+                                                    ->name('store');
+
+                        Route::post('{savedSearch}/delete', [SavedSearchController::class, 'delete'])
+                                        ->name('delete');
+
+                    });
 
     });
 

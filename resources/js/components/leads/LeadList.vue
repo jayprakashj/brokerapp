@@ -152,6 +152,12 @@
                             class="btn font-medium text-slate-700 hover:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-100 dark:hover:bg-navy-300/20 dark:active:bg-navy-300/25">
                             Close
                         </button>
+                        <button
+                            type="button"
+                            @click="saveSearch"
+                            class="btn border border-primary font-medium text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white active:bg-primary/90 dark:border-accent dark:text-accent-light dark:hover:bg-accent dark:hover:text-white dark:focus:bg-accent dark:focus:text-white dark:active:bg-accent/90">
+                            Save Search
+                        </button>
 
                         <button
                             type="submit"
@@ -168,7 +174,40 @@
                     </div>
                 </form>
             </div>
+            <template v-if="savedSearches?.length">
+                <template  v-for="(item, index) in savedSearches" :key="'saved_search_'+ index">
+                    <div class="card mt-2 p-3 py-3 pr-6" v-if="item.data?.length">
+                        <div class="flex ">
+
+                            <div class="w-[96%] space-y-2">
+                                <div
+                                    class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light mr-2"
+                                    v-for="(search, idx ) in item.data"
+                                    :key="'search_param'+ idx"
+                                    >
+                                        <b class="mr-1">{{ search.label }}:</b>
+                                        <span ><pre class="font-sans text-tiny+">{{ search.values }}</pre></span>
+                                    </div>
+                            </div>
+                            <div class="w-16 flex justify-end items-center gap-2">
+                                <button
+                                    @click="applySaveFilter(item.filter)"
+                                    class="btn h-6 w-6 rounded-full bg-primary p-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button
+                                        @click="removeSavedSearch(item.id)"
+                                        class="btn h-6 w-6 p-0 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
+                                    >
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </template>
         </div>
+
         <div class="card mt-3">
             <div class="min-w-full overflow-x-auto">
                 <table class="is-hoverable w-full text-left">
@@ -352,13 +391,13 @@
                                                         </div>
                                                     </div>
                                                 </template>
-                                                <tempalte #default>
+                                                <template #default>
                                                     <span>
                                                         {{ item.property_name.at(0) }} <span class="text-primary">+{{ item.property_name.length-1 }} more</span>
 
                                                     </span>
 
-                                                </tempalte>
+                                                </template>
 
                                             </tippy>
 
@@ -384,13 +423,13 @@
                                                         </div>
                                                     </div>
                                                 </template>
-                                                <tempalte #default>
+                                                <template #default>
                                                     <span>
                                                         {{ item.project_name.at(0) }} <span class="text-primary">+{{ item.project_name.length-1 }} more</span>
 
                                                     </span>
 
-                                                </tempalte>
+                                                </template>
 
                                             </tippy>
 
@@ -492,6 +531,24 @@ export default {
                 assign_to: null,
                 updated_at: null
             },
+            loading:{
+                formSubmit: false
+            },
+            filterLabel: {
+                title: 'Title',
+                customer_name: 'Customer Name',
+                properties: 'Properties',
+                projects: 'Projects',
+                company_branch: 'Company Branch',
+                mobile: 'Mobile',
+                email: 'Email',
+                city: 'City',
+                lead_source: 'Lead Source',
+                lead_status: 'Lead Status',
+                assign_to: 'Assign To',
+                updated_at: 'Updated At',
+            },
+            savedSearches: []
         }
     },
     created(){
@@ -601,6 +658,8 @@ export default {
                             ( res ) => {
                                 if( res.data ){
                                     this.filterOptions = Object.assign( {}, res.data);
+
+                                    this.getSavedSearchList();
                                 }
                             },
                             (err) => {
@@ -612,7 +671,7 @@ export default {
                             }
                         )
         },
-        resetFilter(){
+        clearFilter(){
             this.filter = {
                 title: null,
                 customer_name: null,
@@ -627,8 +686,205 @@ export default {
                 assign_to: null,
                 updated_at: null
             };
+        },
+        resetFilter(){
+
+            this.clearFilter();
             this.resetAndLoadList();
-        }
+        },
+        saveSearch () {
+            if( this.$checkIsObjectEmpty( this.filter) ){
+                this.$toast.error("Error! Please select at least one filter option.");
+                returnl
+            }
+            if( this.loading.formSubmit ){
+                return;
+            }
+            this.loading.formSubmit = true;
+            this.$store.commit('setGlobalLoaderOn');
+
+            const data = {
+                type: 'lead',
+                'search_data': this.$transformFilledOnly(this.filter)
+            };
+            this.$request.createSavedSearch( data )
+                        .then(
+                            ( res ) => {
+                                let message = 'Success! Search criteria has been saved successfully.';
+                                if( res.data?.message ){
+                                    message = res.data.message;
+                                }
+                                this.getSavedSearchList();
+                                this.$toast.info( message );
+                            },
+                            ( err ) => {
+                                let message = 'Error! There is error occured while processing request.';
+                                if( err?.response?.data?.message ){
+                                    message = err.response.data.message;
+                                }
+                                this.$toast.error( message );
+                            }
+                        ).finally(
+                            () => {
+                                this.loading.formSubmit = false;
+                                this.$store.commit('setGlobalLoaderOff');
+                            }
+                        );
+        },
+
+        getSavedSearchList(){
+            this.$store.commit('setGlobalLoaderOn')
+            const params = {
+                type: 'lead',
+            }
+            this.$request.getSavedSearchList( params )
+                        .then(
+                            ( res ) => {
+                                if( res.data ){
+                                    this.savedSearches = [];
+                                    res.data.map( d => {
+                                        const data = Object.assign({
+                                            id: d.id
+                                        }, this.transformSavedSearchData( d.search_data ))
+                                        this.savedSearches.push( data );
+                                    });
+                                }
+                            },
+                            (err) => {
+
+                            }
+                        ).finally(
+                            () => {
+                                this.$store.commit('setGlobalLoaderOff')
+                            }
+                        )
+        },
+        transformSavedSearchData ( obj ) {
+            const searchKeys = Object.keys( obj );
+            let transformData = [];
+
+            searchKeys.map( d => {
+
+                let searchVal = obj[ d ];
+
+                if( searchVal ){
+                    if( ['company_branch', 'properties', 'projects', 'lead_source', 'lead_status', 'assign_to'].includes( d ) ){
+                        if( d == 'company_branch' && this.filterOptions?.company_branches?.length ){
+                            const findRecord = this.filterOptions.company_branches.find( item => item.id == searchVal );
+                            if( findRecord ){
+                                searchVal = findRecord.name
+                            }
+                        }
+                        if( d == 'properties' && this.filterOptions?.properties?.length > 0 ){
+                            const findRecord = this.filterOptions.properties.map( item => {
+                                let id = String( item.id );
+                                if( ( Array.isArray( searchVal ) && searchVal.includes( id ) ) || id == searchVal ){
+                                    return item.name
+                                }
+                                return false;
+                            } ).filter( Boolean );
+                            if( findRecord?.length ){
+                                searchVal = findRecord.join(", \r\n");
+                            }
+                        }
+                        if( d == 'projects' && this.filterOptions?.projects?.length ){
+                            const findRecord = this.filterOptions.projects.map( item => {
+                                let id = String( item.id );
+                                if( ( Array.isArray( searchVal ) && searchVal.includes( id ) ) || id == searchVal ){
+                                    return item.name
+                                }
+                                return false;
+                            } ).filter( Boolean );
+                            if( findRecord?.length ){
+                                searchVal = findRecord.join(", \r\n");
+                            }
+                        }
+                        if( d == 'lead_source' && this.filterOptions?.lead_sources?.length ){
+                            const findRecord = this.filterOptions.lead_sources.find( item => item.id == searchVal );
+                            if( findRecord  ){
+                                searchVal = findRecord.name;
+                            }
+                        }
+                        if( d == 'lead_status' && this.filterOptions?.lead_statuses?.length ){
+                            const findRecord = this.filterOptions.lead_statuses.find( item => item.id == searchVal );
+                            if( findRecord  ){
+                                searchVal = findRecord.name;
+                            }
+                        }
+                        if( d == 'assign_to' && this.filterOptions?.members?.length ){
+                            const findRecord = this.filterOptions.members.find( item => item.id == searchVal );
+                            if( findRecord  ){
+                                searchVal = findRecord.name;
+                            }
+                        }
+                    }
+                    let label = d;
+                    if( d in this.filterLabel ){
+                        label = this.filterLabel[d]
+                    }
+                    const tmpData = {
+                        label: label,
+                        values: searchVal
+                    }
+                    transformData.push( tmpData );
+                }
+            })
+
+            if( transformData && transformData?.length ){
+
+                return {
+                    filter: obj,
+                    data: transformData
+                }
+            }
+            return false;
+        },
+        applySaveFilter( filterData ){
+            this.clearFilter();
+            this.filter = Object.assign( this.filter, filterData );
+            this.applyFilter();
+        },
+        removeSavedSearch ( id ){
+
+
+            this.$swal.fire({
+                    title: 'Are you sure you want to remove the selected saved search?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete.',
+                }).then(
+                    ( res ) =>{
+                        if( res.isConfirmed ){
+                            this.$store.commit('setGlobalLoaderOn')
+                            this.$request
+                                .deleteSavedSearch( id )
+                                .then(
+                                    ( res ) => {
+                                        let message = 'Success! Saved search removed successfully.';
+
+                                        if( res.data?.message ){
+                                            message = res.data.message;
+                                        }
+                                        this.getSavedSearchList();
+                                        this.$toast.info( message );
+                                    },
+                                    ( err ) => {
+                                        let message = 'Error! There is error occured while processing request.';
+                                        if( err?.response?.data?.message ){
+                                            message = err.response.data.message;
+                                        }
+                                        this.$toast.error( message );
+                                    }
+                                )
+                                .finally(
+                                    () => {
+                                        this.$store.commit('setGlobalLoaderOff');
+                                    }
+                                )
+
+                        }
+                    }
+                );
+        },
     }
 }
 </script>
