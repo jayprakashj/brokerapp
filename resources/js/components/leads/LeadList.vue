@@ -29,7 +29,7 @@
 
                             <div class="w-[96%] space-y-2">
                                 <div
-                                    class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light mr-2"
+                                    class="badge bg-slate-150 text-slate-800 dark:bg-navy-500 dark:text-navy-100 mr-2"
                                     v-for="(search, idx ) in item.data"
                                     :key="'search_param'+ idx"
                                     >
