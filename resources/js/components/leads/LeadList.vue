@@ -21,7 +21,40 @@
     </page-header>
     <div class="col-span-12">
         <div >
-            <div class="card p-3 py-3" v-show="showFilter">
+
+            <template v-if="savedSearches?.length">
+                <template  v-for="(item, index) in savedSearches" :key="'saved_search_'+ index">
+                    <div class="card mt-2 p-3 py-3 pr-6" v-if="item.data?.length">
+                        <div class="flex ">
+
+                            <div class="w-[96%] space-y-2">
+                                <div
+                                    class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light mr-2"
+                                    v-for="(search, idx ) in item.data"
+                                    :key="'search_param'+ idx"
+                                    >
+                                        <b class="mr-1">{{ search.label }}:</b>
+                                        <span ><pre class="font-sans text-tiny+">{{ search.values }}</pre></span>
+                                    </div>
+                            </div>
+                            <div class="w-16 flex justify-end items-center gap-2">
+                                <button
+                                    @click="applySaveFilter(item.filter)"
+                                    class="btn h-6 w-6 rounded-full bg-primary p-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button
+                                        @click="removeSavedSearch(item.id)"
+                                        class="btn h-6 w-6 p-0 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
+                                    >
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <div class="card mt-2 p-3 py-3" v-show="showFilter">
                 <form @submit.prevent="applyfilter">
                     <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
                         <label class="block">
@@ -91,7 +124,7 @@
                                 placeholder="Select Property"
                                 :is-multiple="true"
                                 :options="filterOptions.properties"
-                                :selected-item="filter.properties?.map(d => d.id)"
+                                :selected-item="filter.properties?.map(d => d)"
                             />
                         <input-tom-select
                                 class="h-full"
@@ -100,7 +133,7 @@
                                 placeholder="Select Project"
                                 :is-multiple="true"
                                 :options="filterOptions.projects"
-                                :selected-item="filter.projects?.map(d => d.id)"
+                                :selected-item="filter.projects?.map(d => d)"
                             />
                         <input-tom-select
                                 class="h-full"
@@ -174,38 +207,6 @@
                     </div>
                 </form>
             </div>
-            <template v-if="savedSearches?.length">
-                <template  v-for="(item, index) in savedSearches" :key="'saved_search_'+ index">
-                    <div class="card mt-2 p-3 py-3 pr-6" v-if="item.data?.length">
-                        <div class="flex ">
-
-                            <div class="w-[96%] space-y-2">
-                                <div
-                                    class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light mr-2"
-                                    v-for="(search, idx ) in item.data"
-                                    :key="'search_param'+ idx"
-                                    >
-                                        <b class="mr-1">{{ search.label }}:</b>
-                                        <span ><pre class="font-sans text-tiny+">{{ search.values }}</pre></span>
-                                    </div>
-                            </div>
-                            <div class="w-16 flex justify-end items-center gap-2">
-                                <button
-                                    @click="applySaveFilter(item.filter)"
-                                    class="btn h-6 w-6 rounded-full bg-primary p-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                                    <i class="fa fa-check"></i>
-                                </button>
-                                <button
-                                        @click="removeSavedSearch(item.id)"
-                                        class="btn h-6 w-6 p-0 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
-                                    >
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </template>
         </div>
 
         <div class="card mt-3">
