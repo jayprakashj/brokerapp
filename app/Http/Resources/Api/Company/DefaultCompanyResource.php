@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\Company;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Crypt;
 
 class DefaultCompanyResource extends JsonResource
 {
@@ -16,12 +17,14 @@ class DefaultCompanyResource extends JsonResource
     {
         $data = [
             'id' => $this->id,
+            'encrypt_id' => Crypt::encryptString($this->id),
             'company_name' => $this->name,
             'pan_no' => $this->pan_no,
             'gst_no' => $this->gst_no,
             'email' => $this->email,
             'mobile' => $this->mobile,
             'address' => $this->address,
+            'api_verify_token' => $this->api_verify_token,
             'logo' => $this->getLogoMediaId(),
             'logo_url' => $this->getLogoUrl(),
             'is_default' => $this->isDefault(),

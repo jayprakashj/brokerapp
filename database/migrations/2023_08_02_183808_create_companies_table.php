@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('property_email')->nullable();
             $table->tinyInteger('enable_lead_notification')->default( 0 );
             $table->tinyInteger('enable_property_notification')->default( 0 );
+            $table->string('api_verify_token')->nullable();
             $table->tinyInteger('status')->default( 1 );
             $table->bigInteger('owned_by');
             $table->timestamps();

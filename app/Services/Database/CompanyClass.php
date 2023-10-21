@@ -2,13 +2,13 @@
 
 namespace App\Services\Database;
 
-use App\Models\Company;
-use App\Models\CompanyMember;
-use App\Models\CompanyUserPivot;
 use App\Models\User;
+use App\Models\Company;
+use Illuminate\Support\Str;
+use App\Models\CompanyMember;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyClass {
 
@@ -146,6 +146,9 @@ class CompanyClass {
         $company->mobile = $user->mobile;
         if( $company->id && !$company->isDefault() ){
             $company->status = $request->input('status');
+        }
+        if( empty( $company->api_verify_token ) ){
+            $company->api_verify_token = Str::random();
         }
         $company->save();
         return $company;

@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\RoleManagementController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +37,9 @@ Route::middleware('guest')->group( function () {
 
 
 Route::get('customer/enquiry/{type?}', [ DashboardController::class, 'loadVueApp'])->name('vue_app.customer_enquiry');
+
+Route::any('webhook/{company}/leads/{platform}', [ WebhookController::class, 'handleWebhookLeads'])->name('webhook.leads');
+
 
 Route::middleware(['auth', 'set_default_company'])->group( function (){
     Route::get('{any?}/{slug?}/{id?}', [ DashboardController::class, 'loadVueApp'])->name('vue_app');
