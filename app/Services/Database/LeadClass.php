@@ -194,4 +194,39 @@ class LeadClass {
 
         $this->leadCommentClass->create( $lead, $request, $user );
     }
+
+    public function importLeadFromWebhook( $request, $company, $user ){
+        $contactObj = $this->findOrCreateContact( $user, $request );
+
+        $lead = Lead::where('contact_id', $contactObj->id)->first();
+
+        if( is_null( $lead ) ){
+            $lead = new Lead();
+            $lead->user_id = $company->owned_by;
+            $lead->company_id = $company->id ?? null;
+            $lead->created_by = $user->id;
+            $lead->company_branch_id = CompanyBranch::first()->id;
+            $lead->contact_id = $contactObj->id;
+        }
+
+        $lead->updated_by = $company->owned_by;
+        $lead->is_enquiry = 1;
+
+        $lead->title = $request->input('title');
+        $lead->customer_name = $request->input('name');
+        $lead->customer_mobile = $request->input('mobile');
+        $lead->customer_email = $request->input('email');
+        $lead->customer_city = $request->input('city');
+        $lead->remark = $request->input('remark');
+
+        $lead->lead_source = $request->input('lead_source', Lead::DEFAULT_LEAD_SOURCE);
+        $lead->lead_status = Lead::DEFAULT_LEAD_STATUS;
+
+        $lead->save();
+
+        $this->leadCommentClass->create( $lead, $request, $user );
+
+        NewLeadEvent::dispatch( $lead );
+
+    }
 }

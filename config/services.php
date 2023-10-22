@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'facebook_ads' => [
+        'app_id' => env('FB_APP_ID', null),
+        'app_secret' => env('FB_APP_SECRET', null),
+        'access_token' => env('FB_ACCESS_TOKEN', null),
+    ]
 ];

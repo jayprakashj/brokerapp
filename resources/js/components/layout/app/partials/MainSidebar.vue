@@ -121,7 +121,7 @@ export default {
                     route: '/project',
                     iconImg: '/images/icons/file-invoice.svg',
                     permission: [ this.$permissions.PROJECT_LIST,this.$permissions.ONLY_ASSIGNED_PROJECT_LIST ],
-                    ignorePermission: true,
+                    ignorePermission: false,
                     checkGlobalPermission: false,
                 },
                 {
@@ -129,7 +129,7 @@ export default {
                     route: '/task',
                     iconImg: '/images/icons/list-check.svg',
                     permission: [ this.$permissions.TASK_LIST,this.$permissions.ONLY_ASSIGNED_TASK_LIST ],
-                    ignorePermission: true,
+                    ignorePermission: false,
                     checkGlobalPermission: false,
                 },
                 {
@@ -137,8 +137,15 @@ export default {
                     route: '/site-visit',
                     iconImg: '/images/icons/building-user.svg',
                     permission: [ this.$permissions.SITE_VISIT_LIST,this.$permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ],
-                    ignorePermission: true,
+                    ignorePermission: false,
                     checkGlobalPermission: false,
+                },
+                {
+                    name: 'API Documentation',
+                    route: '/api-documentation',
+                    iconImg: '/images/icons/webhook.svg',
+                    permission: [ this.$permissions.COMPANY_LIST ],
+                    ignorePermission: false,
                 }
             ]
         }

@@ -28,6 +28,7 @@ class LeadSourceSeeder extends Seeder
             'Incoming Call',
             'JustDial.com',
             'MagicBricks.com',
+            'Makaan.com',
             'Own Website',
             'Others',
         ];

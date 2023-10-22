@@ -32,6 +32,7 @@ import TaskView from  '@/components/tasks/TaskView.vue'
 import SiteVisitList from  '@/components/site_visits/SiteVisitList.vue'
 import SiteVisitCreate from  '@/components/site_visits/SiteVisitCreate.vue'
 import SiteVisitView from  '@/components/site_visits/SiteVisitView.vue'
+import ApiList from  '@/components/api_doc/ApiList.vue'
 import EnquiryForm from  '@/components/enquiry/EnquiryForm.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
@@ -438,6 +439,14 @@ const routes = [
         meta: {
             title: 'Site Visit View',
             permissions: [ permission.VIEW_SITE_VISIT ]
+        }
+    },
+    {
+        path: '/api-documentation',
+        name: 'api_doc',
+        component: ApiList,
+        meta: {
+            title: 'API Documentations'
         }
     },
     {

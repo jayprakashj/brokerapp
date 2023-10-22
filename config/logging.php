@@ -126,6 +126,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'webhook_lead' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/webhook_lead.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 60,
+        ],
     ],
 
 ];
