@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Http\Resources\Api\Dashboard\LeadListResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewLeadEvent
+class NewLeadEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -33,7 +34,17 @@ class NewLeadEvent
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new PrivateChannel(config('app.broadcast-channel-name')),
+        ];
+    }
+
+    public function broadcastAs (){
+        return 'new-lead-generated';
+    }
+
+    public function broadcastWith (){
+        return [
+            'lead' => new LeadListResource( $this->lead )
         ];
     }
 }

@@ -227,6 +227,7 @@ export default {
     data(){
         return {
             pageTitle: 'Dashboard',
+            inProcess: false,
             data:{
 
             }
@@ -235,6 +236,11 @@ export default {
     created(){
         this.init();
 
+        this.reconnectPusher();
+
+        if( this.userPermissions.isPermissionsAllowed([ this.$permissions.VIEW_LEAD ] ) ){
+            this.registerPusherLeadEvent();
+        }
     },
     computed:{
 
@@ -243,11 +249,18 @@ export default {
             'userPermissions'
         ]),
     },
+    beforeUnmount(){
+        window.Echo.disconnect();
+    },
     methods:{
         init(){
             this.loadData();
         },
         loadData(){
+            if( this.inProcess ){
+                return;
+            }
+            this.inProcess = true;
             this.$request.getDashboardData()
                         .then(
                             ( res ) => {
@@ -260,9 +273,76 @@ export default {
                             }
                         ).finally(
                             () => {
+                                this.inProcess = false;
                                 this.$store.commit('setGlobalLoaderOff');
                             }
                         )
+        },
+        reconnectPusher(){
+
+            if( window.Echo?.connector?.pusher?.connection?.state == 'disconnected' ){
+                Echo.connect();
+            }
+        },
+        registerPusherLeadEvent(){
+            Echo.private(this.$broadcastChannelName)
+                    .listen('.new-lead-generated', (e) => {
+                        if( e?.lead?.id){
+                            this.showNewLeadToast( e.lead );
+                        }
+                    });
+        },
+        showNewLeadToast( item ){
+            let $this = this;
+            this.$toast.open({
+                message: this.getLeadToastMsgHtml( item ),
+                type: 'new-lead',
+                duration: 0,
+                'dismissible': true,
+                position: 'top-right',
+                onClick: function(e) {
+                    if(!(e.target.closest('.trash-btn') || e.target.classList.contains( 'trash-btn'))){
+                        $this.$router.push('/lead/view/' + item.id)
+                    }
+                },
+            });
+            this.loadData();
+        },
+        getLeadToastMsgHtml ( item ) {
+            return `
+                <div class="border-b border-slate-150 py-3 dark:border-navy-500 w-100">
+                        <div class="flex items-center space-x-2 sm:space-x-3">
+                            <h2 class="cursor-pointer line-clamp-1 dark:text-navy-100">
+                                ${ item.title }
+                            </h2>
+                        </div>
+                        <p class="mt-1"><pre class="whitespace-pre-wrap break-words"><i class="fa fa-comment"></i> ${ item.comment }</pre> </p>
+                        <div class="mt-1 flex items-end justify-between">
+                            <div class="flex flex-wrap items-center font-inter text-xs">
+                                <span class="flex items-center space-x-1">
+                                    <i class="fa fa-user"></i>
+                                    <span>${ item.name }</span>
+                                </span>
+                                <div class="m-1.5 w-px self-stretch bg-slate-200 dark:bg-navy-500"></div>
+                                <span class="flex items-center space-x-1">
+                                    <i class="fa fa-phone"></i>
+                                    <span>${ item.mobile }</span>
+                                </span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <router-link target="blank" v-if="userPermissions.isPermissionsAllowed([ this.$permissions.VIEW_LEAD ] )" :to="'/lead/view/' + ${item.id}" class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 lead-view-link">
+                                    <i class="fa fa-external-link"></i>
+                                </router-link>
+
+                                <button class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 trash-btn">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+
+
+                            </div>
+                        </div>
+                    </div>
+                `;
         }
     }
 }
