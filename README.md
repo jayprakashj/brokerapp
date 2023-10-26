@@ -79,3 +79,25 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - php artisan migrate:fresh --seed
 - php artisan schedule:run
 - php artisan queue:listen
+
+
+# Regarding Pusher Notification
+- `npm ci`
+- `composer install`
+
+- `ENV` changes:
+        ``
+        BROADCAST_DRIVER=pusher
+        BROADCAST_CHANNEL_NAME='broker-app'
+
+        PUSHER_APP_ID=1693515
+        PUSHER_APP_KEY=3395495ed2f7b84b0b81
+        PUSHER_APP_SECRET=7716f745e9031696f6a8
+
+        PUSHER_APP_CLUSTER=ap2
+        ``
+
+- To test pusher notification in local:
+    - open `config/broadcasting.php`
+    - find `client_option` inside `pusher`
+    - add `'verify' => false` // It will disable SSL certification
