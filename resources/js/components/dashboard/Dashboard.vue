@@ -174,7 +174,7 @@
             <div
                 class="col-span-12 flex space-x-4 overflow-x-auto px-[var(--margin-x)] transition-all duration-[.25s] lg:col-span-9 lg:pl-0">
                 <template v-if="data?.today_leads?.length">
-                    <div class="card w-72 shrink-0 space-y-1 rounded-xl p-4 sm:px-1  grow " v-for="(item, idx) in data?.today_leads" :key="'today_lead_'+idx">
+                    <div class="card w-72 shrink-0 space-y-1 rounded-xl p-4 sm:px-1 " v-for="(item, idx) in data?.today_leads" :key="'today_lead_'+idx">
                         <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100 text-center" :title="item.full_title">
                             {{ item.title }}
                         </h3>
@@ -335,7 +335,7 @@ export default {
                                 </router-link>
 
                                 <button class="btn h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 trash-btn">
-                                    <i class="fa fa-trash"></i>
+                                    <i class="fa fa-close"></i>
                                 </button>
 
 
