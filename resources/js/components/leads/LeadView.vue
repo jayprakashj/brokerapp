@@ -343,7 +343,7 @@
                                         <div class="mt-2 flex items-center text-xs">
                                             <span class="flex items-center space-x-2 hover:text-slate-800 dark:hover:text-navy-100">
                                                 <div class="avatar h-6 w-6">
-                                                    <img class="rounded-full" src="/images/user-placeholder.png" alt="avatar">
+                                                    <img class="rounded-full" src="/public/images/user-placeholder.png" alt="avatar">
                                                 </div>
                                                 <div>
 

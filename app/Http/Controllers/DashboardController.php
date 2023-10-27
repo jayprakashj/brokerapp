@@ -68,4 +68,7 @@ class DashboardController extends Controller
         return view('dashboard');
     }
 
+    public function authBroadcast(){
+        return response()->json(  true, 200);
+    }
 }
