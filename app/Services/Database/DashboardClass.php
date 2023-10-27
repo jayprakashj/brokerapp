@@ -41,7 +41,7 @@ class DashboardClass {
 
         }
         $monthLeads = $monthLeads->count();
-        $todaysLeads = $todaysLeads->get();
+        $todaysLeads = $todaysLeads->latest()->get();
 
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Site Visit List') ){
             $monthSiteVisits->createdByOrAssignedToAuth();
