@@ -37,7 +37,7 @@ class AddLeadCommentRequest extends FormRequest
             'followup_date' => [
                 'nullable',
                 'date',
-                'after:today'
+                'after_or_equal:today'
             ],
             'lead_status' => [
                 'required',
