@@ -160,84 +160,166 @@
         </div>
     </div>
 
-    <div class="mt-4 grid grid-cols-12 gap-4 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 "  v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,this.$permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
-        <div class="col-span-12 xl:col-span-12">
-            <div class="-mt-1 flex items-center justify-between">
-                <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
-                    Todays' Leads
-                </h2>
-            </div>
-            <div class="card mt-3">
-                <div class="max-h-[520px] overflow-y-auto pr-1">
-                    <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
-                        <thead >
-                            <tr>
-                                <th
-                                    class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100">
-                                    Title
-                                </th>
-                                <th
-                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                    Name
-                                </th>
-                                <th
-                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                    Mobile/Email
-                                </th>
+    <template v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,this.$permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
 
-                                <th
-                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                    Comment
-                                </th>
+        <div class="mt-4 grid grid-cols-12 gap-4 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " >
+            <div class="col-span-12 xl:col-span-12">
+                <div class="-mt-1 flex items-center justify-between">
+                    <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
+                        Todays' Leads
+                    </h2>
+                </div>
+                <div class="card mt-3">
+                    <div class="max-h-[520px] overflow-y-auto pr-1">
+                        <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
+                            <thead >
+                                <tr>
+                                    <th
+                                        class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100">
+                                        Title
+                                    </th>
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Name
+                                    </th>
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Mobile/Email
+                                    </th>
 
-                                <th
-                                    class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                    Action
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template v-if="data?.today_leads?.length">
-                                <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in data?.today_leads" :key="'today_lead_'+idx">
-                                    <td class="whitespace-nowrap px-4 py-3">
-                                        <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
-                                            {{ item.title }}
-                                        </p>
-                                    </td>
-                                    <td class="min-w-[12rem] ">
-                                        {{ item.name }}
-                                    </td>
-                                    <td class="min-w-[13rem] ">
-                                        {{ item.mobile }}
-                                        <br>
-                                        {{ item.email }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Comment
+                                    </th>
 
-                                        <p :title="item.full_comment">{{ item.comment }}</p>
-                                    </td>
+                                    <th
+                                        class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-if="data?.today_leads?.length">
+                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in data?.today_leads" :key="'today_lead_'+idx">
+                                        <td class="whitespace-nowrap px-4 py-3">
+                                            <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
+                                                {{ item.title }}
+                                            </p>
+                                        </td>
+                                        <td class="min-w-[12rem] ">
+                                            {{ item.name }}
+                                        </td>
+                                        <td class="min-w-[13rem] ">
+                                            {{ item.mobile }}
+                                            <br>
+                                            {{ item.email }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
 
-                                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                        <router-link
-                                            v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_LEAD ] )"
-                                            :to="'/lead/view/' + item.id"
-                                            class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                                            <i class="far fa-eye"></i>
-                                        </router-link>
+                                            <p :title="item.full_comment">{{ item.comment }}</p>
+                                        </td>
+
+                                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                            <router-link
+                                                v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_LEAD ] )"
+                                                :to="'/lead/view/' + item.id"
+                                                class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                                                <i class="far fa-eye"></i>
+                                            </router-link>
+                                        </td>
+                                    </tr>
+                                </template>
+                                <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
+                                    <td colspan="5 text-center">
+                                        <no-data-found />
                                     </td>
                                 </tr>
-                            </template>
-                            <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
-                                <td colspan="5 text-center">
-                                    <no-data-found />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="mt-4 grid grid-cols-12 gap-4 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " >
+            <div class="col-span-12 xl:col-span-12">
+                <div class="-mt-1 flex items-center justify-between">
+                    <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
+                        Todays' Followup Leads
+                    </h2>
+                </div>
+                <div class="card mt-3">
+                    <div class="max-h-[520px] overflow-y-auto pr-1">
+                        <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
+                            <thead >
+                                <tr>
+                                    <th
+                                        class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100">
+                                        Title
+                                    </th>
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Name
+                                    </th>
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Mobile/Email
+                                    </th>
+
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Comment
+                                    </th>
+
+                                    <th
+                                        class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-if="data?.today_followup_leads?.length">
+                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in data?.today_followup_leads" :key="'today_followup_lead_'+idx">
+                                        <td class="whitespace-nowrap px-4 py-3">
+                                            <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
+                                                {{ item.title }}
+                                            </p>
+                                        </td>
+                                        <td class="min-w-[12rem] ">
+                                            {{ item.name }}
+                                        </td>
+                                        <td class="min-w-[13rem] ">
+                                            {{ item.mobile }}
+                                            <br>
+                                            {{ item.email }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+
+                                            <p :title="item.full_comment">{{ item.comment }}</p>
+                                        </td>
+
+                                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                            <router-link
+                                                v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_LEAD ] )"
+                                                :to="'/lead/view/' + item.id"
+                                                class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                                                <i class="far fa-eye"></i>
+                                            </router-link>
+                                        </td>
+                                    </tr>
+                                </template>
+                                <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
+                                    <td colspan="5 text-center">
+                                        <no-data-found />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 
 </template>
 
