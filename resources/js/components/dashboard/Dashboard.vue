@@ -3,7 +3,7 @@
 
     <div class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
         <div class="col-span-12 pb-4">
-            <div class="px-4 pt-2 pb-4 mt-3 grid grid-cols-4 gap-3 px-4 gap-y-5 items-center">
+            <div class="pt-2 pb-4 mt-3 grid grid-cols-4 gap-3 gap-y-5 items-center">
                 <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROPERTY_LIST, $permissions.ONLY_ASSIGNED_PROPERTY_LIST ] )">
                     <div class="flex items-center justify-between">
 
