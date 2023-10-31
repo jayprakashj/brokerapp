@@ -1,4 +1,26 @@
 <template>
+    <div class="w-7/12 m-auto mb-2">
+
+        <popper-dropdown :popper-btn-class="'!w-[13rem] space-x-2 bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90 mb-3'">
+            <template v-slot:popper_btn>
+                <span>Change Enquiry Form</span>
+                <i class="fa fa-caret-down"></i>
+            </template>
+            <template v-slot:default="popperSlotOptions">
+                <div
+                    class="popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700">
+                    <ul>
+                        <li v-for="(item, index) in $enquiryTypes" :key="'enquiry_menu_'+index">
+                            <router-link :to="'/customer/enquiry/' + item.id"
+                                @click="popperSlotOptions.closePopper"
+                                class="flex active items-center px-3 h-8 pr-12 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100">Enquiry for {{ item.title }}</router-link>
+                        </li>
+                    </ul>
+                </div>
+
+            </template>
+        </popper-dropdown>
+    </div>
     <div class="flex place-content-center" :class="{'gap-4': formData?.id}">
         <div class="card p-4 w-7/12 sm:p-5 ">
 

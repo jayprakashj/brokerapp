@@ -37,7 +37,7 @@ class MemberController extends Controller
 
     public function store (AddMemberRequest $request ) {
         $response = [
-            'message' => 'Success! Member created successfully.'
+            'message' => 'Success! Staff User created successfully.'
         ];
         $code = 200;
 
@@ -51,7 +51,7 @@ class MemberController extends Controller
 
                 $this->memberClass->update(  auth()->user(), $member, $request );
                 $response = [
-                    'message' => 'Success! Member updated changed successfully.'
+                    'message' => 'Success! Staff User updated changed successfully.'
                 ];
             }else{
                 $code = 500;
@@ -94,7 +94,7 @@ class MemberController extends Controller
 
             $member->delete();
             $response = [
-                'message' => 'Member removed successfully.'
+                'message' => 'Staff User removed successfully.'
             ];
             $code = 200;
         }else{

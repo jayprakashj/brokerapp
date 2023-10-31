@@ -41,6 +41,18 @@
 
                                 <span class="text-tiny+ text-muted" >Add multiple email sperated by comma(,)</span>
                                 <span class="text-tiny+ text-error" v-if="errors?.lead_email?.length">{{ errors.lead_email.at(0) }}</span>
+                                <div class="space-y-1 space-x-1">
+                                    <template v-if="formData.lead_emails?.length">
+
+                                        <span
+                                            v-for="(item, idx) in ( formData.lead_emails)"
+                                            :key="'lead_email'+idx"
+                                            class="text-tiny badge rounded-full border border-slate-300 text-slate-800 dark:border-navy-450 dark:text-navy-50"
+                                        >
+                                            {{ item }}
+                                        </span>
+                                    </template>
+                                </div>
                             </label>
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
@@ -68,6 +80,19 @@
 
                                 <span class="text-tiny+ text-muted" >Add multiple email sperated by comma(,)</span>
                                 <span class="text-tiny+ text-error" v-if="errors?.property_email?.length">{{ errors.property_email.at(0) }}</span>
+
+                                <div class="space-y-1 space-x-1">
+                                    <template v-if="formData.lead_emails?.length">
+
+                                        <span
+                                            v-for="(item, idx) in ( formData.property_emails)"
+                                            :key="'property_email_'+idx"
+                                            class="text-tiny badge rounded-full border border-slate-300 text-slate-800 dark:border-navy-450 dark:text-navy-50"
+                                        >
+                                            {{ item }}
+                                        </span>
+                                    </template>
+                                </div>
                             </label>
                         </div>
                      </div>
@@ -80,6 +105,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import * as Yup from 'yup';
 
 export default {
@@ -88,7 +114,11 @@ export default {
             pageTitle: 'Company Setting',
             errors: {},
             formData:{
-                enable_lead_notification: false
+                enable_lead_notification: false,
+                lead_emails:[],
+                property_emails: [],
+                lead_email: null,
+                property_email: null,
             },
             loading:{
                 formSubmit: false,
@@ -99,6 +129,10 @@ export default {
         this.init();
     },
     computed:{
+
+        ...mapGetters([
+            'currentUser'
+        ]),
         breadcrumbs(){
 
             var breadcrumbs = [
@@ -170,6 +204,7 @@ export default {
 
                                                             }
                                                             this.$toast.info( message );
+                                                            this.loadCompanySetting();
                                                         },
                                                         ( err ) => {
                                                             let message = 'Error! There is error occured while processing request.';

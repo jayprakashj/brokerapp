@@ -8,7 +8,7 @@
                     <div
                         class="flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
                         <h2 class="text-lg font-medium tracking-wide text-slate-700 dark:text-navy-100">
-                            {{ formData?.id ? 'Update Member' : 'Add New Member' }}
+                            {{ formData?.id ? 'Update Staff User' : 'Add New Staff User' }}
                         </h2>
                         <div class="flex justify-center space-x-2">
                             <router-link to="/member"
@@ -203,8 +203,8 @@ import * as Yup from 'yup';
 export default {
     data(){
         return {
-            pageTitle: 'Member Management',
-            subTitle: 'Add Member',
+            pageTitle: 'Staff User Management',
+            subTitle: 'Add Staff User',
             isShowPopper: false,
             errors: {},
             formData:{
@@ -241,7 +241,7 @@ export default {
 
             var breadcrumbs = [
                         {
-                            title: 'Member Management',
+                            title: 'Staff User Management',
                             link: '/member'
                         },
                         {
@@ -369,7 +369,7 @@ export default {
                                                         ( res ) => {
                                                             let message = 'Success! Invitation has been sent successfully.';
                                                             if( this.formData?.id ){
-                                                                message = 'Success! Member data updated successfully.';
+                                                                message = 'Success! Staff User data updated successfully.';
                                                             }
                                                             if( res.data?.message ){
                                                                 message = res.data.message;
