@@ -179,6 +179,10 @@ class Lead extends Model
         return $q->where('lead_status', '=', $value, $boolean);
     }
 
+    public function scopeFilterEnquiryType ( $q, $value, $boolean = 'and' ){
+        return $q->where('enquiry_type', '=', $value, $boolean);
+    }
+
     public function scopeFilterProjects ( $q, $value, $boolean = 'and' ){
         if( !empty( $value ) ) {
             if( is_array( $value ) ){
@@ -213,6 +217,7 @@ class Lead extends Model
 
         if( !empty( $filter ) ){
             $title = data_get( $filter, 'title' );
+            $enquiryType = data_get( $filter, 'enquiry_type' );
             $companyBranch = data_get( $filter, 'company_branch' );
             $customerName = data_get( $filter, 'customer_name' );
             $mobile = data_get( $filter, 'mobile' );
@@ -227,6 +232,9 @@ class Lead extends Model
 
             if( !empty( $title ) ){
                 $q->filterTitleLike( $title );
+            }
+            if( !empty( $enquiryType ) ){
+                $q->filterEnquiryType( $enquiryType );
             }
             if( !empty( $companyBranch ) ){
                 $q->filterCompanyBranch( $companyBranch );

@@ -250,7 +250,7 @@ export default {
     ],
     data(){
         return {
-            pageTitle: 'Member Management',
+            pageTitle: 'Staff User Management',
             isShowPopper: false,
             page: 1,
             lists:{},

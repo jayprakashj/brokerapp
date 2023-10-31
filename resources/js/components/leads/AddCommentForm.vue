@@ -148,7 +148,7 @@ export default {
                             .required('Required'),
                 followup_date: Yup.date()
                             .nullable(true)
-                            .min( dayjs(), 'Must be later than today'  ),
+                            .min( dayjs().subtract(1, 'day'), 'Must be today or later than today'  ),
 
             }
             const yup = Yup.object().shape( fields );

@@ -65,6 +65,17 @@
                                     placeholder="Enter Title" type="text" v-model="filter.title">
                             </div>
                         </label>
+
+                        <input-tom-select
+                                        class="h-full"
+                                        v-model="filter.enquiry_type"
+                                        form-label="Enquiry Type"
+                                        placeholder="Select Type"
+                                        value-field="title"
+                                        display-field="title"
+                                        :options="filterOptions.enquiry_types"
+                                        :selected-item="filter.enquiry_type"
+                                    />
                         <input-tom-select
                             class="h-full"
                             v-model="filter.company_branch"
@@ -520,6 +531,7 @@ export default {
             filterOptions: {},
             filter: {
                 title: null,
+                enquiry_type: null,
                 customer_name: null,
                 properties: [],
                 projects: [],

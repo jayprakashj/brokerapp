@@ -23,7 +23,14 @@ class DashboardClass {
         $projectCount = Project::query();
         $monthLeads = Lead::query()->whereMonth('updated_at', date('m'));
         $monthSiteVisits = SiteVisit::query()->whereMonth('created_at', date('m'));
-        $todaysLeads = Lead::with('lastComment')->whereDate('updated_at',  today());
+        $todaysLeads = Lead::with('lastComment')
+                                ->whereDate('updated_at',  today())
+                                ->whereNull('followup_date')
+                                ->where('lead_status', 'In Progress');
+        $todaysFollowupLeads = Lead::with('lastComment')
+                                    ->whereDate('followup_date', '<=',  today())
+                                    ->whereNotNull('followup_date')
+                                    ->where('lead_status', 'In Progress');
 
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Property List') ){
             $propertyCount->createdByOrAssignToAuth();
@@ -38,10 +45,12 @@ class DashboardClass {
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Lead List') ){
             $monthLeads->createdByOrAssignedToAuth();
             $todaysLeads->createdByOrAssignedToAuth();
+            $todaysFollowupLeads->createdByOrAssignedToAuth();
 
         }
         $monthLeads = $monthLeads->count();
         $todaysLeads = $todaysLeads->latest()->get();
+        $todaysFollowupLeads = $todaysFollowupLeads->orderBy('followup_date')->get();
 
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Site Visit List') ){
             $monthSiteVisits->createdByOrAssignedToAuth();
@@ -72,7 +81,8 @@ class DashboardClass {
             'contact_count' => $contactCount,
             'month_leads' => $monthLeads,
             'month_site_visits' => $monthSiteVisits,
-            'today_leads' => LeadListResource::collection( $todaysLeads )
+            'today_leads' => LeadListResource::collection( $todaysLeads ),
+            'today_followup_leads' => LeadListResource::collection( $todaysFollowupLeads ),
         ];
         return $data;
     }

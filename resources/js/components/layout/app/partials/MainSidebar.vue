@@ -77,7 +77,7 @@ export default {
                     checkGlobalPermission: false,
                 },
                 {
-                    name: 'Members',
+                    name: 'Staff Users',
                     route: '/member',
                     iconImg: '/images/icons/users.svg',
                     permission: [ this.$permissions.MEMBER_LIST ],
