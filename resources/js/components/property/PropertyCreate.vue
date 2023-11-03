@@ -793,6 +793,49 @@
                                     <span class="text-tiny+ text-error" v-if="errors?.notification_message?.length">{{ errors.notification_message.at(0) }}</span>
                                 </label>
                             </div>
+                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                            <div class="space-y-4">
+                                <label class="block">
+                                    <span>Upload Documents</span>
+                                    <div class="mt-4">
+
+                                        <label
+                                                class="btn bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90"
+                                                @click="openMediaUpload('documents')"
+                                                id="document-upload"
+                                                key="document_upload_label"
+                                            >
+                                                <input
+                                                    tabindex="-1"
+                                                    type="file"
+                                                    class="pointer-events-none absolute inset-0 h-full w-full opacity-0"
+                                                    ref="documents"
+                                                    @change="uploadMedia( $event, 'documents')"
+                                                />
+                                                <div class="flex items-center space-x-2">
+                                                    <i class="fa fa-upload"></i>
+                                                    <span>Choose File</span>
+                                                </div>
+                                        </label>
+                                    </div>
+                                </label>
+                                    <div class="grid grid-cols-3 gap-4 mt-4">
+                                        <div class="card" v-for="(item, index) in formData.documents" :key="'document_list_container_' + index">
+                                            <!-- <img class="w-full rounded-lg object-cover" :src="(item.url || 'https://picsum.photos/100/100')" alt="image"> -->
+                                            <i class="fa fa-file-alt fa-6x m-auto"></i>
+                                            <a :href="item.url" class="mt-2 p-2" target="_blank">
+                                                <p class="text-tiny ml-1">{{ item.name ?? item.id }}</p>
+                                            </a>
+                                            <div class="absolute flex h-9 w-9 right-4">
+                                                <div class="flex justify-end p-3">
+                                                    <button type="button" class="btn h-7 w-7 rounded-full text-white bg-red-500 p-0 hover:bg-red-700 focus:bg--red-700" @click="removeDocument(index, item)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
                         </div>
                         <div class="card mt-2 p-4 sm:p-5 col-span-12" v-for="(imgType, idx ) in formDataImagesKeys" :key="'images_'+idx">
                             <div
@@ -924,7 +967,8 @@ export default {
                 notification_start_date: null,
                 notification_end_date: null,
                 notification_message: null,
-                images: {}
+                images: {},
+                documents: []
             },
             rolesList: [],
             loading:{
@@ -1137,6 +1181,18 @@ export default {
                     });
             }
         },
+        removeDocument( idx ){
+            this.$swal.fire({
+                title: 'Are you sure you want to remove?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete.',
+            }).then(
+                ( res ) =>{
+                    if( res.isConfirmed ){
+                        this.formData.documents.splice( idx, 1 );
+                    }
+                });
+        },
         openMediaUpload( refKey ){
             if( refKey in this.$refs ){
                 this.$refs[refKey].click();
@@ -1153,10 +1209,15 @@ export default {
                                     ( res ) => {
                                         if( res.data?.files?.length ){
                                             const tmpFile = res.data.files;
-                                            if( !(refKey in this.formData.images) ){
-                                                this.formData.images[ refKey ] = [];
+                                            if( refKey == 'documents'){
+                                                this.formData.documents = this.formData.documents.concat( tmpFile );
+                                            }else{
+
+                                                if( !(refKey in this.formData.images) ){
+                                                    this.formData.images[ refKey ] = [];
+                                                }
+                                                this.formData.images[refKey] = this.formData.images[refKey].concat( tmpFile );
                                             }
-                                            this.formData.images[refKey] = this.formData.images[refKey].concat( tmpFile );
                                         }else{
 
                                             this.$toast.error( 'Oops!' );

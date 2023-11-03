@@ -526,6 +526,23 @@
                                 </p>
                             </label>
                         </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 items-center">
+                            <label class="block" >
+                                <span>Uploaded Documents</span>
+
+                            </label>
+                            <div class="grid grid-cols-4 gap-4 mt-4">
+                                <div class="card" v-for="(item, index) in formData.documents" :key="'document_list_container_' + index">
+                                    <!-- <img class="w-full rounded-lg object-cover" :src="(item.url || 'https://picsum.photos/100/100')" alt="image"> -->
+                                    <i class="fa fa-file-alt fa-6x m-auto"></i>
+                                    <a :href="item.url" class="mt-2 p-2" target="_blank">
+                                        <p class="text-tiny ml-1">{{ item.name ?? item.id }}</p>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="card mt-2 p-4 sm:p-5 col-span-5">
@@ -740,7 +757,8 @@ export default {
                 refer_by_name: null,
                 refer_by_email: null,
                 refer_by_phone: null,
-                images: {}
+                images: {},
+                documents: []
             },
             show:{
                 modal: false
