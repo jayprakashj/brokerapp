@@ -102,7 +102,7 @@ class ProjectClass {
         if( !empty( $images ) && is_array( $images )){
             $mediaId = Arr::pluck( Arr::flatten($request->images,1), 'id');
 
-            $removedMedia = $project->media()->whereNotIn( 'id', $mediaId )->get();
+            $removedMedia = $project->media()->whereNotIn( 'id', $mediaId )->whereNotIn('collection_name',['documents'])->get();
             if( $removedMedia->count() ){
                 foreach( $removedMedia as $item ){
                     $project->deleteMedia( $item );
@@ -123,9 +123,38 @@ class ProjectClass {
                 }
             }
         }else{
-            $project->clearMediaCollection();
+            $project->clearMediaCollectionExcept('documents');
         }
 
+        $documents = $request->input('documents');
+
+        if( !empty( $documents ) && is_array($documents)){
+            $documentsId = Arr::pluck( $documents, 'id');
+
+            $removeDocuments = $project->media()
+                                    ->where('collection_name','documents')
+                                    ->whereNotIn( 'id', $documentsId )
+                                    ->get();
+
+            if( $removeDocuments->count() ){
+                foreach( $removeDocuments as $item ){
+                    $project->deleteMedia( $item );
+                }
+            }
+
+            foreach( $documents as $fileName ){
+                $tmpFileNm = data_get( $fileName, 'id');
+                if( !empty( $tmpFileNm ) ){
+
+                    $tmpFile = 'tmp_media/' . $tmpFileNm;
+                    if( Storage::disk('public')->has( $tmpFile ) ){
+                        $project->addMediaFromDisk( $tmpFile, 'public')->toMediaCollection( 'documents' );
+                    }
+                }
+            }
+        }else{
+            $project->clearMediaCollection('documents');
+        }
         if( !$project->wasRecentlyCreated ){
             $project->refresh();
 

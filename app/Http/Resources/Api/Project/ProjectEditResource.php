@@ -64,6 +64,7 @@ class ProjectEditResource extends JsonResource
         $isMediaExists = $this->media->count() > 0;
         $media = $this->media->groupBy('collection_name');
         $images = [];
+        $documents = [];
 
         foreach( $propertyImgTypes as $collectionType ){
             if( $isMediaExists && $media->has( $collectionType )){
@@ -81,6 +82,18 @@ class ProjectEditResource extends JsonResource
         }
         $data['images'] = $images;
 
+        if( $media->has( 'documents' ) ){
+            foreach( $media['documents'] as $item ){
+
+                $documents[]  = [
+                    'id' => $item->id,
+                    'name' => $item->file_name,
+                    'url' => $item->getUrl()
+                ];
+            }
+        }
+
+        $data['documents'] = $documents;
         return $data;
     }
 }
