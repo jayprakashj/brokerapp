@@ -460,7 +460,14 @@
                             <label class="block col-span-12" >
                                 <span>Walk Through Link</span>
                                 <div class="w-full" v-if="formData.walk_through_link">
-                                    <iframe :src="formData.walk_through_link" frameborder="0"></iframe>
+                                    <a
+                                        :href="formData.walk_through_link"
+                                        target="_blank"
+                                        class="mt-2 btn h-11 w-11 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
+                                        title="Walk Through Link"
+                                        >
+                                        <i class="fa fa-video"></i>
+                                    </a>
                                 </div>
                                 <p v-else class="text-xs+ text-slate-400 dark:text-navy-300" >
                                     Not Available

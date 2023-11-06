@@ -22,6 +22,8 @@ class ProjectListResource extends JsonResource
             'project_no' => $this->project_no ?? 'N/A',
             'locality' => $this->locality ?? 'N/A',
             'city' => $this->city ?? 'N/A',
+            'walk_through_link' => $this->walkthrough_link,
+            'virtual_tour' => $this->virtual_tour,
             'assigned_to' => $this->assignToUser->name ?? 'N/A',
             'updated_by' => $this->updatedUser->name ?? 'N/A',
             'updated_at_time' => $this->updated_at->format('d-m-Y h:i a'),

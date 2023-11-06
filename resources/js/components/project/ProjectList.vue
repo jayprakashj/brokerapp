@@ -207,6 +207,24 @@
                                             class="btn rounded-full bg-error font-medium text-red-500 hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
                                             <i class="fa fa-trash"></i>
                                         </button>
+                                        <a
+                                            :href="item.walk_through_link"
+                                            target="_blank"
+                                            v-if="item.walk_through_link"
+                                            class="btn h-7 w-7 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
+                                            title="Walk Through Link"
+                                            >
+                                            <i class="fa fa-video"></i>
+                                        </a>
+                                        <a
+                                            :href="item.virtual_tour"
+                                            target="_blank"
+                                            v-if="item.virtual_tour"
+                                            class="btn h-7 w-7 border border-warning/30 bg-warning/10 p-0 font-medium text-warning hover:bg-warning/20 hover:shadow-lg hover:shadow-warning/50 focus:bg-warning/20 focus:shadow-lg focus:shadow-warning/50 active:bg-warning/25"
+                                            title="Virtual Tour"
+                                            >
+                                            <i class="fa fa-vr-cardboard"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
