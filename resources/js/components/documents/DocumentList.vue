@@ -64,7 +64,12 @@
                     <thead>
                         <tr>
                             <th
-                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('name')">
+                                v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_DOCUMENT, $permissions.REMOVE_DOCUMENT ] )"
+                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                Action
+                            </th>
+                            <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('name')">
                                 <div class="flex gap-3 items-center">
                                     Name
                                     <template v-if="sortColumn == 'name'">
@@ -96,7 +101,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')">
+                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')">
                                 <div class="flex gap-3 items-center">
                                     Updated At
                                     <template v-if="sortColumn == 'updated_at'">
@@ -107,33 +112,12 @@
                                     <i class="fa fa-sort" v-else></i>
                                 </div>
                             </th>
-                            <th
-                                v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_DOCUMENT, $permissions.REMOVE_DOCUMENT ] )"
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                Action
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <template v-if="lists?.data?.length">
 
                             <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in lists.data" :key="'document_'+idx">
-                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
-                                    {{ item.name }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                    {{ item.company_name }}
-                                </td>
-
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                    {{ item.description }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                    {{ item.updated_by }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                    {{ item.updated_at_time }}
-                                </td>
                                 <td class="whitespace-nowrap px-4 py-3 sm:px-5" v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_DOCUMENT, $permissions.REMOVE_DOCUMENT ] )">
                                     <div class="flex gap-2">
 
@@ -149,6 +133,22 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </div>
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
+                                    {{ item.name }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.company_name }}
+                                </td>
+
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.description }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.updated_by }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.updated_at_time }}
                                 </td>
                             </tr>
                         </template>

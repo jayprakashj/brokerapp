@@ -92,7 +92,12 @@
                     <thead>
                         <tr>
                             <th
-                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('title')">
+                                v-if="userPermissions.isPermissionsAllowed([  $permissions.REMOVE_PROJECT, $permissions.UPDATE_PROJECT ] )"
+                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                Action
+                            </th>
+                            <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('title')">
                                 <div class="flex gap-3 items-center">
                                     Title
                                     <template v-if="sortColumn == 'title'">
@@ -153,7 +158,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')" :class="{'rounded-tr-lg': !userPermissions.isPermissionsAllowed([  $permissions.REMOVE_PROJECT, $permissions.UPDATE_PROJECT ] )}">
+                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')" :class="{'rounded-tr-lg': !userPermissions.isPermissionsAllowed([  $permissions.REMOVE_PROJECT, $permissions.UPDATE_PROJECT ] )}">
                                 <div class="flex gap-3 items-center">
                                     Updated At
                                     <template v-if="sortColumn == 'updated_at'">
@@ -164,35 +169,12 @@
                                     <i class="fa fa-sort" v-else></i>
                                 </div>
                             </th>
-                            <th
-                                v-if="userPermissions.isPermissionsAllowed([  $permissions.REMOVE_PROJECT, $permissions.UPDATE_PROJECT ] )"
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                Action
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <template v-if="lists?.data?.length">
 
                             <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in lists.data" :key="'project_'+idx">
-                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
-                                    {{ item.title }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
-                                    {{ item.company_branch }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
-                                    {{ item.project_no }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
-                                    {{ item.city }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                    {{ item.assigned_to }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                    {{ item.updated_at_time }}
-                                </td>
                                 <td class="whitespace-nowrap px-4 py-3 sm:px-5" v-if="userPermissions.isPermissionsAllowed([  $permissions.REMOVE_PROJECT, $permissions.UPDATE_PROJECT ] )">
                                     <div class="flex gap-2">
 
@@ -226,6 +208,24 @@
                                             <i class="fa fa-vr-cardboard"></i>
                                         </a>
                                     </div>
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
+                                    {{ item.title }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
+                                    {{ item.company_branch }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
+                                    {{ item.project_no }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
+                                    {{ item.city }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.assigned_to }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                                    {{ item.updated_at_time }}
                                 </td>
                             </tr>
                         </template>

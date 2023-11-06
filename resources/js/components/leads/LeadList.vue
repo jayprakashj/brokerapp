@@ -226,7 +226,12 @@
                     <thead>
                         <tr>
                             <th
-                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('title')">
+                                v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD, $permissions.REMOVE_LEAD, $permissions.VIEW_LEAD ] )"
+                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                Action
+                            </th>
+                            <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('title')">
                                 <div class="flex gap-3 items-center">
                                     Title
                                     <template v-if="sortColumn == 'title'">
@@ -350,7 +355,7 @@
                                 </div>
                             </th>
                             <th
-                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')" :class="{'rounded-tr-lg': !userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD, $permissions.REMOVE_LEAD, $permissions.VIEW_LEAD ])}">
+                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('updated_at')" :class="{'rounded-tr-lg': !userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD, $permissions.REMOVE_LEAD, $permissions.VIEW_LEAD ])}">
                                 <div class="flex gap-3 items-center">
                                     Updated At
                                     <template v-if="sortColumn == 'updated_at'">
@@ -361,17 +366,32 @@
                                     <i class="fa fa-sort" v-else></i>
                                 </div>
                             </th>
-                            <th
-                                v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD, $permissions.REMOVE_LEAD, $permissions.VIEW_LEAD ] )"
-                                class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                Action
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <template v-if="lists?.data?.length">
 
                             <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in lists.data" :key="'property_'+idx">
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5" v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD, $permissions.REMOVE_LEAD, $permissions.VIEW_LEAD ] )">
+                                    <div class="flex gap-2">
+
+                                        <router-link :to="'/lead/edit/' + item.id"
+                                            v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD ] )"
+                                            class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-primary hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                                            <i class="fa fa-pencil"></i>
+
+                                        </router-link>
+
+                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_LEAD ] )" :to="'/lead/view/' + item.id" class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
+                                            <i class="far fa-eye"></i>
+                                        </router-link>
+                                        <button v-if="false && userPermissions.isPermissionsAllowed([ $permissions.REMOVE_LEAD ] )"
+                                                @click="removeItem( item.id )"
+                                            class="btn rounded-full bg-error font-medium text-red-500 hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
                                     {{ item.title }}
                                 </td>
@@ -465,26 +485,6 @@
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-3 sm:px-5">
                                     {{ item.updated_at_time }}
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5" v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD, $permissions.REMOVE_LEAD, $permissions.VIEW_LEAD ] )">
-                                    <div class="flex gap-2">
-
-                                        <router-link :to="'/lead/edit/' + item.id"
-                                            v-if="userPermissions.isPermissionsAllowed([ $permissions.UPDATE_LEAD ] )"
-                                            class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-primary hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                                            <i class="fa fa-pencil"></i>
-
-                                        </router-link>
-
-                                        <router-link v-if="userPermissions.isPermissionsAllowed([ $permissions.VIEW_LEAD ] )" :to="'/lead/view/' + item.id" class="btn h-7 w-7 rounded-full bg-slate-150 px-0 text-xs+ font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
-                                            <i class="far fa-eye"></i>
-                                        </router-link>
-                                        <button v-if="false && userPermissions.isPermissionsAllowed([ $permissions.REMOVE_LEAD ] )"
-                                                @click="removeItem( item.id )"
-                                            class="btn rounded-full bg-error font-medium text-red-500 hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </div>
                                 </td>
                             </tr>
                         </template>
