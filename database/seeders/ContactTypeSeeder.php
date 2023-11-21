@@ -22,9 +22,14 @@ class ContactTypeSeeder extends Seeder
     {
 
         $contactTypes = [
-            'Customer',
-            'Network Consultant',
-            'General Contacts'
+            'Buyer',
+            'Seller',
+            'Tenants',
+            'Investor',
+            'Builder',
+            'Builder Executive',
+            'Visitors',
+            'Others',
         ];
         $users = User::with('defaultCompany')->typeCompany()->get();
         foreach( $users as $item ){
