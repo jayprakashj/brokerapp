@@ -200,4 +200,63 @@ class AuthController extends Controller
 
         return response()->json( $response, $code );
     }
+
+    public function apiLogin ( LoginRequest $request ) {
+        $response = [];
+        $code = 200;
+
+        $user = $this->userClass->findUserByEmailMobile( $request->input('email') );
+        if( !is_null( $user ) ){
+
+            if( Hash::check( $request->input('password' ), $user->getAuthPassword() ) ){
+                if( !$user->isCompanyAdmin() ){
+                    if( $user->isActive() ){
+                        if( $user->isEmailVerified() ){
+                            auth('api')->user( $user );
+                            auth()->shouldUse( 'api' );
+
+                            $token = $user->createToken('auth-token');
+
+                            \Helper::setDefaultCompanySessionTeam( $user );
+
+                            $response = [
+                                'success' => 'Logged in successfully.',
+                                'token' => $token->plainTextToken ?? null,
+                                'user' => $user,
+                            ];
+                        }else{
+                            $code = 500;
+                            $response = [
+                                'message' => 'Email verification pending. You have to use the web for this task.',
+                            ];
+                        }
+                    }else{
+                        $code = 500;
+                        $response = [
+                            'message' => 'User is in-active.',
+                        ];
+
+                    }
+                }else{
+                    $code = 500;
+                    $response = [
+                        'message' => 'Admin login prohibited. Use web portal to access the data.',
+                    ];
+
+                }
+            }else{
+                $code = 500;
+                $response = [
+                    'message' => 'Invalid credentials!',
+                ];
+
+            }
+        }else{
+            $code = 500;
+            $response = [
+                'message' => 'No user exists.',
+            ];
+        }
+        return response()->json( $response, $code );
+    }
 }

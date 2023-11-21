@@ -460,7 +460,14 @@
                             <label class="block col-span-12" >
                                 <span>Walk Through Link</span>
                                 <div class="w-full" v-if="formData.walk_through_link">
-                                    <iframe :src="formData.walk_through_link" frameborder="0"></iframe>
+                                    <a
+                                        :href="formData.walk_through_link"
+                                        target="_blank"
+                                        class="mt-2 btn h-11 w-11 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
+                                        title="Walk Through Link"
+                                        >
+                                        <i class="fa fa-video"></i>
+                                    </a>
                                 </div>
                                 <p v-else class="text-xs+ text-slate-400 dark:text-navy-300" >
                                     Not Available
@@ -525,6 +532,23 @@
                                     {{ formData.updated_at_time }}
                                 </p>
                             </label>
+                        </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 items-center">
+                            <label class="block" >
+                                <span>Uploaded Documents</span>
+
+                            </label>
+                            <div class="grid grid-cols-4 gap-4 mt-4">
+                                <div class="card" v-for="(item, index) in formData.documents" :key="'document_list_container_' + index">
+                                    <!-- <img class="w-full rounded-lg object-cover" :src="(item.url || 'https://picsum.photos/100/100')" alt="image"> -->
+                                    <i class="fa fa-file-alt fa-6x m-auto"></i>
+                                    <a :href="item.url" class="mt-2 p-2" target="_blank">
+                                        <p class="text-tiny ml-1">{{ item.name ?? item.id }}</p>
+                                    </a>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -740,7 +764,8 @@ export default {
                 refer_by_name: null,
                 refer_by_email: null,
                 refer_by_phone: null,
-                images: {}
+                images: {},
+                documents: []
             },
             show:{
                 modal: false

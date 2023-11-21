@@ -90,6 +90,18 @@ class Lead extends Model
         return $this->comments()->latest();
     }
 
+    public function wonComment (){
+        return $this->comments()->wonLeadStatus();
+    }
+
+    public function oppertunityComment (){
+        return $this->comments()->oppertunitiesLeadStatus();
+    }
+
+    public function qualifiedComment (){
+        return $this->comments()->qualifiedLeadStatus();
+    }
+
     public function lastComment (){
         return $this->hasOne( LeadComment::class, 'lead_id', 'id')->latest();
     }
@@ -109,6 +121,21 @@ class Lead extends Model
         });
     }
 
+    public function scopePropertProjectSiteVisitExists ( $q, $selectedDate, $dateColumn = 'created_at', $operator = '>='  ){
+        return $q->where( function( $whereClause ) use( $dateColumn, $selectedDate, $operator ) {
+
+                $whereClause->orWhereHas('properties', function( $q ) use( $dateColumn, $selectedDate, $operator ) {
+                                $q->whereHas('siteVisits', function( $q ) use( $dateColumn, $selectedDate, $operator ) {
+                                    $q->filterDate($dateColumn, $selectedDate, $operator);
+                                });
+                            })
+                            ->orWhereHas('projects', function( $q ) use( $dateColumn, $selectedDate, $operator ) {
+                                $q->whereHas('siteVisits', function( $q ) use( $dateColumn, $selectedDate, $operator ) {
+                                    $q->filterDate($dateColumn, $selectedDate, $operator);
+                                });
+                            });
+            });
+    }
     public function scopeCustomSort( $q, $sortColumn, $sortOrder = 'asc' ){
         if( !empty( $sortColumn ) ){
             switch( $sortColumn ){

@@ -6,18 +6,19 @@ use App\Models\PropertySubTypeList;
 use App\Models\User;
 use App\Models\PropertyTypeList;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class PropertyTypeSeeder extends Seeder
 {
-
-    public function __construct()
-    {
-    }
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        PropertyTypeList::truncate();
+        PropertySubTypeList::truncate();
+        Schema::enableForeignKeyConstraints();
 
         $data = [
             'Residential' => [
@@ -38,6 +39,12 @@ class PropertyTypeSeeder extends Seeder
             ],
             'Farmhouses' => [
                 'Farmhouses'
+            ],
+            'Industrial' => [
+                'Industrial'
+            ],
+            'Resident-Commercial' => [
+                'Resident-Commercial'
             ]
         ];
         $users = User::with('defaultCompany')->typeCompany()->get();

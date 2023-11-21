@@ -200,6 +200,7 @@ export default {
 
             this.tomSelectInstance.on("change", ( selectedValue ) => {
                 this.$emit( 'update:modelValue', selectedValue )
+                this.$emit( 'onChange', selectedValue )
             })
 
             this.tomSelectInstance.on("item_select", ( selectedItem ) => {

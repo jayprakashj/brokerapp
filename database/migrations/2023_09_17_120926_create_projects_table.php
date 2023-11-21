@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('company_branch_id')->nullable();
 
             $table->string('title');
+            $table->string('project_type')->nullable();
             $table->string('rera_reg_no')->nullable();
             $table->string('project_no')->nullable();
 
@@ -59,6 +60,7 @@ return new class extends Migration
             $table->index('user_id');
             $table->index('company_id');
             $table->index('company_branch_id');
+            $table->index('project_type');
             $table->index('launch_date');
             $table->index('completion_date');
             $table->index('total_unit');

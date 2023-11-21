@@ -21,4 +21,15 @@ class LeadSource extends Model
         static::addGlobalScope(new CompanyIdScope);
     }
 
+    public function leads(){
+        return $this->hasMany( Lead::class, 'lead_source', 'name');
+    }
+
+    public function oppertunities(){
+        return $this->leads()->oppertunityComment();
+    }
+
+    public function wonLeads(){
+        return $this->leads()->wonComment();
+    }
 }

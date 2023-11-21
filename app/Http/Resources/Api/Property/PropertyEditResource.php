@@ -89,9 +89,10 @@ class PropertyEditResource extends JsonResource
         $isMediaExists = $this->media->count() > 0;
         $media = $this->media->groupBy('collection_name');
         $images = [];
+        $documents = [];
 
         foreach( $propertyImgTypes as $collectionType ){
-            if( $isMediaExists && $media->has( $collectionType )){
+            if( !in_array( $collectionType, ['documents']) && $isMediaExists && $media->has( $collectionType )){
 
                 $images[ $collectionType ] = $media[$collectionType]->map( function( $data ){
                     $res = [
@@ -105,6 +106,20 @@ class PropertyEditResource extends JsonResource
             }
         }
         $data['images'] = $images;
+
+        if( $media->has( 'documents' ) ){
+            foreach( $media['documents'] as $item ){
+
+                $documents[]  = [
+                    'id' => $item->id,
+                    'name' => $item->file_name,
+                    'url' => $item->getUrl()
+                ];
+            }
+        }
+
+        $data['documents'] = $documents;
+
         return $data;
     }
 }

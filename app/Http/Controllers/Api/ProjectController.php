@@ -107,9 +107,11 @@ class ProjectController extends Controller
 
     public function createFormSelectList ( Request $request ){
         $propertyImgTypes = PropertyImageTypeList::select('id', 'name')->get();
+        $projectTypes = \Helper::convertArrayIntoAssociative(Project::PROJECT_TYPES);
 
         $data = [
             'property_img_types' => PropertyImageTypeListForSelectList::collection( $propertyImgTypes ),
+            'project_types' => $projectTypes,
         ];
         return response()->json( $data, 200 );
     }

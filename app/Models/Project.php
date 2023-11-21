@@ -18,6 +18,12 @@ class Project extends Model implements HasMedia
 {
     use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes, InteractsWithMedia, CommonFilter;
 
+    const PROJECT_TYPES = [
+        'Residential' => 'Residential',
+        'Commercial' => 'Commercial',
+        'Residential-Commercial' => 'Residential-Commercial',
+        'Industrial' => 'Industrial',
+    ];
 
     /**
      * The "booted" method of the model.
