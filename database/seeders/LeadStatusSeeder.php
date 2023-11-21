@@ -3,27 +3,27 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\ContactType;
-use App\Models\LeadSource;
 use App\Models\LeadStatus;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class LeadStatusSeeder extends Seeder
 {
 
-    public function __construct()
-    {
-    }
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        LeadStatus::truncate();
+        Schema::enableForeignKeyConstraints();
 
         $leadStatuses = [
             'In Progress',
             'Qualified',
-            'Disqualified'
+            'Disqualified',
+            'Won'
         ];
         $users = User::with('defaultCompany')->typeCompany()->get();
         foreach( $users as $item ){

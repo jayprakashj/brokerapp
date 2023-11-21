@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Project;
 
+use App\Models\Project;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -36,6 +37,10 @@ class AddProjectRequest extends FormRequest
             ],
             'locality' => [
                 'required'
+            ],
+            'project_type' => [
+                'required',
+                'in:' . implode(',',array_keys( Project::PROJECT_TYPES ))
             ],
 
             'company_branch' => [

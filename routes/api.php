@@ -33,12 +33,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware(['guest'])
+        ->prefix('auth')
+        ->group( function () {
+            Route::post('login', [AuthController::class, 'apiLogin'])->name('api.login');
+        });
 
 Route::post('submit/enquiry-form', [LeadController::class, 'submitEnquiryForm'])->name('enquiry_form.submit');
 
 Route::get('enquiry/form-select-lists', [LeadController::class, 'enquiryFormSelectList'])->name('enquiry_form_lists');
 
-Route::middleware(['auth' , 'set_default_company' ])->group(function () {
+Route::middleware(['auth:web,api' , 'set_default_company' ])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::post('/upload-media', [DashboardController::class, 'uploadMedia'])->name('upload_media');

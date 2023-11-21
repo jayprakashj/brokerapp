@@ -128,7 +128,7 @@ class PropertyClass {
         if( !empty( $images ) && is_array( $images )){
             $mediaId = Arr::pluck( Arr::flatten($request->images,1), 'id');
 
-            $removedMedia = $property->media()->whereNotIn( 'id', $mediaId )->get();
+            $removedMedia = $property->media()->whereNotIn( 'id', $mediaId )->whereNotIn('collection_name',['documents'])->get();
             if( $removedMedia->count() ){
                 foreach( $removedMedia as $item ){
                     $property->deleteMedia( $item );
@@ -149,7 +149,37 @@ class PropertyClass {
                 }
             }
         }else{
-            $property->clearMediaCollection();
+            $property->clearMediaCollectionExcept('documents');
+        }
+
+        $documents = $request->input('documents');
+
+        if( !empty( $documents ) && is_array($documents)){
+            $documentsId = Arr::pluck( $documents, 'id');
+
+            $removeDocuments = $property->media()
+                                    ->where('collection_name','documents')
+                                    ->whereNotIn( 'id', $documentsId )
+                                    ->get();
+
+            if( $removeDocuments->count() ){
+                foreach( $removeDocuments as $item ){
+                    $property->deleteMedia( $item );
+                }
+            }
+
+            foreach( $documents as $fileName ){
+                $tmpFileNm = data_get( $fileName, 'id');
+                if( !empty( $tmpFileNm ) ){
+
+                    $tmpFile = 'tmp_media/' . $tmpFileNm;
+                    if( Storage::disk('public')->has( $tmpFile ) ){
+                        $property->addMediaFromDisk( $tmpFile, 'public')->toMediaCollection( 'documents' );
+                    }
+                }
+            }
+        }else{
+            $property->clearMediaCollection('documents');
         }
 
         if( !$property->wasRecentlyCreated ){
