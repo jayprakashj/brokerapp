@@ -26,19 +26,19 @@ trait CommonFilter {
         return $q->where('updated_by', '=', $value, $boolean);
     }
 
-    public function scopeFilterDate ( $q, $column, $value ){
-        if( !empty( $value ) && is_array( $value ) ){
+    public function scopeFilterDate ( $q, $column, $value, $operator = '=' ){
+        if( !empty( $value ) && (is_array( $value ) || is_string( $value )) ){
             if( is_array( $value ) ){
                 if( count( $value ) == 2 ){
                     return $q->whereBetween( DB::Raw( 'DATE('.$column.')'), $value);
                 }
                 if( count( $value ) == 1 ){
-                    return $q->whereDate( $column, $value);
+                    return $q->whereDate( $column, $operator, $value);
                 }
 
             }else{
 
-                return $q->whereDate( $column, $value);
+                return $q->whereDate( $column, $operator, $value);
             }
         }
         return $q;
