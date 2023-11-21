@@ -5,23 +5,25 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\PropertyTransactionList;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class PropertyTransactionSeeder extends Seeder
 {
 
-    public function __construct()
-    {
-    }
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        PropertyTransactionList::truncate();
+        Schema::enableForeignKeyConstraints();
 
         $data = [
             'Sell',
             'Rental',
-            'Resell'
+            'Resell',
+            'Pre-Leased'
         ];
         $users = User::with('defaultCompany')->typeCompany()->get();
         foreach( $users as $item ){
