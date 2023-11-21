@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Relations\CompanyRelation;
 use App\Models\Relations\CreatedUpdatedUserRelation;
 use App\Models\Relations\OwnerUserRelation;
+use App\Models\Scopes\CommonFilter;
 use App\Models\Scopes\CompanyIdScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,7 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Contact extends Model implements HasMedia
 {
-    use SoftDeletes,InteractsWithMedia,CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation;
+    use SoftDeletes,InteractsWithMedia,CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, CommonFilter;
 
     protected $defaultImage = '/images/100x100.png';
 
