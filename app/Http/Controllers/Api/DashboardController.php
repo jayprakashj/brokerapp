@@ -18,7 +18,7 @@ class DashboardController extends Controller
     public function getDashboardData ( Request $request ) {
         $user = auth()->user();
 
-        $data = $this->dashboardClass->dashboardData( $user );
+        $data = $this->dashboardClass->dashboardData( $user, $request );
 
         return response()->json( $data, 200 );
     }

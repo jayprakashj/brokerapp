@@ -75,6 +75,10 @@ class User extends Authenticatable implements HasMedia
         self::TYPE_INDIVIDUAL => 'Individual',
     ];
 
+    // protected function getDefaultGuardName() {
+    //     return 'web';
+    // }
+
     public function registerMediaCollections(Media $media = null): void
     {
         $this->addMediaCollection('logo')
@@ -218,6 +222,9 @@ class User extends Authenticatable implements HasMedia
         return $this->hasRole('company-admin');
     }
 
+    public function leads (){
+        return $this->hasMany( Lead::class, 'assigned_to', 'id');
+    }
 
     public function scopeGetDefaultLogoUrl () {
 
