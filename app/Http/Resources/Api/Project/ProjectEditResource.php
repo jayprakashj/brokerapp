@@ -19,6 +19,7 @@ class ProjectEditResource extends JsonResource
         $data = [
             'id' => $this->id,
             'title' => $this->title,
+            'project_type' => $this->project_type,
             'rera_reg_no' => $this->rera_reg_no,
             'project_no' => $this->project_no,
             'launch_date' => $this->launch_date,

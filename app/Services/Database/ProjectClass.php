@@ -53,6 +53,7 @@ class ProjectClass {
         $project->assign_to = $request->input('assign_to');
 
         $project->title = $request->input('title');
+        $project->project_type = $request->input('project_type');
         $project->rera_reg_no = $request->input('rera_reg_no');
         $project->project_no = $request->input('project_no');
         $project->launch_date = $request->input('launch_date');

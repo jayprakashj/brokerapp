@@ -65,6 +65,16 @@
                                     <span class="text-tiny+ text-error" v-if="errors?.project_no?.length">{{ errors.project_no.at(0) }}</span>
                                 </label>
                                 <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.project_type"
+                                        form-label="Project Type"
+                                        placeholder="Select Project Type"
+                                        display-field="title"
+                                        :options="options.project_types"
+                                        :selected-item="formData.project_type"
+                                        :error-msg="errors?.project_type"
+                                    />
+                                <input-tom-select
                                             v-model="formData.company_branch"
                                             form-label="Company Branch"
                                             placeholder="Select Branch"
@@ -788,6 +798,7 @@ export default {
             errors: {},
             options:{
                 'property_img_types': [],
+                'project_types': [],
             },
             formData:{
                 title: null,
@@ -796,6 +807,7 @@ export default {
                 launch_date: null,
                 completion_date: null,
                 company_branch: null,
+                project_type: null,
                 project_area: null,
                 developer_name: null,
                 approved_by: null,
@@ -876,6 +888,9 @@ export default {
                             .nullable(true)
                             .required('Required'),
                 locality: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
+                project_type: Yup.string()
                             .nullable(true)
                             .required('Required'),
 
