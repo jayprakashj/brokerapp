@@ -75,9 +75,9 @@ class User extends Authenticatable implements HasMedia
         self::TYPE_INDIVIDUAL => 'Individual',
     ];
 
-    // protected function getDefaultGuardName() {
-    //     return 'web';
-    // }
+    protected function getDefaultGuardName() {
+        return 'web';
+    }
 
     public function registerMediaCollections(Media $media = null): void
     {
