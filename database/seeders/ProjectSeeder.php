@@ -38,7 +38,7 @@ class ProjectSeeder extends Seeder
 
         $companyBranches = CompanyBranch::withoutGlobalScope(CompanyIdScope::class)->get();
         $users = User::with('defaultCompany')->typeCompany()->get();
-
+        $projectTypes = array_keys( Project::PROJECT_TYPES );
         $projectsData = [
             [
                 'title' => 'Fortune Imperia II',
@@ -231,6 +231,7 @@ class ProjectSeeder extends Seeder
             $obj->updated_by = $item->id;
             $obj->company_id = $item->defaultCompany->id;
             $obj->title = data_get( $pData, 'title', Arr::Random( $projectsName ) );
+            $obj->project_type = Arr::random( $projectTypes );
             $obj->rera_reg_no = substr( str_shuffle('ABCDEFGHIJKL1234567890'),0,8 );;
             $obj->project_no = substr( str_shuffle('ABCDEFGHIJKL1234567890MNOPQRSTUVWXYZ'),0,8 );
             $obj->launch_date = now()->subDays( $faker->numberBetween( 30, 900) )->format('Y-m-d');
