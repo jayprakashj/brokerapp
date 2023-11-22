@@ -42,6 +42,8 @@
         var userPermissions = [];
         @endif
         var enquiryTypes = @json( $enquiryTypes ?? [] );
+        var namePrefixes = @json( $namePrefixes ?? [] );
+        var occupations = @json( $occupations ?? [] );
     </script>
 
     @isset($head)

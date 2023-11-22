@@ -8,6 +8,8 @@ export default {
         app.config.globalProperties.$authUser = window.authUser;
         app.config.globalProperties.$permissions = permission;
         app.config.globalProperties.$enquiryTypes = enquiryTypes;
+        app.config.globalProperties.$namePrefixes = namePrefixes;
+        app.config.globalProperties.$occupations = occupations;
         app.config.globalProperties.$broadcastChannelName = import.meta.env.VITE_BROADCAST_CHANNEL_NAME;
         app.config.globalProperties.$genders = [
             {

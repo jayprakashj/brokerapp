@@ -49,30 +49,59 @@
                             <label class="block h-full" >
                                 <span>Name</span>
                                 <span class="relative mt-1.5 flex">
+                                    <select name="name_prefix" v-model="formData.name_prefix" class="form-select border border-slate-300 bg-white px-3 py-2 pr-9 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
+                                        <option v-for="(item, index) in $namePrefixes" :key="'name_prefix_'+index">{{ item.name }}</option>
+                                    </select>
                                     <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        class="form-input peer w-full border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="Name" type="text" name="name" v-model="formData.name">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-user text-base"></i>
-                                    </span>
                                 </span>
 
                                 <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
+                                <span class="text-tiny+ text-error" v-else-if="errors?.name_prefix?.length">{{ errors.name_prefix.at(0) }}</span>
                             </label>
                             <label class="block h-full" >
                                 <span>Mobile</span>
                                 <span class="relative mt-1.5 flex">
+                                    <input name="country_code" v-model="formData.country_code" class="form-input w-16 rounded-l-lg border border-slate-300 bg-white px-3 py-2 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent" placeholder="91">
+
                                     <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        class="form-input peer w-full border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="Mobile" type="text" name="mobile" v-model="formData.mobile">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-phone text-base"></i>
-                                    </span>
                                 </span>
 
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
+                                <span class="text-tiny+ text-error" v-else-if="errors?.country_code?.length">{{ errors.country_code.at(0) }}</span>
+                            </label>
+
+                            <label class="block h-full" >
+                                <span>Is WhatsApp Contact No. ? {{ (formData.mobile ) ? '( '+formData.mobile +' )' : '' }}</span>
+                                <span class="relative mt-1.5 flex mt-3 ml-2">
+                                    <label class="inline-flex items-center space-x-2">
+                                        <input
+                                            name="is_whatsapp_available"
+                                            class="form-switch is-outline h-5 w-10 rounded-full border border-slate-400/70 bg-transparent before:rounded-full before:bg-slate-300 checked:border-primary checked:before:bg-primary dark:border-navy-400 dark:before:bg-navy-300 dark:checked:border-accent dark:checked:before:bg-accent"
+                                            type="checkbox"
+                                            v-model="formData.is_whatsapp_available"
+                                        />
+                                        <span>Yes</span>
+                                    </label>
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
+                            </label>
+                             <label class="block h-full" >
+                                <span>Other Contact No.</span>
+                                <span class="relative mt-1.5 flex">
+                                    <input name="other_contact_country_code" v-model="formData.other_contact_country_code" class="form-input w-16 rounded-l-lg border border-slate-300 bg-white px-3 py-2 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent" placeholder="91">
+
+                                    <input
+                                        class="form-input peer w-full border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Mobile" type="text" name="other_contact_no" v-model="formData.other_contact_no">
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.other_contact_no?.length">{{ errors.other_contact_no.at(0) }}</span>
+                                <span class="text-tiny+ text-error" v-else-if="errors?.other_contact_country_code?.length">{{ errors.other_contact_country_code.at(0) }}</span>
                             </label>
 
                             <label class="block h-full" >
@@ -85,6 +114,22 @@
                                         class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
                                         <i class="fa-regular fa-envelope text-base"></i>
                                     </span>
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
+                            </label>
+                            <label class="block h-full" >
+                                <span>Is Email Verified ?</span>
+                                <span class="relative mt-1.5 flex">
+                                    <label class="inline-flex items-center space-x-2 mt-2 ml-2">
+                                        <input
+                                            name="is_email_verified"
+                                            class="form-switch is-outline h-5 w-10 rounded-full border border-slate-400/70 bg-transparent before:rounded-full before:bg-slate-300 checked:border-primary checked:before:bg-primary dark:border-navy-400 dark:before:bg-navy-300 dark:checked:border-accent dark:checked:before:bg-accent"
+                                            type="checkbox"
+                                            v-model="formData.is_email_verified"
+                                        />
+                                        <span>Yes</span>
+                                    </label>
                                 </span>
 
                                 <span class="text-tiny+ text-error" v-if="errors?.email?.length">{{ errors.email.at(0) }}</span>
@@ -173,7 +218,7 @@
                                 <span class="relative mt-1.5 flex">
                                     <input
                                         class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        placeholder="Pinicode" type="text" name="pincode" v-model="formData.pincode">
+                                        placeholder="Pincode" type="text" name="pincode" v-model="formData.pincode">
                                     <span
                                         class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
                                         <i class="fa fa-location-dot text-base"></i>
@@ -182,6 +227,100 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.pincode?.length">{{ errors.pincode.at(0) }}</span>
                             </label>
+                        </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
+                            <label class="block h-full" >
+                                <span>Company Name</span>
+                                <span class="relative mt-1.5 flex">
+                                    <input
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Company Name" type="text" name="company_name" v-model="formData.company_name">
+
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.company_name?.length">{{ errors.company_name.at(0) }}</span>
+                            </label>
+                            <input-tom-select
+                                    class="h-full"
+                                    v-model="formData.occupation"
+                                    form-label="Occupation"
+                                    placeholder="Select Occupation"
+                                    :options="occupations"
+                                    :allow-empty-option="true"
+                                    :selected-item="formData.occupation"
+                                    :error-msg="errors?.occupation"
+                                />
+                            <label class="block h-full" >
+                                <span>Designation</span>
+                                <span class="relative mt-1.5 flex">
+                                    <input
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Designation" type="text" name="designation" v-model="formData.designation">
+
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.designation?.length">{{ errors.designation.at(0) }}</span>
+                            </label>
+                            <label class="block h-full" >
+                                <span>Date of Birth</span>
+                                <span class="relative mt-1.5 flex">
+                                    <input
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="DD/MM/YYYY" type="date" name="birth_date" v-model="formData.birth_date">
+
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.birth_date?.length">{{ errors.birth_date.at(0) }}</span>
+                            </label>
+                            <label class="block h-full" >
+                                <span>Website</span>
+                                <span class="relative mt-1.5 flex">
+                                    <input
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="https://www.example.com" type="text" name="website" v-model="formData.website">
+
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.website?.length">{{ errors.website.at(0) }}</span>
+                            </label>
+                            <label class="block h-full" >
+                                <span>Send Wishes:</span>
+                                <span class="relative mt-1.5 flex gap-4">
+                                    <label class="inline-flex items-center space-x-2">
+                                        <input
+                                            v-model="formData.enable_whatsapp_wishes"
+                                            class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:bg-slate-500 checked:border-slate-500 hover:border-slate-500 focus:border-slate-500 dark:border-navy-400 dark:checked:bg-navy-400"
+                                            type="checkbox"
+                                        />
+                                        <p>WhatsApp</p>
+                                    </label>
+
+                                    <label class="inline-flex items-center space-x-2">
+                                        <input
+                                            v-model="formData.enable_sms_wishes"
+                                            class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:bg-slate-500 checked:border-slate-500 hover:border-slate-500 focus:border-slate-500 dark:border-navy-400 dark:checked:bg-navy-400"
+                                            type="checkbox"
+                                        />
+                                        <p>SMS</p>
+                                    </label>
+
+                                    <label class="inline-flex items-center space-x-2">
+                                        <input
+                                            v-model="formData.enable_email_wishes"
+                                            class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:bg-slate-500 checked:border-slate-500 hover:border-slate-500 focus:border-slate-500 dark:border-navy-400 dark:checked:bg-navy-400"
+                                            type="checkbox"
+                                        />
+                                        <p>E-Mail</p>
+                                    </label>
+
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.website?.length">{{ errors.website.at(0) }}</span>
+                            </label>
+                        </div>
+                        <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                        <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
                             <label class="block h-full col-span-2">
                                 <span>Comment</span>
                                 <label class="block">
@@ -216,16 +355,30 @@ export default {
             errors: {},
             formData:{
                 name: '',
+                name_prefix: null,
+                country_code: null,
                 mobile: null,
+                is_whatsapp_available: false,
+                other_contact_country_code: null,
+                other_contact_no: null,
                 email: null,
+                is_email_verified: false,
                 contact_type: null,
                 customer_type: null,
                 address: null,
                 city: null,
                 locality: null,
                 pincode: null,
+                company_name: null,
+                occupation: null,
+                designation: null,
+                birth_date: null,
+                website: null,
                 comment: null,
                 gender: null,
+                enable_whatsapp_wishes: null,
+                enable_sms_wishes: null,
+                enable_email_wishes: null,
             },
             rolesList: [],
             loading:{
@@ -268,12 +421,33 @@ export default {
             let fields = {
                 name: Yup.string()
                             .nullable(true)
-                            .required('Required'),
+                            .required('Name required'),
+                name_prefix: Yup.string()
+                            .nullable(true)
+                            .required('Name prefix required'),
+                country_code: Yup.number()
+                            .nullable(true)
+                            .required('Country code required'),
                 mobile: Yup.string()
                             .nullable(true)
-                            .required('Required')
+                            .required('Mobile number required')
                             .min( 10, 'Must be 10 digits')
                             .max( 10, 'Must be 10 digits'),
+                other_contact_no: Yup.string()
+                                    .nullable(true)
+                                    .transform( (c, o ) => o == "" ? null : c)
+                                    .min( 10, 'Must be 10 digits')
+                                    .max( 10, 'Must be 10 digits'),
+                other_contact_country_code: Yup.number()
+                                            .nullable(true)
+                                            .when("other_contact_no", (data, schema) => {
+                                                console.log("OTER COUNTU CODE", data);
+                                                if( data.at(0) != null ){
+
+                                                    return schema.required('Country code required')
+                                                }
+                                                return schema;
+                                            }),
                 email: Yup.string()
                             .nullable(true)
                             .email( 'Must be a valid email address'),
@@ -288,6 +462,13 @@ export default {
             const yup = Yup.object().shape( fields );
 
             return yup;
+        },
+        occupations(){
+            const defaultOption = {
+                id: "",
+                name: 'Select'
+            };
+            return [ defaultOption, ...this.$occupations]
         }
     },
     methods:{

@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SpatiePermission;
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Models\Lead;
 
 class DashboardController extends Controller
@@ -60,8 +61,10 @@ class DashboardController extends Controller
             $globalPermissions = SpatiePermission::GlobalPermissions()->get()->pluck('name');
         }
         $enquiryTypes = \Helper::convertArrayIntoAssociative( Lead::ENQUIRY_TYPES );
+        $namePrefixes = \Helper::convertArrayIntoAssociative( Contact::NAME_PREFIX_LIST, 'id', 'name' );
+        $occupations = \Helper::convertArrayIntoAssociative( Contact::OCCUPATION_LIST, 'id', 'name' );
 
-        return view('components.layouts.vue-app', compact( 'globalPermissions', 'enquiryTypes' ) );
+        return view('components.layouts.vue-app', compact( 'globalPermissions', 'enquiryTypes', 'namePrefixes', 'occupations' ) );
     }
 
     public function viewDashboard () {
