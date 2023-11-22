@@ -29,10 +29,10 @@ class ContactEditResource extends JsonResource
             'logo_url' => $this->getLogoUrl(),
         ];
 
-        if( !is_null( $this->customer_type_id ) ){
+        if( !is_null( $this->customerType ) ){
             $data['customer_type_data'] = $this->customerType->only(['id', 'name']);
         }
-        if( !is_null( $this->contact_type_id ) ){
+        if( !is_null( $this->contactType ) ){
             $data['contact_type_data'] = $this->contactType->only(['id', 'name']);
         }
         return $data;
