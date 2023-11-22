@@ -17,7 +17,9 @@ return new class extends Migration
             $table->bigInteger('company_id');
             $table->bigInteger('contact_id');
             $table->string('title');
+            $table->string('customer_name_prefix')->nullable();
             $table->string('customer_name');
+            $table->integer('country_code')->nullable();
             $table->bigInteger('customer_mobile');
             $table->string('customer_email')->nullable();
             $table->string('customer_city')->nullable();

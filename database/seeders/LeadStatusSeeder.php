@@ -20,6 +20,7 @@ class LeadStatusSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $leadStatuses = [
+            'Open',
             'In Progress',
             'Qualified',
             'Disqualified',

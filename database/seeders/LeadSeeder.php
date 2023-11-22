@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\CompanyBranch;
 use App\Models\Contact;
 use App\Models\User;
-use Illuminate\Support\Str;
 use App\Models\Lead;
 use App\Models\LeadComment;
 use App\Models\LeadSource;
@@ -21,10 +20,6 @@ use Illuminate\Support\Facades\Schema;
 
 class LeadSeeder extends Seeder
 {
-
-    public function __construct()
-    {
-    }
     /**
      * Run the database seeds.
      */
@@ -46,6 +41,7 @@ class LeadSeeder extends Seeder
         $contacts = Contact::withoutGlobalScope(CompanyIdScope::class)->get();
         $users = User::with('defaultCompany')->typeCompany()->get();
         $propertyTypes = PropertySubTypeList::withoutGlobalScope(CompanyIdScope::class)->get();
+        $namePrfixes = array_keys( Contact::NAME_PREFIX_LIST );
 
         $titles = [
             'Looking for 2 BHK flat',
@@ -68,7 +64,9 @@ class LeadSeeder extends Seeder
             $obj->title = Arr::random( $titles );
             $obj->contact_id = $contactObj->id;
             $obj->company_branch_id = $companyBranches->random()->id;
+            $obj->customer_name_prefix = $contactObj->name_prefix;
             $obj->customer_name = $contactObj->name;
+            $obj->country_code = $contactObj->country_code;
             $obj->customer_mobile = $contactObj->mobile;
             $obj->customer_email = $contactObj->email;
             $obj->customer_city = $contactObj->city;
@@ -84,7 +82,7 @@ class LeadSeeder extends Seeder
             $obj->is_protected = $faker->boolean();
             $obj->lead_source = $leadSource->random()->name;
             $obj->lead_status = $leadStatus->random()->name;
-            $obj->followup_date = now()->addDay( $faker->randomDigit() )->format('Y-m-d');
+            $obj->followup_date = $i > 1 ? now()->addDay( $faker->randomDigit() )->format('Y-m-d') : null;
             $obj->assigned_date = today();
             $obj->enquiry_type = Arr::random( array_values( Lead::ENQUIRY_TYPES ));
             $obj->property_type = [$propertyTypes->random()->name];

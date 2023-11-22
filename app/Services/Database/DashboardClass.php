@@ -56,7 +56,7 @@ class DashboardClass {
     }
 
     private function fetchPropertyCount ($user, $selectedDate) {
-        $propertyCount = Property::query()->filterDate( 'created_at', $selectedDate );
+        $propertyCount = Property::query()->filterDate( 'created_at', $selectedDate, '>=' );
 
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Property List') ){
             $propertyCount->createdByOrAssignToAuth();
@@ -67,7 +67,7 @@ class DashboardClass {
     }
 
     private function fetchProjectCount ($user, $selectedDate) {
-        $projectCount = Project::query()->filterDate( 'created_at', $selectedDate );
+        $projectCount = Project::query()->filterDate( 'created_at', $selectedDate, '>=' );
 
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Project List') ){
             $projectCount->createdByOrAssignToAuth();
@@ -78,7 +78,7 @@ class DashboardClass {
     }
 
     private function fetchLeadsCount ($user, $selectedDate) {
-        $leadCount = Lead::query()->filterDate( 'created_at', $selectedDate );
+        $leadCount = Lead::query()->filterDate( 'created_at', $selectedDate, '>=' );
 
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Lead List') ){
             $leadCount->createdByOrAssignToAuth();
@@ -150,7 +150,7 @@ class DashboardClass {
         $contactCount = 0;
 
         if( $user->can('Contact List') ){
-            $contactCount = Contact::filterDate( 'created_at', $selectedDate )->count();
+            $contactCount = Contact::filterDate( 'created_at', $selectedDate, '>=' )->count();
         }
 
         return $contactCount;
@@ -167,9 +167,8 @@ class DashboardClass {
 
     private function fetchTodayLeads ( $user ) {
         $todaysLeads = Lead::with('lastComment')
-                            ->whereDate('updated_at',  today())
-                            ->whereNull('followup_date')
-                            ->where('lead_status', 'In Progress');
+                            ->whereRelation('newLeadComment', DB::raw('DATE(updated_at)'), '=', today());
+
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Lead List') ){
             $todaysLeads->createdByOrAssignedToAuth();
 
@@ -206,7 +205,7 @@ class DashboardClass {
         $commonWhereClause = function ( $q ) use( $selectedDate, $user ){
             $q->filterDate( 'created_at', $selectedDate, '>=' );
             if( !$user->isCompanyAdmin() ){
-                $q->createdByOrAssignToAuth();
+                $q->createdByOrAssignedToAuth();
             }
         };
         $leadSources = LeadSource::withCount([
@@ -216,7 +215,7 @@ class DashboardClass {
                                             $q->filterDate('created_at', $selectedDate, '>=');
                                         });
                                     if( !$user->isCompanyAdmin() ){
-                                        $q->createdByOrAssignToAuth();
+                                        $q->createdByOrAssignedToAuth();
                                     }
                                 },
                                 'leads as oppertunities' => function( $q ) use ( $selectedDate, $user ) {
@@ -224,13 +223,13 @@ class DashboardClass {
                                             $q->filterDate('created_at', $selectedDate, '>=');
                                         });
                                     if( !$user->isCompanyAdmin() ){
-                                        $q->createdByOrAssignToAuth();
+                                        $q->createdByOrAssignedToAuth();
                                     }
                                 },
                                 'leads as visited' => function( $q ) use ( $selectedDate, $user ) {
                                     $q->propertProjectSiteVisitExists( $selectedDate );
                                     if( !$user->isCompanyAdmin() ){
-                                        $q->createdByOrAssignToAuth();
+                                        $q->createdByOrAssignedToAuth();
                                     }
                                 }
                             ])->get();
@@ -246,7 +245,7 @@ class DashboardClass {
                                             $q->filterDate('created_at', $selectedDate, '>=');
                                         });
                                     if( !$user->isCompanyAdmin() ){
-                                        $q->createdByOrAssignToAuth();
+                                        $q->createdByOrAssignedToAuth();
                                     }
                                 },
                                 'leads as won_leads' => function( $q ) use ( $selectedDate, $user ) {
@@ -254,7 +253,7 @@ class DashboardClass {
                                             $q->filterDate('created_at', $selectedDate, '>=');
                                         });
                                     if( !$user->isCompanyAdmin() ){
-                                        $q->createdByOrAssignToAuth();
+                                        $q->createdByOrAssignedToAuth();
                                     }
                                 },
                                 'leads as oppertunities' => function( $q ) use ( $selectedDate, $user ) {
@@ -262,13 +261,13 @@ class DashboardClass {
                                             $q->filterDate('created_at', $selectedDate, '>=');
                                         });
                                     if( !$user->isCompanyAdmin() ){
-                                        $q->createdByOrAssignToAuth();
+                                        $q->createdByOrAssignedToAuth();
                                     }
                                 },
                                 'leads as visited' => function( $q ) use ( $selectedDate, $user ) {
                                     $q->propertProjectSiteVisitExists( $selectedDate );
                                     if( !$user->isCompanyAdmin() ){
-                                        $q->createdByOrAssignToAuth();
+                                        $q->createdByOrAssignedToAuth();
                                     }
                                 }
                             ])->get();

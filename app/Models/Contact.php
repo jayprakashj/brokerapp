@@ -20,6 +20,17 @@ class Contact extends Model implements HasMedia
 
     protected $defaultImage = '/images/100x100.png';
 
+    const NAME_PREFIX_LIST = [
+        'Mr.' => 'Mr.',
+        'Mrs.' => 'Mrs.',
+        'Miss' => 'Miss',
+        'Ms.' => 'Ms.',
+    ];
+
+    const OCCUPATION_LIST = [
+        'Business' => 'Business',
+        'Job' => 'Job',
+    ];
     /**
      * The "booted" method of the model.
      */

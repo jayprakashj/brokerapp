@@ -23,6 +23,8 @@ use App\Models\PropertySubTypeList;
 use App\Models\PropertyTypeList;
 use App\Models\User;
 use App\Services\Database\CompanyBranchClass;
+use App\Services\Database\ContactTypeClass;
+use App\Services\Database\CustomerTypeClass;
 use App\Services\Database\MemberClass;
 use App\Services\Database\LeadClass;
 use Illuminate\Http\Request;
@@ -32,12 +34,16 @@ class LeadController extends Controller
     private $leadClass;
     private $companyBranchClass;
     private $memberClass;
+    private $contactTypeClass;
+    private $customerTypeClass;
 
     public function __construct( )
     {
         $this->leadClass = new LeadClass;
         $this->companyBranchClass = new CompanyBranchClass;
         $this->memberClass = new MemberClass;
+        $this->contactTypeClass = new ContactTypeClass;
+        $this->customerTypeClass = new CustomerTypeClass;
     }
 
     public function index ( Request $request ) {
@@ -190,6 +196,8 @@ class LeadController extends Controller
         $properties = Property::select('id', 'name')->get();
         $projects = Project::select('id', 'title as name')->get();
         $enquiryTypes = \Helper::convertArrayIntoAssociative( Lead::ENQUIRY_TYPES );
+        $contactTypes = $this->contactTypeClass->getByName( $request->input('search'));
+        $customerTypes = $this->customerTypeClass->getByName( $request->input('search'));
 
         $data = [
             'members' => $members,
@@ -200,7 +208,9 @@ class LeadController extends Controller
             'lead_statuses' => $leadStatuses,
             'properties' => $properties,
             'projects' => $projects,
-            'enquiry_types' => $enquiryTypes
+            'enquiry_types' => $enquiryTypes,
+            'contact_types' => $contactTypes,
+            'customer_types' => $customerTypes,
         ];
         return response()->json( $data, 200 );
     }

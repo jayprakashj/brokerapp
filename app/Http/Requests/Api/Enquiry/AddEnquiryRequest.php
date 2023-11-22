@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Api\Enquiry;
 
 use App\Models\Company;
-use App\Models\Lead;
+use App\Models\Contact;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,7 +27,10 @@ class AddEnquiryRequest extends FormRequest
 
         $rules =  [
             //
-
+            'name_prefix' => [
+                'required',
+                'in:' . implode(',',array_keys( Contact::NAME_PREFIX_LIST ))
+            ],
             'name' => [
                 'required'
             ],
@@ -40,6 +43,10 @@ class AddEnquiryRequest extends FormRequest
             'email' => [
                 'required',
                 'email',
+            ],
+            'country_code' => [
+                'required',
+                'integer'
             ],
             'mobile' => [
                 'required',

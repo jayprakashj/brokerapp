@@ -23,9 +23,11 @@ class CustomerTypeSeeder extends Seeder
     {
 
         $contactTypes = [
-            'Buyer',
-            'Seller',
-            'Tenants'
+            'Customer',
+            'Friends/Relatives',
+            'Service Provider',
+            'Other Consultant',
+            'Others',
         ];
         $users = User::with('defaultCompany')->typeCompany()->get();
         foreach( $users as $item ){

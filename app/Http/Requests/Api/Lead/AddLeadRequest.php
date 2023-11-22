@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Api\Lead;
 
+use App\Models\Contact;
 use App\Models\Lead;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\ValidationException;
 
 class AddLeadRequest extends FormRequest
 {
@@ -36,6 +34,14 @@ class AddLeadRequest extends FormRequest
             ],
             'name' => [
                 'required'
+            ],
+            'name_prefix' => [
+                'required',
+                'in:' . implode(',',array_keys( Contact::NAME_PREFIX_LIST ))
+            ],
+            'gender' => [
+                'required',
+                'in:male,female,other'
             ],
             'city' => [
                 'required'
@@ -106,7 +112,13 @@ class AddLeadRequest extends FormRequest
                 'required',
                 'integer',
                 'gt:min_budget'
-            ]
+            ],
+            'country_code' => [
+                'required',
+                'integer'
+            ],
+            'contact_type' => 'required',
+            'customer_type' => 'required',
         ];
         return $rules;
     }
