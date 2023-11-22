@@ -18,8 +18,23 @@
         </template>
     </page-header>
 
-    <div class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
-        <div class="col-span-3 pb-4 border-r">
+    <div
+        class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6"
+        v-if="userPermissions.isPermissionsAllowed([
+                $permissions.LEAD_LIST,
+                $permissions.ONLY_ASSIGNED_LEAD_LIST,
+                $permissions.SITE_VISIT_LIST,
+                $permissions.ONLY_ASSIGNED_SITE_VISIT_LIST,
+                $permissions.PROPERTY_LIST,
+                $permissions.ONLY_ASSIGNED_PROPERTY_LIST,
+                $permissions.PROJECT_LIST,
+                $permissions.ONLY_ASSIGNED_PROJECT_LIST,
+                $permissions.MEMBER_LIST,
+                $permissions.CONTACT_LIST
+
+            ], false )"
+    >
+        <div class="col-span-3 pb-4 border-r" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST,$permissions.SITE_VISIT_LIST, $permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ], false )">
             <div class="flex items-center justify-between space-x-2">
                 <h2 class="text-base font-medium tracking-wide text-slate-800 line-clamp-1 dark:text-navy-100">
                     This Months Statistics
@@ -33,7 +48,7 @@
 
                             <div>
                                 <p class="text-4xl font-bold text-slate-900 dark:text-navy-100">
-                                    {{ data.month_leads }}
+                                    {{ data.month_leads || 0 }}
                                 </p>
                                 <p class="text-xs+ line-clamp-1">This Month Leads</p>
                             </div>
@@ -47,7 +62,7 @@
 
                             <div>
                                 <p class="text-4xl font-bold text-red-800 dark:text-navy-100">
-                                    {{ data.month_site_visits }}
+                                    {{ data.month_site_visits || 0 }}
                                 </p>
                                 <p class="text-xs+ line-clamp-1">This Month Site Visits</p>
                             </div>
@@ -60,42 +75,67 @@
 
             </div>
         </div>
-        <div class="col-span-9 pb-4">
-            <div class="pt-2 pb-4 mt-3 grid grid-cols-3 gap-3 gap-y-5 items-center">
-                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROPERTY_LIST, $permissions.ONLY_ASSIGNED_PROPERTY_LIST ] )">
-                    <div class="flex items-center justify-between">
+        <div
+            class="col-span-3 pb-4 border-r"
+            v-if="userPermissions.isPermissionsAllowed([
+                        $permissions.PROPERTY_LIST,
+                        $permissions.ONLY_ASSIGNED_PROPERTY_LIST,
+                        $permissions.PROJECT_LIST,
+                        $permissions.ONLY_ASSIGNED_PROJECT_LIST
+                    ], false)"
+        >
+            <div class="flex flex-col sm:space-x-7 pr-4 pt-6">
+                <div class="pt-2 pb-4 mt-3 grid grid-cols-1 gap-y-5 items-center">
 
-                        <div>
-                            <p class="text-4xl font-bold text-success dark:text-navy-100">
-                                {{ data.property_count }}
-                            </p>
-                            <p class="text-xs+ line-clamp-1">Properties</p>
+
+                    <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROPERTY_LIST, $permissions.ONLY_ASSIGNED_PROPERTY_LIST ] )">
+                        <div class="flex items-center justify-between">
+
+                            <div>
+                                <p class="text-4xl font-bold text-success dark:text-navy-100">
+                                    {{ data.property_count || 0}}
+                                </p>
+                                <p class="text-xs+ line-clamp-1">Properties</p>
+                            </div>
+                            <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-success/10">
+                                <i class="fa text-2xl fa-building text-success"></i>
+                            </div>
                         </div>
-                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-success/10">
-                            <i class="fa text-2xl fa-building text-success"></i>
+                    </div>
+                    <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROJECT_LIST, $permissions.ONLY_ASSIGNED_PROJECT_LIST ] )">
+                        <div class="flex items-center justify-between">
+
+                            <div>
+                                <p class="text-4xl font-bold text-primary dark:text-navy-100">
+                                    {{ data.project_count || 0 }}
+                                </p>
+                                <p class="text-xs+ line-clamp-1">Projects</p>
+                            </div>
+                            <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-primary/10">
+                                <i class="fa text-2xl fa-file-invoice text-primary"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROJECT_LIST, $permissions.ONLY_ASSIGNED_PROJECT_LIST ] )">
-                    <div class="flex items-center justify-between">
 
-                        <div>
-                            <p class="text-4xl font-bold text-primary dark:text-navy-100">
-                                {{ data.project_count }}
-                            </p>
-                            <p class="text-xs+ line-clamp-1">Projects</p>
-                        </div>
-                        <div class="mask is-star flex h-16 w-16 shrink-0 items-center justify-center bg-primary/10">
-                            <i class="fa text-2xl fa-file-invoice text-primary"></i>
-                        </div>
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div
+            class="col-span-6 pb-4"
+            v-if="userPermissions.isPermissionsAllowed([
+                    $permissions.MEMBER_LIST,
+                    $permissions.CONTACT_LIST,
+                    $permissions.LEAD_LIST,
+                    $permissions.ONLY_ASSIGNED_LEAD_LIST
+                ],false )"
+        >
+            <div class="pt-2 pb-4 mt-3 grid grid-cols-2 gap-3 gap-y-5 items-center">
                 <div class=" card p-8 justify-center hidden" v-if="userPermissions.isPermissionsAllowed([ $permissions.MEMBER_LIST] )">
                     <div class="flex items-center justify-between">
 
                         <div>
                             <p class="text-4xl font-bold text-info dark:text-navy-100">
-                                {{ data.member_count }}
+                                {{ data.member_count || 0 }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Members</p>
                         </div>
@@ -110,7 +150,7 @@
 
                         <div>
                             <p class="text-4xl font-bold text-warning dark:text-navy-100">
-                                {{ data.contact_count }}
+                                {{ data.contact_count || 0 }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Contacts</p>
                         </div>
@@ -124,7 +164,7 @@
 
                         <div>
                             <p class="text-4xl font-bold text-gray dark:text-navy-100">
-                                {{ data.lead_count }}
+                                {{ data.lead_count || 0 }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Leads</p>
                         </div>
@@ -139,7 +179,7 @@
 
                         <div>
                             <p class="text-4xl font-bold text-error dark:text-error">
-                                {{ data.oppertunity_count }}
+                                {{ data.oppertunity_count || 0 }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Oppertunities</p>
                         </div>
@@ -154,7 +194,7 @@
 
                         <div>
                             <p class="text-4xl font-bold text-info dark:text-info">
-                                {{ data.visited_count }}
+                                {{ data.visited_count || 0 }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Visited</p>
                         </div>
@@ -169,7 +209,7 @@
 
                         <div>
                             <p class="text-4xl font-bold text-secondary dark:text-secondary">
-                                {{ data.won_count }}
+                                {{ data.won_count || 0 }}
                             </p>
                             <p class="text-xs+ line-clamp-1">Won</p>
                         </div>
@@ -234,215 +274,6 @@
             <no-data-found v-else />
         </div>
     </div>
-
-    <div class="grid grid-cols-12 gap-8 mt-2" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST, $permissions.MEMBER_LIST ], false )">
-        <div class="col-span-6 xl:col-span-6">
-            <div class="dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST])" >
-                <div class="-mt-1 flex items-center justify-between">
-                    <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
-                        Lead Sources
-                    </h2>
-                </div>
-                <div class="card mt-3">
-                    <div class="max-h-[520px] overflow-y-auto pr-1">
-                        <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
-                            <thead >
-                                <tr>
-                                    <th
-                                        class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100">
-                                        Lead Sources
-                                    </th>
-                                    <th
-                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                        Leads
-                                    </th>
-                                    <th
-                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                        Oppertunities
-                                    </th>
-
-                                    <th
-                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                        Visited
-                                    </th>
-
-                                    <th
-                                        class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                        Won
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template v-if="data?.lead_sources_with_count?.length">
-                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in data?.lead_sources_with_count" :key="'lead_sources_with_count_'+idx">
-                                        <td class="whitespace-nowrap px-4 py-3">
-                                            <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
-                                                {{ item.title }}
-                                            </p>
-                                        </td>
-                                        <td class="min-w-[2rem] text-center" :class="{'text-primary': item.leads}">
-                                            {{ item.leads }}
-                                        </td>
-                                        <td class="min-w-[2rem] text-center" :class="{'text-secondary': item.oppertunities}">
-                                            {{ item.oppertunities }}
-                                        </td>
-                                        <td class="min-w-[2rem] text-center" :class="{'text-error': item.visited}">
-                                            {{ item.visited }}
-                                        </td>
-                                        <td class="min-w-[2rem] text-center" :class="{'text-success': item.won}">
-                                            {{ item.won }}
-                                        </td>
-                                    </tr>
-                                </template>
-                                <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
-                                    <td colspan="5 text-center">
-                                        <no-data-found />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-span-6 xl:col-span-6">
-            <div class="dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " v-if="userPermissions.isPermissionsAllowed([$permissions.MEMBER_LIST])" >
-                <div class="-mt-1 flex items-center justify-between">
-                    <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
-                        Staff Users
-                    </h2>
-                </div>
-                <div class="card mt-3">
-                    <div class="max-h-[520px] overflow-y-auto pr-1">
-                        <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
-                            <thead >
-                                <tr>
-                                    <th
-                                        class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100">
-                                        Name
-                                    </th>
-                                    <th
-                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                        Oppertunities
-                                    </th>
-                                    <th
-                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                        Qualified
-                                    </th>
-
-                                    <th
-                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                        Visited
-                                    </th>
-
-                                    <th
-                                        class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                        Won
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template v-if="data?.users_with_lead_count?.length">
-                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in data?.users_with_lead_count" :key="'users_with_lead_count_'+idx">
-                                        <td class="whitespace-nowrap px-4 py-3">
-                                            <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
-                                                {{ item.name }}
-                                            </p>
-                                        </td>
-                                        <td class="min-w-[2rem] text-center" :class="{'text-primary': item.oppertunities}">
-                                            {{ item.oppertunities }}
-                                        </td>
-                                        <td class="min-w-[2rem] text-center" :class="{'text-secondary': item.qualified}">
-                                            {{ item.qualified }}
-                                        </td>
-                                        <td class="min-w-[2rem] text-center" :class="{'text-error': item.visited}">
-                                            {{ item.visited }}
-                                        </td>
-                                        <td class="min-w-[2rem] text-center" :class="{'text-success': item.won}">
-                                            {{ item.won }}
-                                        </td>
-                                    </tr>
-                                </template>
-                                <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
-                                    <td colspan="5 text-center">
-                                        <no-data-found />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="mt-4 grid grid-cols-12 gap-4 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " >
-        <div class="col-span-12 xl:col-span-12">
-            <div class="-mt-1 flex items-center justify-between">
-                <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
-                    Properties Statistics
-                </h2>
-            </div>
-            <div class="card mt-3">
-                <div class="max-h-[520px] overflow-y-auto pr-1">
-                    <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
-                        <thead >
-                            <tr>
-                                <th
-                                    class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 text-right">
-                                    Property Type
-                                </th>
-                                <th
-                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 text-center">
-                                    Property Transaction Name
-                                </th>
-                                <th
-                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 text-center">
-                                    Total
-                                </th>
-
-                                <th
-                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 text-center">
-                                    Available
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template v-if="data?.property_type_wise_count?.length">
-                                <template v-for="(property_types, index) in data?.property_type_wise_count" :key="'property_type_wise_count_'+index">
-
-                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" >
-                                        <td class="whitespace-nowrap px-4 py-3 border-r text-right" :rowspan="((property_types?.items?.length) || 1) + 1">
-                                            <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
-                                                {{ property_types.name }}
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in property_types?.items" :key="'property_type_wise_count_item_'+idx">
-                                        <td class="text-center text-sm p-1 font-semibold ">
-                                            {{ item.property_type_name }}
-                                        </td>
-                                        <td class="text-center text-sm p-1 font-semibold text-slate-900 ">
-                                            {{ item.properties_count }}
-                                        </td>
-                                        <td class="text-center text-sm p-1 font-semibold text-slate-900">
-                                            {{ item.availble_properties_count }}
-                                        </td>
-                                    </tr>
-                                </template>
-                            </template>
-                            <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
-                                <td colspan="5 text-center">
-                                    <no-data-found />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <template v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST])">
 
         <div class="mt-4 grid grid-cols-12 gap-4 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " >
@@ -604,6 +435,213 @@
         </div>
     </template>
 
+    <div class="grid grid-cols-12 gap-8 mt-2" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST, $permissions.MEMBER_LIST ], false )">
+        <div class="col-span-6 xl:col-span-6" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST])" >
+            <div class="dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " >
+                <div class="-mt-1 flex items-center justify-between">
+                    <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
+                        Lead Sources
+                    </h2>
+                </div>
+                <div class="card mt-3">
+                    <div class="max-h-[520px] overflow-y-auto pr-1">
+                        <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
+                            <thead >
+                                <tr>
+                                    <th
+                                        class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100">
+                                        Lead Sources
+                                    </th>
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Leads
+                                    </th>
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Oppertunities
+                                    </th>
+
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Visited
+                                    </th>
+
+                                    <th
+                                        class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Won
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-if="data?.lead_sources_with_count?.length">
+                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in data?.lead_sources_with_count" :key="'lead_sources_with_count_'+idx">
+                                        <td class="whitespace-nowrap px-4 py-3">
+                                            <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
+                                                {{ item.title }}
+                                            </p>
+                                        </td>
+                                        <td class="min-w-[2rem] text-center" :class="{'text-primary': item.leads}">
+                                            {{ item.leads }}
+                                        </td>
+                                        <td class="min-w-[2rem] text-center" :class="{'text-secondary': item.oppertunities}">
+                                            {{ item.oppertunities }}
+                                        </td>
+                                        <td class="min-w-[2rem] text-center" :class="{'text-error': item.visited}">
+                                            {{ item.visited }}
+                                        </td>
+                                        <td class="min-w-[2rem] text-center" :class="{'text-success': item.won}">
+                                            {{ item.won }}
+                                        </td>
+                                    </tr>
+                                </template>
+                                <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
+                                    <td colspan="5 text-center">
+                                        <no-data-found />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-6 xl:col-span-6" v-if="userPermissions.isPermissionsAllowed([$permissions.MEMBER_LIST])">
+            <div class="dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 "  >
+                <div class="-mt-1 flex items-center justify-between">
+                    <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
+                        Staff Users
+                    </h2>
+                </div>
+                <div class="card mt-3">
+                    <div class="max-h-[520px] overflow-y-auto pr-1">
+                        <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
+                            <thead >
+                                <tr>
+                                    <th
+                                        class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100">
+                                        Name
+                                    </th>
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Oppertunities
+                                    </th>
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Qualified
+                                    </th>
+
+                                    <th
+                                        class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Visited
+                                    </th>
+
+                                    <th
+                                        class="whitespace-nowrap rounded-tr-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
+                                        Won
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template v-if="data?.users_with_lead_count?.length">
+                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in data?.users_with_lead_count" :key="'users_with_lead_count_'+idx">
+                                        <td class="whitespace-nowrap px-4 py-3">
+                                            <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
+                                                {{ item.name }}
+                                            </p>
+                                        </td>
+                                        <td class="min-w-[2rem] text-center" :class="{'text-primary': item.oppertunities}">
+                                            {{ item.oppertunities }}
+                                        </td>
+                                        <td class="min-w-[2rem] text-center" :class="{'text-secondary': item.qualified}">
+                                            {{ item.qualified }}
+                                        </td>
+                                        <td class="min-w-[2rem] text-center" :class="{'text-error': item.visited}">
+                                            {{ item.visited }}
+                                        </td>
+                                        <td class="min-w-[2rem] text-center" :class="{'text-success': item.won}">
+                                            {{ item.won }}
+                                        </td>
+                                    </tr>
+                                </template>
+                                <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
+                                    <td colspan="5 text-center">
+                                        <no-data-found />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 grid grid-cols-12 gap-4 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " v-if="userPermissions.isPermissionsAllowed([$permissions.PROPERTY_LIST])" >
+        <div class="col-span-12 md:col-span-8">
+            <div class="-mt-1 flex items-center justify-between">
+                <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
+                    Properties Statistics
+                </h2>
+            </div>
+            <div class="card mt-3">
+                <div class="max-h-[520px] overflow-y-auto pr-1">
+                    <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
+                        <thead >
+                            <tr>
+                                <th
+                                    class="position-sticky whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 text-right">
+                                    Property Type
+                                </th>
+                                <th
+                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 text-center">
+                                    Property Transaction Name
+                                </th>
+                                <th
+                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 text-center">
+                                    Total
+                                </th>
+
+                                <th
+                                    class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 text-center">
+                                    Available
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template v-if="data?.property_type_wise_count?.length">
+                                <template v-for="(property_types, index) in data?.property_type_wise_count" :key="'property_type_wise_count_'+index">
+
+                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" >
+                                        <td class="whitespace-nowrap px-4 py-3 border-r text-right" :rowspan="((property_types?.items?.length) || 1) + 1">
+                                            <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
+                                                {{ property_types.name }}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in property_types?.items" :key="'property_type_wise_count_item_'+idx">
+                                        <td class="text-center text-sm p-1 font-semibold ">
+                                            {{ item.property_type_name }}
+                                        </td>
+                                        <td class="text-center text-sm p-1 font-semibold text-slate-900 ">
+                                            {{ item.properties_count }}
+                                        </td>
+                                        <td class="text-center text-sm p-1 font-semibold text-slate-900">
+                                            {{ item.availble_properties_count }}
+                                        </td>
+                                    </tr>
+                                </template>
+                            </template>
+                            <tr v-else class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
+                                <td colspan="5 text-center">
+                                    <no-data-found />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
