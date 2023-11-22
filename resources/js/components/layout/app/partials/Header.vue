@@ -76,7 +76,7 @@
 
                                 <div>
                                     <h2
-                                        class="font-medium text-slate-700 transition-colors group-hover:text-primary group-focus:text-primary dark:text-navy-100 dark:group-hover:text-accent-light dark:group-focus:text-accent-light">
+                                        class="!font-sans !text-sm font-medium text-slate-700 transition-colors group-hover:text-primary group-focus:text-primary dark:text-navy-100 dark:group-hover:text-accent-light dark:group-focus:text-accent-light">
                                         Profile
                                     </h2>
                                     <div class="text-xs text-slate-400 line-clamp-1 dark:text-navy-300">
@@ -94,7 +94,7 @@
 
                                 <div>
                                     <h2
-                                        class="font-medium text-slate-700 transition-colors group-hover:text-primary group-focus:text-primary dark:text-navy-100 dark:group-hover:text-accent-light dark:group-focus:text-accent-light">
+                                        class="!font-sans !text-sm font-medium text-slate-700 transition-colors group-hover:text-primary group-focus:text-primary dark:text-navy-100 dark:group-hover:text-accent-light dark:group-focus:text-accent-light">
                                         Change Password
                                     </h2>
                                     <div class="text-xs text-slate-400 line-clamp-1 dark:text-navy-300">
@@ -112,7 +112,7 @@
 
                                 <div>
                                     <h2
-                                        class="font-medium text-slate-700 transition-colors group-hover:text-primary group-focus:text-primary dark:text-navy-100 dark:group-hover:text-accent-light dark:group-focus:text-accent-light">
+                                        class="!font-sans !text-sm font-medium text-slate-700 transition-colors group-hover:text-primary group-focus:text-primary dark:text-navy-100 dark:group-hover:text-accent-light dark:group-focus:text-accent-light">
                                         Company Setting
                                     </h2>
                                     <div class="text-xs text-slate-400 line-clamp-1 dark:text-navy-300">
