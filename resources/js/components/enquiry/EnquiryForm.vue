@@ -48,30 +48,38 @@
                             <label class="block h-full" >
                                 <span>Name</span>
                                 <span class="relative mt-1.5 flex">
+                                    <select name="name_prefix" v-model="formData.name_prefix" class="form-select border border-slate-300 rounded-l-lg bg-white px-3 py-2 pr-9 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
+                                        <option v-for="(item, index) in $namePrefixes" :key="'name_prefix_'+index">{{ item.name }}</option>
+                                    </select>
                                     <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        class="form-input peer w-full rounded-r-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="Name" type="text" name="name" v-model="formData.name">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-user text-base"></i>
-                                    </span>
+
                                 </span>
 
                                 <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
+                                <span class="text-tiny+ text-error" v-else-if="errors?.name_prefix?.length">{{ errors.name_prefix.at(0) }}</span>
                             </label>
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.gender"
+                                        form-label="Gender"
+                                        placeholder="Select Gender"
+                                        :options="$genders"
+                                        :selected-item="formData.gender"
+                                        :error-msg="errors?.gender"
+                                    />
                             <label class="block h-full" >
                                 <span>Mobile</span>
                                 <span class="relative mt-1.5 flex">
+                                    <input name="country_code" v-model="formData.country_code" class="form-input w-16 rounded-l-lg border border-r-0 border-slate-300 bg-white px-3 py-2 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent" placeholder="91">
                                     <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        class="form-input peer w-full rounded-r-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="Mobile" type="text" name="mobile" v-model="formData.mobile">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-phone text-base"></i>
-                                    </span>
                                 </span>
 
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
+                                <span class="text-tiny+ text-error" v-else-if="errors?.country_code?.length">{{ errors.country_code.at(0) }}</span>
                             </label>
 
                             <label class="block h-full" >
@@ -199,7 +207,9 @@ export default {
             isShowPopper: false,
             errors: {},
             formData:{
+                name_prefix: '',
                 name: '',
+                country_code: null,
                 mobile: null,
                 email: null,
                 city: null,
@@ -207,6 +217,8 @@ export default {
                 max_budget: null,
                 interest_in: null,
                 remark: null,
+                contact_type: null,
+                customer_type: 'Others',
                 property_type: []
             },
             loading:{
@@ -220,6 +232,12 @@ export default {
                 'property_types': [],
                 'property_sub_types': [],
             },
+            contactTypes: {
+                'buy': 'Buyer',
+                'sell': 'Seller',
+                'rent_tenant': 'Tenants',
+                'rent_owner': 'Tenants',
+            }
         }
     },
     mounted(){
@@ -261,11 +279,17 @@ export default {
                 city: Yup.string()
                             .nullable(true)
                             .required('Required'),
+                name_prefix: Yup.string()
+                            .nullable(true)
+                            .required('Name prefix required'),
                 mobile: Yup.string()
                             .nullable(true)
                             .required('Required')
                             .min( 10, 'Must be 10 digits')
                             .max( 10, 'Must be 10 digits'),
+                country_code: Yup.number()
+                            .nullable(true)
+                            .required('Country code required'),
                 email: Yup.string()
                             .nullable(true)
                             .required('Required')
@@ -315,6 +339,9 @@ export default {
             this.errors = {};
             this.validationSchema.validate( this.formData, { abortEarly: false })
                                     .then( ( resValidate ) => {
+                                        if( this.formType in this.contactTypes ){
+                                            this.formData.contact_type = this.contactTypes[ this.formType ];
+                                        }
                                         this.loading.formSubmit = true;
                                         this.$store.commit('setGlobalLoaderOn');
                                         const data = {

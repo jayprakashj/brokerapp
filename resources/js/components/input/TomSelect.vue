@@ -91,6 +91,10 @@ export default {
         errorMsg:{
             type: [String, Array],
             default:null
+        },
+        allowEmptyOption:{
+            type: [Boolean],
+            default:false
         }
     },
     data(){
@@ -136,7 +140,10 @@ export default {
                 create: (this.allowCreate || false),
                 preload: this.ajaxPreload,
                 openOnFocus: true,
-                shouldOpen: true
+                shouldOpen: true,
+                allowEmptyOption: this.allowEmptyOption,
+                // plugins: ['clear_button'],
+
             }
 
             if( this.isAjax && this.requestName ){

@@ -50,6 +50,12 @@
                             </p>
                         </label>
                         <label class="block" >
+                            <span>Gender</span>
+                            <p class="text-xs+ capitalize text-slate-400 dark:text-navy-300" >
+                                {{ formData.gender }}
+                            </p>
+                        </label>
+                        <label class="block" >
                             <span>Mobile</span>
 
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
@@ -77,6 +83,20 @@
 
                             <p class="text-xs+ text-slate-400 dark:text-navy-300" >
                                 {{ formData.company_branch }}
+                            </p>
+                        </label>
+                        <label class="block" >
+                            <span>Customer Type</span>
+
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                {{ formData.customer_type ?? 'N/A' }}
+                            </p>
+                        </label>
+                        <label class="block" >
+                            <span>Contact Type</span>
+
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" >
+                                {{ formData.contact_type ?? 'N/A' }}
                             </p>
                         </label>
 

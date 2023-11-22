@@ -14,7 +14,7 @@ class Lead extends Model
 {
     use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes, CommonFilter;
 
-    const DEFAULT_LEAD_STATUS = 'In Progress';
+    const DEFAULT_LEAD_STATUS = 'Open';
     const DEFAULT_LEAD_SOURCE = 'Own Website';
 
     const CONFIDENTIAL_YES = 1;
@@ -100,6 +100,10 @@ class Lead extends Model
 
     public function qualifiedComment (){
         return $this->comments()->qualifiedLeadStatus();
+    }
+
+    public function newLeadComment (){
+        return $this->comments()->newLeadStatus();
     }
 
     public function lastComment (){
@@ -358,5 +362,21 @@ class Lead extends Model
             return $properties;
         }
         return [];
+    }
+
+    public function getNameWithPrefix (){
+        $name = $this->customer_name_prefix ?? '';
+        if( !empty( $name ) ){
+            $name .= ' ';
+        }
+        $name .= $this->customer_name;
+        return $name;
+
+    }
+
+    public function getMobileWithCountryCode(){
+        $mobile = array_filter( [ ($this->country_code ?? '91'), $this->customer_mobile ] );
+
+        return '+'.implode('', $mobile);
     }
 }

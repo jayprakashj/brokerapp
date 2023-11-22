@@ -22,7 +22,7 @@ class CustomerTypeClass {
     public function findOrCreate ( User $user, $keyword ) {
 
         $customerType = $this->find( $keyword );
-        if( is_null( $customerType ) ){
+        if( is_null( $customerType ) && !empty( $keyword ) ){
             $customerType = $this->create( $user, $keyword );
         }
         return $customerType;

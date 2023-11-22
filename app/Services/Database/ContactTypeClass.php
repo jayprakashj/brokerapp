@@ -22,7 +22,7 @@ class ContactTypeClass {
     public function findOrCreate ( User $user, $keyword ) {
 
         $contactType = $this->find( $keyword );
-        if( is_null( $contactType ) ){
+        if( is_null( $contactType ) && !empty( $keyword ) ){
             $contactType = $this->create( $user, $keyword );
         }
         return $contactType;

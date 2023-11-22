@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Contact;
 
+use App\Models\Contact;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -29,6 +30,14 @@ class AddContactRequest extends FormRequest
             'name' => [
                 'required'
             ],
+            'name_prefix' => [
+                'required',
+                'in:' . implode(',',array_keys( Contact::NAME_PREFIX_LIST ))
+            ],
+            'country_code' => [
+                'required',
+                'integer'
+            ],
             'gender' => [
                 'required',
                 'in:male,female,other'
@@ -42,6 +51,15 @@ class AddContactRequest extends FormRequest
                             $clause->whereNot('id', $this->id);
                         })
             ],
+            'other_contact_no' => [
+                'nullable',
+                'digits:10',
+            ],
+            'other_contact_country_code' => [
+                'nullable',
+                'required_with:other_contact_no',
+                'integer'
+            ],
             'mobile' => [
                 'required',
                 'digits:10',
@@ -53,10 +71,23 @@ class AddContactRequest extends FormRequest
             ],
             'contact_type' => 'required',
             'customer_type' => 'required',
+            'birth_date' => [
+                'nullable',
+                'date',
+                'before:today'
+            ],
+            'website' => [
+                'nullable',
+                'url'
+            ]
             // 'state' => 'required',
             // 'city' => 'required',
             // 'address' => 'required',
         ];
+
+        if( $this->filled('occupation') ){
+            $rules['occupation'] = 'in:' . implode(',',array_keys( Contact::OCCUPATION_LIST ));
+        }
         return $rules;
     }
 

@@ -17,6 +17,7 @@ class LeadComment extends Model
     const WON_LEAD_STATUS = 'Won';
     const OPPERTUNITY_LEAD_STATUS = 'Qualified';
     const QUALIFIED_LEAD_STATUS = 'Qualified';
+    const NEW_LEAD_STATUS = 'Open';
 
     /**
      * The "booted" method of the model.
@@ -46,5 +47,9 @@ class LeadComment extends Model
 
     public function scopeQualifiedLeadStatus ( $q, $boolean = 'and' ){
         return $q->filterLeadStatus( self::QUALIFIED_LEAD_STATUS, $boolean);
+    }
+
+    public function scopeNewLeadStatus ( $q, $boolean = 'and' ){
+        return $q->filterLeadStatus( self::NEW_LEAD_STATUS, $boolean);
     }
 }
