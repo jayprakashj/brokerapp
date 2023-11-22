@@ -130,7 +130,7 @@ class LeadClass {
         $lead->title = $request->input('title');
         $lead->contact_id = $this->findOrCreateContact( $user, $request )->id;
         $lead->company_branch_id = $request->input('company_branch');
-        // $lead->customer_name_prefix = $request->input('name_prefix');
+        $lead->customer_name_prefix = $request->input('name_prefix');
         $lead->customer_name = $request->input('name');
         $lead->customer_mobile = $request->input('mobile');
         $lead->country_code = $request->input('country_code', 91);
