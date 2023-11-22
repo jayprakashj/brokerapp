@@ -167,9 +167,8 @@ class DashboardClass {
 
     private function fetchTodayLeads ( $user ) {
         $todaysLeads = Lead::with('lastComment')
-                            ->whereDate('updated_at',  today())
-                            ->whereNull('followup_date')
-                            ->where('lead_status', 'In Progress');
+                            ->whereRelation('newLeadComment', DB::raw('DATE(updated_at)'), '=', today());
+
         if( !$user->isCompanyAdmin() && $user->can('Only Assigned Lead List') ){
             $todaysLeads->createdByOrAssignedToAuth();
 

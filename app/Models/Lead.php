@@ -14,7 +14,7 @@ class Lead extends Model
 {
     use CompanyRelation, CreatedUpdatedUserRelation, OwnerUserRelation, SoftDeletes, CommonFilter;
 
-    const DEFAULT_LEAD_STATUS = 'In Progress';
+    const DEFAULT_LEAD_STATUS = 'Open';
     const DEFAULT_LEAD_SOURCE = 'Own Website';
 
     const CONFIDENTIAL_YES = 1;
@@ -100,6 +100,10 @@ class Lead extends Model
 
     public function qualifiedComment (){
         return $this->comments()->qualifiedLeadStatus();
+    }
+
+    public function newLeadComment (){
+        return $this->comments()->newLeadStatus();
     }
 
     public function lastComment (){
