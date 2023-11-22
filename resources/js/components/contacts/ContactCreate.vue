@@ -453,7 +453,7 @@ export default {
                             .email( 'Must be a valid email address'),
                 pincode: Yup.string()
                             .nullable(true)
-                            .max( 6, 'Maximum 6 digis allowed'),
+                            .max( 6, 'Maximum 6 characters allowed'),
                 gender: Yup.string()
                             .nullable(true)
                             .required('Required'),

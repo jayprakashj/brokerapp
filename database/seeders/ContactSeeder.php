@@ -87,7 +87,7 @@ class ContactSeeder extends Seeder
             $obj->address = Arr::random( $address );
             $obj->city = 'Vadodara';
             $obj->locality = Arr::random( $locality );
-            $obj->pincode = $faker->text( 10 );
+            $obj->pincode = $faker->text( 6 );
             $obj->comment = $faker->text( 10 );
             $obj->company_name = $faker->text( 6 );
             $obj->designation = $faker->text( 6 );

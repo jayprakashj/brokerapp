@@ -71,30 +71,37 @@
                             <label class="block h-full" >
                                 <span>Name</span>
                                 <span class="relative mt-1.5 flex">
+                                    <select name="name_prefix" v-model="formData.name_prefix" class="form-select border border-slate-300 bg-white px-3 py-2 pr-9 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
+                                        <option v-for="(item, index) in $namePrefixes" :key="'name_prefix_'+index">{{ item.name }}</option>
+                                    </select>
                                     <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        class="form-input peer w-full border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="Name" type="text" name="name" v-model="formData.name">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-user text-base"></i>
-                                    </span>
                                 </span>
 
                                 <span class="text-tiny+ text-error" v-if="errors?.name?.length">{{ errors.name.at(0) }}</span>
+                                <span class="text-tiny+ text-error" v-else-if="errors?.name_prefix?.length">{{ errors.name_prefix.at(0) }}</span>
                             </label>
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.gender"
+                                        form-label="Gender"
+                                        placeholder="Select Gender"
+                                        :options="$genders"
+                                        :selected-item="formData.gender"
+                                        :error-msg="errors?.gender"
+                                    />
                             <label class="block h-full" >
                                 <span>Mobile</span>
                                 <span class="relative mt-1.5 flex">
+                                    <input name="country_code" v-model="formData.country_code" class="form-input w-16 rounded-l-lg border border-r-0 border-slate-300 bg-white px-3 py-2 hover:z-10 hover:border-slate-400 focus:z-10 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent" placeholder="91">
                                     <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        class="form-input peer w-full border rounded-r-lg border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="Mobile" type="text" name="mobile" v-model="formData.mobile">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-phone text-base"></i>
-                                    </span>
                                 </span>
 
                                 <span class="text-tiny+ text-error" v-if="errors?.mobile?.length">{{ errors.mobile.at(0) }}</span>
+                                <span class="text-tiny+ text-error" v-else-if="errors?.country_code?.length">{{ errors.country_code.at(0) }}</span>
                             </label>
 
                             <label class="block h-full" >
@@ -136,6 +143,32 @@
                                         :selected-item="selected.company_branch_data?.id"
                                         :selected-options="selected.company_branch_data"
                                         :error-msg="errors?.company_branch"
+                                    />
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.contact_type"
+                                        form-label="Contact Type"
+                                        placeholder="Select Contact Type"
+                                        :is-ajax="true"
+                                        request-name="contactTypeSelectList"
+                                        :allow-create="true"
+                                        :ajax-preload="true"
+                                        :selected-item="selected.contact_type_data?.id"
+                                        :selected-options="selected.contact_type_data"
+                                        :error-msg="errors?.contact_type"
+                                    />
+                            <input-tom-select
+                                        class="h-full"
+                                        v-model="formData.customer_type"
+                                        form-label="Customer Type"
+                                        placeholder="Select Customer Type"
+                                        :is-ajax="true"
+                                        request-name="customerTypeSelectList"
+                                        :allow-create="true"
+                                        :ajax-preload="true"
+                                        :selected-item="selected.customer_type_data?.id"
+                                        :selected-options="selected.customer_type_data"
+                                        :error-msg="errors?.contact_type"
                                     />
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
@@ -427,7 +460,10 @@ export default {
             errors: {},
             formData:{
                 title: '',
+                name_prefix: '',
                 name: '',
+                gender: null,
+                country_code: null,
                 mobile: null,
                 email: null,
                 city: null,
@@ -458,12 +494,16 @@ export default {
                 company_branch_data: {},
                 property_data: [],
                 project_data: [],
+                contact_type_data: [],
+                customer_type_data: [],
             },
             selectedOptions:{
                 lead_source: [],
                 lead_status: [],
                 assigned_to: [],
                 company_branch_data: [],
+                contact_type_data: [],
+                customer_type_data: [],
 
             },
             options:{
@@ -476,6 +516,8 @@ export default {
                 properties: [],
                 projects: [],
                 enquiry_types: [],
+                contact_types: [],
+                customer_types: [],
             },
             show:{
                 commentForm: false
@@ -511,6 +553,12 @@ export default {
                 name: Yup.string()
                             .nullable(true)
                             .required('Required'),
+                name_prefix: Yup.string()
+                            .nullable(true)
+                            .required('Name prefix required'),
+                gender: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
                 city: Yup.string()
                             .nullable(true)
                             .required('Required'),
@@ -535,11 +583,20 @@ export default {
                 enquiry_type: Yup.string()
                             .nullable(true)
                             .required('Required'),
+                contact_type: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
+                customer_type: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
                 mobile: Yup.string()
                             .nullable(true)
                             .required('Required')
                             .min( 10, 'Must be 10 digits')
                             .max( 10, 'Must be 10 digits'),
+                country_code: Yup.number()
+                            .nullable(true)
+                            .required('Country code required'),
                 email: Yup.string()
                             .nullable(true)
                             .email( 'Must be a valid email address'),
@@ -597,6 +654,8 @@ export default {
                                     this.selected.company_branch_data = this.formData.company_branch_data;
                                     this.selected.property_data = this.formData.property_data;
                                     this.selected.project_data = this.formData.project_data;
+                                    this.selected.customer_type_data = this.formData.customer_type_data;
+                                    this.selected.contact_type_data = this.formData.contact_type_data;
                                 }
                             },
                             (err) => {

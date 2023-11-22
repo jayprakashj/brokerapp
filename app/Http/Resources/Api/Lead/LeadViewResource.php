@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api\Lead;
 
 use App\Http\Resources\Api\CompanyBranch\BranchListForSelectList;
+use App\Models\Contact;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LeadViewResource extends JsonResource
@@ -19,8 +20,8 @@ class LeadViewResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'enquiry_type' => $this->enquiry_type ?? '-',
-            'name' => $this->customer_name,
-            'mobile' => $this->customer_mobile,
+            'name' => $this->getNameWithPrefix (),
+            'mobile' => $this->getMobileWithCountryCode(),
             'email' => $this->customer_email  ?? 'N/A',
             'city' => $this->customer_city  ?? 'N/A',
             'remark' => $this->remark  ?? 'N/A',
@@ -44,7 +45,10 @@ class LeadViewResource extends JsonResource
             'updated_at_time' => $this->created_at->format('d-m-Y h:i a'),
             'comments' => LeadCommentsResource::collection( $this->latestComments ),
             'property_type' => $this->property_type ? implode(', ', $this->property_type ) : 'N/A',
-            'property_references' => PropertyReferenceListResource::collection( $this->getPropertySuggestions() )
+            'property_references' => PropertyReferenceListResource::collection( $this->getPropertySuggestions() ),
+            'contact_type' => null,
+            'customer_type' => null,
+            'gender' => null,
         ];
 
         if( $this->properties->count() ){
@@ -52,6 +56,17 @@ class LeadViewResource extends JsonResource
         }
         if( $this->projects->count() ){
             $data['project_names'] = $this->projects->pluck('title');
+        }
+        if( !is_null( $this->contact ) ){
+            $contact = $this->contact;
+            $data['gender'] = $contact->gender;
+
+            if( !is_null( $contact->customerType ) ){
+                $data['customer_type'] = $contact->customerType->name;
+            }
+            if( !is_null( $contact->contactType ) ){
+                $data['contact_type'] = $contact->contactType->name;
+            }
         }
         return $data;
     }

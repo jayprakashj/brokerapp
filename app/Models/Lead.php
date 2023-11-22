@@ -359,4 +359,20 @@ class Lead extends Model
         }
         return [];
     }
+
+    public function getNameWithPrefix (){
+        $name = $this->customer_name_prefix ?? '';
+        if( !empty( $name ) ){
+            $name .= ' ';
+        }
+        $name .= $this->customer_name;
+        return $name;
+
+    }
+
+    public function getMobileWithCountryCode(){
+        $mobile = array_filter( [ ($this->country_code ?? '91'), $this->customer_mobile ] );
+
+        return '+'.implode('', $mobile);
+    }
 }

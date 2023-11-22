@@ -41,6 +41,7 @@ class LeadSeeder extends Seeder
         $contacts = Contact::withoutGlobalScope(CompanyIdScope::class)->get();
         $users = User::with('defaultCompany')->typeCompany()->get();
         $propertyTypes = PropertySubTypeList::withoutGlobalScope(CompanyIdScope::class)->get();
+        $namePrfixes = array_keys( Contact::NAME_PREFIX_LIST );
 
         $titles = [
             'Looking for 2 BHK flat',
@@ -63,7 +64,9 @@ class LeadSeeder extends Seeder
             $obj->title = Arr::random( $titles );
             $obj->contact_id = $contactObj->id;
             $obj->company_branch_id = $companyBranches->random()->id;
+            $obj->customer_name_prefix = $contactObj->name_prefix;
             $obj->customer_name = $contactObj->name;
+            $obj->country_code = $contactObj->country_code;
             $obj->customer_mobile = $contactObj->mobile;
             $obj->customer_email = $contactObj->email;
             $obj->customer_city = $contactObj->city;

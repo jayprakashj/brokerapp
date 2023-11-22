@@ -19,6 +19,8 @@ class LeadEditResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'name' => $this->customer_name,
+            'name_prefix' => $this->customer_name_prefix,
+            'country_code' => $this->country_code,
             'mobile' => $this->customer_mobile,
             'email' => $this->customer_email,
             'city' => $this->customer_city,
@@ -58,6 +60,23 @@ class LeadEditResource extends JsonResource
                                         $item->name = $item->title;
                                         return $item->only(['id', 'name']);
                                     });
+        }
+        if( !is_null( $this->contact ) ){
+            $contact = $this->contact;
+            $data['gender'] = $contact->gender;
+
+            if( !is_null( $contact->customerType ) ){
+                $data['customer_type_data'] = $contact->customerType->only(['id', 'name']);
+            }
+            if( !is_null( $contact->contactType ) ){
+                $data['contact_type_data'] = $contact->contactType->only(['id', 'name']);
+            }
+            if( empty( $data['name_prefix'] ) ){
+                $data['name_prefix'] = $contact->name_prefix;
+            }
+            if( empty( $data['country_code'] ) ){
+                $data['country_code'] = $contact->country_code;
+            }
         }
         return $data;
     }
