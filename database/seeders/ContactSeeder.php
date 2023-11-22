@@ -83,8 +83,8 @@ class ContactSeeder extends Seeder
             $obj->locality = Arr::random( $locality );
             $obj->pincode = $faker->text( 10 );
             $obj->comment = $faker->text( 10 );
-            $obj->customer_type_id = $contactTypes->random()->id;
-            $obj->contact_type_id = $customerTypes->random()->id;
+            $obj->customer_type_id = $customerTypes->random()->id;
+            $obj->contact_type_id = $contactTypes->random()->id;
             $obj->save();
 
         }
