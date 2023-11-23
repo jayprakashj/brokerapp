@@ -27,7 +27,7 @@
                     <div class="card mt-2 p-3 py-3 pr-6" v-if="item.data?.length">
                         <div class="flex ">
 
-                            <div class="w-[96%] space-y-2">
+                            <div class="w-[96%] max-sm:w-[85%] space-y-2">
                                 <div
                                     class="badge bg-slate-150 text-slate-800 dark:bg-navy-500 dark:text-navy-100 mr-2"
                                     v-for="(search, idx ) in item.data"
@@ -37,7 +37,7 @@
                                         <span ><pre class="font-sans text-tiny+">{{ search.values }}</pre></span>
                                     </div>
                             </div>
-                            <div class="w-16 flex justify-end items-center gap-2">
+                            <div class="w-16 flex justify-end max-sm:items-start items-center gap-2">
                                 <button
                                     @click="applySaveFilter(item.filter)"
                                     class="btn h-6 w-6 rounded-full bg-primary p-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
