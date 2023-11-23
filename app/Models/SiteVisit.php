@@ -68,6 +68,10 @@ class SiteVisit extends Model
         return $this->belongsTo( User::class, 'assign_to', 'id');
     }
 
+    public function leads (){
+        return $this->belongsToMany( Lead::class, 'lead_site_visit_pivot', 'site_visit_id', 'lead_id');
+    }
+
 
     public function scopeAssignToAuth ( $q, $boolean = 'and' ){
         return $q->where('assign_to', '=', auth()->id(), $boolean );
@@ -137,6 +141,12 @@ class SiteVisit extends Model
                     break;
                 case 'lead_status':
                     $q->orderBy( 'lead_status' , $sortOrder);
+                    break;
+                case 'leads_count':
+                    $q->orderBy( 'leads_count' , $sortOrder);
+                    break;
+                default:
+                    $q->orderBy( $sortColumn , $sortOrder);
                     break;
             }
         }

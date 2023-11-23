@@ -24,7 +24,17 @@ class LeadClass {
 
     public function getDefaultCompanyLeads ( $request, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
-        $lists = Lead::query()->with(['companyBranch', 'properties', 'projects', 'assignToUser', 'updatedUser']);
+        $lists = Lead::query()
+                        ->withCount([
+                            'siteVisits'
+                        ])
+                        ->with([
+                                'companyBranch',
+                                'properties',
+                                'projects',
+                                'assignToUser',
+                                'updatedUser'
+                        ]);
 
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignedToAuth();
@@ -162,7 +172,7 @@ class LeadClass {
 
             $lead->properties()->sync( $request->input( 'property', [] ) );
         }else{
-            $lead->properties()->detah();
+            $lead->properties()->detach();
 
         }
 
@@ -170,7 +180,7 @@ class LeadClass {
 
             $lead->projects()->sync( $request->input( 'project', [] ) );
         }else{
-            $lead->projects()->detah();
+            $lead->projects()->detach();
 
         }
 

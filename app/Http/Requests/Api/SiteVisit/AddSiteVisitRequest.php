@@ -49,6 +49,7 @@ class AddSiteVisitRequest extends FormRequest
 
             'property_id' => [
                 'required_if:type,property',
+                'nullable',
                 Rule::exists('properties', 'id')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
@@ -56,6 +57,11 @@ class AddSiteVisitRequest extends FormRequest
                 'required_if:type,project',
                 'nullable',
                 Rule::exists('projects', 'id')
+                        ->where('company_id', \Helper::retrieveDefaultCompany()->id )
+            ],
+            'leads.*' => [
+                'nullable',
+                Rule::exists('leads', 'id')
                         ->where('company_id', \Helper::retrieveDefaultCompany()->id )
             ],
             'company_branch' => [

@@ -44,6 +44,10 @@ class SiteVisitEditResource extends JsonResource
         if( !is_null( $this->project ) ){
             $data['project_data'] = $this->project->only(['id', 'title']);
         }
+
+        if( $this->leads->count() ){
+            $data['leads'] = $this->leads->pluck('id');
+        }
         return $data;
     }
 }

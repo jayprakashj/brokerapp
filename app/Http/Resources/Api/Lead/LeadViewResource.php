@@ -46,6 +46,7 @@ class LeadViewResource extends JsonResource
             'comments' => LeadCommentsResource::collection( $this->latestComments ),
             'property_type' => $this->property_type ? implode(', ', $this->property_type ) : 'N/A',
             'property_references' => PropertyReferenceListResource::collection( $this->getPropertySuggestions() ),
+            'site_visits' => SiteVisitListResource::collection( $this->siteVisits ),
             'contact_type' => null,
             'customer_type' => null,
             'gender' => null,

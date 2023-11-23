@@ -41,7 +41,7 @@ class DashboardClass {
             'contact_count' => $this->fetchContactCount( $user, $selectedDate ),
             'lead_count' => $this->fetchLeadsCount( $user, $selectedDate ),
             'oppertunity_count' => $this->fetchOppertunityCount( $user, $selectedDate ),
-            'visited_count' => $this->fetchVisitedLeadsCount( $user, $selectedDate ),
+            'visited_count' => $this->fetchSiteVisitsCount( $user, $selectedDate ),
             'won_count' => $this->fetchWonLeadsCount( $user, $selectedDate ),
             'month_leads' => $this->fetchThisMonthLead( $user ),
             'month_site_visits' => $this->fetchMonthlySiteVisits( $user ),
@@ -127,6 +127,18 @@ class DashboardClass {
         $visitedCount = $visitedCount->count();
 
         return $visitedCount;
+    }
+
+    private function fetchSiteVisitsCount ($user, $selectedDate) {
+        $siteVisitCount = SiteVisit::query()
+                        ->filterDate( 'created_at', $selectedDate, '>=' );
+
+        if( !$user->isCompanyAdmin() ){
+            $siteVisitCount->createdByOrAssignToAuth();
+        }
+        $siteVisitCount = $siteVisitCount->count();
+
+        return $siteVisitCount;
     }
 
     private function fetchMemberCount ( $user ) {
@@ -227,7 +239,7 @@ class DashboardClass {
                                     }
                                 },
                                 'leads as visited' => function( $q ) use ( $selectedDate, $user ) {
-                                    $q->propertProjectSiteVisitExists( $selectedDate );
+                                    $q->whereRelation( 'siteVisits', DB::Raw('DATE(site_visits.created_at)'), '>=', $selectedDate );
                                     if( !$user->isCompanyAdmin() ){
                                         $q->createdByOrAssignedToAuth();
                                     }
@@ -265,7 +277,7 @@ class DashboardClass {
                                     }
                                 },
                                 'leads as visited' => function( $q ) use ( $selectedDate, $user ) {
-                                    $q->propertProjectSiteVisitExists( $selectedDate );
+                                    $q->whereRelation( 'siteVisits', DB::Raw('DATE(site_visits.created_at)'), '>=', $selectedDate );
                                     if( !$user->isCompanyAdmin() ){
                                         $q->createdByOrAssignedToAuth();
                                     }
