@@ -162,7 +162,7 @@ class LeadClass {
 
             $lead->properties()->sync( $request->input( 'property', [] ) );
         }else{
-            $lead->properties()->detah();
+            $lead->properties()->detach();
 
         }
 
@@ -170,7 +170,7 @@ class LeadClass {
 
             $lead->projects()->sync( $request->input( 'project', [] ) );
         }else{
-            $lead->projects()->detah();
+            $lead->projects()->detach();
 
         }
 
