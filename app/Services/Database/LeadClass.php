@@ -24,7 +24,17 @@ class LeadClass {
 
     public function getDefaultCompanyLeads ( $request, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
-        $lists = Lead::query()->with(['companyBranch', 'properties', 'projects', 'assignToUser', 'updatedUser']);
+        $lists = Lead::query()
+                        ->withCount([
+                            'siteVisits'
+                        ])
+                        ->with([
+                                'companyBranch',
+                                'properties',
+                                'projects',
+                                'assignToUser',
+                                'updatedUser'
+                        ]);
 
         if( $onlyAssignedTo ){
             $lists->createdByOrAssignedToAuth();

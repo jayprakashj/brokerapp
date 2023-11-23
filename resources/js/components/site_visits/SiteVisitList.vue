@@ -186,6 +186,18 @@
                                     <i class="fa fa-sort" v-else></i>
                                 </div>
                             </th>
+                            <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('leads_count')">
+                                <div class="flex gap-3 items-center">
+                                    Total Linked Leads
+                                    <template v-if="sortColumn == 'leads_count'">
+                                        <i class="fa fa-arrow-down-short-wide" v-if="sortOrder == 'asc'"></i>
+                                        <i class="fa fa-arrow-up-short-wide" v-else></i>
+
+                                    </template>
+                                    <i class="fa fa-sort" v-else></i>
+                                </div>
+                            </th>
 
                             <th
                                 class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('visit_type')">
@@ -320,6 +332,11 @@
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
                                     {{ item.property }}
+                                </td>
+                                <td class="whitespace-nowrap text-center px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
+                                    <span class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light">
+                                        {{ item.leads_count }}
+                                    </span>
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
                                     {{ item.visit_type }}

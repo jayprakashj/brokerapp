@@ -82,6 +82,10 @@ class Lead extends Model
         return $this->belongsToMany( Project::class, 'lead_project_pivot', 'lead_id', 'project_id');
     }
 
+    public function siteVisits (){
+        return $this->belongsToMany( SiteVisit::class, 'lead_site_visit_pivot', 'lead_id', 'site_visit_id' );
+    }
+
     public function comments (){
         return $this->hasMany( LeadComment::class, 'lead_id', 'id');
     }
@@ -176,6 +180,9 @@ class Lead extends Model
                 case 'lead_status':
                     $q->orderBy( 'lead_status' , $sortOrder);
                     break;
+                case 'site_visits_count':
+                    $q->orderBy( 'site_visits_count' , $sortOrder);
+                    break;
             }
         }
 
@@ -212,6 +219,10 @@ class Lead extends Model
 
     public function scopeFilterEnquiryType ( $q, $value, $boolean = 'and' ){
         return $q->where('enquiry_type', '=', $value, $boolean);
+    }
+
+    public function scopeWorkingLead ( $q,){
+        return $q->whereNotIn('lead_status', ['Won', 'Disqualified']);
     }
 
     public function scopeFilterProjects ( $q, $value, $boolean = 'and' ){

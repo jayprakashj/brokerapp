@@ -317,6 +317,19 @@
                             </th>
 
                             <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('site_visits_count')">
+                                <div class="flex gap-3 items-center">
+                                    Total Site Visits
+                                    <template v-if="sortColumn == 'site_visits_count'">
+                                        <i class="fa fa-arrow-down-short-wide" v-if="sortOrder == 'asc'"></i>
+                                        <i class="fa fa-arrow-up-short-wide" v-else></i>
+
+                                    </template>
+                                    <i class="fa fa-sort" v-else></i>
+                                </div>
+                            </th>
+
+                            <th
                                 class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('lead_source')">
                                 <div class="flex gap-3 items-center">
                                     Lead Source
@@ -473,6 +486,11 @@
                                     <p v-else>
                                         N/A
                                     </p>
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-center">
+                                    <span class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light">
+                                        {{ item.site_visits_count }}
+                                    </span>
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-3 sm:px-5">
                                     {{ item.lead_source ?? 'N/A' }}

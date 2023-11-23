@@ -33,6 +33,7 @@ class SiteVisitViewResource extends JsonResource
             'updated_user_name' => $this->updatedUser->name ?? 'N/A',
             'created_at_time' => $this->created_at->format('d-m-Y h:i a'),
             'updated_at_time' => $this->created_at->format('d-m-Y h:i a'),
+            'leads' => LeadListResource::collection( $this->leads )
         ];
 
         if( !is_null( $this->assignToUser ) ){
