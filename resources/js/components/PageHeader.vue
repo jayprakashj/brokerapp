@@ -1,6 +1,6 @@
 <template>
 
-<div class="flex items-center justify-between py-5 lg:py-6">
+<div class="flex sm:items-center max-xs:flex-col justify-between py-5 lg:py-6">
     <div class="flex items-center space-x-1">
       <h2 class="line-clamp-1 text-xl font-medium text-slate-700 dark:text-navy-50 lg:text-2xl">
         {{ title || '' }}
