@@ -91,6 +91,26 @@ export default {
         },
       },
     },
+    screens: {
+        'xs': '425px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+
+        'max-xl': {'max': '1279px'},
+        // => @media (max-width: 1279px) { ... }
+
+        'max-lg': {'max': '1023px'},
+        // => @media (max-width: 1023px) { ... }
+
+        'max-md': {'max': '767px'},
+        // => @media (max-width: 767px) { ... }
+
+        'max-sm': {'max': '639px'},
+
+        'max-xs': {'max': '425px'},
+    }
   },
   corePlugins: {
     textOpacity: false,

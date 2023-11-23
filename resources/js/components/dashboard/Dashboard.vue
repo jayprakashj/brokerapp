@@ -1,7 +1,7 @@
 <template>
     <page-header :title="pageTitle" >
         <template v-slot:actionContainer >
-            <div class="flex items-center space-x-2">
+            <div class="flex self-end sm:items-center space-x-2">
                 <input-tom-select
                         class="h-full !w-[13rem]"
                         v-model="filter.date"
@@ -19,7 +19,7 @@
     </page-header>
 
     <div
-        class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6"
+        class="grid grid-cols-1 lg:grid-cols-12 sm:grid-cols-6 gap-4 sm:gap-5 lg:gap-6"
         v-if="userPermissions.isPermissionsAllowed([
                 $permissions.LEAD_LIST,
                 $permissions.ONLY_ASSIGNED_LEAD_LIST,
@@ -34,7 +34,7 @@
 
             ], false )"
     >
-        <div class="col-span-3 pb-4 border-r" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST,$permissions.SITE_VISIT_LIST, $permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ], false )">
+        <div class="col-span-12 sm:col-span-3 pb-4 border-r" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST,$permissions.SITE_VISIT_LIST, $permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ], false )">
             <div class="flex items-center justify-between space-x-2">
                 <h2 class="text-base font-medium tracking-wide text-slate-800 line-clamp-1 dark:text-navy-100">
                     This Months Statistics
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div
-            class="col-span-3 pb-4 border-r"
+            class="col-span-12 sm:col-span-3 pb-4 border-r"
             v-if="userPermissions.isPermissionsAllowed([
                         $permissions.PROPERTY_LIST,
                         $permissions.ONLY_ASSIGNED_PROPERTY_LIST,
@@ -121,7 +121,7 @@
             </div>
         </div>
         <div
-            class="col-span-6 pb-4"
+            class="col-span-12 sm:col-span-6 pb-4"
             v-if="userPermissions.isPermissionsAllowed([
                     $permissions.MEMBER_LIST,
                     $permissions.CONTACT_LIST,
@@ -129,7 +129,7 @@
                     $permissions.ONLY_ASSIGNED_LEAD_LIST
                 ],false )"
         >
-            <div class="pt-2 pb-4 mt-3 grid grid-cols-2 gap-3 gap-y-5 items-center">
+            <div class="pt-2 pb-4 mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 gap-y-5 items-center">
                 <div class=" card p-8 justify-center hidden" v-if="userPermissions.isPermissionsAllowed([ $permissions.MEMBER_LIST] )">
                     <div class="flex items-center justify-between">
 
@@ -436,7 +436,7 @@
     </template>
 
     <div class="grid grid-cols-12 gap-8 mt-2" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST, $permissions.MEMBER_LIST ], false )">
-        <div class="col-span-6 xl:col-span-6" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST])" >
+        <div class="col-span-12 lg:col-span-6" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST])" >
             <div class="dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " >
                 <div class="-mt-1 flex items-center justify-between">
                     <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
@@ -505,7 +505,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-6 xl:col-span-6" v-if="userPermissions.isPermissionsAllowed([$permissions.MEMBER_LIST])">
+        <div class="col-span-12 lg:col-span-6" v-if="userPermissions.isPermissionsAllowed([$permissions.MEMBER_LIST])">
             <div class="dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 "  >
                 <div class="-mt-1 flex items-center justify-between">
                     <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
@@ -577,7 +577,7 @@
     </div>
 
     <div class="mt-4 grid grid-cols-12 gap-4 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " v-if="userPermissions.isPermissionsAllowed([$permissions.PROPERTY_LIST])" >
-        <div class="col-span-12 md:col-span-8">
+        <div class="col-span-12 lg:col-span-8">
             <div class="-mt-1 flex items-center justify-between">
                 <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
                     Properties Statistics

@@ -1,7 +1,7 @@
 <template>
     <page-header :title="pageTitle" >
         <template v-slot:actionContainer >
-            <div class="flex items-center space-x-2">
+            <div class="flex self-end sm:items-center space-x-2 max-sm:mt-4">
                 <router-link to="/site-visit/create"
                     class="btn space-x-2 rounded-full bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
                     <i class="fa fa-plus"></i>
@@ -24,7 +24,7 @@
         <div >
             <div class="card p-3 py-3" v-show="showFilter">
                 <form @submit.prevent="applyfilter">
-                    <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
+                    <div class="grid xs:grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 lg:gap-6">
                         <label class="block">
                             <span>Site Name:</span>
                             <div class="relative mt-1.5 flex">

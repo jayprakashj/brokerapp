@@ -60,6 +60,9 @@ body.is-monochrome::before {
     @apply w-3;
 }
 
+.menu-toggle.active {
+    @apply pl-18 pr-2;
+}
 .menu-toggle.active span {
     @apply ml-2 w-[11px] -translate-x-2;
 }
