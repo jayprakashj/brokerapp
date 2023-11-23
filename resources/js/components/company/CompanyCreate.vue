@@ -1,7 +1,7 @@
 <template>
     <page-header :title="pageTitle" :breadcrumbs="breadcrumbs" />
     <div class="flex place-content-center">
-        <div class="card w-9/12 p-4 sm:p-5">
+        <div class="card w-full sm:w-9/12 p-4 sm:p-5">
             <form @submit.prevent="submitForm">
                 <div class="card">
                     <div

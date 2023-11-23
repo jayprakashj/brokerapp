@@ -1,7 +1,7 @@
 <template>
     <page-header :title="pageTitle" >
         <template v-slot:actionContainer >
-            <div class="flex items-center space-x-2">
+            <div class="flex self-end sm:items-center space-x-2 max-sm:mt-4">
                 <router-link to="/lead/create"
                     class="btn space-x-2 rounded-full bg-slate-150 font-medium text-slate-800 hover:bg-slate-200 focus:bg-slate-200 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:focus:bg-navy-450 dark:active:bg-navy-450/90">
                     <i class="fa fa-plus"></i>
@@ -27,7 +27,7 @@
                     <div class="card mt-2 p-3 py-3 pr-6" v-if="item.data?.length">
                         <div class="flex ">
 
-                            <div class="w-[96%] space-y-2">
+                            <div class="w-[96%] max-sm:w-[85%] space-y-2">
                                 <div
                                     class="badge bg-slate-150 text-slate-800 dark:bg-navy-500 dark:text-navy-100 mr-2"
                                     v-for="(search, idx ) in item.data"
@@ -37,7 +37,7 @@
                                         <span ><pre class="font-sans text-tiny+">{{ search.values }}</pre></span>
                                     </div>
                             </div>
-                            <div class="w-16 flex justify-end items-center gap-2">
+                            <div class="w-16 flex justify-end max-sm:items-start items-center gap-2">
                                 <button
                                     @click="applySaveFilter(item.filter)"
                                     class="btn h-6 w-6 rounded-full bg-primary p-0 font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
@@ -56,7 +56,7 @@
             </template>
             <div class="card mt-2 p-3 py-3" v-show="showFilter">
                 <form @submit.prevent="applyfilter">
-                    <div class="grid grid-cols-4 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
+                    <div class="grid xs:grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 lg:gap-6">
                         <label class="block">
                             <span>Title:</span>
                             <div class="relative mt-1.5 flex">
