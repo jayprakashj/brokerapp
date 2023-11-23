@@ -21,6 +21,7 @@ class LeadListResource extends JsonResource
             'company_name' => $this->company->name ?? 'N/A',
             'property_name' => $this->properties->pluck('name') ?? 'N/A',
             'project_name' => $this->projects->pluck('title') ?? 'N/A',
+            'site_visits_count' => $this->site_visits_count ?? 0,
             'mobile' => $this->customer_mobile ?? 'N/A',
             'email' => $this->customer_email ?? 'N/A',
             'city' => $this->customer_city ?? 'N/A',

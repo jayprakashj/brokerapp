@@ -21,6 +21,7 @@ class SiteVisitListResource extends JsonResource
             'company_branch' => $this->companyBranch->name ?? 'N/A',
             'property' => (!is_null( $this->property ) ? $this->property->name : 'N/A'),
             'project' => (!is_null( $this->project ) ? $this->project->title : 'N/A'),
+            'leads_count' => $this->leads_count ?? 0,
             'assign_user' => $this->assignToUser->name ?? 'N/A',
             'source_manager' => $this->sourceManagerUser->name ?? 'N/A',
             'closing_manager' => $this->closingManagerUser->name ?? 'N/A',

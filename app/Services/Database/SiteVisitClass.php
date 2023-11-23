@@ -4,8 +4,6 @@ namespace App\Services\Database;
 
 use App\Models\SiteVisit;
 use App\Models\User;
-use App\Models\Task;
-use App\Models\TaskStatus;
 
 class SiteVisitClass {
 
@@ -16,6 +14,7 @@ class SiteVisitClass {
     public function getDefaultCompanySiteVisits ( $request, $onlyAssignedTo = false, $onlyCreatedBy = false ) {
 
         $lists = SiteVisit::query()
+                        ->withCount('leads')
                         ->with([
                             'company',
                             'companyBranch',
@@ -75,6 +74,14 @@ class SiteVisitClass {
         $siteVisit->assign_to = $request->input('assign_to');
         $siteVisit->updated_by = $user->id;
         $siteVisit->save();
+
+        if( $request->filled('leads') ){
+
+            $siteVisit->leads()->sync( $request->input( 'leads', [] ) );
+        }else{
+            $siteVisit->leads()->detach();
+
+        }
 
         if( !$siteVisit->wasRecentlyCreated ){
             $siteVisit->refresh();

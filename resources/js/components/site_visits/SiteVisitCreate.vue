@@ -52,6 +52,17 @@
                                         :selected-item="formData.project_id"
                                         :error-msg="errors?.project_id"
                                     />
+
+                            <input-tom-select
+                                        class="h-full col-span-2"
+                                        v-model="formData.leads"
+                                        form-label="Lead"
+                                        placeholder="Select Lead"
+                                        :options="options.leads"
+                                        :is-multiple="true"
+                                        :selected-item="formData.leads"
+                                        :error-msg="errors?.leads"
+                                    />
                             <label class="block h-full" >
                                 <span>Site Name</span>
                                 <span class="relative mt-1.5 flex">
@@ -222,6 +233,7 @@ export default {
                 opening_manager: null,
                 visit_type: null,
                 comments: null,
+                leads: [],
             },
             rolesList: [],
             loading:{
@@ -233,6 +245,7 @@ export default {
                 company_branch_data: {},
                 property_data: {},
                 project_data: {},
+                leads_data: [],
             },
             options:{
                 'properties': [],
@@ -240,6 +253,7 @@ export default {
                 'members': [],
                 'visit_types': [],
                 'types': [],
+                'leads': [],
 
             },
         }
