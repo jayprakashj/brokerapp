@@ -18,7 +18,14 @@ export default {
                 this[filterVarName] = Object.assign( this[filterVarName], queryFilter );
 
                 routeQueryString[queryParam] = undefined;
-                this.$router.replace( { query: {}})
+
+                const currUrl = new URL( window.location.origin + this.$route.fullPath );
+                const param = new URLSearchParams( currUrl.search );
+                param.delete( queryParam );
+
+                window.history.replaceState( null, null, "?" + param.toString() );
+
+                this.$router.replace( {query: routeQueryString} )
 
             }
         },
