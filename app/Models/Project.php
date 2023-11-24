@@ -120,6 +120,7 @@ class Project extends Model implements HasMedia
             $companyBranch = data_get( $filter, 'company_branch' );
             $assignTo = data_get( $filter, 'assign_to' );
             $city = data_get( $filter, 'city' );
+            $updatedAt = data_get( $filter, 'updated_at' );
             if( !empty( $title ) ){
                 $q->filterTitleLike( $title );
             }
@@ -131,6 +132,10 @@ class Project extends Model implements HasMedia
             }
             if( !empty( $city ) ){
                 $q->filterCityLike( $city );
+            }
+            if( !is_null( $updatedAt ) ){
+                $dt = explode(' to ', $updatedAt);
+                $q->filterDate( 'updated_at',$dt );
             }
         }
         return $q;

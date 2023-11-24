@@ -296,7 +296,8 @@ class DashboardClass {
                                         ->where('property_type_id', '=', DB::raw( $propertyTypeTblName.'.id'))
                                         ->toRawSql();
 
-        $properties = Property::selectRaw('count(id)')->where('property_transaction', '=', DB::raw( $propertyTransactionTblName . '.name'))
+        $properties = Property::selectRaw('count(id)')
+                        ->where('property_transaction', '=', DB::raw( $propertyTransactionTblName . '.name'))
                         ->whereRaw('property_type in ( '.$propertySubtypeListQry . ')' )
                         ->whereRaw('DATE(created_at) >= '.$selectedDate );
 
@@ -311,6 +312,7 @@ class DashboardClass {
                         )
                         ->select(
                             DB::raw('CONCAT('.$propertyTransactionTblName.'.name, " Properties") AS property_transaction_name'),
+                            $propertyTransactionTblName.'.name AS property_transaction',
                             $propertyTypeTblName.'.name AS property_type_name',
                             DB::raw('( ' . $properties->toRawSql() . ') as properties_count'),
                             DB::raw('( ' . $availableProperties->toRawSql() . ') as availble_properties_count')
