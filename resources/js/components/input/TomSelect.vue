@@ -247,7 +247,7 @@ export default {
 
                 }
             }
-            if(this.selectedItem ){
+            if(this.selectedItem && this.tomSelectInstance){
 
                 if( Array.isArray( this.selectedItem ) ){
                     if( this.selectedItem?.length ){
@@ -265,7 +265,7 @@ export default {
 
                 }
             }else{
-                this.tomSelectInstance.clear();
+                this.tomSelectInstance?.clear();
             }
         }
     }
