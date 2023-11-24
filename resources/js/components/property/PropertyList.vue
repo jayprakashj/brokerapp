@@ -119,13 +119,6 @@
                                     class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                     placeholder="Choose date...">
                                 </flat-pickr>
-                                <!-- <input
-                                    v-model="filter.updated_at"
-                                    ref="updatedAtDateRange"
-                                    class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                    placeholder="Choose date..."
-                                    type="text"
-                                /> -->
                                 <span
                                     class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent"
                                 >
@@ -410,10 +403,12 @@
 import { mapGetters } from 'vuex' ;
 import flatPickr from 'vue-flatpickr-component';
 import sortFilterMethodsMixin from '@/mixin/FilterSortMethodsMixin.js';
+import SetQueryStringFilter from '@/mixin/SetQueryStringFilter.js';
 
 export default {
     mixins:[
-        sortFilterMethodsMixin
+        sortFilterMethodsMixin,
+        SetQueryStringFilter
     ],
     components:{
         flatPickr
@@ -444,8 +439,10 @@ export default {
         }
     },
     created(){
+
     },
     mounted(){
+        this.readQueryAndSetFilter();
         this.init();
         this.$nextTick( () => {
             // this.updateDateFlatickr = flatpickr(this.$refs.updatedAtDateRange, { mode: 'range', dateFormat: 'Y-m-d' });

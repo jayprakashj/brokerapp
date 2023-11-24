@@ -231,6 +231,19 @@
                                 Action
                             </th>
                             <th
+                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('site_visits_count')">
+                                <div class="flex gap-3 items-center">
+                                    Site Visits
+                                    <template v-if="sortColumn == 'site_visits_count'">
+                                        <i class="fa fa-arrow-down-short-wide" v-if="sortOrder == 'asc'"></i>
+                                        <i class="fa fa-arrow-up-short-wide" v-else></i>
+
+                                    </template>
+                                    <i class="fa fa-sort" v-else></i>
+                                </div>
+                            </th>
+
+                            <th
                                 class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('title')">
                                 <div class="flex gap-3 items-center">
                                     Title
@@ -317,19 +330,6 @@
                             </th>
 
                             <th
-                                class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('site_visits_count')">
-                                <div class="flex gap-3 items-center">
-                                    Total Site Visits
-                                    <template v-if="sortColumn == 'site_visits_count'">
-                                        <i class="fa fa-arrow-down-short-wide" v-if="sortOrder == 'asc'"></i>
-                                        <i class="fa fa-arrow-up-short-wide" v-else></i>
-
-                                    </template>
-                                    <i class="fa fa-sort" v-else></i>
-                                </div>
-                            </th>
-
-                            <th
                                 class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5 cursor-pointer" @click="applySort('lead_source')">
                                 <div class="flex gap-3 items-center">
                                     Lead Source
@@ -404,6 +404,11 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </div>
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-center">
+                                    <span class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light">
+                                        {{ item.site_visits_count }}
+                                    </span>
                                 </td>
                                 <td class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5">
                                     {{ item.title }}
@@ -487,11 +492,6 @@
                                         N/A
                                     </p>
                                 </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5 text-center">
-                                    <span class="badge rounded-full border border-primary text-primary dark:border-accent-light dark:text-accent-light">
-                                        {{ item.site_visits_count }}
-                                    </span>
-                                </td>
                                 <td class="whitespace-nowrap px-4 py-3 sm:px-5">
                                     {{ item.lead_source ?? 'N/A' }}
                                 </td>
@@ -528,10 +528,12 @@
 import { mapGetters } from 'vuex' ;
 import sortFilterMethodsMixin from '@/mixin/FilterSortMethodsMixin.js';
 import flatPickr from 'vue-flatpickr-component';
+import SetQueryStringFilter from '@/mixin/SetQueryStringFilter.js';
 
 export default {
     mixins:[
-        sortFilterMethodsMixin
+        sortFilterMethodsMixin,
+        SetQueryStringFilter
     ],
     components:{
         flatPickr
@@ -585,6 +587,7 @@ export default {
     created(){
     },
     mounted(){
+        this.readQueryAndSetFilter();
         this.init();
     },
     computed:{
