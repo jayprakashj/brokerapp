@@ -345,7 +345,7 @@
                         </div>
                     </div>
                     <div v-show="activeTab === 'property_references'" >
-                        <div v-if="formData?.property_references?.length">
+                        <div v-if="formData?.property_references?.length" class="space-y-4">
                             <div class="card border border-light shadow-none hover:shadow lg:flex-row" v-for="(item, index) in formData.property_references" :key="'site_visit_'+index">
                                 <!-- <img class="h-48 w-full shrink-0 rounded-t-lg bg-cover bg-center object-cover object-center lg:h-auto lg:w-48 lg:rounded-t-none lg:rounded-l-lg"
                                     src="/images/object/object-2.jpg" alt="image"> -->

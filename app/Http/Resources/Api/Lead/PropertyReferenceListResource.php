@@ -18,7 +18,7 @@ class PropertyReferenceListResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'building_name' => $this->building_name ?? 'N/A',
-            'price' => $this->price,
+            'price' => \Helper::formatAmount($this->price ?? '0.00'),
             'address' => $this->address ?? 'N/A',
             'locality' => $this->locality,
             'city' => $this->city,

@@ -43,7 +43,7 @@
             <div class="flex flex-col sm:flex-row sm:space-x-7">
                 <div class="pt-2 pb-4 mt-3 grid grid-cols-1 gap-y-5 items-center">
 
-                    <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
+                    <div class="card p-8 justify-center cursor-pointer" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )" @click="redirectToSpecificPage('/lead', {updated_at: thisMonthDate})">
                         <div class="flex items-center justify-between">
 
                             <div>
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.SITE_VISIT_LIST, $permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ] )">
+                    <div class="card p-8 justify-center cursor-pointer" v-if="userPermissions.isPermissionsAllowed([ $permissions.SITE_VISIT_LIST, $permissions.ONLY_ASSIGNED_SITE_VISIT_LIST ] )"  @click="redirectToSpecificPage('/site-visit', {updated_at: thisMonthDate})">
                         <div class="flex items-center justify-between">
 
                             <div>
@@ -84,11 +84,20 @@
                         $permissions.ONLY_ASSIGNED_PROJECT_LIST
                     ], false)"
         >
-            <div class="flex flex-col sm:space-x-7 pr-4 pt-6">
+            <div class="flex items-center justify-between space-x-2">
+                <h2 class="text-base font-medium tracking-wide text-slate-800 line-clamp-1 dark:text-navy-100">
+                    {{ filterDateLabel }} Statistics
+                </h2>
+            </div>
+            <div class="flex flex-col sm:space-x-7 pr-4">
                 <div class="pt-2 pb-4 mt-3 grid grid-cols-1 gap-y-5 items-center">
 
 
-                    <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROPERTY_LIST, $permissions.ONLY_ASSIGNED_PROPERTY_LIST ] )">
+                    <div
+                        class=" card p-8 justify-center cursor-pointer"
+                        v-if="userPermissions.isPermissionsAllowed([ $permissions.PROPERTY_LIST, $permissions.ONLY_ASSIGNED_PROPERTY_LIST ] )"
+                        @click="redirectToSpecificPage('/property')"
+                    >
                         <div class="flex items-center justify-between">
 
                             <div>
@@ -102,7 +111,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.PROJECT_LIST, $permissions.ONLY_ASSIGNED_PROJECT_LIST ] )">
+                    <div
+                        class=" card p-8 justify-center cursor-pointer"
+                        v-if="userPermissions.isPermissionsAllowed([ $permissions.PROJECT_LIST, $permissions.ONLY_ASSIGNED_PROJECT_LIST ] )"
+                        @click="redirectToSpecificPage('/project')"
+                    >
                         <div class="flex items-center justify-between">
 
                             <div>
@@ -129,6 +142,11 @@
                     $permissions.ONLY_ASSIGNED_LEAD_LIST
                 ],false )"
         >
+            <div class="flex items-center justify-between space-x-2">
+                <h2 class="text-base font-medium tracking-wide text-slate-800 line-clamp-1 dark:text-navy-100">
+                    {{ filterDateLabel }} Statistics
+                </h2>
+            </div>
             <div class="pt-2 pb-4 mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 gap-y-5 items-center">
                 <div class=" card p-8 justify-center hidden" v-if="userPermissions.isPermissionsAllowed([ $permissions.MEMBER_LIST] )">
                     <div class="flex items-center justify-between">
@@ -145,7 +163,7 @@
                     </div>
                 </div>
 
-                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.CONTACT_LIST] )">
+                <div class=" card p-8 justify-center cursor-pointer" v-if="userPermissions.isPermissionsAllowed([ $permissions.CONTACT_LIST] )" @click="redirectToSpecificPage('/contact')">
                     <div class="flex items-center justify-between">
 
                         <div>
@@ -159,7 +177,7 @@
                         </div>
                     </div>
                 </div>
-                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
+                <div class=" card p-8 justify-center cursor-pointer" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )" @click="redirectToSpecificPage('/lead')">
                     <div class="flex items-center justify-between">
 
                         <div>
@@ -174,7 +192,7 @@
                     </div>
                 </div>
 
-                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
+                <div class=" card p-8 justify-center cursor-pointer" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )" @click="redirectToSpecificPage('/lead', {lead_status: 'Qualified'})">
                     <div class="flex items-center justify-between">
 
                         <div>
@@ -189,7 +207,7 @@
                     </div>
                 </div>
 
-                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
+                <div class=" card p-8 justify-center cursor-pointer" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )" @click="redirectToSpecificPage('/site-visit')">
                     <div class="flex items-center justify-between">
 
                         <div>
@@ -204,7 +222,7 @@
                     </div>
                 </div>
 
-                <div class=" card p-8 justify-center" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )">
+                <div class=" card p-8 justify-center cursor-pointer" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST, $permissions.ONLY_ASSIGNED_LEAD_LIST ] )" @click="redirectToSpecificPage('/lead', {lead_status: 'Won'})">
                     <div class="flex items-center justify-between">
 
                         <div>
@@ -435,7 +453,7 @@
         </div>
     </template>
 
-    <div class="grid grid-cols-12 gap-8 mt-2" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST, $permissions.MEMBER_LIST ], false )">
+    <div class="grid grid-cols-12 items-stretch gap-8 mt-2" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST, $permissions.MEMBER_LIST ], false )">
         <div class="col-span-12 lg:col-span-6" v-if="userPermissions.isPermissionsAllowed([ $permissions.LEAD_LIST,$permissions.ONLY_ASSIGNED_LEAD_LIST])" >
             <div class="dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " >
                 <div class="-mt-1 flex items-center justify-between">
@@ -444,7 +462,7 @@
                     </h2>
                 </div>
                 <div class="card mt-3">
-                    <div class="max-h-[520px] overflow-y-auto pr-1">
+                    <div class="max-h-[520px] overflow-y-auto pr-1 h-[520px]">
                         <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
                             <thead >
                                 <tr>
@@ -478,6 +496,9 @@
                                         <td class="whitespace-nowrap px-4 py-3">
                                             <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
                                                 {{ item.title }}
+                                                <span @click="redirectToSpecificPage('/lead', {lead_source: item.title})" class="cursor-pointer badge space-x-1 bg-info text-white">
+                                                    <i class="fa fa-external-link"></i>
+                                                </span>
                                             </p>
                                         </td>
                                         <td class="min-w-[2rem] text-center" :class="{'text-primary': item.leads}">
@@ -513,7 +534,7 @@
                     </h2>
                 </div>
                 <div class="card mt-3">
-                    <div class="max-h-[520px] overflow-y-auto pr-1">
+                    <div class="max-h-[520px] overflow-y-auto pr-1 h-[520px]">
                         <table class="is-hoverable w-full text-left max-h-[520px] overflow-y-auto">
                             <thead >
                                 <tr>
@@ -547,6 +568,9 @@
                                         <td class="whitespace-nowrap px-4 py-3">
                                             <p class=" text-base font-medium text-slate-700 dark:text-navy-100">
                                                 {{ item.name }}
+                                                <span @click="redirectToSpecificPage('/lead', {assign_to: item.id})" class="cursor-pointer badge space-x-1 bg-info text-white">
+                                                    <i class="fa fa-external-link"></i>
+                                                </span>
                                             </p>
                                         </td>
                                         <td class="min-w-[2rem] text-center" :class="{'text-primary': item.oppertunities}">
@@ -577,7 +601,7 @@
     </div>
 
     <div class="mt-4 grid grid-cols-12 gap-4 py-5 dark:bg-navy-800 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6 " v-if="userPermissions.isPermissionsAllowed([$permissions.PROPERTY_LIST])" >
-        <div class="col-span-12 lg:col-span-8">
+        <div class="col-span-12 ">
             <div class="-mt-1 flex items-center justify-between">
                 <h2 class="text-sm+ font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
                     Properties Statistics
@@ -621,6 +645,10 @@
                                     <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500" v-for="(item, idx) in property_types?.items" :key="'property_type_wise_count_item_'+idx">
                                         <td class="text-center text-sm p-1 font-semibold ">
                                             {{ item.property_type_name }}
+                                            <!-- <span @click="redirectToSpecificPage('/property', {property_type: item.property_type_name, property_transaction: item.property_transaction})" class="cursor-pointer badge space-x-1 bg-slate-150 text-slate-800 dark:bg-navy-500 dark:text-navy-100"> -->
+                                            <span @click="redirectToSpecificPage('/property', {property_transaction: item.property_transaction})" class="cursor-pointer badge space-x-1 bg-slate-150 text-slate-800 dark:bg-navy-500 dark:text-navy-100">
+                                                <i class="fa fa-external-link"></i>
+                                            </span>
                                         </td>
                                         <td class="text-center text-sm p-1 font-semibold text-slate-900 ">
                                             {{ item.properties_count }}
@@ -698,6 +726,16 @@ export default {
             'globalPermissions',
             'userPermissions'
         ]),
+        filterDateLabel(){
+            const data = this.dateFilter.find( d => d.id == this.filter.date );
+            if( data?.id ){
+                return data.text;
+            }
+            return null
+        },
+        thisMonthDate(){
+            return dayjs().startOf('M').format('YYYY-MM-DD') + ' to ' + dayjs().format('YYYY-MM-DD')
+        }
     },
     beforeUnmount(){
         window.Echo.disconnect();
@@ -798,6 +836,21 @@ export default {
         },
         dateChanged(){
             this.loadData();
+        },
+        redirectToSpecificPage( routeName, params){
+            if( params === undefined ){
+                params = {}
+            }
+            const filter = {
+                updated_at: this.filter.date + ' to ' + dayjs().format('YYYY-MM-DD'),
+                ...params
+            }
+            this.$router.push({
+                path: routeName,
+                query:{
+                    _defaultFilter: JSON.stringify( filter )
+                }
+            })
         }
     }
 }

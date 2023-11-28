@@ -104,6 +104,7 @@ class Contact extends Model implements HasMedia
             $gender = data_get( $filter, 'gender' );
             $contactType = data_get( $filter, 'contact_type' );
             $customerType = data_get( $filter, 'customer_type' );
+            $updatedAt = data_get( $filter, 'updated_at' );
             if( !empty( $name ) ){
                 $q->filterNameLike( $name );
             }
@@ -124,6 +125,10 @@ class Contact extends Model implements HasMedia
             }
             if( !empty( $customerType ) ){
                 $q->filterCustomerType( $customerType );
+            }
+            if( !is_null( $updatedAt ) ){
+                $dt = explode(' to ', $updatedAt);
+                $q->filterDate( 'updated_at',$dt );
             }
         }
         return $q;
