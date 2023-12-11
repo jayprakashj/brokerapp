@@ -26,6 +26,8 @@ class SiteVisitViewResource extends JsonResource
             'time_in' => $this->time_in ?? 'N/A',
             'time_out' => $this->time_out ?? 'N/A',
             'location' => $this->location ?? 'N/A',
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
             'company_branch' => $this->companyBranch->name ?? 'N/A',
             'source_manager_name' => $this->sourceManagerUser->name ?? 'N/A',
             'closing_manager_name' => $this->closingManagerUser->name ?? 'N/A',
