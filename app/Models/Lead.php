@@ -197,6 +197,13 @@ class Lead extends Model
         return $q->where('customer_name', 'LIKE', '%'. $value . '%', $boolean);
     }
 
+    public function scopeFilterTitleCustomerNameLike ( $q, $value, $boolean = 'and' ){
+        return $q->{$boolean == 'and' ? 'where' : 'orWhere'}(function( $whereQry ) use ( $value ) {
+                $whereQry->orWhere('title', 'LIKE', '%'. $value . '%');
+                $whereQry->orWhere('customer_name', 'LIKE', '%'. $value . '%');
+            });
+    }
+
     public function scopeFilterMobileLike ( $q, $value, $boolean = 'and' ){
         return $q->where('customer_mobile', 'LIKE', '%'. $value . '%', $boolean);
     }
@@ -262,6 +269,7 @@ class Lead extends Model
             $enquiryType = data_get( $filter, 'enquiry_type' );
             $companyBranch = data_get( $filter, 'company_branch' );
             $customerName = data_get( $filter, 'customer_name' );
+            $titleCustomerName = data_get( $filter, 'title_customer_name' );
             $mobile = data_get( $filter, 'mobile' );
             $email = data_get( $filter, 'email' );
             $city = data_get( $filter, 'city' );
@@ -283,6 +291,9 @@ class Lead extends Model
             }
             if( !empty( $customerName ) ){
                 $q->filterCustomerNameLike( $customerName );
+            }
+            if( !empty( $titleCustomerName ) ){
+                $q->filterTitleCustomerNameLike( $titleCustomerName );
             }
             if( !empty( $mobile ) ){
                 $q->filterMobileLike( $mobile );
