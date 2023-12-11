@@ -57,7 +57,6 @@ class SiteVisitClass {
 
     public function createOrUpdate( SiteVisit $siteVisit, User $user, $request ){
 
-
         $siteVisit->company_branch_id = $request->input('company_branch');
         $siteVisit->type = $request->input('type');
         $siteVisit->property_id = $request->input('property_id');
@@ -69,6 +68,8 @@ class SiteVisitClass {
         $siteVisit->time_out = $request->input('time_out');
         $siteVisit->comments = $request->input('comments');
         $siteVisit->location = $request->input('location');
+        $siteVisit->latitude = $request->input('latitude');
+        $siteVisit->longitude = $request->input('longitude');
         $siteVisit->source_manager = $request->input('source_manager');
         $siteVisit->closing_manager = $request->input('closing_manager');
         $siteVisit->assign_to = $request->input('assign_to');

@@ -26,6 +26,8 @@ return new class extends Migration
             $table->dateTime('time_out')->nullable();
             $table->text('comments')->nullable();
             $table->text('location')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->bigInteger('source_manager')->nullable();
             $table->bigInteger('closing_manager')->nullable();
             $table->bigInteger('assign_to')->nullable();
@@ -43,6 +45,8 @@ return new class extends Migration
             $table->index('visit_type');
             $table->index('time_in');
             $table->index('time_out');
+            $table->index('latitude');
+            $table->index('longitude');
             $table->index('source_manager');
             $table->index('closing_manager');
             $table->index('assign_to');
