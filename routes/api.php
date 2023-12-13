@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\DashboardController as ApiDashboardController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\MemberLocationController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
@@ -68,6 +69,8 @@ Route::middleware(['auth:web,api' , 'set_default_company' ])->group(function () 
     Route::middleware('check_default_company')->group( function(){
         Route::get('/data/dashboard', [ApiDashboardController::class, 'getDashboardData'])
                                                 ->name('data.dashboard');
+        Route::post('/track/location', [MemberLocationController::class, 'store'])
+                                                ->name('track.location');
         Route::prefix('roles')
                 ->name('role.')
                 ->group( function () {
