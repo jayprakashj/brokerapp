@@ -42,6 +42,10 @@ export default {
         formattedAddress:{
             type: String,
             default: ""
+        },
+        addressLabel:{
+            type: String,
+            default: ""
         }
     },
     data(){
@@ -148,7 +152,7 @@ export default {
             })
         },
         setInfoWindow(){
-            let content = `<p class="text-base">${this.markerAddress}</p>`;
+            let content = (this.addressLabel ? `<p><b class="text-lg">${this.addressLabel}</b></p>` : '' ) + `<p class="text-base">${this.markerAddress}</p>`;
             if( this.infoWindow ){
                 this.infoWindow.setContent( content )
             }else{

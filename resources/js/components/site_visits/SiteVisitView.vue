@@ -65,7 +65,11 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 items-center">
-                            <location-selector :formatted-address="formData.location" :marker-position="{lat: formData.latitude,lng: formData.longitude}" :enable-map-click="false"/>
+                            <location-selector
+                                :formatted-address="formData.location"
+                                :marker-position="{lat: formData.latitude,lng: formData.longitude}"
+                                :address-label="formData.site_name"
+                                :enable-map-click="false" />
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
