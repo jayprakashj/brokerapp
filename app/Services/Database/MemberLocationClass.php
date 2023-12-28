@@ -65,7 +65,7 @@ class MemberLocationClass {
         $memberLocation->longitude = $request->input('longitude');
         $memberLocation->location_time = $request->input('location_time', now()->format('Y-m-d H:i:S'));
         $memberLocation->save();
-        dispatch_sync( new FetchLocationFromLatLongJob( $memberLocation ) );
+        dispatch( new FetchLocationFromLatLongJob( $memberLocation ) );
         return $memberLocation;
     }
 

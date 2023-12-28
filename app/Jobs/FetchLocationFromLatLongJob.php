@@ -35,58 +35,17 @@ class FetchLocationFromLatLongJob implements ShouldQueue
             $lat = $this->memberLocation->latitude;
             $long = $this->memberLocation->longitude;
 
-            $client = new Client();
+            $response = \Helper::getGoogleAddressFromLatLong( $lat, $long );
 
-            $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $lat. ',' . $long .'&key=' . config('services.google_map.api_key');
-
-            try{
-
-                $req = $client->get( $url, ['verify' => false] );
-
-                $response = $req->getBody()->getContents();
-                $response = json_decode( $response, true );
-
-                $results = data_get( $response, 'results');
-                $result = head( $results );
-                $formattedAddress = data_get( $result, 'formatted_address');
-                $addressComponent = data_get( $result, 'address_components', []);
-
-                $address = [];
-                $locality = null;
-                $city = null;
-                $country = null;
-                foreach( $addressComponent as $item ){
-                    $types = data_get( $item, 'types', []);
-                    $typeName = data_get( $item, 'long_name', []);
-                    if( in_array('country', $types ) ){
-                        $country = $typeName;
-                    }
-                    if( in_array('locality', $types ) ){
-                        $locality = $typeName;
-                    }
-                    if( in_array('administrative_area_level_3', $types ) ){
-                        $city = $typeName;
-                    }
-                    if( in_array('route', $types ) || in_array('neighborhood', $types ) || in_array('sublocality', $types )  ){
-                        $address[] = $typeName;
-                    }
-                }
-                if( !empty( $address ) ){
-                    $address = implode( ', ', $address );
-                }
-
+            if( !empty( $response ) && is_array( $response ) ){
                 $memberLocation = $this->memberLocation;
-                $memberLocation->formatted_address = $formattedAddress;
-                $memberLocation->address = $address;
-                $memberLocation->locality = $locality;
-                $memberLocation->city = $city;
-                $memberLocation->country = $country;
-                $memberLocation->response = json_encode( $results, true );
+                $memberLocation->formatted_address = data_get( $response, 'formatted_address');
+                $memberLocation->address = data_get( $response, 'address');
+                $memberLocation->locality = data_get( $response, 'locality');
+                $memberLocation->city = data_get( $response, 'city');
+                $memberLocation->country = data_get( $response, 'country');
+                $memberLocation->response = json_encode( data_get( $response, '__response_results', []), true );
                 $memberLocation->save();
-
-            }catch( \Exception $e ){
-                info( 'ERROR IN GOOGLE MAP API' );
-                info( $e );
             }
 
         }

@@ -74,8 +74,15 @@ class SiteVisitClass {
         $siteVisit->closing_manager = $request->input('closing_manager');
         $siteVisit->assign_to = $request->input('assign_to');
         $siteVisit->updated_by = $user->id;
-        $siteVisit->save();
 
+        if( empty( $siteVisit->location ) && !empty( $siteVisit->latitude ) && !empty( $siteVisit->longitude ) ){
+            $response = \Helper::getGoogleAddressFromLatLong( $siteVisit->latitude, $siteVisit->longitude );
+            if( !empty( $response ) && is_array( $response ) ){
+                $siteVisit->location = data_get( $response, 'formatted_address');
+
+            }
+        }
+        $siteVisit->save();
         if( $request->filled('leads') ){
 
             $siteVisit->leads()->sync( $request->input( 'leads', [] ) );
