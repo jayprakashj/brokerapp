@@ -234,3 +234,6 @@ h2.swal2-title{
     background-color: #4f46e5 !important;
     width: 20rem;
 }
+#location_picker_map [class*='-keyboard-shortcuts-dialog-view']{
+    display:none;
+}

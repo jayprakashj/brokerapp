@@ -106,19 +106,19 @@
                                         :selected-item="formData.visit_type"
                                         :error-msg="errors?.visit_type"
                                     />
-                            <label class="block h-full" >
-                                <span>Location</span>
-                                <span class="relative mt-1.5 flex">
-                                    <input
-                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                        placeholder="Location" type="text" name="location" v-model="formData.location">
-                                    <span
-                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                        <i class="fa fa-location-dot text-base"></i>
-                                    </span>
+                            <label class="block h-full col-span-2" >
+                                <span>
+                                    Pick Location
+                                    <span class="text-tiny+ text-error" v-if="errors?.latitude?.length">({{ errors.latitude.at(0) }})</span>
+                                    <span class="text-tiny+ text-error" v-else-if="errors?.longitude?.length">({{ errors.longitude.at(0) }})</span>
+                                    <span class="text-tiny+ text-error" v-else-if="errors?.location?.length">({{ errors.location.at(0) }})</span>
                                 </span>
-
-                                <span class="text-tiny+ text-error" v-if="errors?.location?.length">{{ errors.location.at(0) }}</span>
+                                <location-selector
+                                    :formatted-address="formData.location"
+                                    :marker-position="{lat: formData.latitude,lng: formData.longitude}"
+                                    @onLocationChange="onLocationSelect"
+                                    @close="onLocationPickerClose"
+                                />
                             </label>
 
                             <label class="block h-full" >
@@ -210,8 +210,12 @@
 <script>
 import * as Yup from 'yup';
 import { mapGetters } from 'vuex' ;
+import LocationSelector from '@/components/site_visits/LocationSelector.vue'
 
 export default {
+    components:{
+        LocationSelector
+    },
     data(){
         return {
             pageTitle: 'Site Visits',
@@ -233,6 +237,8 @@ export default {
                 opening_manager: null,
                 visit_type: null,
                 comments: null,
+                latitude: null,
+                longitude: null,
                 leads: [],
             },
             rolesList: [],
@@ -256,6 +262,9 @@ export default {
                 'leads': [],
 
             },
+            show:{
+                locationPicker: false
+            }
         }
     },
     mounted(){
@@ -288,6 +297,12 @@ export default {
                             .nullable(true)
                             .required('Required'),
                 location: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
+                latitude: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
+                longitude: Yup.string()
                             .nullable(true)
                             .required('Required'),
                 type: Yup.string()
@@ -428,6 +443,20 @@ export default {
                             }
                         )
         },
+        showLocationPicker(){
+            this.show.locationPicker = true;
+        },
+        hideLocationPicker(){
+            this.show.locationPicker = false;
+        },
+        onLocationPickerClose () {
+            this.hideLocationPicker();
+        },
+        onLocationSelect( data ){
+            this.formData.location = data.address;
+            this.formData.latitude = data.latLng.lat;
+            this.formData.longitude = data.latLng.lng;
+        }
     }
 }
 </script>

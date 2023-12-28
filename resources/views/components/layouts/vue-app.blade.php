@@ -63,7 +63,14 @@
 
     <script>
         window.addEventListener("DOMContentLoaded", () => Alpine.start());
+        function mapLoaded (){
+            window.dispatchEvent( new Event('googleMapLoaded'));
+        }
     </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map.api_key') }}&callback=mapLoaded"
+        defer
+    ></script>
 
     @isset($script)
         {{ $script }}
