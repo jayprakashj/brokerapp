@@ -114,6 +114,7 @@
                                     <span class="text-tiny+ text-error" v-else-if="errors?.location?.length">({{ errors.location.at(0) }})</span>
                                 </span>
                                 <location-selector
+                                    :address-label="formData.site_name"
                                     :formatted-address="formData.location"
                                     :marker-position="{lat: formData.latitude,lng: formData.longitude}"
                                     @onLocationChange="onLocationSelect"
