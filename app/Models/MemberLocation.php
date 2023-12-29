@@ -11,6 +11,9 @@ class MemberLocation extends Model
 {
     use CreatedUpdatedUserRelation, OwnerUserRelation;
 
+    public $casts = [
+        'location_time' => 'date'
+    ];
     /**
      * The "booted" method of the model.
      */

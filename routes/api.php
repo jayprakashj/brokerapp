@@ -71,6 +71,8 @@ Route::middleware(['auth:web,api' , 'set_default_company' ])->group(function () 
                                                 ->name('data.dashboard');
         Route::post('/track/location', [MemberLocationController::class, 'store'])
                                                 ->name('track.location');
+        Route::get('/member/{user}/location-history', [MemberLocationController::class, 'getMemberLocationHistory'])
+                                                ->name('meber.location_history');
         Route::prefix('roles')
                 ->name('role.')
                 ->group( function () {

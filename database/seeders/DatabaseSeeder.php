@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
                 TaskStatusSeeder::class,
                 TaskSeeder::class,
                 SiteVisitSeeder::class,
+                MemberLocationSeeder::class,
             ]
         );
     }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddMemberLocationRequest;
+use App\Http\Resources\Api\MemberLocationHistory\MemberLocationHistoryListResource;
 use App\Http\Resources\Api\Member\MemberPaginationResource;
+use App\Models\User;
 use App\Services\Database\MemberLocationClass;
 use Illuminate\Http\Request;
 
@@ -31,6 +33,18 @@ class MemberLocationController extends Controller
         $code = 200;
 
         $this->memberLocationClass->createMany(  auth()->user(), $request->input('locations', []) );
+
+        return response()->json( $response, $code );
+    }
+
+    public function getMemberLocationHistory( User $user ){
+        $code = 200;
+
+        $locations = $this->memberLocationClass->fetchLocationHistory( $user );
+        $response = [
+            'message' => 'Success! Location captured successfully.',
+            'locations' => MemberLocationHistoryListResource::collection( $locations )->additional(['selectedUser' => $user])
+        ];
 
         return response()->json( $response, $code );
     }

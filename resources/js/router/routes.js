@@ -35,6 +35,7 @@ import SiteVisitView from  '@/components/site_visits/SiteVisitView.vue'
 import ApiList from  '@/components/api_doc/ApiList.vue'
 import EnquiryForm from  '@/components/enquiry/EnquiryForm.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
+import MemberLocationHistory from  '@/components/member_location_history/MemberLocationHistory.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
 
@@ -447,6 +448,15 @@ const routes = [
         component: ApiList,
         meta: {
             title: 'API Documentations'
+        }
+    },
+    {
+        path: '/member/location-history',
+        name: 'member_location_history',
+        component: MemberLocationHistory,
+        meta: {
+            title: 'Location History',
+            permissions: [ permission.VIEW_MEMBER_LOCATION_HISTORY ]
         }
     },
     {

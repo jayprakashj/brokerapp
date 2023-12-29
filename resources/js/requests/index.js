@@ -533,6 +533,9 @@ const apis = {
     createEnquiryRequest: ( data ) => {
         return http.post('submit/enquiry-form', data);
     },
+    getMemberLocationHistory: ( id ) => {
+        return http.get('member/' + id + '/location-history');
+    },
 
     getSavedSearchList: ( params ) => {
         let config = {};

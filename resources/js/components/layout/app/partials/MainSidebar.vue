@@ -141,6 +141,14 @@ export default {
                     checkGlobalPermission: false,
                 },
                 {
+                    name: 'Member Location History',
+                    route: '/member/location-history',
+                    iconImg: '/images/icons/map-icon.svg',
+                    permission: [ this.$permissions.VIEW_MEMBER_LOCATION_HISTORY ],
+                    ignorePermission: false,
+                    checkGlobalPermission: false,
+                },
+                {
                     name: 'API Documentation',
                     route: '/api-documentation',
                     iconImg: '/images/icons/webhook.svg',

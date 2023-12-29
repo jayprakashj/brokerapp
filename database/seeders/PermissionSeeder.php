@@ -282,6 +282,10 @@ class PermissionSeeder extends Seeder
             'name' => 'Remove Site Visit',
             'group_name' => 'Site Visit',
         ]);
+        Permission::create([
+            'name' => 'View Member Location History',
+            'group_name' => 'Member Location',
+        ]);
 
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
