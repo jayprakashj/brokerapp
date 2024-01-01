@@ -17,6 +17,13 @@ class RoleClass {
                         ->paginate( $request->input('per_page', config('app.per_page') ) );
     }
 
+    public function getAllUserRolesHierarchy () {
+        return Role::with(['users'])
+                        ->withCount(['users'])
+                        ->orderBy('hierarchy_order')
+                        ->get();
+    }
+
 
     public function create ( User $user, $request, $default = false ) {
 
@@ -32,6 +39,7 @@ class RoleClass {
 
     private function createOrUpdate( Role $role, User $user, $request ){
         $role->name = $request->input('role_name');
+        $role->hierarchy_order = $request->input('hierarchy_order');
         $role->user_id = $user->id;
         $role->company_id = \Helper::retrieveDefaultCompany()->id;
         $role->guard_name = 'web';

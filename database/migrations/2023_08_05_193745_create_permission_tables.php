@@ -45,7 +45,9 @@ class CreatePermissionTables extends Migration
             $table->index('user_id', 'roles_user_id_foreign_key_index');
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
+            $table->integer('hierarchy_order')->nullable();
             $table->timestamps();
+            $table->index('hierarchy_order');
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
             } else {

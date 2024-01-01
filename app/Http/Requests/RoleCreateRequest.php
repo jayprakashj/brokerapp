@@ -33,6 +33,11 @@ class RoleCreateRequest extends FormRequest
                             $clause->whereNot('id', $this->id);
                         })
             ],
+            'hierarchy_order' => [
+                'required',
+                'integer',
+                'min:1'
+            ]
         ];
     }
 

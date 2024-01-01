@@ -231,8 +231,8 @@ export default {
             page: 1,
             lists:{},
             showFilter: false,
-            sortColumn: 'updated_at',
-            sortOrder: 'desc',
+            sortColumn: 'hierarchy_order',
+            sortOrder: 'asc',
             filterOptions: {},
             filter: {
                 name: null,

@@ -35,6 +35,7 @@ import SiteVisitView from  '@/components/site_visits/SiteVisitView.vue'
 import ApiList from  '@/components/api_doc/ApiList.vue'
 import EnquiryForm from  '@/components/enquiry/EnquiryForm.vue'
 import ViewInvitation from  '@/components/members/ViewInvitation.vue'
+import MemberRoleHierarchyTree from  '@/components/members/MemberRolesHierarchyTree.vue'
 import MemberLocationHistory from  '@/components/member_location_history/MemberLocationHistory.vue'
 import NotFound from  '@/components/errors/NotFound.vue'
 import Unauthorize from  '@/components/errors/Unauthorize.vue'
@@ -170,6 +171,14 @@ const routes = [
         component: ViewInvitation,
         meta: {
             title: 'Invitation'
+        }
+    },
+    {
+        path: '/member/roles-hierarchy',
+        name: 'member_roles_hierarchy',
+        component: MemberRoleHierarchyTree,
+        meta: {
+            title: 'Roles Hierarchy Tree'
         }
     },
     {

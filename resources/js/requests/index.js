@@ -258,6 +258,14 @@ const apis = {
         return http.get('roles/lists', config);
 
     },
+    getRoleHierarchyList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('roles/hierarchy-lists', config);
+
+    },
     roleFilterData: ( params) => {
         let config = {};
         if( params ) {
@@ -388,6 +396,9 @@ const apis = {
     },
     addLeadComment: ( id, data ) => {
         return http.post( `leads/${id}/add-comment`, data );
+    },
+    addLeadSiteVisit: ( data ) => {
+        return http.post( `site-visits/for-lead/add`, data );
     },
     getPropertyList: ( params) => {
         let config = {};
