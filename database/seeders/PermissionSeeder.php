@@ -286,6 +286,10 @@ class PermissionSeeder extends Seeder
             'name' => 'View Member Location History',
             'group_name' => 'Member Location',
         ]);
+        Permission::create([
+            'name' => 'Allow App Access',
+            'group_name' => 'App Access',
+        ]);
 
         $role = Role::create(['name' => 'company-admin', 'company_id' => null]);
         $role->givePermissionTo(Permission::all());
