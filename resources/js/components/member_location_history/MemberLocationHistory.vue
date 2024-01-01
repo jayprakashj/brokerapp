@@ -23,7 +23,7 @@
             <div class="card mt-3">
                 <div class="">
                     <h2 class="text-lg p-3 font-medium tracking-wide text-slate-700 dark:text-navy-100">
-                        {{ selectedUserInfo.name }}'s History
+                        {{ selectedUserInfo?.name }}'s History
                     </h2>
                 </div>
                 <div class="pt-2">
