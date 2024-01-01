@@ -134,7 +134,7 @@ class DashboardClass {
                         ->filterDate( 'created_at', $selectedDate, '>=' );
 
         if( !$user->isCompanyAdmin() ){
-            $siteVisitCount->createdByOrAssignToAuth();
+            $siteVisitCount->createdByOrAssignedToAuth();
         }
         $siteVisitCount = $siteVisitCount->count();
 
