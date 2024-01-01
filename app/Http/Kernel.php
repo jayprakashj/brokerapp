@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'set_default_company' => \App\Http\Middleware\SetDefaultCompanyTeamMiddleware::class,
         'check_default_company' => \App\Http\Middleware\CheckDefaultCompanyMiddleware::class,
+        'check_app_access' => \App\Http\Middleware\CheckAppAccess::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class
     ];
 }

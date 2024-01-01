@@ -17,6 +17,7 @@ class RoleEditResource extends JsonResource
         $data = [
             'id' => $this->id,
             'role_name' => $this->name,
+            'hierarchy_order' => $this->hierarchy_order,
             'permissions' => $this->permissions->pluck('id')->toArray(),
         ];
 

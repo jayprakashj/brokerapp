@@ -1,7 +1,7 @@
 <template>
 
-    <div class="px-4 py-4 sm:px-5 ">
-        <div id="location_picker_map" ref="location_picker_map" class="w-full h-[320px]"></div>
+    <div class="px-4 py-4 sm:px-5 h-[320px]">
+        <div id="location_picker_map" ref="location_picker_map" class="w-full h-full"></div>
     </div>
 </template>
 
@@ -46,6 +46,18 @@ export default {
         addressLabel:{
             type: String,
             default: ""
+        },
+        markersList:{
+            type: [Array],
+            default: () => []
+        },
+        highlightMarker:{
+            type: [ String, Number],
+            default: null
+        },
+        fitMapToMarkers:{
+            type: Boolean,
+            default: true
         }
     },
     data(){
@@ -55,7 +67,9 @@ export default {
             markerLatLong: null,
             geoCoderObj: null,
             markerAddress: null,
-            infoWindow: null
+            infoWindow: null,
+            mapMarkers: [],
+            markersData: [],
         }
     },
     created(){
@@ -79,11 +93,31 @@ export default {
             if( typeof nv == 'object' && Object.keys( nv ).length ){
                 this.updateMarkerPosition();
             }
+        },
+        markersList( nV ){
+            if( nV && nV?.length ){
+                this.markersData = nV;
+                this.$nextTick( () => {
+                    this.cleanMarkersPoint();
+
+                    this.showMarkers();
+                })
+            }
+        },
+        highlightMarker(){
+            this.focusOnHighlightMarker()
         }
     },
     methods:{
         init(){
             this.initMap();
+            if( this.markersList && this.markersList?.length ){
+                this.markersData = this.markersList;
+                this.$nextTick( () => {
+
+                    this.showMarkers();
+                })
+            }
         },
         initMap(){
 
@@ -187,6 +221,86 @@ export default {
         },
         closeModal () {
             this.$emit('close');
+        },
+        cleanMarkersPoint(){
+            if( this.mapMarkers && this.mapMarkers?.length ){
+                this.mapMarkers.forEach( d => {
+                    d.marker.setVisible( false );
+                    d.marker.setMap( null );
+
+                });
+                this.mapMarkers = [];
+            }
+        },
+        showMarkers(){
+            if(this.markersData && this.markersData?.length ){
+                this.cleanMarkersPoint();
+                this.mapMarkers = [];
+                const __map = this.mapObj;
+                setTimeout(() => {
+
+                    this.markersData.forEach( ( d ) => {
+                        let markerObj = new google.maps.Marker({
+                            position: d.marker_points,
+                            map: this.mapObj,
+                            id: d.id
+                        });
+                        let infoWindow;
+                        if( d.marker_content ){
+                            let content = (d.marker_label ? `<p><b class="text-lg">${d.marker_label}</b></p>` : '' ) + `<p class="text-base">${d.marker_content}</p>`;
+                            infoWindow = new google.maps.InfoWindow({
+                                content: content
+                            })
+                            markerObj.addListener("click", (e, data) => {
+                                this.mapMarkers.forEach( d => {
+                                    if( d.infoWindow && d.infoWindow != infoWindow){
+                                        d.infoWindow.close();
+                                    }
+                                })
+                                infoWindow.open( __map,markerObj)
+                            })
+
+                        }
+                        this.mapMarkers[ d.id ] = {
+                            marker: markerObj,
+                            infoWindow: infoWindow
+                        };
+
+                    });
+                    if( this.fitMapToMarkers ){
+                        this.fitMapAccordingMarkers();
+                    }
+                }, 300);
+            }
+        },
+        focusOnHighlightMarker(){
+            if( this.highlightMarker && this.highlightMarker in this.mapMarkers ){
+                this.mapMarkers.forEach( (d, k) => {
+                    if( k !== this.highlightMarker && d.infoWindow ){
+                        d.infoWindow.close();
+                    }
+                })
+                let markerObj = this.mapMarkers[ this.highlightMarker ].marker;
+                let infoWindow = this.mapMarkers[ this.highlightMarker ].infoWindow;
+                if( !infoWindow ){
+                    new google.maps.event.trigger( markerObj, 'click');
+                }else{
+                    infoWindow.open( this.mapObj, markerObj);
+
+                }
+            }
+        },
+        fitMapAccordingMarkers(){
+            if(this.mapMarkers && this.mapMarkers?.length ){
+                let bounds =  new google.maps.LatLngBounds();
+                this.mapMarkers.forEach( d => {
+                    if( d.marker ){
+                        bounds.extend( d.marker.getPosition() );
+                    }
+                })
+
+                this.mapObj.fitBounds( bounds );
+            }
         }
     }
 }

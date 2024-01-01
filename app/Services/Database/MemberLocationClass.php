@@ -69,4 +69,13 @@ class MemberLocationClass {
         return $memberLocation;
     }
 
+    public function fetchLocationHistory( User $user ){
+        $locations = MemberLocation::where('user_id', $user->id)
+                                    ->where('created_at', '>=', now()->subDays(3)->startOfDay() )
+                                    ->limit(500)
+                                    ->orderByDesc('location_time')
+                                    ->get();
+        return $locations;
+    }
+
 }
