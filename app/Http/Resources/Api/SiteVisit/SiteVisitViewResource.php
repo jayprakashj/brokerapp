@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\SiteVisit;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SiteVisitViewResource extends JsonResource
@@ -23,8 +24,8 @@ class SiteVisitViewResource extends JsonResource
             'project' => $this->project->title ?? null,
             'comments' => $this->comments ?? 'N/A',
             'assign_user' => 'N/A',
-            'time_in' => $this->time_in ?? 'N/A',
-            'time_out' => $this->time_out ?? 'N/A',
+            'time_in' => $this->time_in ? Carbon::parse($this->time_in)->format('d M, Y h:i A') : 'N/A',
+            'time_out' => $this->time_out ? Carbon::parse($this->time_out)->format('d M, Y h:i A') :  'N/A',
             'location' => $this->location ?? 'N/A',
             'latitude' => (float)$this->latitude,
             'longitude' => (float)$this->longitude,
