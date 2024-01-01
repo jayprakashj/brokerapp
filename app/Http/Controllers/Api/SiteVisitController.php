@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\SiteVisit\AddSiteVisitForLeadRequest;
 use App\Http\Requests\Api\SiteVisit\AddSiteVisitRequest;
 use App\Http\Resources\Api\Member\MemberSelectListResource;
 use App\Http\Resources\Api\SiteVisit\SiteVisitEditResource;
@@ -78,6 +79,18 @@ class SiteVisitController extends Controller
                 'message' => 'Success! Site Visit data updated successfully.'
             ];
         }
+        return response()->json( $response, $code );
+    }
+
+    public function createSiteVisitFromLead (AddSiteVisitForLeadRequest $request ) {
+        $response = [
+            'message' => 'Success! New Site Visit added successfully.'
+        ];
+        $code = 200;
+
+        $lead = Lead::find( $request->input('lead_id') );
+
+        $this->siteVisitClass->createFromLead( auth()->user(), $lead , $request );
         return response()->json( $response, $code );
     }
 
