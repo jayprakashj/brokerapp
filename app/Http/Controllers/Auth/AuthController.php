@@ -209,21 +209,30 @@ class AuthController extends Controller
         if( !is_null( $user ) ){
 
             if( Hash::check( $request->input('password' ), $user->getAuthPassword() ) ){
+                \Helper::setDefaultCompanySessionTeam( $user );
                 if( !$user->isCompanyAdmin() ){
+
                     if( $user->isActive() ){
                         if( $user->isEmailVerified() ){
-                            auth('api')->user( $user );
-                            auth()->shouldUse( 'api' );
+                            if( $user->can('Allow App Access') ){
+                                auth('api')->user( $user );
+                                auth()->shouldUse( 'api' );
 
-                            $token = $user->createToken('auth-token');
+                                $token = $user->createToken('auth-token');
 
-                            \Helper::setDefaultCompanySessionTeam( $user );
 
-                            $response = [
-                                'success' => 'Logged in successfully.',
-                                'token' => $token->plainTextToken ?? null,
-                                'user' => $user,
-                            ];
+                                $response = [
+                                    'success' => 'Logged in successfully.',
+                                    'token' => $token->plainTextToken ?? null,
+                                    'user' => $user,
+                                ];
+                            }else{
+                                $code = 403;
+                                $response = [
+                                    'message' => 'App access is restricted.',
+                                ];
+
+                            }
                         }else{
                             $code = 500;
                             $response = [
