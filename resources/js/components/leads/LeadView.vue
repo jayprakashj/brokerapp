@@ -445,6 +445,18 @@
                         <no-data-found v-else />
                     </div>
                     <div v-show="activeTab === 'site_visits'" >
+                        <div
+                            class="flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
+                            <div class="flex justify-end space-x-2">
+                                <button
+                                    @click="showSiteVisitForm"
+                                    v-if="userPermissions.isPermissionsAllowed([ $permissions.ADD_SITE_VISIT ] )"
+                                    class="btn bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+                                    >
+                                    <i class="fa fa-building-user mr-2"></i> Add Site Visit
+                                </button>
+                            </div>
+                        </div>
                         <div class="px-4 pt-2 pb-4" v-if="formData?.site_visits?.length">
                             <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.site_visits" :key="'site_visit_'+index">
                                 <div class="flex items-center space-x-2 sm:space-x-3">
@@ -486,6 +498,7 @@
         <Teleport to="#teleport-target">
 
             <add-comment-form v-if="userPermissions.isPermissionsAllowed([ $permissions.CAN_COMMENT ] ) && show.commentForm" title="Add Comment" :lead-id="formData.id" @close="hideCommentForm" @onAdded="onCommentAdd" />
+            <add-site-visit-form v-if="userPermissions.isPermissionsAllowed([ $permissions.ADD_SITE_VISIT ] ) && show.siteVisitForm" title="Add Site Visit" :lead-id="formData.id" @close="hideSiteVisitForm" @onAdded="onSiteVisitAdd" />
         </Teleport>
     </div>
 
@@ -495,10 +508,12 @@
 import * as Yup from 'yup';
 import { mapGetters } from 'vuex' ;
 import AddCommentForm from '@/components/leads/AddCommentForm.vue' ;
+import AddSiteVisitForm from '@/components/leads/AddSiteVisitForm.vue' ;
 
 export default {
     components:{
-        AddCommentForm
+        AddCommentForm,
+        AddSiteVisitForm
     },
     data(){
         return {
@@ -541,7 +556,8 @@ export default {
 
             },
             show:{
-                commentForm: false
+                commentForm: false,
+                siteVisitForm: false
             },
             activeTab: 'history'
         }
@@ -604,6 +620,16 @@ export default {
         },
         changeTab( tabKey ){
             this.activeTab = tabKey;
+        },
+        showSiteVisitForm(){
+            this.show.siteVisitForm = true;
+        },
+        hideSiteVisitForm(){
+            this.show.siteVisitForm = false;
+        },
+        onSiteVisitAdd(){
+            this.hideSiteVisitForm();
+            this.loadViewDetail( this.$route.params.id );
         }
     }
 }

@@ -265,4 +265,12 @@ class User extends Authenticatable implements HasMedia
 
         return $this;
     }
+
+    public function isAppLogin(){
+        return ( is_null( auth('web')->id() ) && !empty( auth('api')->id() ) );
+    }
+
+    public function isAppAccessAllowed(){
+        return $this->can('Allow App Access') && $this->isAppLogin();
+    }
 }

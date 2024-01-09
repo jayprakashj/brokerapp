@@ -258,6 +258,14 @@ const apis = {
         return http.get('roles/lists', config);
 
     },
+    getRoleHierarchyList: ( params) => {
+        let config = {};
+        if( params ) {
+            config['params'] = params;
+        }
+        return http.get('roles/hierarchy-lists', config);
+
+    },
     roleFilterData: ( params) => {
         let config = {};
         if( params ) {
@@ -388,6 +396,9 @@ const apis = {
     },
     addLeadComment: ( id, data ) => {
         return http.post( `leads/${id}/add-comment`, data );
+    },
+    addLeadSiteVisit: ( data ) => {
+        return http.post( `site-visits/for-lead/add`, data );
     },
     getPropertyList: ( params) => {
         let config = {};
@@ -532,6 +543,9 @@ const apis = {
     },
     createEnquiryRequest: ( data ) => {
         return http.post('submit/enquiry-form', data);
+    },
+    getMemberLocationHistory: ( id ) => {
+        return http.get('member/' + id + '/location-history');
     },
 
     getSavedSearchList: ( params ) => {

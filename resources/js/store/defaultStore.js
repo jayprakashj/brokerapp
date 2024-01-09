@@ -13,6 +13,7 @@ const defaultStore = ({
             isSearchbarActive: false,
             breakpoints: {},
             globalLoader: true,
+            isLocationAllowed: false,
             authUser: window.authUser,
             userPermissions: window.userPermissions,
             globalPermissions: window.globalPermissions
@@ -34,6 +35,9 @@ const defaultStore = ({
         userPermissions( state ){
             return state.userPermissions;
         },
+        getIsLocationAllowed( state ){
+            return state.isLocationAllowed;
+        },
     },
     mutations:{
         setSidebarExpanded ( state ){
@@ -53,6 +57,9 @@ const defaultStore = ({
         },
         changeUserPermissions(state, data ){
             state.userPermissions = data;
+        },
+        setIsLocationAllowed(state, data ){
+            state.isLocationAllowed = data;
         },
     },
     actions:{

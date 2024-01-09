@@ -22,7 +22,7 @@ class PropertyTransactionSeeder extends Seeder
         $data = [
             'Sell',
             'Rental',
-            'Resell',
+            // 'Resell',
             'Pre-Leased'
         ];
         $users = User::with('defaultCompany')->typeCompany()->get();

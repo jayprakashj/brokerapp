@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\DashboardController as ApiDashboardController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\LeadController;
+use App\Http\Controllers\Api\MemberLocationController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\RoleManagementController;
@@ -43,7 +44,7 @@ Route::post('submit/enquiry-form', [LeadController::class, 'submitEnquiryForm'])
 
 Route::get('enquiry/form-select-lists', [LeadController::class, 'enquiryFormSelectList'])->name('enquiry_form_lists');
 
-Route::middleware(['auth:web,api' , 'set_default_company' ])->group(function () {
+Route::middleware(['auth:web,api' , 'set_default_company', 'check_app_access' ])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::post('/upload-media', [DashboardController::class, 'uploadMedia'])->name('upload_media');
@@ -68,12 +69,20 @@ Route::middleware(['auth:web,api' , 'set_default_company' ])->group(function () 
     Route::middleware('check_default_company')->group( function(){
         Route::get('/data/dashboard', [ApiDashboardController::class, 'getDashboardData'])
                                                 ->name('data.dashboard');
+        Route::post('/track/location', [MemberLocationController::class, 'store'])
+                                                ->name('track.location');
+        Route::get('/member/{user}/location-history', [MemberLocationController::class, 'getMemberLocationHistory'])
+                                                ->name('meber.location_history');
         Route::prefix('roles')
                 ->name('role.')
                 ->group( function () {
                     Route::get('/lists', [RoleManagementController::class, 'index'])
                             ->middleware('permission:Role List')
                             ->name('index');
+
+                    Route::get('/hierarchy-lists', [RoleManagementController::class, 'getRoleHierarchy'])
+                                ->middleware('permission:Role List')
+                                ->name('index');
 
                     Route::get('{role}/edit', [RoleManagementController::class, 'edit'])
                             ->middleware('permission:Update Role')
@@ -372,6 +381,9 @@ Route::middleware(['auth:web,api' , 'set_default_company' ])->group(function () 
             Route::post('store', [SiteVisitController::class, 'store'])
                             ->middleware('permission:Add Site Visit|Update Site Visit')
                             ->name('store');
+            Route::post('for-lead/add', [SiteVisitController::class, 'createSiteVisitFromLead'])
+                            ->middleware('permission:Add Site Visit')
+                            ->name('create_site_visit_from_lead');
             Route::get('lists/form-select-lists', [SiteVisitController::class, 'createFormSelectList'])
                             ->name('create_form_lists');
             // Route::post('{siteVisit}/delete', [SiteVisitController::class, 'delete'])

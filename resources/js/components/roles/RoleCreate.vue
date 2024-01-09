@@ -38,6 +38,41 @@
 
                                 <span class="text-tiny+ text-error" v-if="errors?.role_name?.length">{{ errors.role_name.at(0) }}</span>
                             </label>
+                            <label class="block">
+                                <span>
+                                    Hierarchy Order
+                                    <tippy tag="button" type="button">
+                                        <template #content >
+                                            <div class="flex space-x-3 rounded-lg bg-slate-150 p-3 dark:bg-navy-500 text-black">
+                                                <div>
+                                                    <p>This value is used to maintain the role hierarachy, where the less number become the top and highe number will become the sub-level.</p>
+                                                    <p>For example,</p>
+                                                    <ul>
+                                                        <li>1: Admin</li>
+                                                        <li>2: Base Admin</li>
+                                                        <li>3: Managers</li>
+                                                        <li>4: Sales Person</li>
+                                                        <li>5: Staff</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template #default>
+                                            <span>
+                                                <i class="fa fa-info-circle"></i>
+                                            </span>
+                                        </template>
+
+                                    </tippy>
+                                </span>
+                                <span class="relative mt-1.5 flex">
+                                    <input
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Hierarchy no..." type="number" name="hierarchy_order" v-model="formData.hierarchy_order">
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.hierarchy_order?.length">{{ errors.hierarchy_order.at(0) }}</span>
+                            </label>
 
 
                             <div class="card px-4 pb-4 sm:px-5 mt-6 {{ $loop->last ? 'mb-5' :'' }}" v-for="(item, index) in permissions" :key="'permission_'+index">
@@ -87,6 +122,7 @@ export default {
             errors: {},
             formData:{
                 role_name: '',
+                hierarchy_order: null,
                 permissions: []
             },
             permissions: [],
@@ -119,6 +155,10 @@ export default {
                             .nullable(true)
                             .required('Required')
                             .min('2', 'Must have at least 2 characters'),
+                hierarchy_order: Yup.number()
+                            .nullable(true)
+                            .required('Required')
+                            .min(1, 'Minimum value: 1'),
 
             }
             const yup = Yup.object().shape( fields );

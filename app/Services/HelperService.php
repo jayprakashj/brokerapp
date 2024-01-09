@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use NumberFormatter;
 use App\Models\Company;
+use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
 class HelperService {
@@ -92,5 +93,71 @@ class HelperService {
         }
 
         return $result;
+    }
+
+    public function getGoogleAddressFromLatLong( $lat, $lng ){
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $lat. ',' . $lng .'&key=' . config('services.google_map.api_key');
+
+        $response = null;
+
+        $client = new Client();
+
+        try{
+            $req = $client->get( $url, ['verify' => false] );
+
+            $response = $req->getBody()->getContents();
+            $response = json_decode( $response, true );
+
+            $results = data_get( $response, 'results');
+            $result = head( $results );
+
+            $formattedAddress = data_get( $result, 'formatted_address');
+            $addressComponent = data_get( $result, 'address_components', []);
+
+            $address = [];
+
+            $locality = null;
+            $city = null;
+            $country = null;
+
+            foreach( $addressComponent as $item ){
+                $types = data_get( $item, 'types', []);
+                $typeName = data_get( $item, 'long_name', []);
+                if( in_array('country', $types ) ){
+                    $country = $typeName;
+                }
+                if( in_array('locality', $types ) ){
+                    $locality = $typeName;
+                }
+                if( in_array('administrative_area_level_3', $types ) ){
+                    $city = $typeName;
+                }
+                if( in_array('route', $types ) || in_array('neighborhood', $types ) || in_array('sublocality', $types )  ){
+                    $address[] = $typeName;
+                }
+            }
+            if( !empty( $address ) ){
+                $address = implode( ', ', $address );
+            }else{
+                $address = null;
+            }
+
+            $response = [
+                '__response' => $response,
+                '__response_results' => $results,
+                '__address_components' => $addressComponent,
+                'formatted_address' => $formattedAddress,
+                'address' => $address,
+                'locality' => $locality,
+                'city' => $city,
+                'country' => $country,
+            ];
+
+        }catch( \Exception $e ){
+            info( 'ERROR IN GOOGLE MAP API' );
+            info( $e );
+        }
+
+        return $response;
     }
 }

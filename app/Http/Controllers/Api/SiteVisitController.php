@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\SiteVisit\AddSiteVisitForLeadRequest;
 use App\Http\Requests\Api\SiteVisit\AddSiteVisitRequest;
 use App\Http\Resources\Api\Member\MemberSelectListResource;
 use App\Http\Resources\Api\SiteVisit\SiteVisitEditResource;
@@ -81,6 +82,18 @@ class SiteVisitController extends Controller
         return response()->json( $response, $code );
     }
 
+    public function createSiteVisitFromLead (AddSiteVisitForLeadRequest $request ) {
+        $response = [
+            'message' => 'Success! New Site Visit added successfully.'
+        ];
+        $code = 200;
+
+        $lead = Lead::find( $request->input('lead_id') );
+
+        $this->siteVisitClass->createFromLead( auth()->user(), $lead , $request );
+        return response()->json( $response, $code );
+    }
+
 
     public function delete ( SiteVisit $siteVisit ) {
         $code = 500;
@@ -95,6 +108,7 @@ class SiteVisitController extends Controller
     public function createFormSelectList ( Request $request ){
         $propertyList = Property::select('id', 'name')->get();
         $projectList = Project::select('id', 'title as name')->get();
+        $companyBranch = CompanyBranch::select('id', 'name')->get();
         $members = $this->memberClass->getMembersListForSelectList();
         $leads = Lead::select(
                             'id',
@@ -110,6 +124,7 @@ class SiteVisitController extends Controller
             'properties' => $propertyList,
             'projects' => $projectList,
             'members' => MemberSelectListResource::collection( $members ),
+            'company_branches' => $companyBranch,
             'visit_types' => $visitTypes,
             'types' => $types,
             'leads' => $leads,

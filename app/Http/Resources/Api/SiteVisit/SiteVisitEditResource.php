@@ -27,6 +27,8 @@ class SiteVisitEditResource extends JsonResource
             'source_manager' => $this->source_manager,
             'closing_manager' => $this->closing_manager,
             'location' => $this->location,
+            'latitude' => (float)$this->latitude,
+            'longitude' => (float)$this->longitude,
             'time_in' => $this->time_in ? Carbon::parse( $this->time_in )->format('Y-m-d\TH:i') : null,
             'time_out' => $this->time_out? Carbon::parse( $this->time_out )->format('Y-m-d\TH:i') : null,
             'property_id' => $this->property_id,

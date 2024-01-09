@@ -7,12 +7,13 @@ use App\Http\Requests\RoleCreateRequest;
 use App\Http\Resources\Api\Permission\GroupPermissionListResource;
 use App\Http\Resources\Api\Permission\PermissionResource;
 use App\Http\Resources\Api\Role\RoleEditResource;
+use App\Http\Resources\Api\Role\RoleListHierarchyResource;
 use App\Http\Resources\Api\Role\RolePaginationResource;
 use App\Models\SpatiePermission;
 use App\Models\User;
+use App\Models\Role;
 use App\Services\Database\RoleClass;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 class RoleManagementController extends Controller
 {
@@ -76,6 +77,12 @@ class RoleManagementController extends Controller
             dd( $e );
         }
         return redirect()->route('role.index')->with('success-message', $message);
+    }
+
+    public function getRoleHierarchy ( Request $request ) {
+        $roles = $this->roleClass->getAllUserRolesHierarchy( $request );
+
+        return RoleListHierarchyResource::collection( $roles );
     }
 
     public function getPermissions () {

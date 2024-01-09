@@ -58,6 +58,7 @@ const permissions = {
     ADD_SITE_VISIT:'Add Site Visit',
     UPDATE_SITE_VISIT:'Update Site Visit',
     REMOVE_SITE_VISIT:'Remove Site Visit',
+    VIEW_MEMBER_LOCATION_HISTORY:'View Member Location History',
 }
 
 export default permissions;

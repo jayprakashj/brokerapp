@@ -35,5 +35,9 @@ return [
         'app_id' => env('FB_APP_ID', null),
         'app_secret' => env('FB_APP_SECRET', null),
         'access_token' => env('FB_ACCESS_TOKEN', null),
+    ],
+
+    'google_map' => [
+        'api_key' => env('GOOGLE_MAP_API_KEY', null)
     ]
 ];

@@ -33,9 +33,42 @@ class SiteVisitSeeder extends Seeder
         $projects = Project::withoutGlobalScope(CompanyIdScope::class)->get();
         $users = User::with('defaultCompany')->typeCompany()->get();
         $members = User::with('defaultCompany')->typeIndividual()->get();
+
+        $latLong = [
+            [
+                'lat' => 22.2986066,
+                'long' => 73.1232061,
+                'address' => 'Ravi park society, Siyed vasna, vadodara, gujarat'
+            ],
+            [
+                'lat' => 22.2960201,
+                'long' => 73.1324528,
+                'address' => 'Gotri, vadodara, gujarat'
+            ],
+            [
+                'lat' => 22.3224239,
+                'long' => 73.1540479,
+                'address' => 'Shubhanpura, vadodara, gujarat'
+            ],
+            [
+                'lat' => 22.326402,
+                'long' => 73.184584,
+                'address' => 'Fatehgunj, vadodara, gujarat'
+            ],
+            [
+                'lat' => 22.317550,
+                'long' => 73.197056,
+                'address' => 'Viththalnagar, karelibaugh, vadodara, gujarat'
+            ],
+            [
+                'lat' => 22.293389,
+                'long' => 73.222432,
+                'address' => 'Swami narayan flats, suryanagar, vadodara, gujarat'
+            ]
+        ];
         for($i = 0; $i < 8; $i++){
             $item = $users->random();
-
+            $latLng = Arr::random( $latLong );
             $obj = new SiteVisit();
 
             $obj->user_id = $item->id;
@@ -53,7 +86,9 @@ class SiteVisitSeeder extends Seeder
             $obj->time_in = now()->addDays( $faker->randomDigit( 10, 100 ) )->format('Y-m-d H:i:s');
             $obj->time_out = now()->addDays( $faker->randomDigit( 10, 100 ) )->format('Y-m-d H:i:s');
             $obj->comments = $faker->text( 16 );
-            $obj->location = $faker->text( 16 );
+            $obj->location = data_get( $latLng, 'address', $faker->text( 16 ) );
+            $obj->latitude = data_get( $latLng, 'lat', $faker->latitude(22, 23) );
+            $obj->longitude = data_get( $latLng, 'long', $faker->longitude( 73,74) );
             $obj->source_manager = $members->random()->id;
             $obj->closing_manager = $members->random()->id;
             $obj->assign_to = $members->random()->id;
