@@ -114,6 +114,8 @@ class SiteVisitClass {
         }
         $request->merge([
             'leads' => [$lead->id],
+            'latitude' => $siteModel->latitude,
+            'longitude' => $siteModel->longitude,
             'comments' => 'Automated: Site visit added from the lead form.',
             'company_branch' => $lead->company_branch_id,
             'site_owner' => $siteModel->owner_name,
