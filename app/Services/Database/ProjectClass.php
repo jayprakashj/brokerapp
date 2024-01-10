@@ -76,6 +76,8 @@ class ProjectClass {
         $project->locality = $request->input('locality');
         $project->building = $request->input('building');
         $project->address = $request->input('address');
+        $project->latitude = $request->input('latitude');
+        $project->longitude = $request->input('longitude');
         $project->amenities = $request->input('amenities');
         $project->owner_name = $request->input('owner_name');
         $project->owner_email = $request->input('owner_email');
