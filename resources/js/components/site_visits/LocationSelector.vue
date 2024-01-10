@@ -138,6 +138,9 @@ export default {
                 if( this.enableMapClick ){
 
                     google.maps.event.addListener( this.mapObj, 'click', ( mapE ) => {
+                        if( !this.enableMapClick ){
+                            return;
+                        }
                         this.markerLatLong = {
                             lat: mapE.latLng.lat(),
                             lng: mapE.latLng.lng(),
@@ -150,7 +153,6 @@ export default {
                         this.$emit('onLocationChange', {
                             latLng: this.markerLatLong,
                             address: this.markerAddress,
-                            address_obj: res,
                         });
                     });
                 }
@@ -161,7 +163,6 @@ export default {
                 if( this.mapMarker ){
                     this.mapMarker.setPosition( this.markerLatLong );
                 }else{
-
                     this.mapMarker = new google.maps.Marker({
                         position: this.markerLatLong,
                         map: this.mapObj
@@ -206,11 +207,14 @@ export default {
         },
         updateMarkerPosition(){
             if( this.markerPosition && Object.keys( this.markerPosition ).length ){
-                this.markerLatLong = Object.assign( {}, this.markerPosition );
-                if( this.mapObj ){
-                    // this.mapObj.setCenter( this.markerLatLong );
+                if( this.markerPosition.lat && this.markerPosition.lng ){
+                    this.markerLatLong = Object.assign( {}, this.markerPosition );
+
+                    if( this.mapObj ){
+                        // this.mapObj.setCenter( this.markerLatLong );
+                    }
+                    this.setMarkerPoint();
                 }
-                this.setMarkerPoint();
             }
             if(this.formattedAddress){
                 this.markerAddress = this.formattedAddress;
