@@ -131,7 +131,7 @@ export default {
             formData:{
                 lead_id: this.leadId,
                 type: null,
-                visit_type: null,
+                visit_type: "Direct Visit",
                 project_id: null,
                 property_id: null,
                 latitude: null,
