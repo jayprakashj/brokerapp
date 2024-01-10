@@ -28,6 +28,8 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('city')->nullable();
             $table->string('locality')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->text('description')->nullable();
             $table->text('remark')->nullable();
             $table->text('internal_note')->nullable();

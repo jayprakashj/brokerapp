@@ -32,6 +32,8 @@ class PropertyViewResource extends JsonResource
             'address' => $this->address,
             'city' => $this->city,
             'locality' => $this->locality,
+            'latitude' => !is_null( $this->latitude ) ? (float)$this->latitude : null,
+            'longitude' => !is_null( $this->longitude ) ? (float)$this->longitude : null,
             'description' => $this->description ?? 'N/A',
             'remark' => $this->remark ?? 'N/A',
             'internal_note' => $this->internal_note ?? 'N/A',
