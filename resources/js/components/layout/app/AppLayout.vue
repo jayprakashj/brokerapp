@@ -2,17 +2,16 @@
 
     <div id="root" class="min-h-100vh flex grow bg-slate-50 dark:bg-navy-900" x-cloak>
         <!-- Sidebar -->
-        <div class="sidebar print:hidden" v-if="getIsLocationAllowed">
+        <div class="sidebar print:hidden">
             <MainSidebar />
         </div>
 
         <Header />
-        <AppBlockMessage message="You can not access or use the application as location permission is required to access the app. Please allow the permission." v-if="!getIsLocationAllowed" :is-location-denied="isLocationDenied" />
 
-        <MobileSearchBar v-if="getIsLocationAllowed" />
-        <RightSidebar v-if="getIsLocationAllowed" />
+        <MobileSearchBar />
+        <RightSidebar />
 
-        <main class="main-content w-full px-[var(--margin-x)] pb-8" v-if="getIsLocationAllowed">
+        <main class="main-content w-full px-[var(--margin-x)] pb-8">
             <router-view :key="$route.fullPath"></router-view>
         </main>
     </div>
