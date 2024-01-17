@@ -134,8 +134,7 @@ export default {
                 visit_type: "Direct Visit",
                 project_id: null,
                 property_id: null,
-                latitude: null,
-                longitude: null,
+                comment: "Automated: Site visit added from the lead form."
             },
             options:{
                 types: [],
@@ -152,12 +151,12 @@ export default {
     computed:{
         validationSchema(){
             let fields = {
-                latitude: Yup.string()
-                            .nullable(true)
-                            .required('Current location positions is required'),
-                longitude: Yup.string()
-                            .nullable(true)
-                            .required('Current location positions is required'),
+                // latitude: Yup.string()
+                //             .nullable(true)
+                //             .required('Current location positions is required'),
+                // longitude: Yup.string()
+                //             .nullable(true)
+                //             .required('Current location positions is required'),
                 type: Yup.string()
                             .nullable(true)
                             .required('Required'),
@@ -194,7 +193,7 @@ export default {
     },
     methods:{
         init(){
-            this.getCurrentLatLong();
+            // this.getCurrentLatLong();
             this.loadSelectListData();
         },
         closeModal () {
