@@ -599,6 +599,18 @@
                             </div>
                             <div class="tab-content pt-4">
                                 <div v-show="activeTab === 'site_visits'" >
+                                    <div
+                                        class="flex flex-col items-center space-y-4 border-b border-slate-200 p-4 dark:border-navy-500 sm:flex-row sm:justify-between sm:space-y-0 sm:px-5">
+                                        <div class="flex justify-end space-x-2">
+                                            <button
+                                                @click="showSiteVisitForm"
+                                                v-if="userPermissions.isPermissionsAllowed([ $permissions.ADD_SITE_VISIT ] )"
+                                                class="btn bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+                                                >
+                                                <i class="fa fa-building-user mr-2"></i> Add Site Visit
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div class="px-4 pt-2 pb-4" v-if="formData?.site_visits?.length">
                                         <div class="border-b border-slate-150 py-3 dark:border-navy-500" v-for="(item, index) in formData.site_visits" :key="'site_visit_'+index">
                                             <div class="flex items-center space-x-2 sm:space-x-3">
@@ -710,9 +722,10 @@
 
             </div>
         </div>
-        <Teleport to="#teleport-target" v-if="show.modal">
+        <Teleport to="#teleport-target" >
 
             <property-image-modal-vue v-if="show.modal" :images="formData.images" @close="closeModal"/>
+            <add-site-visit-form v-if="userPermissions.isPermissionsAllowed([ $permissions.ADD_SITE_VISIT ] ) && show.siteVisitForm" title="Add Site Visit" :property-id="formData.id" request-type="property" @close="hideSiteVisitForm" @onAdded="onSiteVisitAdd" />
         </Teleport>
 
     </div>
@@ -725,11 +738,13 @@ import {Navigation} from 'swiper/modules'
 import { mapGetters } from 'vuex' ;
 import PropertyImageModalVue from './PropertyImageModal.vue';
 import LocationSelector from '@/components/site_visits/LocationSelector.vue'
+import AddSiteVisitForm from '@/components/property/AddSiteVisitForm.vue' ;
 
 export default {
     components:{
         PropertyImageModalVue,
-        LocationSelector
+        LocationSelector,
+        AddSiteVisitForm
     },
     data(){
         return {
@@ -798,8 +813,10 @@ export default {
                 images: {},
                 documents: []
             },
+
             show:{
-                modal: false
+                modal: false,
+                siteVisitForm: false
             },
             activeTab: 'site_visits'
         }
@@ -875,6 +892,17 @@ export default {
         },
         changeTab( tabKey ){
             this.activeTab = tabKey;
+        },
+
+        showSiteVisitForm(){
+            this.show.siteVisitForm = true;
+        },
+        hideSiteVisitForm(){
+            this.show.siteVisitForm = false;
+        },
+        onSiteVisitAdd(){
+            this.hideSiteVisitForm();
+            this.loadEditFormDetail( this.$route.params.id );
         }
     }
 }
