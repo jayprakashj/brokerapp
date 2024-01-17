@@ -52,7 +52,7 @@ class ProjectViewResource extends JsonResource
             'project_towers' => $this->projectTowers->map->only(['id','tower_name', 'completion_date']),
             'project_plans' => $this->projectPlans->map->only(['id','tower', 'type','bhk','area', 'price','basic_price']),
             'project_charges' => $this->projectCharges->map->only(['id','charges', 'description', 'price', 'escalation_from']),
-            'site_visits' => SiteVisitListResource::collection( $this->siteVisits ),
+            'site_visits' => SiteVisitListResource::collection( $this->latestSiteVisits ),
             'leads' => LeadListResource::collection( $this->latestLeads ),
             'created_user_name' => $this->createdUser->name  ?? 'N/A',
             'updated_user_name' => $this->updatedUser->name ?? 'N/A',

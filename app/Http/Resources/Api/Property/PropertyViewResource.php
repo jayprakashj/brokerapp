@@ -80,7 +80,7 @@ class PropertyViewResource extends JsonResource
             'notification_end_date' => $this->notification_end_date,
             'notification_message' => $this->notification_message,
             'images' => [],
-            'site_visits' => SiteVisitListResource::collection( $this->siteVisits ),
+            'site_visits' => SiteVisitListResource::collection( $this->latestSiteVisits ),
             'leads' => LeadListResource::collection( $this->latestLeads ),
             'created_user_name' => $this->createdUser->name  ?? 'N/A',
             'updated_user_name' => $this->updatedUser->name ?? 'N/A',

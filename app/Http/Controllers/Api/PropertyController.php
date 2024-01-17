@@ -61,7 +61,7 @@ class PropertyController extends Controller
             return response()->json( [], 404 );
         }
         $property->load([
-            'siteVisits' => function ( $q ){
+            'latestSiteVisits' => function ( $q ){
                 $q->with([
                     'companyBranch',
                     'sourceManagerUser',
