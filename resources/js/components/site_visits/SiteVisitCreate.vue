@@ -41,6 +41,8 @@
                                         :options="options.properties"
                                         :selected-item="formData.property_id"
                                         :error-msg="errors?.property_id"
+                                        @onChange="onSelectProperty"
+
                                     />
                             <input-tom-select
                                         v-if="formData.type == 'project'"
@@ -51,6 +53,7 @@
                                         :options="options.projects"
                                         :selected-item="formData.project_id"
                                         :error-msg="errors?.project_id"
+                                        @onChange="onSelectProject"
                                     />
 
                             <input-tom-select
@@ -106,17 +109,41 @@
                                         :selected-item="formData.visit_type"
                                         :error-msg="errors?.visit_type"
                                     />
+                            <label class="block h-full" >
+                                <span>Location</span>
+                                <span class="relative mt-1.5 flex">
+                                    <input
+                                        class="form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Location" type="text" name="location" v-model="formData.location">
+                                    <span
+                                        class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                        <i class="fa fa-location-dot text-base"></i>
+                                    </span>
+                                </span>
+
+                                <span class="text-tiny+ text-error" v-if="errors?.location?.length">{{ errors.location.at(0) }}</span>
+                            </label>
                             <label class="block h-full col-span-2" >
                                 <span>
                                     Pick Location
                                     <span class="text-tiny+ text-error" v-if="errors?.latitude?.length">({{ errors.latitude.at(0) }})</span>
                                     <span class="text-tiny+ text-error" v-else-if="errors?.longitude?.length">({{ errors.longitude.at(0) }})</span>
-                                    <span class="text-tiny+ text-error" v-else-if="errors?.location?.length">({{ errors.location.at(0) }})</span>
                                 </span>
+                                    <div v-if="!showMapSelector" class="p-4">
+                                        <button
+                                            type="button"
+                                            @click.prevent="showMapSelector = true"
+                                            class="btn border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
+                                            >
+                                            Click to Load Map
+                                        </button>
+                                    </div>
                                 <location-selector
+                                    v-else
                                     :address-label="formData.site_name"
                                     :formatted-address="formData.location"
                                     :marker-position="{lat: formData.latitude,lng: formData.longitude}"
+                                    :enable-map-click="!propertyOrProjectLatLongExists"
                                     @onLocationChange="onLocationSelect"
                                     @close="onLocationPickerClose"
                                 />
@@ -222,6 +249,8 @@ export default {
             pageTitle: 'Site Visits',
             subTitle: 'Add Site Visit',
             isShowPopper: false,
+            showMapSelector: false,
+            propertyOrProjectLatLongExists: false,
             errors: {},
             formData:{
                 site_name: null,
@@ -300,13 +329,16 @@ export default {
                 location: Yup.string()
                             .nullable(true)
                             .required('Required'),
-                latitude: Yup.string()
-                            .nullable(true)
-                            .required('Required'),
-                longitude: Yup.string()
-                            .nullable(true)
-                            .required('Required'),
+                // latitude: Yup.string()
+                //             .nullable(true)
+                //             .required('Required'),
+                // longitude: Yup.string()
+                //             .nullable(true)
+                //             .required('Required'),
                 type: Yup.string()
+                            .nullable(true)
+                            .required('Required'),
+                visit_type: Yup.string()
                             .nullable(true)
                             .required('Required'),
                 property_id: Yup.string()
@@ -454,9 +486,27 @@ export default {
             this.hideLocationPicker();
         },
         onLocationSelect( data ){
-            this.formData.location = data.address;
+            // this.formData.location = data.address;
             this.formData.latitude = data.latLng.lat;
             this.formData.longitude = data.latLng.lng;
+        },
+        onSelectProperty( data ){
+            const property = this.options.properties.find( d => d.id == data );
+            this.propertyOrProjectLatLongExists = false;
+            if( property.latitude !== null && property.longitude !== null ){
+                this.formData.latitude = parseFloat( property.latitude );
+                this.formData.longitude = parseFloat( property.longitude );
+                this.propertyOrProjectLatLongExists = true;
+            }
+        },
+        onSelectProject( data ){
+            const project = this.options.projects.find( d => d.id == data );
+            this.propertyOrProjectLatLongExists = false;
+            if( project.latitude !== null && project.longitude !== null ){
+                this.formData.latitude = parseFloat( project.latitude );
+                this.formData.longitude = parseFloat( project.longitude );
+                this.propertyOrProjectLatLongExists = true;
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed z-50 grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900">
+    <div class="fixed z-[19] grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900">
         <div
             class="alert flex overflow-hidden rounded-lg bg-warning/10 text-warning dark:bg-warning/15"
         >

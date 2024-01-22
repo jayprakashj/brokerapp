@@ -54,7 +54,7 @@ class ProjectController extends Controller
             return response()->json( [], 404 );
         }
         $project->load([
-            'siteVisits' => function ( $q ){
+            'latestSiteVisits' => function ( $q ){
                 $q->with([
                     'companyBranch',
                     'sourceManagerUser',

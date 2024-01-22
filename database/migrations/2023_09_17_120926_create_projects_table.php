@@ -44,6 +44,8 @@ return new class extends Migration
             $table->string('building')->nullable();
             $table->text('address')->nullable();
             $table->string('owner_name')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->string('owner_phone')->nullable();
             $table->string('owner_email')->nullable();
             $table->bigInteger('assign_to')->nullable();

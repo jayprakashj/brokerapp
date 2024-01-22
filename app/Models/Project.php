@@ -70,6 +70,10 @@ class Project extends Model implements HasMedia
         return $this->hasMany( SiteVisit::class, 'project_id', 'id');
     }
 
+    public function latestSiteVisits (){
+        return $this->siteVisits()->latest();
+    }
+
     public function leads (){
         return $this->belongsToMany( Lead::class, 'lead_project_pivot', 'project_id', 'lead_id');
     }
