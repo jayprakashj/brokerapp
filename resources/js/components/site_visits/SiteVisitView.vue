@@ -84,11 +84,27 @@
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 items-center">
-                            <location-selector
-                                :formatted-address="formData.location"
-                                :marker-position="{lat: formData.latitude,lng: formData.longitude}"
-                                :address-label="formData.site_name"
-                                :enable-map-click="false" />
+                            <p class="text-xs+ text-slate-400 dark:text-navy-300" v-if="formData.latitude == null || formData.longitude == null" >
+                                Location Data Unavailable.
+                            </p>
+                            <template v-else>
+
+                                <div v-if="!showMapSelector" class="p-4">
+                                    <button
+                                        type="button"
+                                        @click.prevent="showMapSelector = true"
+                                        class="btn border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
+                                        >
+                                        Click to Load Map
+                                    </button>
+                                </div>
+                                <location-selector
+                                    v-else
+                                    :formatted-address="formData.location"
+                                    :marker-position="{lat: formData.latitude,lng: formData.longitude}"
+                                    :address-label="formData.site_name"
+                                    :enable-map-click="false" />
+                            </template>
                         </div>
                         <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                         <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 items-center">
@@ -383,6 +399,7 @@ export default {
             pageTitle: 'Site Visits',
             subTitle: 'View Site Visit',
             isShowPopper: false,
+            showMapSelector: false,
             errors: {},
             formData:{
                 site_name: null,

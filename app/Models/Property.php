@@ -85,6 +85,10 @@ class Property extends Model implements HasMedia
         return $this->hasMany( SiteVisit::class, 'property_id', 'id');
     }
 
+    public function latestSiteVisits (){
+        return $this->siteVisits()->latest();
+    }
+
     public function scopeAvailabilityYes ( $q, $boolean = 'and' ){
         return $q->where('availability', '=', 'Yes', $boolean );
     }

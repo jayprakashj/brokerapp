@@ -86,6 +86,10 @@ class Lead extends Model
         return $this->belongsToMany( SiteVisit::class, 'lead_site_visit_pivot', 'lead_id', 'site_visit_id' );
     }
 
+    public function latestSiteVisits (){
+        return $this->siteVisits()->latest();
+    }
+
     public function comments (){
         return $this->hasMany( LeadComment::class, 'lead_id', 'id');
     }

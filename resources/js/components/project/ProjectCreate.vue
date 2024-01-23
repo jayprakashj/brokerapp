@@ -330,6 +330,32 @@
                             </div>
                             <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
                             <div class="grid grid-cols-12 gap-4 sm:grid-cols-12 items-center">
+                                <label class="block h-full col-span-12" >
+                                    <span>
+                                        Pick Location
+                                        <span class="text-tiny+ text-error" v-if="errors?.latitude?.length">({{ errors.latitude.at(0) }})</span>
+                                        <span class="text-tiny+ text-error" v-else-if="errors?.longitude?.length">({{ errors.longitude.at(0) }})</span>
+                                    </span>
+                                    <div v-if="!showMapSelector" class="p-4">
+                                        <button
+                                            type="button"
+                                            @click.prevent="showMapSelector = true"
+                                            class="btn border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
+                                            >
+                                            Click to Load Map
+                                        </button>
+                                    </div>
+                                    <location-selector
+                                        v-else
+                                        :address-label="formData.title"
+                                        :formatted-address="formData.address"
+                                        :marker-position="{lat: formData.latitude,lng: formData.longitude}"
+                                        @onLocationChange="onLocationSelect"
+                                    />
+                                </label>
+                            </div>
+                            <div class="my-7 h-px bg-slate-200 dark:bg-navy-500"></div>
+                            <div class="grid grid-cols-12 gap-4 sm:grid-cols-12 items-center">
 
                                 <label class="block h-full col-span-12" >
                                     <span>Walk Through Link</span>
@@ -788,13 +814,19 @@
 
 <script>
 import * as Yup from 'yup';
+import LocationSelector from '@/components/site_visits/LocationSelector.vue'
 
 export default {
+    components:{
+        LocationSelector
+    },
+
     data(){
         return {
             pageTitle: 'Project Management',
             subTitle: 'Add Project',
             isShowPopper: false,
+            showMapSelector: false,
             errors: {},
             options:{
                 'property_img_types': [],
@@ -825,6 +857,8 @@ export default {
                 locality: null,
                 building: null,
                 address: null,
+                latitude: null,
+                longitude: null,
                 amenities: null,
                 owner_name: null,
                 owner_email: null,
@@ -1158,6 +1192,11 @@ export default {
                     }
                 });
         },
+
+        onLocationSelect( data ){
+            this.formData.latitude = data.latLng.lat;
+            this.formData.longitude = data.latLng.lng;
+        }
     }
 }
 </script>

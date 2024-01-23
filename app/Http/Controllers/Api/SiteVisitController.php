@@ -106,8 +106,8 @@ class SiteVisitController extends Controller
     }
 
     public function createFormSelectList ( Request $request ){
-        $propertyList = Property::select('id', 'name')->get();
-        $projectList = Project::select('id', 'title as name')->get();
+        $propertyList = Property::select('id', 'name', 'latitude', 'longitude')->get();
+        $projectList = Project::select('id', 'title as name', 'latitude', 'longitude')->get();
         $companyBranch = CompanyBranch::select('id', 'name')->get();
         $members = $this->memberClass->getMembersListForSelectList();
         $leads = Lead::select(

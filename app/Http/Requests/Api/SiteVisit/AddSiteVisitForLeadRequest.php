@@ -25,12 +25,12 @@ class AddSiteVisitForLeadRequest extends FormRequest
 
         $rules =  [
 
-            'latitude' => [
-                'required',
-            ],
-            'longitude' => [
-                'required',
-            ],
+            // 'latitude' => [
+            //     'required',
+            // ],
+            // 'longitude' => [
+            //     'required',
+            // ],
             'visit_type' => [
                 'required',
             ],

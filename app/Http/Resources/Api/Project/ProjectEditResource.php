@@ -42,6 +42,8 @@ class ProjectEditResource extends JsonResource
             'locality' => $this->locality,
             'building' => $this->building,
             'address' => $this->address,
+            'latitude' => !is_null( $this->latitude ) ? (float)$this->latitude : null,
+            'longitude' => !is_null( $this->longitude ) ? (float)$this->longitude : null,
             'amenities' => $this->amenities,
             'owner_name' => $this->owner_name,
             'owner_email' => $this->owner_email,

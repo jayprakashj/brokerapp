@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('property_id')->nullable();
             $table->bigInteger('project_id')->nullable();
             $table->string('site_name');
-            $table->string('site_owner');
+            $table->string('site_owner')->nullable();
             $table->string('visit_type');
             $table->dateTime('time_in')->nullable();
             $table->dateTime('time_out')->nullable();

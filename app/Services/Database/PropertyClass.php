@@ -69,6 +69,8 @@ class PropertyClass {
         $property->address = $request->input('address');
         $property->city = $request->input('city');
         $property->locality = $request->input('locality');
+        $property->latitude = $request->input('latitude');
+        $property->longitude = $request->input('longitude');
         $property->description = $request->input('description');
         $property->remark = $request->input('remark');
         $property->internal_note = $request->input('internal_note');
